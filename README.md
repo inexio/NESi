@@ -3,9 +3,7 @@
 ### (former Softboxen)
 
 [![GitHub license](https://img.shields.io/badge/license-BSD-blue.svg)](https://raw.githubusercontent.com/inexio/NESi/master/LICENSE.rst)
-[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/api_build?label=build)]()
-
-
+[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/api_build/master?label=build)]()
 
 
 The `NESi` project which originated from [`softboxen`](https://github.com/etingof/softboxen), a project originally created by our 
@@ -24,12 +22,12 @@ For more information on `softboxen` or `NESi` please refer to our local [documen
 ## Features
 
 
-[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_alcatel?label=alcatel_tests)]()
-[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_huawei?label=huawei_tests)]()
-[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_edgecore?label=edgecore_tests)]()
-[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_keymile?label=keymile_tests)]()
-[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_pbn?label=pbn_tests)]()
-[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_zhone?label=zhone_tests)]()
+[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_alcatel/master?label=alcatel_tests)]()
+[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_huawei/master?label=huawei_tests)]()
+[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_edgecore/master?label=edgecore_tests)]()
+[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_keymile/master?label=keymile_tests)]()
+[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_pbn/master?label=pbn_tests)]()
+[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_zhone/master?label=zhone_tests)]()
 
 ### Supported Vendors
  - Alcatel  (nearly feature complete)
