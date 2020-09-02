@@ -134,8 +134,23 @@ For other vendors replace 'alcatel' with your desired vendor, or use:
 For more information on this matter, please refer to the
 [developer's documentation](https://github.com/inexio/NESi/blob/master/docs/source/development.rst).
 
------
 
+
+### Issues
+
+If you find any bug or a feature you think should be implemented, you can open up an [issue](https://github.com/inexio/NESi/issues/new).
+We will take care of the problem as fast as we can!
+
+
+### Contributing
+
+Contributions to the project are welcome.
+
+We are looking forward to your [pull requests](https://github.com/inexio/NESi/pulls), suggestions and fixes.
+
+Happy Coding!
+
+-----
 Copyright (c) 2020
  
 Original Software Design by [Ilya Etingof](https://github.com/etingof).
