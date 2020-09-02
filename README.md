@@ -2,7 +2,6 @@
 # Network Equipment Simulator (NESi)
 ### (former Softboxen)
 
-[![Python Versions](https://img.shields.io/pypi/pyversions/NESi.svg)]()
 [![GitHub license](https://img.shields.io/badge/license-BSD-blue.svg)](https://raw.githubusercontent.com/inexio/NESi/master/LICENSE.rst)
 [![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/api_build?label=build)]()
 
