@@ -53,6 +53,7 @@ For more information on `softboxen` or `NESi` please refer to our local [documen
 ## Download
 
 The `NESi` package is distributed under terms and conditions of 2-clause BSD [license](https://github.com/inexio/NESi/blob/master/LICENSE.rst). 
+
 Furthermore the previous `softboxen` project is freely available as a GitHub [repository](https://github.com/etingof/softboxen) or can be downloaded from [PyPI](https://pypi.org/project/softboxen).
 
 ## Installation
