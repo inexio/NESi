@@ -1,0 +1,13 @@
+configure
+#-------------------------------------------------------------------------------
+echo "vlan"
+#-------------------------------------------------------------------------------
+vlan
+  {% if context.box.broadcast_frames == True %}  broadcast-frames
+  {%endif %}
+  {% if context.box.priority_policy_port_default == True %}  priority-policy port-default
+  {%endif %}
+  vmac-address-format
+    host-id 0
+  exit
+

@@ -1,0 +1,30 @@
+================================================================================
+slot table (detailed)
+================================================================================
+
+--------------------------------------------------------------------------------
+slot
+--------------------------------------------------------------------------------
+                 slot : {{ context.slot_name }}{{ context.spacer1 }}planned-type : {{ context.card.planned_type }}
+          actual-type : {{ context.card.actual_type }}{{ context.spacer2 }}oper-status : {{ context.card.operational_state }}
+         error-status : {{ context.card.err_state }}
+         availability : {{ context.card.availability }}
+        alarm-profile : {{ context.card.alarm_profile }}
+        capab-profile : {{ context.card.capab_profile }}
+         manufacturer : {{ context.card.manufacturer }}
+             mnemonic : {{ context.card.mnemonic }}
+             pba-code : {{ context.card.pba_code }}
+            fpba-code : {{ context.card.fpba_code }}
+             fpba-ics : {{ context.card.fpba_ics }}
+            clei-code : {{ context.card.clei_code }}
+            serial-no : {{ context.card.serial_no }}
+          failed-test : {{ context.card.failed_test }}
+      lt-restart-time : {{ context.card.lt_restart_time }}
+     lt-restart-cause : {{ context.card.lt_restart_cause }}
+       lt-restart-num : {{ context.card.lt_restart_num }}
+mgnt-entity-oamipaddr : {{ context.card.mgnt_entity_oamipaddr }}
+  mgnt-entity-pairnum : {{ context.card.mgnt_entity_pairnum }}
+         dual-host-ip : {{ context.card.dual_host_ip }}
+        dual-host-loc : {{ context.card.dual_host_loc }}
+================================================================================
+

@@ -1,0 +1,5 @@
+admin
+secret
+admin software-mngt database upload actual-active:TEST_FILENAME.tar
+show software-mngt upload-download detail
+logout

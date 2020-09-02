@@ -1,0 +1,6 @@
+admin
+secret
+configure system id Test_DSLAM name isam location Test_DSLAM
+configure system security operator admin prompt ISAMTEST-DSLAM%d%c
+configure system contact-person "TestPerson"
+logout

@@ -1,0 +1,14 @@
+configure vlan
+#----------------------------------------------------------------------------------------------
+echo "vlan"
+#----------------------------------------------------------------------------------------------
+id {{ context.vlan.number }} mode {{ context.vlan.mode }}
+  name {{ context.vlan.name }}
+  protocol-filter {{ context.vlan.protocol_filter }}
+  pppoe-relay-tag {{ context.vlan.pppoe_relay_tag }}
+  pppoe-linerate {{ context.vlan.pppoe_linerate }}
+  circuit-id-pppoe {{ context.vlan.circuit_id_pppoe }}
+  remote-id-pppoe {{ context.vlan.remote_id_pppoe }}
+exit
+#----------------------------------------------------------------------------------------------
+

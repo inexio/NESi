@@ -1,0 +1,11 @@
+Flask-SQLAlchemy<=2.4.1
+Flask<=1.1.1
+flask-marshmallow<=0.11.0
+jinja2
+marshmallow<=3.5.1
+marshmallow-sqlalchemy<=0.22.3
+requests
+pydevd-pycharm~=201.7846.77
+psutil
+pytest
+pyperclip

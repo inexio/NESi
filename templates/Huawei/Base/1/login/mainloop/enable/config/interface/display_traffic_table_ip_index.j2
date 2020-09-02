@@ -1,0 +1,26 @@
+  ------------------------------------------------
+  TD Index               : {{ context.ip_index }}
+  TD Name                : ip-traffic-table_{{ context.ip_index }}
+  Priority               : 0
+  Copy Priority          : -
+  Mapping Index          : -
+  CTAG Mapping Priority  : -
+  CTAG Mapping Index     : -
+  CTAG Default Priority  : 0
+  Priority Policy        : tag-pri
+  CIR                    : {{ context.cir }} kbps
+  CBS                    : {{ context.cbs }} bytes
+  PIR                    : {{ context.pir }} kbps
+  PBS                    : {{ context.pbs }} bytes
+  Fix                    : 0 kbps
+  CAR Threshold Profile  : -
+  Color Mode             : color-blind
+  Color Policy           : dei
+  Referenced Status      : not used
+  E2E Mapping Priority   : -
+  E2E Mapping Index      : -
+  E2E Default Priority   : -
+  Yellow WRR Weight      : auto
+  Green WRR Weight       : auto
+  ------------------------------------------------
+

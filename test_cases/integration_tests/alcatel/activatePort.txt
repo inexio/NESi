@@ -1,0 +1,8 @@
+admin
+secret
+configure xdsl line 1/1/1/1 admin-up
+configure ethernet line 1/1/4/1 mau 1 power up
+configure ethernet line 1/1/4/1 admin-up
+exit
+exit
+logout

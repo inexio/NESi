@@ -1,0 +1,33 @@
+================================================================================
+port table (detailed)
+================================================================================
+--------------------------------------------------------------------------------
+port
+--------------------------------------------------------------------------------
+                  port : {{ context.port.name }}
+              if-index : {{ context.port.if_index }}
+                  info : {{ context.port.description }}
+                  type : {{ context.port.type }}
+                  name : {{ context.port.name }}
+            high-speed : {{ context.port.high_speed }}{{ context.spacer1 }}connector-present : {{ context.port.connector_present }}
+                 media : {{ context.port.media }}
+      largest-pkt-size : {{ context.port.largest_pkt_size }}{{ context.spacer2 }}current-bandwidth : {{ context.port.curr_bandwith }}
+              phy-addr : {{ context.port.phy_addr }}
+          admin-status : {{ context.port.admin_state }}{{ context.spacer3 }}opr-status : {{ context.port.operational_state }}
+     last-chg-opr-stat : {{ context.port.last_chg_opr_stat }}{{ context.spacer4 }}pkts-unknown-proto : {{ context.port.pkts_unknown_proto }}
+             in-octets : {{ context.port.in_octets }}{{ context.spacer5 }}out-octets : {{ context.port.out_octets }}
+         in-ucast-pkts : {{ context.port.in_ucast_pkts }}{{ context.spacer6 }}out-ucast-pkts : {{ context.port.out_ucast_pkts }}
+         in-mcast-pkts : {{ context.port.in_mcast_pkts }}{{ context.spacer7 }}out-mcast-pkts : {{ context.port.out_mcast_pkts }}
+     in-broadcast-pkts : {{ context.port.in_broadcast_pkts }}{{ context.spacer8 }}out-broadcast-pkts : {{ context.port.out_broadcast_pkts }}
+       in-discard-pkts : {{ context.port.in_discard_pkts }}{{ context.spacer9 }}out-discard-pkts : {{ context.port.out_discard_pkts }}
+           in-err-pkts : {{ context.port.in_err_pkts }}{{ context.spacer10 }}out-err-pkts : {{ context.port.out_err_pkts }}
+          in-octets-hc : {{ context.port.in_octets_hc }}
+         out-octets-hc : {{ context.port.out_octets_hc }}
+      in-ucast-pkts-hc : {{ context.port.in_ucast_pkts_hc }}
+     out-ucast-pkts-hc : {{ context.port.out_ucast_pkts_hc }}
+      in-mcast-pkts-hc : {{ context.port.in_mcast_pkts_hc }}
+     out-mcast-pkts-hc : {{ context.port.out_mcast_pkts_hc }}
+  in-broadcast-pkts-hc : {{ context.port.in_broadcast_pkts_hc }}
+ out-broadcast-pkts-hc : {{ context.port.out_broadcast_pkts_hc }}
+================================================================================
+

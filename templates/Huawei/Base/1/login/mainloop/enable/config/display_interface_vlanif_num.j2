@@ -1,0 +1,7 @@
+vlanif{{ context.vlan.number }} current state : {{ context.vlan.state }}
+Line protocol current state : {{ context.vlan.state }}
+Description : {{ model.vendor }}, SmartAX Series, vlanif{{ context.vlan_id }} Interface
+The Maximum Transmit Unit is {{ context.vlan.mtu }} bytes
+Internet Address is {{ model.mgmt_address }}/24
+IP Sending Frames' Format is {{ context.vlan.sending_frames_format }}, Hardware address is {{ context.vlan.hardware_address }}
+

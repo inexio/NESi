@@ -1,0 +1,8 @@
+  Command:
+          display port ddm-info 1
+  Temperature(C)                       : {{ context.port.temperature_h_exact }}
+  Supply voltage(V)                    : {{ context.port.supply_voltage_h_exact }}
+  TX bias current(mA)                  : {{ context.port.tx_bias_current_h_exact }}
+  TX power(dBm)                        : {{ context.port.tx_power_h_exact }}
+  RX power(dBm)                        : {{ context.port.rx_power_h_exact }}
+

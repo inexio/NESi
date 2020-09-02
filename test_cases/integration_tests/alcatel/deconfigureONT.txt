@@ -1,0 +1,5 @@
+admin
+secret
+configure equipment ont interface 1/1/5/1/2 admin-state down
+configure equipment ont no interface 1/1/5/1/2
+logout

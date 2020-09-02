@@ -1,0 +1,10 @@
+admin
+secret
+configure system management no default-route
+configure system management host-ip-address manual:10.0.0.2/24
+configure system management default-route 10.0.0.3
+configure system loop-id-syntax atm-based-dsl "10.0.0.2 eth Slot/Port" efm-based-dsl "10.0.0.2 eth Slot/Port"
+configure system mgnt-vlan-id 3320
+exit
+exit
+logout

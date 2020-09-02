@@ -1,0 +1,19 @@
+================================================================================
+line table (detailed)
+================================================================================
+
+--------------------------------------------------------------------------------
+line
+--------------------------------------------------------------------------------
+              if-index : {{ context.port.name }}{{ context.spacer1 }}adm-state : {{ context.port.admin_state }}
+  opr-state/tx-rate-ds : {{ context.port.operational_state }}{{ context.spacer2 }}tx-rate/us : {{ context.port.upstream }}
+            tx-rate/ds : {{ context.port.downstream }}{{ context.spacer3 }}max-tx-rate-us : {{ context.port.upstream_max }}
+        max-tx-rate-ds : {{ context.port.downstream_max }}{{ context.spacer4 }}inp-up : {{ context.port.inp_up }}
+                inp-dn : {{ context.port.inp_dn }}{{ context.spacer5 }}interl-us : {{ context.port.interl_us }}
+             interl-ds : {{ context.port.interl_dn }}{{ context.spacer6 }}cur-op-mode : {{ context.port.cur_op_mode }}
+              rinit-1d : {{ context.port.rinit_1d }}{{ context.spacer7 }}actual-tps-tc-mode : {{ context.port.actual_tps_tc_mode }}
+           rtx-mode-up : {{ context.port.rtx_mode_up }}{{ context.spacer8 }}rtx-mode-dn : {{ context.port.rtx_mode_dn }}
+   total-reset-attempt : {{ context.port.total_reset_attempt }}{{ context.spacer9 }}success-reset-attempt : {{ context.port.success_reset_attempt }}
+        cur-init-state : {{ context.port.cur_init_state }}
+================================================================================
+

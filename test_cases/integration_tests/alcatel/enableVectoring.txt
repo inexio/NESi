@@ -1,0 +1,11 @@
+admin
+secret
+show equipment slot
+configure xdsl board nt vce-profile name:vce-default
+configure xdsl board nt vplt-autodiscover enable
+configure xdsl board 1/1/4 vplt-autodiscover enable
+configure xdsl board 1/1/4 vect-fallback spectrum-profile name:VDSL_VECT_FALLBACK
+configure xdsl board 1/1/4 vect-fallback fb-vplt-com-fail fb-cpe-cap-mism fb-conf-not-feas
+exit
+exit
+logout

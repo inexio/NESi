@@ -1,0 +1,5 @@
+  id {{ context.vlan.number }} mode {{ context.vlan.mode }}
+    {% if context.vlan.name != None %}    name {{ context.vlan.name }}
+    {%endif %}
+    user2-comm disable
+

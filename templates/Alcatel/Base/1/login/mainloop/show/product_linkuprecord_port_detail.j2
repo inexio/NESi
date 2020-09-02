@@ -1,0 +1,20 @@
+================================================================================
+linkup-record table (detailed)
+================================================================================
+--------------------------------------------------------------------------------
+linkup-record
+--------------------------------------------------------------------------------
+                  line : {{ context.port.name }}
+   link-timestamp-down : 1970-01-01:00:00:00
+     link-timestamp-up : 1970-01-01:00:00:00
+        act-bitrate-up : {{ context.port.upstream }}{{ context.spacer1 }}act-bitrate-down : {{ context.port.downstream }}
+   act-noise-margin-up : {{ context.port.noise_margin_up }}{{ context.spacer2 }}act-noise-margin-down : {{ context.port.noise_margin_down }}
+        attenuation-up : {{ context.port.attenuation_up }}{{ context.spacer3 }}attenuation-down : {{ context.port.attenuation_down }}
+   attained-bitrate-up : {{ context.port.attained_upstream }}{{ context.spacer4 }}attained-bitrate-down : {{ context.port.attained_downstream }}
+        max-bitrate-up : {{ context.port.upstream_max }}{{ context.spacer5 }}max-bitrate-down : {{ context.port.downstream_max }}
+  threshold-bitrate-up : {{ context.port.threshold_upstream }}{{ context.spacer6 }}threshold-bitrate-down : {{ context.port.threshold_downstream }}
+          max-delay-up : {{ context.port.max_delay_upstream }}{{ context.spacer7 }}max-delay-down : {{ context.port.max_delay_downsteam }}
+   tgt-noise-margin-up : {{ context.port.tgt_noise_margin_up }}{{ context.spacer8 }}tgt-noise-margin-down : {{ context.port.tgt_noise_margin_down }}
+
+================================================================================
+

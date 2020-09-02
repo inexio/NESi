@@ -1,0 +1,7 @@
+  vlan-id {{ context.vlan.name }}
+{% if context.vlan.l2fwder_vlan != None %}    l2fwder-vlan {{ context.vlan.l2fwder_vlan }}
+{% else %}{% endif %}
+{% if context.vlan.scope != None %}    vlan-scope {{ context.vlan.scope }}
+{% else %}{% endif %}
+  exit
+

@@ -1,0 +1,7 @@
+admin
+secret
+configure bridge port 1/1/4/1 qos-profile name:TEST_FTTH_500M
+exit
+exit
+exit
+logout

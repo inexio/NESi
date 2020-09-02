@@ -1,0 +1,31 @@
+  vlan-id {{ context.service_vlan.name }}
+{% if context.service_vlan.tag == "single-tagged" %}    tag single-tagged
+{% else %}{% endif %}
+{% if context.service_vlan.l2fwder_vlan != None %}    l2fwder-vlan {{ context.service_vlan.l2fwder_vlan }}
+{% else %}{% endif %}
+{% if context.service_vlan.scope != None %}    vlan-scope {{ context.service_vlan.scope }}
+{% else %}{% endif %}
+    no qos # value=profile:none
+    no qos-profile # value=none
+    no prior-best-effort
+    no prior-background
+    no prior-spare
+    no prior-exc-effort
+    no prior-ctrl-load
+    no prior-less-100ms
+    no prior-less-10ms
+    no prior-nw-ctrl
+    no in-qos-prof-name # value=name:Default_TC0
+    no max-up-qos-policy # value=0
+    no max-ip-antispoof # value=65535
+    no max-unicast-mac # value=65535
+    no max-ipv6-antispf # value=65535
+    no mac-learn-ctrl # value=3
+    no min-cvlan-id # value=1
+    no max-cvlan-id # value=4095
+    no ds-dedicated-q # value=disable
+    no inner-pbit-remark # value=untouched
+    no oltregenprofile # value=disabled
+    prio-regen-name none
+  exit
+

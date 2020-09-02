@@ -1,0 +1,14 @@
+admin
+secret
+configure vlan
+broadcast-frames
+priority-policy port-default
+id 1337 mode residential-bridge
+protocol-filter pass-pppoe
+name PPPoE
+exit
+configure vlan id 1337 in-qos-prof-name name:Default_TC0
+configure bridge port nt-a:xfp:1 max-unicast-mac 1000
+configure bridge port nt-a:xfp:1 vlan-id 1337
+configure service vpls 1337 no shutdown
+logout

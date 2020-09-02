@@ -1,0 +1,14 @@
+admin
+secret
+show vlan name
+show vlan name PPPoE detail
+configure vlan
+info
+show equipment slot detail
+show equipment slot 1/1/1 detail
+show interface port | match match exact:1/1/1/1
+show interface port | match match exact:xdsl-line:1/1/1
+show interface port | match match exact:ethernet-line:1/1/4
+exit
+exit
+logout

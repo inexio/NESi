@@ -1,0 +1,7 @@
+admin
+secret
+show equipment slot
+configure equipment slot 1/1/1 planned-type rdlt-c unlock
+exit
+exit
+logout

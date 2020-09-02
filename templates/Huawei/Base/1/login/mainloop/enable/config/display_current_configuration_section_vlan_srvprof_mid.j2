@@ -1,0 +1,17 @@
+ vlan service-profile profile-id {{ context.vlan.bind_service_profile_id}} profile-name "{{ context.profile.name}}"
+  vmac {{ context.vlan.vmac_ipoe}} ipoe
+  vmac {{ context.vlan.vmac_pppoe}} pppoe
+  vmac {{ context.vlan.vmac_ppoa}} pppoa
+  {% if 'forwarding' == context.vlan.vlan_mac %}  forwarding vlan-mac{% endif %}
+
+  {% if 'forward' == context.vlan.packet_policy_multicast %}  packet-policy multicast forward{% endif %}
+
+  {% if 'discard' == context.vlan.packet_policy_unicast %}  packet-policy unicast discard{% endif %}
+
+  {% if 'disable' == context.vlan.security_anti_ipspoofing %}  security anti-ipspoofing disable{% endif %}
+
+  {% if 'disable' == context.vlan.security_anti_macspoofing %}  security anti-macspoofing disable{% endif %}
+
+  igmp mismatch {{ context.vlan.igmp_mismatch}}
+  commit
+

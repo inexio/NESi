@@ -1,0 +1,84 @@
+  -----------------------------------------------------------------------------
+  F/S/P                   : {{ context.port.name }}
+  ONT-ID                  : {{ context.ont_idx }}
+  Control flag            : {{ context.ont.control_flag }}
+  Run state               : {{ context.ont.run_state }}
+  Config state            : {{ context.ont.config_state }}
+  Match state             : {{ context.ont.match_state }}
+  DBA type                : {{ context.ont.dba_type }}
+  ONT distance(m)         : {{ context.ont.ont_distance }}
+  ONT last distance(m)    : {{ context.ont.ont_last_distance }}
+  ONT battery state       : {{ context.ont.ont_battery_state }}
+  Memory occupation       : {{ context.ont.memory_occupation }}
+  CPU occupation          : {{ context.ont.cpu_occupation }}
+  Temperature             : {{ context.ont.temperature }}
+  Authentic type          : {{ context.ont.authentic_type }}
+  SN                      : {{ context.ont.serial_number }}
+  Management mode         : {{ context.ont.management_mode }}
+  Software work mode      : {{ context.ont.software_work_mode }}
+  Isolation state         : {{ context.ont.isolation_state }}
+  ONT IP 0 address/mask   : {{ context.ont.ont_ip_zero_address_mask }}
+  Description             : {{ context.ont.description }}
+  Last down cause         : {{ context.ont.last_down_cause }}
+  Last up time            : {{ context.ont.last_up_time }}
+  Last down time          : {{ context.ont.last_down_time }}
+  Last dying gasp time    : {{ context.ont.last_dying_gasp }}
+  ONT online duration     : {{ context.ont.ont_online_duration }}
+  Type C support          : {{ context.ont.type_c_support }}
+  Interoperability-mode   : {{ context.ont.interoperability_mode }}
+  Power reduction status  : {{ context.ont.power_reduction_status }}
+  FEC upstream state      : {{ context.ont.fec_upstream_state }}
+  -----------------------------------------------------------------------------
+  VoIP configure method   : Default
+  -----------------------------------------------------------------------------
+  Line profile ID      : 0
+  Line profile name    : line-profile_default_0
+  -----------------------------------------------------------------------------
+  FEC upstream switch :Disable
+  OMCC encrypt switch :Off
+  Qos mode            :GEM-CAR
+  Mapping mode        :VLAN
+  TR069 management    :Disable
+  TR069 IP index      :0
+  -----------------------------------------------------------------------------
+  Notes: * indicates Discrete TCONT(TCONT Unbound)
+  -----------------------------------------------------------------------------
+  <T-CONT   0>          DBA Profile-ID:10
+  <T-CONT   1>          DBA Profile-ID:10
+  -----------------------------------------------------------------------------
+  Service profile ID   : 0
+  Service profile name : srv-profile_default_0
+  -----------------------------------------------------------------------------
+  Port-type     Port-number     Max-adaptive-number
+  -----------------------------------------------------------------------------
+  POTS          {{ context.ont.port_number_pots }}{{ context.spacer1 }}{% if context.ont.port_number_pots == '0' %}-{% else %}{{ context.ont.max_adaptive_num_pots }}{% endif %}
+
+  ETH           {{ context.ont.port_number_eth }}{{ context.spacer2  }}{% if context.ont.port_number_eth == '0' %}-{% else %}{{ context.ont.max_adaptive_num_eth }}{% endif %}
+
+  VDSL          {{ context.ont.port_number_vdsl }}{{ context.spacer3 }}{% if context.ont.port_number_vdsl == '0' %}-{% else %}{{ context.ont.max_adaptive_num_vdsl }}{% endif %}
+
+  TDM           0               -
+  MOCA          0               -
+  CATV          0               -
+  -----------------------------------------------------------------------------
+  TDM port type                     : E1
+  TDM service type                  : TDMoGem
+  MAC learning function switch      : Enable
+  ONT transparent function switch   : Disable
+  Ring check switch                 : Disable
+  Ring port auto-shutdown           : Enable
+  Ring detect frequency             : 8 (pps)
+  Ring resume interval              : 300 (s)
+  Multicast forward mode            : Unconcern
+  Multicast forward VLAN            : -
+  Multicast mode                    : Unconcern
+  Upstream IGMP packet forward mode : Unconcern
+  Upstream IGMP packet forward VLAN : -
+  Upstream IGMP packet priority     : -
+  Native VLAN option                : Concern
+  Upstream PQ color policy          : -
+  Downstream PQ color policy        : -
+  -----------------------------------------------------------------------------
+  Port-type Port-ID QinQmode  PriorityPolicy Inbound     Outbound
+  -----------------------------------------------------------------------------
+
