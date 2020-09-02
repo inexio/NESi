@@ -124,7 +124,7 @@ def main():
 
     if args.list_boxen:
         for model in root_resource.boxen():
-            print('Vendor %s, model %s, version %s, instance %s' % (
+            print('Vendor %s, model %s, version %s, uuid %s' % (
                 model.vendor, model.model, model.version, model.uuid))
         return 0
 

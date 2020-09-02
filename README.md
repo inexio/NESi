@@ -81,11 +81,11 @@ First we collect the uuid´s of all boxes
 
     % ./bootup/box.sh --list-boxen
 
-    Vendor Alcatel, model 7360, version FX-4, instance 1
+    Vendor Alcatel, model 7360, version FX-4, uuid d8da2c00-ed28-11ea-9cc7-8c8590d3240c
     
 Second we connect to one box with the specific uuid
 
-    % ./bootup/box.sh --box-uuid <box-uuid> 
+    % ./bootup/box.sh --box-uuid d8da2c00-ed28-11ea-9cc7-8c8590d3240c
 
           _   _ ______  _____ _ 
          | \ | |  ____|/ ____(_)
@@ -125,6 +125,8 @@ For other vendors replace 'alcatel' with your desired vendor, or use:
 
     % ./bootup/restapi.sh --help
 
+
+For more information see [test_structure.rst](https://github.com/inexio/NESi/blob/master/docs/source/test_structure.rst)
 
  
 ### How to add new simulated CLI
