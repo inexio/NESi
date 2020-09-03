@@ -698,7 +698,7 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
                                  context=dict(context, bridgeportcount=count))
             self._write(text)
 
-        elif self._validate(args, 'bridge-port-fdb', str, 'detail'):  # TODO: find out functionality
+        elif self._validate(args, 'bridge-port-fdb', str, 'detail'):
             port_identifier, = self._dissect(args, 'bridge-port-fdb', str, 'detail')
 
             try:
@@ -709,7 +709,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
                 return
 
             cpe = None
-            #TODO: try catch
             if service_port.connected_type == 'port':
                 port = self._model.get_port('id', service_port.connected_id)
                 cpe = self._model.get_cpe('port_id', port.id)
