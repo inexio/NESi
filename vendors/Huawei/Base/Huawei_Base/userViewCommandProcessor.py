@@ -36,17 +36,13 @@ class UserViewCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_quit(self, command, *args, context=None):
-        hint = "  Check whether system data has been changed. Please save data before logout.\n"
-        logout_checkt = "Are you sure to log out? (y/n)[n]:"
-        prompt_end_pos = self.prompt_end_pos
-        self.prompt_end_pos = len(logout_checkt)
-        answer = self.user_input(hint + logout_checkt)
+        self._write("  Check whether system data has been changed. Please save data before logout.\n")
+        answer = self.user_input("Are you sure to log out? (y/n)[n]:")
         if answer == "y":
             self._model.set_last_logout(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
             exc = exceptions.TerminalExitError()
             exc.return_to = 'sysexit'
             raise exc
-        self.prompt_end_pos = prompt_end_pos
         return
 
     def on_help(self, command, args, context=None):

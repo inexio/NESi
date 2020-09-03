@@ -23,7 +23,11 @@ class BaseCommandProcessor(base.CommandProcessor):
 
     def user_input(self, prompt):
         self._write(prompt)
-        return self._read().strip()
+        prompt_end_pos = self.prompt_end_pos
+        self.prompt_end_pos = len(prompt) - 1
+        input = self._read().strip()
+        self.prompt_end_pos = prompt_end_pos
+        return input
 
     def do_quit(self, command, *args, context=None):
         raise exceptions.TerminalExitError()
