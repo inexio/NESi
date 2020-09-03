@@ -1,21 +1,20 @@
 BSD 2-Clause License
 
-Copyright (c) 2020, inexio <https://github.com/inexio>
+Copyright (c) 2020
 
-Janis Groß <https://github.com/unkn0wn-user>
+Original Software Design by Ilya Etingof <https://github.com/etingof>
 
-Philip Konrath <https://github.com/Connyko65>
+Software adapted by inexio <https://github.com/inexio>
 
-Alexander Dincher <https://github.com/Dinker1996>
+- Janis Groß <https://github.com/unkn0wn-user>
 
-|
-| Ilya Etingof <etingof@gmail.com>
-|
+- Philip Konrath <https://github.com/Connyko65>
+
+- Alexander Dincher <https://github.com/Dinker1996>
 
 All rights reserved.
 
-|
-| Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
 * Redistributions of source code must retain the above copyright notice, this
   list of conditions and the following disclaimer.
