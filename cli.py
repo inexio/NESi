@@ -26,6 +26,13 @@ from bootup.sockets.telnet import TelnetSocket
 import pydevd_pycharm
 import pytest
 
+import subprocess
+from nesi.softbox.api import app
+from nesi.softbox.api import db
+from nesi.softbox.api.views import *  # noqa
+import pydevd_pycharm
+import time
+
 
 LOG = logging.getLogger(__name__)
 
@@ -80,113 +87,130 @@ def main():
         '--test', metavar='<VENDOR>', type=str,
         help='Run CLI instance with test cases')
 
+    parser.add_argument(
+        '--standalone', action='store_true',
+        help='Run Cli without starting api')
+
     args = parser.parse_args()
 
-    if args.debug:
-        pydevd_pycharm.settrace('localhost', port=3001, stdoutToServer=True, stderrToServer=True)
+    if args.standalone:
+        config = os.path.abspath(os.getcwd()) + '/bootup/conf/nesi.conf'
+        subprocess.run(['python3', 'api.py', '--config', config, '--recreate-db'])
+        p = subprocess.Popen(['python3', 'api.py', '--config', config])
 
-    if args.test == 'Alcatel':
-        pytest.main(['--pyargs', 'test_cases.unit_tests.alcatel', '-rA', '--disable-warnings'])
-        return
-    elif args.test == 'Huawei':
-        pytest.main(['--pyargs', 'test_cases.unit_tests.huawei', '-rA', '--disable-warnings'])
-        return
-    elif args.test == 'Edgecore':
-        pytest.main(['--pyargs', 'test_cases.unit_tests.edgecore', '-rA', '--disable-warnings'])
-        return
-    elif args.test == 'Keymile':
-        pytest.main(['--pyargs', 'test_cases.unit_tests.keymile', '-rA', '--disable-warnings'])
-        return
-    elif args.test == 'Pbn':
-        pytest.main(['--pyargs', 'test_cases.unit_tests.pbn', '-rA', '--disable-warnings'])
-        return
-    elif args.test == 'Zhone':
-        pytest.main(['--pyargs', 'test_cases.unit_tests.zhone', '-rA', '--disable-warnings'])
-        return
-    elif args.test is not None:
-        parser.error('--test has invalid argument')
-        return
-
-    if not args.service_root:
-        parser.error('--service-root is required')
-        return
-
-    service_root = urlparse(args.service_root)
-    prefix = os.path.dirname(service_root.path)
-    filename = os.path.basename(service_root.path)
-
-    conn = rest_client.RestClient(
-        '%s://%s%s/' % (service_root.scheme, service_root.netloc, prefix),
-        verify=not args.insecure,
-    )
-
-    root_resource = root.Root(conn, path=filename)
-
-    if args.list_boxen:
-        for model in root_resource.boxen():
-            print('Vendor %s, model %s, version %s, uuid %s' % (
-                model.vendor, model.model, model.version, model.uuid))
-        return 0
-
-    if not args.box_uuid:
-        parser.error('--box-uuid is required')
-        return
-
-    for model in root_resource.boxen():
-        if model.uuid == args.box_uuid:
-            LOG.debug('Found requested box with UUID %s', model.uuid)
-            break
-    else:
-        parser.error('Requested box with UUID %s not found' % args.box_uuid)
-        return
+        time.sleep(2)
+        os.system("./bootup/conf/bootstraps/create-vendors-and-models.sh")
+        os.system("./bootup/conf/bootstraps/create-alcatel-7360.sh")
 
     try:
-        model = root_resource.get_box(base.get_member_identity(model.json), model.vendor)
-        main = importlib.import_module('vendors.' + model.vendor + '.' + model.model + '.' + model.vendor + '_' + model.model + '.main')
-        cli = main.PreLoginCommandProcessor
 
-    except exceptions.ExtensionNotFoundError as exc:
-        parser.error(exc)
-        return
+        if args.debug:
+            pydevd_pycharm.settrace('localhost', port=3001, stdoutToServer=True, stderrToServer=True)
 
-    if args.daemon:
-        if model.network_address is not None:
-            ip_address = model.network_address
-        else:
-            ip_address = args.ip_address
-
-        if model.network_port is not None:
-            port = model.network_port
-        else:
-            port = args.port
-
-        if port is None or ip_address is None:
-            parser.error('ip-address and port are required')
+        if args.test == 'Alcatel':
+            pytest.main(['--pyargs', 'test_cases.unit_tests.alcatel', '-rA', '--disable-warnings'])
+            return
+        elif args.test == 'Huawei':
+            pytest.main(['--pyargs', 'test_cases.unit_tests.huawei', '-rA', '--disable-warnings'])
+            return
+        elif args.test == 'Edgecore':
+            pytest.main(['--pyargs', 'test_cases.unit_tests.edgecore', '-rA', '--disable-warnings'])
+            return
+        elif args.test == 'Keymile':
+            pytest.main(['--pyargs', 'test_cases.unit_tests.keymile', '-rA', '--disable-warnings'])
+            return
+        elif args.test == 'Pbn':
+            pytest.main(['--pyargs', 'test_cases.unit_tests.pbn', '-rA', '--disable-warnings'])
+            return
+        elif args.test == 'Zhone':
+            pytest.main(['--pyargs', 'test_cases.unit_tests.zhone', '-rA', '--disable-warnings'])
+            return
+        elif args.test is not None:
+            parser.error('--test has invalid argument')
             return
 
-        if model.network_protocol == 'telnet':
-            telnet = TelnetSocket(cli, model, args.template_root, ip_address, int(port))
-            telnet.start()
-        elif model.network_protocol == 'ssh':
-            ssh = None
-            # TODO: add ssh-socket daemon
+        if not args.service_root:
+            parser.error('--service-root is required')
+            return
 
-    else:
-        stdin = os.fdopen(sys.stdin.fileno(), 'rb', 0)
-        stdout = os.fdopen(sys.stdout.fileno(), 'wb', 0)
+        service_root = urlparse(args.service_root)
+        prefix = os.path.dirname(service_root.path)
+        filename = os.path.basename(service_root.path)
 
-        command_processor = cli(
-            model, stdin, stdout, (), template_root=args.template_root, daemon=False)
+        conn = rest_client.RestClient(
+            '%s://%s%s/' % (service_root.scheme, service_root.netloc, prefix),
+            verify=not args.insecure,
+        )
 
+        root_resource = root.Root(conn, path=filename)
 
+        if args.list_boxen:
+            for model in root_resource.boxen():
+                print('Vendor %s, model %s, version %s, uuid %s' % (
+                    model.vendor, model.model, model.version, model.uuid))
+            return 0
+
+        if not args.box_uuid:
+            parser.error('--box-uuid is required')
+            return
+
+        for model in root_resource.boxen():
+            if model.uuid == args.box_uuid:
+                LOG.debug('Found requested box with UUID %s', model.uuid)
+                break
+        else:
+            parser.error('Requested box with UUID %s not found' % args.box_uuid)
+            return
 
         try:
-            context = dict()
-            context['login_banner'] = model.login_banner
-            command_processor.loop(context=context)
-        except exceptions.TerminalExitError as exc:
-            if exc.return_to is not None and exc.return_to != 'sysexit':
-                raise exc
+            model = root_resource.get_box(base.get_member_identity(model.json), model.vendor)
+            main = importlib.import_module('vendors.' + model.vendor + '.' + model.model + '.' + model.vendor + '_' + model.model + '.main')
+            cli = main.PreLoginCommandProcessor
+
+        except exceptions.ExtensionNotFoundError as exc:
+            parser.error(exc)
+            return
+
+        if args.daemon:
+            if model.network_address is not None:
+                ip_address = model.network_address
+            else:
+                ip_address = args.ip_address
+
+            if model.network_port is not None:
+                port = model.network_port
+            else:
+                port = args.port
+
+            if port is None or ip_address is None:
+                parser.error('ip-address and port are required')
+                return
+
+            if model.network_protocol == 'telnet':
+                telnet = TelnetSocket(cli, model, args.template_root, ip_address, int(port))
+                telnet.start()
+            elif model.network_protocol == 'ssh':
+                ssh = None
+                # TODO: add ssh-socket daemon
+
+        else:
+            stdin = os.fdopen(sys.stdin.fileno(), 'rb', 0)
+            stdout = os.fdopen(sys.stdout.fileno(), 'wb', 0)
+
+            command_processor = cli(
+                model, stdin, stdout, (), template_root=args.template_root, daemon=False)
+
+            try:
+                context = dict()
+                context['login_banner'] = model.login_banner
+                command_processor.loop(context=context)
+            except exceptions.TerminalExitError as exc:
+                if exc.return_to is not None and exc.return_to != 'sysexit':
+                    raise exc
+    finally:
+        if args.standalone:
+            p.terminate()
+            p.kill()
 
 
 if __name__ == '__main__':
