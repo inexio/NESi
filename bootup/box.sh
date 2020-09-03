@@ -17,6 +17,7 @@ Usage: $0 [options]
   --box-uuid                      Start a box instance in CLI mode
   --daemon                        Start a box instance in daemon mode (ssh or telnet socket)
   --debug                         Start a box with debug mode enabled
+  --standalone
 EOF
 )
 
@@ -24,6 +25,7 @@ uuid=0
 list_boxen=false
 daemon=false
 debug=false
+standalone=false
 
 POSITIONAL=()
 for arg in "$@"
@@ -50,6 +52,10 @@ do
             list_boxen=true
             shift # past argument
             ;;
+        --standalone)
+            standalone=true
+            shift # past argument
+            ;;
     esac
 done
 
@@ -64,6 +70,10 @@ elif [ "$uuid" != "" ]; then
 
     if $debug; then
       args="${args} --debug"
+    fi
+
+    if $standalone; then
+      args="${args} --standalone"
     fi
     python3 ./cli.py --service-root http://127.0.0.1:5000/nesi/v1 --template-root templates/ --box-uuid $uuid $args
 fi

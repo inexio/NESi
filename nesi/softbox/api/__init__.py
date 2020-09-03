@@ -15,11 +15,16 @@ import os
 from flask import Flask
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
+import logging
 
 from nesi.softbox.api import config
 
 
 app = Flask(__name__)
+
+log = logging.getLogger('werkzeug')
+log.disabled = False
+app.logger.disabled = False
 
 app.url_map.strict_slashes = False
 
