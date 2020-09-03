@@ -12,6 +12,7 @@
 import random
 import datetime
 import re
+import time
 
 from nesi import exceptions
 from .huaweiBaseCommandProcessor import HuaweiBaseCommandProcessor
@@ -45,6 +46,14 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 '?',
                 context=context)
             self._write(text)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_backup(self, command, *args, context=None):
+        if self._validate(args, 'configuration', 'tftp', str, str):
+            ip, path = self._dissect(args, 'configuration', 'tftp', str, str)
+            time.sleep(5)
+            return
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
@@ -856,26 +865,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             except (exceptions.SoftboxenError, AssertionError):
                 raise exceptions.CommandSyntaxError(command=command)
 
-            try:            # Check if s_port exists
-                service_port = self._model.get_service_port("name", portident)
-            except exceptions.SoftboxenError:
-                self._model.add_service_port(name=portident, connected_id=port.id, connected_type='port',
-                                             bytes_us=port.total_bytes_us, packets_us=port.total_packets_us,
-                                             bytes_ds=port.total_bytes_ds, packets_ds=port.total_packets_ds)
-                try:
-                    service_port = self._model.get_service_port("name", portident)
-                except (exceptions.SoftboxenError, AssertionError):
-                    raise exceptions.CommandSyntaxError(command=command)
-
-            params = dict(name=str(vlan.number), service_port_id=service_port.id)
-            service_vlan = self._model.get_service_vlan_by_values(params)
-            if service_vlan is None:
-                self._model.add_service_vlan(name=vlan.number, vlan_id=vlan.id, service_port_id=service_port.id)
-                try:
-                    service_vlan = self._model.get_service_vlan_by_values(params)
-                except (exceptions.SoftboxenError, AssertionError):
-                    raise exceptions.CommandSyntaxError(command=command)
-
+            port.set_vlan_id(vlan.id)
         else:
             raise exceptions.CommandSyntaxError(command=command)
 

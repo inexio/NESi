@@ -303,3 +303,4 @@ class Port(db.Model):
     alm_prof_24_hour = db.Column(db.String(), default='-')
     warn_prof_24_hour = db.Column(db.String(), default='-')
     combo_status = db.Column(db.Enum('-', 'optic', 'electric'), default='optic')
+    vlan_id = db.Column(db.Integer())

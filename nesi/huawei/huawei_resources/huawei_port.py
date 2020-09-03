@@ -205,6 +205,7 @@ class HuaweiPort(Port):
     tx_power_h_exact = base.Field('tx_power_h_exact')
     rx_power_h_exact = base.Field('rx_power_h_exact')
     rx_power_h = base.Field('rx_power_h')
+    vlan_id = base.Field('vlan_id')
 
     def admin_up(self):
         """Set the admin port state to up"""
@@ -227,6 +228,9 @@ class HuaweiPort(Port):
 
     def port_upstream_set(self, us_rate):
         self.update(upstream_max=us_rate)
+
+    def set_vlan_id(self, id):
+        self.update(vlan_id=id)
 
 
 class HuaweiPortCollection(PortCollection):
