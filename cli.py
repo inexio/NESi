@@ -203,6 +203,7 @@ def main():
             try:
                 context = dict()
                 context['login_banner'] = model.login_banner
+                command_processor.history_enabled = False
                 command_processor.loop(context=context)
             except exceptions.TerminalExitError as exc:
                 if exc.return_to is not None and exc.return_to != 'sysexit':
