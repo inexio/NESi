@@ -835,7 +835,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_terminal(self, command, *args, context=None):  # TODO: create user + credentials
+    def do_terminal(self, command, *args, context=None):
         if self._validate(args, 'user', 'name'):
             login = self.user_input("  User Name(length<6,15>):")
 
@@ -848,24 +848,46 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 text = self._render('user_already_exists', context=context)
                 self._write(text)
                 return
-            if (len(login) < 6) or (len(login) > 15):
-                raise exceptions.CommandSyntaxError(command=command)
+            while len(login) < 6:
+                text = self._render('terminal_name_short', context=context)
+                self._write(text)
+                login = self.user_input("  User Name(length<6,15>):")
+            while len(login) > 15:
+                text = self._render('terminal_name_long', context=context)
+                self._write(text)
+                login = self.user_input("  User Name(length<6,15>):")
 
             password = self.user_input("  User Password(length<6,15>):")
+            while len(password) < 6:
+                text = self._render('terminal_pw_short', context=context)
+                self._write(text)
+                password = self.user_input("  User Password(length<6,15>):")
+            while len(password) > 15:
+                text = self._render('terminal_pw_long', context=context)
+                self._write(text)
+                password = self.user_input("  User Password(length<6,15>):")
+
             password_repeat = self.user_input("  Confirm Password(length<6,15>):")
-            if (len(password) < 6) or (len(password) > 15) or (len(password_repeat) < 6) or (len(password_repeat) > 15)\
-                    or (password != password_repeat):
-                raise exceptions.CommandSyntaxError(command=command)
+            while password != password_repeat:
+                text = self._render('terminal_pw_error', context=context)
+                self._write(text)
+                password_repeat = self.user_input("  Confirm Password(length<6,15>):")
 
             profile = self.user_input("  User profile name(<=15 chars)[root]:")
-            if (profile != 'root') and (profile != 'admin') and (profile != 'operator') and (profile != 'commonuser'):
-                raise exceptions.CommandSyntaxError(command=command)
+            while (profile != 'root') and (profile != 'admin') and (profile != 'operator') and (profile != 'commonuser'):
+                text = self._render('terminal_profile_error', context=context)
+                self._write(text)
+                profile = self.user_input("  User profile name(<=15 chars)[root]:")
 
             text = self._render('user_level', context=context)
             self._write(text)
             level = self.user_input("     1. Common User  2. Operator  3. Administrator:")
-            if (level != '1') and (level != '2') and (level != '3'):
-                raise exceptions.CommandSyntaxError(command=command)
+            while (level != '1') and (level != '2') and (level != '3'):
+                text = self._render('terminal_level_error', context=context)
+                self._write(text)
+                text = self._render('user_level', context=context)
+                self._write(text)
+                level = self.user_input("     1. Common User  2. Operator  3. Administrator:")
 
             if level == '1':
                 lvl = 'User'
@@ -877,12 +899,16 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 raise exceptions.CommandSyntaxError(command=command)
 
             reenter_num = self.user_input("  Permitted Reenter Number(0--20):")
-            if (int(reenter_num) < 0) or (int(reenter_num) > 20):
-                raise exceptions.CommandSyntaxError(command=command)
+            while (int(reenter_num) < 0) or (int(reenter_num) > 20):
+                text = self._render('terminal_error_choice', context=context)
+                self._write(text)
+                reenter_num = self.user_input("  Permitted Reenter Number(0--20):")
 
             info = self.user_input("  User's Appended Info(<=30 chars):")
-            if len(info) > 30:
-                raise exceptions.CommandSyntaxError(command=command)
+            while len(info) > 30:
+                text = self._render('terminal_error_choice', context=context)
+                self._write(text)
+                info = self.user_input("  User's Appended Info(<=30 chars):")
 
             box = self._model
             box.add_credentials(username=login, password=password)
