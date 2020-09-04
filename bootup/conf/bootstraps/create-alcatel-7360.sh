@@ -107,7 +107,15 @@ req='{
   "password": "secret"
 }'
 
-credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
+admin_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
+
+# Admin user
+req='{
+  "name": "admin",
+  "credentials_id": '$admin_credential_id'
+}'
+
+admin_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
 
 # PortProfile 1
 req='{

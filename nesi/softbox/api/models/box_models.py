@@ -26,6 +26,7 @@ from .vlan_models import Vlan
 from .vlan_interface_models import VlanInterface
 from .route_models import Route
 from .emu_models import Emu
+from .user_models import User
 
 
 class Box(db.Model):
@@ -50,6 +51,7 @@ class Box(db.Model):
     welcome_banner = db.Column(db.String, default="")
     credentials = db.relationship('Credential', backref='Box', lazy='dynamic')
     credential_details = db.relationship('Credential', backref='credentials', lazy='dynamic')
+    users = db.relationship('User', backref='Box', lazy='dynamic')
     subracks = db.relationship('Subrack', backref='Box', lazy='dynamic')
     subrack_details = db.relationship('Subrack', backref='subracks', lazy='dynamic')
     cards = db.relationship('Card', backref='Box', lazy='dynamic')

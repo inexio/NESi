@@ -317,6 +317,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             text = self._render('display_emu_id', context=dict(context, emu=emu))
             self._write(text)
 
+        elif self._validate(args, 'terminal', 'user', 'all'):
+            self.display_terminal_user(command, context)
+
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
@@ -832,26 +835,97 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_terminal(self, command, *args, context=None):  # TODO: Functionality
+    def do_terminal(self, command, *args, context=None):  # TODO: create user + credentials
         if self._validate(args, 'user', 'name'):
-            _ = self.user_input("Login: ")
-            _ = self.user_input("Password: ")
-            _ = self.user_input("Repeat Password: ")
-            root = self.user_input("root: ")
-            if root != 'root':
-                raise exceptions.InvalidInputError
-            var3 = self.user_input("3: ")
-            if var3 != '3':
-                raise exceptions.InvalidInputError
-            var4 = self.user_input("4: ")
-            if var4 != '4':
-                raise exceptions.InvalidInputError
-            enter = self.user_input("enter: ")
-            if enter != '':
-                raise exceptions.InvalidInputError
-            var_n = self.user_input("n: ")
-            if var_n != 'n':
-                raise exceptions.InvalidInputError
+            login = self.user_input("  User Name(length<6,15>):")
+
+            try:
+                usr = self._model.get_user('name', login)
+            except exceptions.SoftboxenError:
+                pass
+            else:
+                context['user_name'] = login
+                text = self._render('user_already_exists', context=context)
+                self._write(text)
+                return
+            if (len(login) < 6) or (len(login) > 15):
+                raise exceptions.CommandSyntaxError(command=command)
+
+            password = self.user_input("  User Password(length<6,15>):")
+            password_repeat = self.user_input("  Confirm Password(length<6,15>):")
+            if (len(password) < 6) or (len(password) > 15) or (len(password_repeat) < 6) or (len(password_repeat) > 15)\
+                    or (password != password_repeat):
+                raise exceptions.CommandSyntaxError(command=command)
+
+            profile = self.user_input("  User profile name(<=15 chars)[root]:")
+            if (profile != 'root') and (profile != 'admin') and (profile != 'operator') and (profile != 'commonuser'):
+                raise exceptions.CommandSyntaxError(command=command)
+
+            text = self._render('user_level', context=context)
+            self._write(text)
+            level = self.user_input("     1. Common User  2. Operator  3. Administrator:")
+            if (level != '1') and (level != '2') and (level != '3'):
+                raise exceptions.CommandSyntaxError(command=command)
+
+            if level == '1':
+                lvl = 'User'
+            elif level == '2':
+                lvl = 'Operator'
+            elif level == '3':
+                lvl = 'Admin'
+            else:
+                raise exceptions.CommandSyntaxError(command=command)
+
+            reenter_num = self.user_input("  Permitted Reenter Number(0--20):")
+            if (int(reenter_num) < 0) or (int(reenter_num) > 20):
+                raise exceptions.CommandSyntaxError(command=command)
+
+            info = self.user_input("  User's Appended Info(<=30 chars):")
+            if len(info) > 30:
+                raise exceptions.CommandSyntaxError(command=command)
+
+            box = self._model
+            box.add_credentials(username=login, password=password)
+            try:
+                creds = self._model.get_credentials('username', login)
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+
+            box.add_user(name=login, credentials_id=creds.id, level=lvl, profile=profile, reenter_num=reenter_num,
+                         reenter_num_temp=reenter_num, append_info=info, lock_status='Unlocked')
+            try:
+                user = self._model.get_user('name', login)
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+
+            text = self._render('user_created', context=context)
+            self._write(text)
+
+            var_n = self.user_input("  Repeat this operation? (y/n)[n]:")
+            if var_n == 'y':
+                self.do_terminal(command, 'user', 'name', context=context)
+                return
+            elif var_n == 'n':
+                return
+
+        elif self._validate(args, 'unlock', 'user', str):
+            user_name, = self._dissect(args, 'unlock', 'user', str)
+
+            try:
+                locked_user = self._model.get_user('name', user_name)
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+
+            if locked_user.lock_status == 'Locked':
+                locked_user.set_reenter_num_temp(locked_user.reenter_num)
+                locked_user.unlock()
+                return
+            elif locked_user.lock_status == 'Unlocked':
+                text = self._render('user_already_unlocked', context=context)
+                self._write(text)
+            else:
+                raise exceptions.CommandSyntaxError(command=command)
+
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
@@ -862,10 +936,29 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             try:
                 port = self._model.get_port("name", portident)
                 vlan = self._model.get_vlan("number", int(trafficvlan))
-            except (exceptions.SoftboxenError, AssertionError):
+            except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 
-            port.set_vlan_id(vlan.id)
+            try:            # Check if s_port exists
+                service_port = self._model.get_service_port("name", portident)
+            except exceptions.SoftboxenError:
+                self._model.add_service_port(name=portident, connected_id=port.id, connected_type='port',
+                                             bytes_us=port.total_bytes_us, packets_us=port.total_packets_us,
+                                             bytes_ds=port.total_bytes_ds, packets_ds=port.total_packets_ds)
+                try:
+                    service_port = self._model.get_service_port("name", portident)
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+
+            params = dict(name=str(vlan.number), service_port_id=service_port.id)
+            service_vlan = self._model.get_service_vlan_by_values(params)
+            if service_vlan is None:
+                self._model.add_service_vlan(name=vlan.number, vlan_id=vlan.id, service_port_id=service_port.id)
+                try:
+                    service_vlan = self._model.get_service_vlan_by_values(params)
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+
         else:
             raise exceptions.CommandSyntaxError(command=command)
 

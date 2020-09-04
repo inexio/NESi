@@ -50,12 +50,41 @@ class LoginCommandProcessor(ReadInputCommandProcessor):
 
         for creds in self._model.credentials:
             if creds.username == username and creds.password == password:
+                user = self._model.get_user('credentials_id', creds.id)
+                if user.lock_status == 'Locked':
+                    text = self._render('user_locked', context=context)
+                    self._write(text)
+                    raise exceptions.TerminalExitError()
+                num = user.reenter_num
+                user.set_reenter_num_temp(num)
+                user.set_online()
                 break
 
         else:
-            text = self._render('password', context=context)
-            self._write(text)
-            raise exceptions.TerminalExitError()
+            try:
+                user = self._model.get_user('name', username)
+            except exceptions.SoftboxenError:
+                text = self._render('password', context=context)
+                self._write(text)
+                raise exceptions.TerminalExitError()
+            else:
+                if user.reenter_num_temp < 0:
+                    if user.level == 'Admin':
+                        user.set_reenter_num_temp(user.reenter_num)
+                        text = self._render('password', context=context)
+                        self._write(text)
+                        raise exceptions.TerminalExitError()
+                    else:
+                        user.lock()
+                        text = self._render('user_locked', context=context)
+                        self._write(text)
+                        raise exceptions.TerminalExitError()
+                else:
+                    num = user.reenter_num_temp - 1
+                    user.set_reenter_num_temp(num)
+                    text = self._render('password', context=context)
+                    self._write(text)
+                    raise exceptions.TerminalExitError()
 
         self._output.write(bytes(False))
         self._output.write(bytes(False))

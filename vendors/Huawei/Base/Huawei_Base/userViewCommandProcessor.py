@@ -40,6 +40,8 @@ class UserViewCommandProcessor(BaseCommandProcessor):
         answer = self.user_input("Are you sure to log out? (y/n)[n]:")
         if answer == "y":
             self._model.set_last_logout(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
+            user = self._model.get_user('status', 'Online')
+            user.set_offline()
             exc = exceptions.TerminalExitError()
             exc.return_to = 'sysexit'
             raise exc

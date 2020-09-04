@@ -94,6 +94,10 @@ class Box(base.Resource):
         raise PropertyNotFoundError("abstract credentials properties")
 
     @property
+    def users(self):
+        raise PropertyNotFoundError("abstract users properties")
+
+    @property
     def routes(self):
         raise PropertyNotFoundError("abstract routes properties")
 

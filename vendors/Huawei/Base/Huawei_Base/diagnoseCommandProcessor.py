@@ -15,9 +15,6 @@ from nesi import exceptions
 from .baseCommandProcessor import BaseCommandProcessor
 from .baseMixIn import BaseMixIn
 
-# TODO: you can jump from enable to diagnose
-# TODO: when doing 'quit', you get into enable again
-
 
 class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
 
@@ -46,7 +43,8 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
             for card in self._model.cards:
                 result = ['Abnormal', 'Normal'][card.board_status == 'Normal' or card.board_status == 'Active_normal']
                 context['spacer'] = self.create_spacers((9,), (result,))[0] * ' '
-                text += self._render('display_system_status_collection_1', context=dict(context, card=card, result=result))
+                text += self._render('display_system_status_collection_1',
+                                     context=dict(context, card=card, result=result))
             text += self._render('display_system_status_collection_2', context=context)
             text2 = ''
             for subrack in self._model.subracks:

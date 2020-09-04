@@ -11,24 +11,23 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 import logging
-
 from nesi.softbox import base
 
 LOG = logging.getLogger(__name__)
 
 
-class Credentials(base.Resource):
-    """Represent user credentials."""
-
+class User(base.Resource):
+    """Represents a logical User resource"""
+    
     id = base.Field('id')
-    protocol = base.Field('protocol')
-    username = base.Field('username')
-    password = base.Field('password')
-
-
-class CredentialsCollection(base.ResourceCollection):
-    """Represent a collection of users credentials."""
+    credentials_id = base.Field('credentials_id')
+    name = base.Field('name')
+    
+    
+class UserCollection(base.ResourceCollection):
+    """Represent the collection of Users."""
 
     @property
     def _resource_type(self):
-        return Credentials
+        return User
+

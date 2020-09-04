@@ -10,6 +10,8 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
+from nesi import exceptions
+
 
 class BaseMixIn:
 
@@ -29,6 +31,13 @@ class BaseMixIn:
 
         from .enableCommandProcessor import EnableCommandProcessor
         from .configCommandProcessor import ConfigCommandProcessor
+
+
+        try:
+            admin = self._model.get_user('status', 'Online')
+            assert admin.level != 'User'
+        except (exceptions.SoftboxenError, AssertionError):
+            raise exceptions.CommandSyntaxError(command=command)
 
         if args.__contains__('?'):
             text = self._render('?', context=context)

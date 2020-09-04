@@ -94,7 +94,8 @@ def new_box():
     box_data = req.copy()
 
     # Additional components have to be wiped from box_data as a box can otherwise not be created
-    components = ('credentials', 'subracks', 'cards', 'ports', 'onts', 'ont_ports', 'cpes', 'cpe_ports', 'vlans', 'port_profiles', 'routes')
+    components = ('credentials', 'subracks', 'cards', 'ports', 'onts', 'ont_ports', 'cpes', 'cpe_ports', 'vlans',
+                  'port_profiles', 'routes')
     for component in components:
         if component in req:
             del box_data[component]
@@ -246,6 +247,10 @@ def del_box(id):
     del_sub_components(box.vlans)
     del_sub_components(box.port_profiles)
     del_sub_components(box.routes)
+    del_sub_components(box.vlan_interfaces)
+    del_sub_components(box.emus)
+    del_sub_components(box.qos_interfaces)
+    del_sub_components(box.users)
 
     db.session.delete(box)
     db.session.commit()

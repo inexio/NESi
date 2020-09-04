@@ -42,13 +42,14 @@ class HuaweiVlan(Vlan):
         """Set the tag to given value."""
         self.update(tag=tag)
 
-    def set_type(self, type):
-        """Change thetype"""
+    def set_type_smart(self):
+        """Change the type to smart"""
         self.update(type="smart")
 
     def set_service_profile_id(self, id):
         """Set service profile_id"""
         self.update(bind_service_profile_id=id)
+
 
 class HuaweiVlanCollection(VlanCollection):
     """Represent the collection of VLANs."""
