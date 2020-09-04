@@ -36,6 +36,13 @@ class HuaweiBox(Box):
                 self, 'credentials'))
 
     @property
+    def users(self):
+        """Return `UserCollection` object."""
+        return huawei_user.HuaweiUserCollection(
+            self._conn, base.get_sub_resource_path_by(
+                self, 'users'))
+
+    @property
     def routes(self):
         """Return `RouteCollection` object."""
         return route.RouteCollection(
@@ -118,6 +125,24 @@ class HuaweiBox(Box):
         """Return `VlanInterfaceCollection` object."""
         return huawei_vlan_interface.HuaweiVlanInterfaceCollection(
             self._conn, base.get_sub_resource_path_by(self, 'vlan_interfaces'))
+
+    def get_user(self, field, value):
+        """Get specific user object."""
+        return huawei_user.HuaweiUserCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'users'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_users(self, field, value):
+        """Get specific user objects."""
+        return huawei_user.HuaweiUserCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'users'),
+            params={field: value})
+
+    def get_credentials(self, field, value):
+        """Get specific user object."""
+        return credentials.CredentialsCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'credentials'),
+            params={field: value}).find_by_field_value(field, value)
     
     def get_subrack(self, field, value):
         """Get specific subrack object."""
@@ -271,6 +296,22 @@ class HuaweiBox(Box):
                 return service_vlan
         else:
             return None
+
+    def add_credentials(self, **fields):
+        """Add a new pair of credentials"""
+        return credentials.Credentials.create(
+            self._conn,
+            os.path.join(self.path, 'credentials'),
+            **fields
+        )
+
+    def add_user(self, **fields):
+        """Add a new user"""
+        return huawei_user.HuaweiUser.create(
+            self._conn,
+            os.path.join(self.path, 'users'),
+            **fields
+        )
 
     def add_vlan(self, **fields):
         """Add new vlan."""

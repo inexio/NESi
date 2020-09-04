@@ -494,3 +494,39 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
         return port, card, vlan, porttype
+
+    def display_terminal_user(self, command, context):
+        text = self._render('display_terminal_user_all_top', context=context)
+        user_counter = 0
+
+        try:
+            exec_user = self._model.get_user('status', 'Online')
+        except exceptions.SoftboxenError:
+            raise exceptions.CommandSyntaxError(command=command)
+
+        for user in self._model.users:
+            if (exec_user.level == 'User') and (user.level == 'User'):
+                check = True
+            elif (exec_user.level == 'Operator') and ((user.level == 'User') or (user.level == 'Operator')):
+                check = True
+            elif (exec_user.level == 'Admin') and (user.level != 'Super'):
+                check = True
+            elif exec_user.level == 'Super':
+                check = True
+            else:
+                check = False
+
+            if check:
+                context['spacer1'] = self.create_spacers((16,), (user.name,))[0] * ' '
+                context['spacer2'] = self.create_spacers((9,), (user.level,))[0] * ' '
+                context['spacer3'] = self.create_spacers((15,), (user.status + str(user.reenter_num),))[0] * ' '
+                context['spacer4'] = self.create_spacers((1,), ('',))[0] * ' '
+                context['spacer5'] = self.create_spacers((16,), (user.profile,))[0] * ' '
+
+                text += self._render('display_terminal_user_all_middle', context=dict(context, user=user))
+                user_counter += 1
+
+        context['user_counter'] = user_counter
+        text += self._render('display_terminal_user_all_bottom', context=context)
+        self._write(text)
+        return

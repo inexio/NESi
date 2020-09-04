@@ -14,6 +14,7 @@
 from nesi.alcatel.alcatel_resources import *
 import logging
 from nesi.softbox.base_resources import credentials
+from nesi.softbox.base_resources import user
 from nesi.softbox.base_resources import route
 from nesi.softbox.base_resources.box import Box, BoxCollection, base, os
 
@@ -63,6 +64,13 @@ class AlcatelBox(Box):
         return credentials.CredentialsCollection(
             self._conn, base.get_sub_resource_path_by(
                 self, 'credentials'))
+
+    @property
+    def users(self):
+        """Return `UserCollection` object."""
+        return user.UserCollection(
+            self._conn, base.get_sub_resource_path_by(
+                self, 'users'))
 
     @property
     def routes(self):

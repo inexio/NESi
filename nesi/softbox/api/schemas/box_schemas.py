@@ -29,9 +29,12 @@ class RootSchema(ma.ModelSchema):
 class BoxSchema(ma.ModelSchema):
     class Meta:
         model = Box
-        fields = ('id', 'vendor', 'model', 'version', 'software_version', 'network_protocol', 'network_address', 'network_port', 'uuid', 'description',
-                  'hostname', 'mgmt_address', 'credentials', 'credential_details', 'port_profiles', 'port_profile_details', 'vlans', 'service_vlans', 'vlan_details',
-                  'subracks', 'subrack_details', 'cards', 'ports', 'service_ports', 'emus', 'onts', 'ont_ports', 'cpes', 'cpe_ports', 'routes', 'login_banner',
+        fields = ('id', 'vendor', 'model', 'version', 'software_version', 'network_protocol', 'network_address',
+                  'network_port', 'uuid', 'description',
+                  'hostname', 'mgmt_address', 'credentials', 'credential_details', 'port_profiles',
+                  'port_profile_details', 'vlans', 'service_vlans', 'vlan_details',
+                  'subracks', 'subrack_details', 'cards', 'ports', 'service_ports', 'emus', 'onts', 'ont_ports', 'cpes',
+                  'cpe_ports', 'routes', 'login_banner', 'vlan_interfaces', 'users',
                   'welcome_banner', 'last_login', 'last_logout', 'sntp_server_ip_address', 'timezone_offset', '_links')
 
     credentials = ma.Hyperlinks(
@@ -39,6 +42,10 @@ class BoxSchema(ma.ModelSchema):
             'self': ma.URLFor('show_credentials', box_id='<id>')}})
 
     credential_details = ma.Nested(CredentialsSchema.CredentialSchema, many=True)
+
+    users = ma.Hyperlinks(
+        {'_links': {
+            'self': ma.URLFor('show_users', box_id='<id>')}})
 
     subracks = ma.Hyperlinks(
         {'_links': {
@@ -89,6 +96,10 @@ class BoxSchema(ma.ModelSchema):
             'self': ma.URLFor('show_service_vlans', box_id='<id>')}})
 
     vlan_details = ma.Nested(VlansSchema.VlanSchema, many=True)
+
+    vlan_interfaces = ma.Hyperlinks(
+        {'_links': {
+            'self': ma.URLFor('show_vlan_interfaces', box_id='<id>')}})
 
     routes = ma.Hyperlinks(
         {'_links': {

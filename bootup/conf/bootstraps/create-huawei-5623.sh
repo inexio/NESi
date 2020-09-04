@@ -36,13 +36,27 @@ req='{
 
 box_id=$(create_resource "$req" $ENDPOINT/boxen) || exit 1
 
-# Create login credentials at the switch (admin operation)
+# Super Admin credentials
 req='{
-  "username": "admin",
+  "username": "root",
   "password": "secret"
 }'
 
-credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
+root_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
+
+# Super Admin user
+req='{
+  "name": "root",
+  "credentials_id": '$root_credential_id',
+  "level": "Super",
+  "profile": "root",
+  "append_info": "Super Admin",
+  "reenter_num": 3,
+  "reenter_num_temp": 3,
+  "lock_status": "Unlocked"
+}'
+
+root_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
 
 # PortProfile 1
 req='{

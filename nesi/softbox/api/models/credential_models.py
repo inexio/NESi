@@ -9,7 +9,6 @@
 # - Alexander Dincher <https://github.com/Dinker1996>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
-import uuid
 
 from nesi.softbox.api import db
 

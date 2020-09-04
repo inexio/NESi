@@ -14,6 +14,7 @@ from nesi import exceptions
 from .baseCommandProcessor import BaseCommandProcessor
 from.baseMixIn import BaseMixIn
 
+
 class UserViewCommandProcessor(BaseCommandProcessor, BaseMixIn):
 
     def on_unknown_command(self, command, *args, context=None):

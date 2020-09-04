@@ -30,6 +30,8 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
         answer = self.user_input("Are you sure to log out? (y/n)[n]:")
         if answer == "y":
             self._model.set_last_logout(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
+            user = self._model.get_user('status', 'Online')
+            user.set_offline()
             exc = exceptions.TerminalExitError()
             exc.return_to = 'sysexit'
             raise exc
@@ -45,6 +47,12 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
     def do_config(self, command, *args, context=None):
 
         from .configCommandProcessor import ConfigCommandProcessor
+
+        try:
+            admin = self._model.get_user('status', 'Online')
+            assert admin.level != 'User'
+        except (exceptions.SoftboxenError, AssertionError):
+            raise exceptions.CommandSyntaxError(command=command)
 
         subprocessor = self._create_subprocessor(
             ConfigCommandProcessor, 'login', 'mainloop', 'enable', 'config')
@@ -193,6 +201,9 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
                 context=context)
             self._write(text)
 
+        elif self._validate(args, 'terminal', 'user', 'all'):
+            self.display_terminal_user(command, context)
+
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
@@ -201,4 +212,3 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)
-
