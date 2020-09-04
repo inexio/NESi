@@ -65,6 +65,10 @@ class CommandProcessor:
                     if template_root else None),
             trim_blocks=True, lstrip_blocks=True, autoescape=True)
         self.daemon = daemon
+
+        # CLI specific attributes
+        self.history_enabled = True
+        self.hide_input = False
         self.history_pos = 0
         self.history = history
         self.prompt_end_pos = self.get_prompt_len() - 1
@@ -119,9 +123,15 @@ class CommandProcessor:
             k = inkey(self._input).decode('utf-8')
             if k != '': break
         if k == '\x1b[A':  # up-arrow
-            return 'history', self.history_up()
+            if self.history_enabled:
+                return 'history', self.history_up()
+            else:
+                return None, None
         elif k == '\x1b[B':  # down-arrow
-            return 'history', self.history_down()
+            if self.history_enabled:
+                return 'history', self.history_down()
+            else:
+                return None, None
         elif k == '\x1b[C':  # right-arrow
             self.move_right()
             return None, None
@@ -137,6 +147,8 @@ class CommandProcessor:
             return 'del', ''
         elif k == '':  # ctrl-v
             return 'paste', pyperclip.paste()
+        elif k == '':  # ctrl-c
+            return 'cancel', ''
         elif k == 'OF' or k == '[F':  # command + right-arrow or end-key
             self.cursor_pos = self.cursor_boundary
             return 'cursor', ''
@@ -173,32 +185,31 @@ class CommandProcessor:
                 line = line[:self.cursor_pos - self.prompt_end_pos - 2] + line[self.cursor_pos - self.prompt_end_pos - 1:]
                 self.cursor_pos -= 1
                 self.cursor_boundary -= 1
-                self.updateline(line)
-                continue
             elif option == 'del':
                 line = line[:(self.cursor_pos - self.prompt_end_pos) - 1] + line[(self.cursor_pos - self.prompt_end_pos):]
                 self.cursor_boundary -= 1
-                self.updateline(line)
-                continue
             elif option == 'history':
                 self.cursor_pos = self.prompt_end_pos + 1 + len(char)
                 self.cursor_boundary = self.prompt_end_pos + 1 + len(char)
-                self.updateline(char)
                 line = char
-            elif option == 'cursor':
-                self.updateline(line)
             elif option == 'paste':
                 line = line[:(self.cursor_pos - self.prompt_end_pos - 1)] + char + line[(self.cursor_pos - self.prompt_end_pos - 1):]
                 self.cursor_boundary = self.cursor_boundary + len(char)
                 self.cursor_pos = self.cursor_pos + len(char)
-                self.updateline(line)
             elif option == 'character':
                 line = line[:(self.cursor_pos - self.prompt_end_pos - 1)] + char + line[(self.cursor_pos - self.prompt_end_pos - 1):]
                 self.cursor_pos += 1
                 self.cursor_boundary += 1
+            elif option == 'cursor':
+                pass
+            elif option == 'cancel':
+                line = '\r'
+                break
+
+            if not self.hide_input:
                 self.updateline(line)
 
-        if line != '\r' and line != '':
+        if line != '\r' and line != '' and self.history_enabled:
             self.history += (line.replace('\r', '').rstrip(),)
 
         self._write('\n')
