@@ -837,7 +837,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
 
     def do_terminal(self, command, *args, context=None):
         if self._validate(args, 'user', 'name'):
-            login = self.user_input("  User Name(length<6,15>):", False)
+            login = self.user_input("  User Name(length<6,15>):", False, 15)
 
             try:
                 usr = self._model.get_user('name', login)
@@ -851,11 +851,11 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             while len(login) < 6:
                 text = self._render('terminal_name_short', context=context)
                 self._write(text)
-                login = self.user_input("  User Name(length<6,15>):", False)
+                login = self.user_input("  User Name(length<6,15>):", False, 15)
             while len(login) > 15:
                 text = self._render('terminal_name_long', context=context)
                 self._write(text)
-                login = self.user_input("  User Name(length<6,15>):", False)
+                login = self.user_input("  User Name(length<6,15>):", False, 15)
 
             password = self.user_input("  User Password(length<6,15>):", False)
             while len(password) < 6:
