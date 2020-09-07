@@ -60,6 +60,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
                 port_counter = 0
 
                 for port in ports:
+                    self.map_states(port, 'port')
                     if card.id == port.card_id:
                         if port.admin_state == 'activated':
                             activated_count += 1
@@ -387,6 +388,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
             s_port_up = 0
             s_port_down = 0
             for s_port in s_ports:
+                self.map_states(s_port, 'service_port')
                 port, card, vlan, porttype = self.prepare_template_vars(s_port, command)
 
                 context['porttype'] = porttype
@@ -411,7 +413,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
                 text += self._render('display_service_port_all_middle',
                                      context=dict(context, port=port, s_port=s_port, vlan=vlan))
 
-                if s_port.operational_state == 'up':
+                if s_port.operational_state == '1':
                     s_port_up += 1
                 else:
                     s_port_down += 1
@@ -427,6 +429,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
 
         try:
             s_port = self._model.get_service_port('name', s_port_idx)
+            self.map_states(s_port, 'service_port')
         except exceptions.SoftboxenError:
             raise exceptions.CommandSyntaxError(command=command)
 

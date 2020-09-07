@@ -24,11 +24,11 @@ class TestAlcatel(TestCore):
 
     def test_ontportup_portdown(self):
         port = self.model.get_ont_port("name", '1/1/4/2/1/1/1')
-        assert (self.model.get_ont_port("name", '1/1/4/2/1/1/1').admin_state == 'down')
+        assert (self.model.get_ont_port("name", '1/1/4/2/1/1/1').admin_state == '0')
         port.admin_up()
-        assert (self.model.get_ont_port("name", '1/1/4/2/1/1/1').admin_state == 'up')
+        assert (self.model.get_ont_port("name", '1/1/4/2/1/1/1').admin_state == '1')
         port.admin_down()
-        assert (self.model.get_ont_port("name", '1/1/4/2/1/1/1').admin_state == 'down')
+        assert (self.model.get_ont_port("name", '1/1/4/2/1/1/1').admin_state == '0')
 
     def test_card_types(self):
         card = self.model.get_card("name", '1/1/1')
@@ -104,9 +104,9 @@ class TestAlcatel(TestCore):
         except exceptions.SoftboxenError:
             assert True
 
-        assert card.admin_state == 'unlock'
-        card.set_admin_state('disabled')
-        assert card.admin_state == 'disabled'
+        assert card.admin_state == '1'
+        card.set_admin_state('0')
+        assert card.admin_state == '0'
         try:
             card.set_admin_state('failure')
             assert False
@@ -135,17 +135,17 @@ class TestAlcatel(TestCore):
 
     def test_port_states(self):
         port = self.model.get_port("name", '1/1/1/3')
-        assert (port.admin_state == 'down')
+        assert (port.admin_state == '0')
         port.admin_up()
-        assert (port.admin_state == 'up')
+        assert (port.admin_state == '1')
         port.admin_down()
-        assert (port.admin_state == 'down')
+        assert (port.admin_state == '0')
         port.admin_up()
-        assert (port.admin_state == 'up')
+        assert (port.admin_state == '1')
         port.down()
-        assert (port.operational_state == 'down')
+        assert (port.operational_state == '0')
         port.up()
-        assert (port.operational_state == 'up')
+        assert (port.operational_state == '1')
 
     def test_port_rest(self):
         port = self.model.get_port("name", '1/1/1/1')
@@ -188,25 +188,25 @@ class TestAlcatel(TestCore):
 
     def test_cpe_states(self):
         port = self.model.get_cpe("name", '1/1/1/1/1')
-        assert (port.admin_state == 'up')
+        assert (port.admin_state == '1')
         port.admin_down()
-        assert (port.admin_state == 'down')
+        assert (port.admin_state == '0')
         port.admin_up()
-        assert (port.admin_state == 'up')
+        assert (port.admin_state == '1')
 
     def test_ont_states(self):
         port = self.model.get_ont("name", '1/1/4/1/1')
         port.power_down()
-        assert (port.admin_state == 'down')
-        assert (port.operational_state == 'down')
+        assert (port.admin_state == '0')
+        assert (port.operational_state == '0')
         port.admin_up()
-        assert (port.admin_state == 'up')
-        assert (port.operational_state == 'down')
+        assert (port.admin_state == '1')
+        assert (port.operational_state == '0')
         port.admin_down()
-        assert (port.admin_state == 'down')
+        assert (port.admin_state == '0')
         port.power_up()
-        assert (port.admin_state == 'up')
-        assert (port.operational_state == 'up')
+        assert (port.admin_state == '1')
+        assert (port.operational_state == '1')
 
     def test_ont_rest(self):
         port = self.model.get_ont("name", '1/1/4/1/1')
@@ -236,16 +236,16 @@ class TestAlcatel(TestCore):
 
     def test_ontport_states(self):
         port = self.model.get_ont_port("name", '1/1/4/1/1/1/1')
-        assert (port.admin_state == 'up')
+        assert (port.admin_state == '1')
         port.admin_down()
-        assert (port.admin_state == 'down')
+        assert (port.admin_state == '0')
         port.admin_up()
-        assert (port.admin_state == 'up')
-        assert (port.operational_state == 'down')
+        assert (port.admin_state == '1')
+        assert (port.operational_state == '0')
         port.port_up()
-        assert (port.operational_state == 'up')
+        assert (port.operational_state == '1')
         port.port_down()
-        assert (port.operational_state == 'down')
+        assert (port.operational_state == '0')
 
     def test_ontport_rest(self):
         port = self.model.get_ont_port("name", '1/1/4/1/1/1/1')

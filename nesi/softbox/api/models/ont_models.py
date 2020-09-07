@@ -18,8 +18,8 @@ class Ont(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64))
     description = db.Column(db.String())
-    admin_state = db.Column(db.Enum('up', 'down'), nullable=False, default='down')
-    operational_state = db.Column(db.Enum('up', 'down'), nullable=False, default='down')
+    admin_state = db.Column(db.Enum('0', '1'), default='0')  # Alcatel: 0 => down, 1 => up; Huawei: 0 => offline, 1 => online
+    operational_state = db.Column(db.Enum('0', '1'), default='0')  # Alcatel: 0 => down, 1 => up; Huawei: 0 => offline, 1 => online
 
     box_id = db.Column(db.Integer, db.ForeignKey('box.id'))
     port_id = db.Column(db.Integer, db.ForeignKey('port.id'))

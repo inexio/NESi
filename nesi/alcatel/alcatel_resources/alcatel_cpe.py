@@ -22,11 +22,11 @@ class AlcatelCpe(Cpe):
 
     def admin_up(self):
         """Change cpe admin state to up."""
-        self.update(admin_state="up")
+        self.update(admin_state='1')
 
     def admin_down(self):
         """Change cpe admin state to down."""
-        self.update(admin_state="down")
+        self.update(admin_state='0')
 
 
 class AlcatelCpeCollection(CpeCollection):

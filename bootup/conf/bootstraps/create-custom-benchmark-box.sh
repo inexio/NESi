@@ -178,7 +178,7 @@ do
             "name": "'$name'",
             "description": "Physical port #'$k'",
             "card_id": '$total_card_count',
-            "operational_state": "up",
+            "operational_state": "1",
             "admin_state": "'$admin'"
         },' >> $ports_file
 
@@ -333,8 +333,8 @@ do
             "name": "1/'$i'/'$j'",
             "description": "Physical card #'$j'",
             "subrack_id": '$total_subrack_count',
-            "operational_state": "enabled",
-            "admin_state": "unlock",
+            "operational_state": "1",
+            "admin_state": "1",
             "product": "'$card_type'",
             "ppc": "'$ppc'"
         },' >> $cards_file
@@ -344,8 +344,8 @@ do
             "name": "'`expr $i - 1`'/'`expr $j - 1`'",
             "description": "Physical card #'$j'",
             "subrack_id": '$total_subrack_count',
-            "operational_state": "enabled",
-            "admin_state": "unlock",
+            "operational_state": "1",
+            "admin_state": "1",
             "product": "'$card_type'",
             "ppc": "'$ppc'",
             "board_name": "'$board_name'"
@@ -362,8 +362,8 @@ do
     echo '        "'$i'": {
               "name": "'$name'",
               "description": "Physical subrack #'$i'",
-              "operational_state": "enabled",
-              "admin_state": "unlock"
+              "operational_state": "1",
+              "admin_state": "1"
           },' >> $subracks_file
     ((i++))
     ((total_subrack_count++))

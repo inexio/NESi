@@ -23,7 +23,7 @@ class Cpe(db.Model):
     cpe_ports = db.relationship('CpePort', backref='Cpe', lazy='dynamic')
     name = db.Column(db.String(64))
     serial_no = db.Column(db.String(), default='ABCD123456EF')
-    admin_state = db.Column(db.Enum('up', 'down'), default='down')
+    admin_state = db.Column(db.Enum('0', '1'), default='0')  # 0 => down, 1 => up
     description = db.Column(db.String())
     mac = db.Column(db.String(64), nullable=False)
 

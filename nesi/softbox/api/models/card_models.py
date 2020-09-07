@@ -34,8 +34,8 @@ class Card(db.Model):
     dual_tag_mode = db.Column(db.Boolean(), default=False)
     actual_type = db.Column(db.Enum('rdlt-c', 'rant-a', 'nant-a', 'nrnt-a', 'fant-f', 'relt-a', 'nelt-b', 'fglt-b',
                                     'ngfc-f', 'empty'), default='empty')
-    admin_state = db.Column(db.Enum('unlock', 'disabled'), default='disabled')
-    operational_state = db.Column(db.Enum('enabled', 'disabled'), default='disabled')
+    admin_state = db.Column(db.Enum('0', '1'), default='0')  # Alcatel: 0 => disabled, 1 => unlock
+    operational_state = db.Column(db.Enum('0', '1'), default='0')  # Alcatel: 0 => disabled, 1 => enabled
     err_state = db.Column(db.Enum('no-error', 'error', 'type-mismatch'), default='no-error')
     availability = db.Column(db.Enum('available', 'unavailable', 'not-installed'), default='available')
     alarm_profile = db.Column(db.Enum('none'), default='none')

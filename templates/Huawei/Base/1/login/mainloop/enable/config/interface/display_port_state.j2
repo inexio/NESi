@@ -2,7 +2,7 @@
   Port Information
   ----------------------------------------------------------------------------
   F/S/P                        {{ context.port.name }}
-  Port state                   {% if context.port.operational_state == 'down' %}Offline{% endif %}{% if context.port.operational_state == 'up' %}Online{% endif %}
+  Port state                   {% if context.port.operational_state == '0' %}Offline{% endif %}{% if context.port.operational_state == '1' %}Online{% endif %}
 
   Last down cause              {{ context.port.last_down_cause }}
   Last up time                 {{ context.port.last_up_time }}

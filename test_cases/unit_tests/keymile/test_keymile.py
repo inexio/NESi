@@ -17,17 +17,17 @@ class TestKeymile(TestCore):
 
     def test_portup_portdown(self):
         port = self.model.get_port("name", '1/1/1/1')
-        assert(self.model.get_port("name", '1/1/1/1').admin_state == 'down')
+        assert(self.model.get_port("name", '1/1/1/1').admin_state == '0')
         port.admin_up()
-        assert(self.model.get_port("name", '1/1/1/1').admin_state == 'up')
+        assert(self.model.get_port("name", '1/1/1/1').admin_state == '1')
         port.admin_down()
-        assert(self.model.get_port("name", '1/1/1/1').admin_state == 'down')
+        assert(self.model.get_port("name", '1/1/1/1').admin_state == '0')
 
     def test_ontportup_portdown(self):
         port = self.model.get_ont_port("name", '1/1/4/1/1/1/1')
-        assert(self.model.get_ont_port("name", '1/1/4/1/1/1/1').admin_state == 'down')
+        assert(self.model.get_ont_port("name", '1/1/4/1/1/1/1').admin_state == '0')
         port.admin_up()
-        assert(self.model.get_ont_port("name", '1/1/4/1/1/1/1').admin_state == 'up')
+        assert(self.model.get_ont_port("name", '1/1/4/1/1/1/1').admin_state == '1')
         port.admin_down()
-        assert(self.model.get_ont_port("name", '1/1/4/1/1/1/1').admin_state == 'down')
+        assert(self.model.get_ont_port("name", '1/1/4/1/1/1/1').admin_state == '0')
 

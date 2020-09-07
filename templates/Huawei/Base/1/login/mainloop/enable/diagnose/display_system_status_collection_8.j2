@@ -1,4 +1,4 @@
-  Port state           {{ context.port.name }}               {{ context.result }}{{ context.spacer }}{% if 'activated' == context.port.admin_state %}normal
+  Port state           {{ context.port.name }}               {{ context.result }}{{ context.spacer }}{% if '1' == context.port.admin_state %}normal
   {% else %}fail
   {% endif %}
 

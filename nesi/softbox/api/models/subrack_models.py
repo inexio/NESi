@@ -24,8 +24,8 @@ class Subrack(db.Model):
     description = db.Column(db.String(), default='')
     planned_type = db.Column(db.Enum('rvxs-a', 'not-planned', 'planned', 'nfxs-f'), default='not-planned')
     actual_type = db.Column(db.Enum('rvxs-a', 'not-planned', 'planned', 'nfxs-f'), default='not-planned')
-    admin_state = db.Column(db.Enum('unlock', 'lock'), default='unlock')
-    operational_state = db.Column(db.Enum('enabled', 'disabled'), default='disabled')
+    admin_state = db.Column(db.Enum('0', '1'), default='0')  # 0 => lock, 1 => unlock
+    operational_state = db.Column(db.Enum('0', '1'), default='0')  # 0 => disabled, 1 => enabled
     err_state = db.Column(db.Enum('no-error', 'error'), default='no-error')
     availability = db.Column(db.Enum('available', 'unavailable', 'not-installed'), default='not-installed')
     mode = db.Column(db.Enum('no-extended-lt-slots', 'extended-lt-slots'), default='extended-lt-slots')
