@@ -852,32 +852,24 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 text = self._render('terminal_name_short', context=context)
                 self._write(text)
                 login = self.user_input("  User Name(length<6,15>):", False, 15)
-            while len(login) > 15:
-                text = self._render('terminal_name_long', context=context)
-                self._write(text)
-                login = self.user_input("  User Name(length<6,15>):", False, 15)
 
-            password = self.user_input("  User Password(length<6,15>):", False)
+            password = self.user_input("  User Password(length<6,15>):", False, )
             while len(password) < 6:
                 text = self._render('terminal_pw_short', context=context)
                 self._write(text)
-                password = self.user_input("  User Password(length<6,15>):", False)
-            while len(password) > 15:
-                text = self._render('terminal_pw_long', context=context)
-                self._write(text)
-                password = self.user_input("  User Password(length<6,15>):", False)
+                password = self.user_input("  User Password(length<6,15>):", False, 15)
 
             password_repeat = self.user_input("  Confirm Password(length<6,15>):", False)
             while password != password_repeat:
                 text = self._render('terminal_pw_error', context=context)
                 self._write(text)
-                password_repeat = self.user_input("  Confirm Password(length<6,15>):", False)
+                password_repeat = self.user_input("  Confirm Password(length<6,15>):", False, 15)
 
             profile = self.user_input("  User profile name(<=15 chars)[root]:", False)
             while (profile != 'root') and (profile != 'admin') and (profile != 'operator') and (profile != 'commonuser'):
                 text = self._render('terminal_profile_error', context=context)
                 self._write(text)
-                profile = self.user_input("  User profile name(<=15 chars)[root]:", False)
+                profile = self.user_input("  User profile name(<=15 chars)[root]:", False, 15)
 
             text = self._render('user_level', context=context)
             self._write(text)
@@ -898,17 +890,13 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             else:
                 raise exceptions.CommandSyntaxError(command=command)
 
-            reenter_num = self.user_input("  Permitted Reenter Number(0--20):", False)
+            reenter_num = self.user_input("  Permitted Reenter Number(0--20):", False, 2)
             while (int(reenter_num) < 0) or (int(reenter_num) > 20):
                 text = self._render('terminal_error_choice', context=context)
                 self._write(text)
-                reenter_num = self.user_input("  Permitted Reenter Number(0--20):", False)
+                reenter_num = self.user_input("  Permitted Reenter Number(0--20):", False, 2)
 
-            info = self.user_input("  User's Appended Info(<=30 chars):", False)
-            while len(info) > 30:
-                text = self._render('terminal_error_choice', context=context)
-                self._write(text)
-                info = self.user_input("  User's Appended Info(<=30 chars):", False)
+            info = self.user_input("  User's Appended Info(<=30 chars):", False, 30)
 
             box = self._model
             box.add_credentials(username=login, password=password)
