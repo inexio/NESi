@@ -29,6 +29,35 @@ class BaseCommandProcessor(base.CommandProcessor):
         exc.return_to = 'sysexit'
         raise exc
 
+    def map_states(self, object, type):
+        if object.admin_state == '0':
+            if type == 'subrack':
+                object.admin_state = 'lock'
+            elif type in ('card', 'port', 'ont', 'ont_port', 'cpe', 'service_port'):
+                object.admin_state = 'down'
+        elif object.admin_state == '1':
+            if type == 'subrack':
+                object.admin_state = 'unlock'
+            elif type in ('card', 'port', 'ont', 'ont_port', 'cpe', 'service_port'):
+                object.admin_state = 'up'
+        elif object.admin_state == '2':
+            if type == 'port':
+                object.admin_state = 'not-appl'
+
+        if object.operational_state == '0':
+            if type in ('subrack', 'card'):
+                object.operational_state = 'disabled'
+            elif type in ('port', 'ont', 'ont_port', 'service_port'):
+                object.operational_state = 'down'
+        elif object.operational_state == '1':
+            if type in ('subrack', 'card'):
+                object.operational_state = 'enabled'
+            elif type in ('port', 'ont', 'ont_port', 'service_port'):
+                object.operational_state = 'up'
+        elif object.operational_state == '2':
+            if type in ('port', 'ont_port'):
+                object.operational_state = 'not-appl'
+
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 

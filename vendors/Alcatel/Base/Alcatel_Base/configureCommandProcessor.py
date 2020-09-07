@@ -43,7 +43,7 @@ class ConfigureCommandProcessor(BaseCommandProcessor, BaseMixIn):
             try:
                 s_port = self._model.get_service_port('name', port_identifier)
             except exceptions.SoftboxenError:
-                self._model.add_service_port(name=port_identifier, connected_id=port.id, connected_type='port', admin_state='down', pvc=True)
+                self._model.add_service_port(name=port_identifier, connected_id=port.id, connected_type='port', admin_state='0', pvc=True)
 
             return
 
@@ -66,17 +66,17 @@ class ConfigureCommandProcessor(BaseCommandProcessor, BaseMixIn):
                 s_port = self._model.get_service_port('name', port_identifier)
             except exceptions.SoftboxenError:
                 if admin_prefix == 'no' and args[3] == 'admin-down':
-                    self._model.add_service_port(name=port_identifier, connected_id=port.id, connected_type='port', admin_state='up', pvc=True)
+                    self._model.add_service_port(name=port_identifier, connected_id=port.id, connected_type='port', admin_state='1', pvc=True)
                 elif admin_prefix == 'admin-down':
-                    self._model.add_service_port(name=port_identifier, connected_id=port.id, connected_type='port', admin_state='down', pvc=True)
+                    self._model.add_service_port(name=port_identifier, connected_id=port.id, connected_type='port', admin_state='0', pvc=True)
                 else:
                     raise exceptions.CommandSyntaxError(command=command)
                 return
 
             if admin_prefix == 'no' and args[3] == 'admin-down':
-                s_port.set_admin_state('up')
+                s_port.set_admin_state('1')
             elif admin_prefix == 'admin-down':
-                s_port.set_admin_state('down')
+                s_port.set_admin_state('0')
             else:
                 raise exceptions.CommandSyntaxError(command=command)
 
@@ -138,7 +138,7 @@ class ConfigureCommandProcessor(BaseCommandProcessor, BaseMixIn):
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
 
-            card.set_admin_state('unlock')
+            card.set_admin_state('1')
 
         else:
             raise exceptions.CommandSyntaxError(command=command)
@@ -181,7 +181,7 @@ class ConfigureCommandProcessor(BaseCommandProcessor, BaseMixIn):
                 try:
                     card = self._model.get_card("name", identifier)
                     card.set_planned_type(planned_type)
-                    card.set_admin_state('unlock')
+                    card.set_admin_state('1')
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
 

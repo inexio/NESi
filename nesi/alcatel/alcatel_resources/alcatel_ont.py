@@ -106,13 +106,13 @@ class AlcatelOnt(Ont):
 
     def power_up(self):
         """Change ont admin state to up."""
-        self.update(admin_state="up")
-        self.update(operational_state="up")
+        self.update(admin_state='1')
+        self.update(operational_state='1')
 
     def power_down(self):
         """Change ont admin state to down."""
-        self.update(admin_state="down")
-        self.update(operational_state="down")
+        self.update(admin_state='0')
+        self.update(operational_state='0')
 
     def set_type(self, type):
         """Change ont type."""
@@ -129,11 +129,11 @@ class AlcatelOnt(Ont):
 
     def admin_up(self):
         """Change ont admin state to up."""
-        self.update(admin_state="up")
+        self.update(admin_state='1')
 
     def admin_down(self):
         """Change ont admin state to down."""
-        self.update(admin_state="down")
+        self.update(admin_state='0')
 
 
 class AlcatelOntCollection(OntCollection):

@@ -17,17 +17,17 @@ class TestHuawei(TestCore):
 
     def test_portup_portdown(self):
         port = self.model.get_port("name", '0/0/0')
-        assert(self.model.get_port("name", '0/0/0').admin_state == 'deactivated')
+        assert(self.model.get_port("name", '0/0/0').admin_state == '0')
         port.admin_up()
-        assert(self.model.get_port("name", '0/0/0').admin_state == 'activated')
+        assert(self.model.get_port("name", '0/0/0').admin_state == '1')
         port.admin_down()
-        assert(self.model.get_port("name", '0/0/0').admin_state == 'deactivated')
+        assert(self.model.get_port("name", '0/0/0').admin_state == '0')
 
     def test_ontportup_portdown(self):
         port = self.model.get_ont_port("name", '0/2/0/0/1')
-        assert(self.model.get_ont_port("name", '0/2/0/0/1').operational_state == 'down')
+        assert(self.model.get_ont_port("name", '0/2/0/0/1').operational_state == '0')
         port.operational_state_up()
-        assert(self.model.get_ont_port("name", '0/2/0/0/1').operational_state == 'up')
+        assert(self.model.get_ont_port("name", '0/2/0/0/1').operational_state == '1')
         port.operational_state_down()
-        assert(self.model.get_ont_port("name", '0/2/0/0/1').operational_state == 'down')
+        assert(self.model.get_ont_port("name", '0/2/0/0/1').operational_state == '0')
 

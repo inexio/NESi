@@ -18,7 +18,7 @@ line {{ context.port.name }}
   exit
   mau 1
     type {{ context.mau.type }}
-    power {% if 'up' in context.mau.admin_state %}on
+    power {% if '1' in context.mau.admin_state %}on
     {% else %}off
     {% endif %}
     no speed-auto-sense

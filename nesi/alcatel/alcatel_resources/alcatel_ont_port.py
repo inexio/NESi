@@ -27,19 +27,19 @@ class AlcatelOntPort(OntPort):
 
     def port_up(self):
         """Change ont port state to up."""
-        self.update(operational_state="up")
+        self.update(operational_state='1')
 
     def port_down(self):
         """Change ont port state to down."""
-        self.update(operational_state="down")
+        self.update(operational_state='0')
 
     def admin_up(self):
         """Change ont port admin state to up."""
-        self.update(admin_state="up")
+        self.update(admin_state='1')
 
     def admin_down(self):
         """Change ont port admin state to down."""
-        self.update(admin_state="down")
+        self.update(admin_state='0')
 
     def set_description(self, user):
         """Set the description of the ont port"""

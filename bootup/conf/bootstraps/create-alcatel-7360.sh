@@ -336,8 +336,8 @@ req='{
   "description": "Physical subrack #1",
   "planned_type": "rvxs-a",
   "actual_type": "rvxs-a",
-  "operational_state": "enabled",
-  "admin_state": "unlock",
+  "operational_state": "1",
+  "admin_state": "1",
   "err_state": "no-error",
   "availability": "available",
   "mode": "no-extended-lt-slots",
@@ -361,7 +361,7 @@ req='{
   "description": "Physical Management card",
   "planned_type": "rant-a",
   "actual_type": "rant-a",
-  "operational_state": "enabled",
+  "operational_state": "1",
   "err_state": "no-error",
   "availability": "available",
   "alarm_profile": "none",
@@ -394,8 +394,8 @@ req='{
   "name": "nt-a:xfp:1",
   "position": "nt-a:xfp:1",
   "description": "Management port #1",
-  "operational_state": "up",
-  "admin_state": "up",
+  "operational_state": "1",
+  "admin_state": "1",
   "upstream": 0,
   "downstream": 0,
   "upstream_max": 100000,
@@ -483,8 +483,8 @@ req='{
   "connected_id": '$port_mgmt',
   "connected_type": "port",
   "name": "nt-a:xfp:1",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -499,8 +499,8 @@ req='{
   "description": "Physical card 1/1/1",
   "planned_type": "rdlt-c",
   "actual_type": "rdlt-c",
-  "operational_state": "enabled",
-  "admin_state": "unlock",
+  "operational_state": "1",
+  "admin_state": "1",
   "err_state": "no-error",
   "availability": "available",
   "alarm_profile": "none",
@@ -532,8 +532,8 @@ card_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 req='{
   "card_id": '$card_1_1_1',
   "description": "Physical port 1/1/1/1",
-  "operational_state": "up",
-  "admin_state": "up",
+  "operational_state": "1",
+  "admin_state": "1",
   "upstream": 10000,
   "downstream": 25000,
   "upstream_max": 100000,
@@ -621,8 +621,8 @@ req='{
   "connected_id": '$port_1_1_1_1',
   "connected_type": "port",
   "name": "1/1/1/1",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -655,8 +655,8 @@ req='{
   "name": "1/1/1/1:1:32",
   "connected_id": '$port_1_1_1_1',
   "connected_type": "port",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_1_1_1_32=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -680,7 +680,7 @@ req='{
   "port_id": '$port_1_1_1_1',
   "description": "Cpe 1/1/1/1/1",
   "serial_no": "ABCD123456EF",
-  "admin_state": "up",
+  "admin_state": "1",
   "mac": "8f:db:82:ef:ea:17"
 }'
 
@@ -703,8 +703,8 @@ req='{
   "connected_id": '$cpe_port_1_1_1_1_1_1',
   "connected_type": "cpe",
   "name": "1/1/1/1/1/1",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -738,8 +738,8 @@ service_vlan_=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlans)
 req='{
   "card_id": '$card_1_1_1',
   "description": "Physical port 1/1/1/2",
-  "operational_state": "down",
-  "admin_state": "up",
+  "operational_state": "0",
+  "admin_state": "1",
   "upstream": 0,
   "downstream": 0,
   "upstream_max": 100000,
@@ -827,8 +827,8 @@ req='{
   "connected_id": '$port_1_1_1_2',
   "connected_type": "port",
   "name": "1/1/1/1",
-  "admin_state": "up",
-  "operational_state": "down"
+  "admin_state": "1",
+  "operational_state": "0"
 }'
 
 service_port_1_1_1_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -863,7 +863,7 @@ req='{
   "port_id": '$port_1_1_1_2',
   "description": "Cpe 1/1/1/2/1",
   "serial_no": "ABCD654321FE",
-  "admin_state": "down",
+  "admin_state": "0",
   "mac": "8d:dc:81:ea:fe:12"
 }'
 
@@ -887,8 +887,8 @@ cpe_port_1_1_1_2_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_ports)
 req='{
   "card_id": '$card_1_1_1',
   "description": "Physical port 1/1/1/3",
-  "operational_state": "down",
-  "admin_state": "down",
+  "operational_state": "0",
+  "admin_state": "0",
   "upstream": 0,
   "downstream": 0,
   "upstream_max": 100000,
@@ -976,8 +976,8 @@ req='{
   "connected_id": '$port_1_1_1_3',
   "connected_type": "port",
   "name": "1/1/1/3",
-  "admin_state": "down",
-  "operational_state": "down"
+  "admin_state": "0",
+  "operational_state": "0"
 }'
 
 service_port_1_1_1_3=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -1013,8 +1013,8 @@ req='{
   "description": "Physical card 1/1/2",
   "planned_type": "rdlt-c",
   "actual_type": "rdlt-c",
-  "operational_state": "enabled",
-  "admin_state": "unlock",
+  "operational_state": "1",
+  "admin_state": "1",
   "err_state": "no-error",
   "availability": "available",
   "alarm_profile": "none",
@@ -1046,8 +1046,8 @@ card_1_1_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 req='{
   "card_id": '$card_1_1_2',
   "description": "Physical port 1/1/2/1",
-  "operational_state": "up",
-  "admin_state": "up",
+  "operational_state": "1",
+  "admin_state": "1",
   "upstream": 10000,
   "downstream": 25000,
   "upstream_max": 100000,
@@ -1135,8 +1135,8 @@ req='{
   "connected_id": '$port_1_1_2_1',
   "connected_type": "port",
   "name": "1/1/2/1",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_2_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -1171,7 +1171,7 @@ req='{
   "port_id": '$port_1_1_2_1',
   "description": "Cpe 1/1/2/1/1",
   "serial_no": "GFED123456BA",
-  "admin_state": "up",
+  "admin_state": "1",
   "mac": "2a:87:19:09:ae:2f"
 }'
 
@@ -1195,8 +1195,8 @@ cpe_port_1_1_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_ports)
 req='{
   "card_id": '$card_1_1_2',
   "description": "Physical port 1/1/2/2",
-  "operational_state": "down",
-  "admin_state": "up",
+  "operational_state": "0",
+  "admin_state": "1",
   "upstream": 0,
   "downstream": 0,
   "upstream_max": 100000,
@@ -1284,8 +1284,8 @@ req='{
   "connected_id": '$port_1_1_2_2',
   "connected_type": "port",
   "name": "1/1/2/1",
-  "admin_state": "up",
-  "operational_state": "down"
+  "admin_state": "1",
+  "operational_state": "0"
 }'
 
 service_port_1_1_2_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -1320,7 +1320,7 @@ req='{
   "port_id": '$port_1_1_2_2',
   "description": "Cpe 1/1/2/2/1",
   "serial_no": "DEFG654321AB",
-  "admin_state": "down",
+  "admin_state": "0",
   "mac": "2e:78:09:e6:dc:4e"
 }'
 
@@ -1344,8 +1344,8 @@ cpe_port_1_1_2_2_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_ports)
 req='{
   "card_id": '$card_1_1_2',
   "description": "Physical port 1/1/2/3",
-  "operational_state": "down",
-  "admin_state": "down",
+  "operational_state": "0",
+  "admin_state": "0",
   "upstream": 0,
   "downstream": 0,
   "upstream_max": 100000,
@@ -1433,8 +1433,8 @@ req='{
   "connected_id": '$port_1_1_2_3',
   "connected_type": "port",
   "name": "1/1/2/3",
-  "admin_state": "down",
-  "operational_state": "down"
+  "admin_state": "0",
+  "operational_state": "0"
 }'
 
 service_port_1_1_2_3=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -1470,8 +1470,8 @@ req='{
   "description": "Physical card 1/1/3",
   "planned_type": "nant-a",
   "actual_type": "nant-a",
-  "operational_state": "enabled",
-  "admin_state": "unlock",
+  "operational_state": "1",
+  "admin_state": "1",
   "err_state": "no-error",
   "availability": "available",
   "alarm_profile": "none",
@@ -1503,8 +1503,8 @@ card_1_1_3=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 req='{
   "card_id": '$card_1_1_3',
   "description": "Physical port 1/1/3/1",
-  "operational_state": "up",
-  "admin_state": "up",
+  "operational_state": "1",
+  "admin_state": "1",
   "upstream": 10000,
   "downstream": 25000,
   "upstream_max": 100000,
@@ -1592,8 +1592,8 @@ req='{
   "connected_id": '$port_1_1_3_1',
   "connected_type": "port",
   "name": "1/1/3/1",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_3_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -1628,7 +1628,7 @@ req='{
   "port_id": '$port_1_1_3_1',
   "description": "Cpe 1/1/3/1/1",
   "serial_no": "WXYZ123456BA",
-  "admin_state": "up",
+  "admin_state": "1",
   "mac": "fd:28:2e:25:a2:99"
 }'
 
@@ -1652,8 +1652,8 @@ cpe_port_1_1_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_ports)
 req='{
   "card_id": '$card_1_1_3',
   "description": "Physical port 1/1/3/2",
-  "operational_state": "down",
-  "admin_state": "up",
+  "operational_state": "0",
+  "admin_state": "1",
   "upstream": 0,
   "downstream": 0,
   "upstream_max": 100000,
@@ -1741,8 +1741,8 @@ req='{
   "connected_id": '$port_1_1_3_2',
   "connected_type": "port",
   "name": "1/1/3/2",
-  "admin_state": "up",
-  "operational_state": "down"
+  "admin_state": "1",
+  "operational_state": "0"
 }'
 
 service_port_1_1_3_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -1777,7 +1777,7 @@ req='{
   "port_id": '$port_1_1_3_2',
   "description": "Cpe 1/1/3/2/1",
   "serial_no": "DEFG654321AB",
-  "admin_state": "down",
+  "admin_state": "0",
   "mac": "c3:3e:81:30:3d:10"
 }'
 
@@ -1801,8 +1801,8 @@ cpe_port_1_1_3_2_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_ports)
 req='{
   "card_id": '$card_1_1_3',
   "description": "Physical port 1/1/3/3",
-  "operational_state": "down",
-  "admin_state": "down",
+  "operational_state": "0",
+  "admin_state": "0",
   "upstream": 0,
   "downstream": 0,
   "upstream_max": 100000,
@@ -1890,8 +1890,8 @@ req='{
   "connected_id": '$port_1_1_3_3',
   "connected_type": "port",
   "name": "1/1/3/3",
-  "admin_state": "down",
-  "operational_state": "down"
+  "admin_state": "0",
+  "operational_state": "0"
 }'
 
 service_port_1_1_3_3=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -1927,8 +1927,8 @@ req='{
   "description": "Physical card 1/1/4",
   "planned_type": "relt-a",
   "actual_type": "relt-a",
-  "operational_state": "enabled",
-  "admin_state": "unlock",
+  "operational_state": "1",
+  "admin_state": "1",
   "err_state": "no-error",
   "availability": "available",
   "alarm_profile": "none",
@@ -1960,8 +1960,8 @@ card_1_1_4=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 req='{
   "card_id": '$card_1_1_4',
   "description": "Physical port 1/1/4/1",
-  "operational_state": "up",
-  "admin_state": "up",
+  "operational_state": "1",
+  "admin_state": "1",
   "upstream": 10000,
   "downstream": 25000,
   "upstream_max": 100000,
@@ -2049,8 +2049,8 @@ req='{
   "connected_id": '$port_1_1_4_1',
   "connected_type": "port",
   "name": "1/1/4/1",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_4_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -2084,7 +2084,7 @@ service_vlan_=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlans)
 req='{
   "port_id":'$port_1_1_4_1',
   "description": "Ont 1/1/4/1/1",
-  "admin_state": "up",
+  "admin_state": "1",
   "index": 1,
   "type": "10gbaselr",
   "basebx10d": "yes",
@@ -2131,7 +2131,7 @@ ont_1_1_4_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)
 req='{
   "ont_id": '$ont_1_1_4_1_1',
   "description": "OntPort 1/1/4/1/1/1/1",
-  "admin_state": "up"
+  "admin_state": "1"
 }'
 
 ont_port_1_1_4_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
@@ -2142,8 +2142,8 @@ req='{
   "connected_id": '$ont_port_1_1_4_1_1_1_1',
   "connected_type": "port",
   "name": "1/1/4/1/1/1/1",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_4_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -2178,7 +2178,7 @@ req='{
   "ont_port_id": '$ont_port_1_1_4_1_1_1_1',
   "description": "Cpe 1/1/4/1/1/1/1/1",
   "serial_no": "GFED123456XY",
-  "admin_state": "up",
+  "admin_state": "1",
   "mac": "a4:c9:21:bd:11:c3"
 }'
 
@@ -2202,8 +2202,8 @@ cpe_port_1_1_4_1_1_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_
 req='{
   "card_id": '$card_1_1_4',
   "description": "Physical port 1/1/4/2",
-  "operational_state": "down",
-  "admin_state": "up",
+  "operational_state": "0",
+  "admin_state": "1",
   "upstream": 0,
   "downstream": 0,
   "upstream_max": 100000,
@@ -2291,8 +2291,8 @@ req='{
   "connected_id": '$port_1_1_4_2',
   "connected_type": "port",
   "name": "1/1/4/2",
-  "admin_state": "up",
-  "operational_state": "down"
+  "admin_state": "1",
+  "operational_state": "0"
 }'
 
 service_port_1_1_4_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -2326,7 +2326,7 @@ service_vlan_=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlans)
 req='{
   "port_id":'$port_1_1_4_2',
   "description": "Ont 1/1/4/2/1",
-  "admin_state": "up",
+  "admin_state": "1",
   "index": 1,
   "type": "10gbaselr",
   "basebx10d": "yes",
@@ -2375,7 +2375,7 @@ ont_1_1_4_2_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)
 req='{
   "ont_id": '$ont_1_1_4_2_1',
   "description": "OntPort 1/1/4/2/1/1/1",
-  "admin_state": "down"
+  "admin_state": "0"
 }'
 
 ont_port_1_1_4_2_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
@@ -2386,8 +2386,8 @@ req='{
   "connected_id": '$ont_port_1_1_4_2_1_1_1',
   "connected_type": "port",
   "name": "1/1/4/2/1/1/1",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_4_2_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -2422,7 +2422,7 @@ req='{
   "ont_port_id": '$ont_port_1_1_4_2_1_1_1',
   "description": "Cpe 1/1/4/2/1/1/1/1",
   "serial_no": "GFED123456YZ",
-  "admin_state": "down",
+  "admin_state": "0",
   "mac": "04:1f:1a:14:fc:35"
 }'
 
@@ -2446,8 +2446,8 @@ cpe_port_1_1_4_2_1_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_
 req='{
   "card_id": '$card_1_1_4',
   "description": "Physical port 1/1/4/3",
-  "operational_state": "down",
-  "admin_state": "down",
+  "operational_state": "0",
+  "admin_state": "0",
   "upstream": 0,
   "downstream": 0,
   "upstream_max": 100000,
@@ -2535,8 +2535,8 @@ req='{
   "connected_id": '$port_1_1_4_3',
   "connected_type": "port",
   "name": "1/1/4/2",
-  "admin_state": "down",
-  "operational_state": "down"
+  "admin_state": "0",
+  "operational_state": "0"
 }'
 
 service_port_1_1_4_3=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -2570,7 +2570,7 @@ service_vlan_=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlans)
 req='{
   "port_id":'$port_1_1_4_3',
   "description": "Ont 1/1/4/3/1",
-  "admin_state": "down",
+  "admin_state": "0",
   "index": 1,
   "type": "10gbaselr",
   "basebx10d": "yes",
@@ -2619,7 +2619,7 @@ ont_1_1_4_3_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)
 req='{
   "ont_id": '$ont_1_1_4_3_1',
   "description": "OntPort 1/1/4/3/1/1/1",
-  "admin_state": "down"
+  "admin_state": "0"
 }'
 
 ont_port_1_1_4_3_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
@@ -2630,8 +2630,8 @@ req='{
   "connected_id": '$ont_port_1_1_4_3_1_1_1',
   "connected_type": "port",
   "name": "1/1/4/3/1/1/1",
-  "admin_state": "down",
-  "operational_state": "down"
+  "admin_state": "0",
+  "operational_state": "0"
 }'
 
 service_port_1_1_4_3_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -2666,7 +2666,7 @@ req='{
   "ont_port_id": '$ont_port_1_1_4_3_1_1_1',
   "description": "Cpe 1/1/4/3/1/1/1/1",
   "serial_no": "GFED123456WQ",
-  "admin_state": "down",
+  "admin_state": "0",
   "mac": "5b:8a:36:50:d4:8b"
 }'
 
@@ -2692,8 +2692,8 @@ req='{
   "description": "Physical card 1/1/5",
   "planned_type": "fant-f",
   "actual_type": "fant-f",
-  "operational_state": "enabled",
-  "admin_state": "unlock",
+  "operational_state": "1",
+  "admin_state": "1",
   "err_state": "no-error",
   "availability": "available",
   "alarm_profile": "none",
@@ -2725,8 +2725,8 @@ card_1_1_5=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 req='{
   "card_id": '$card_1_1_5',
   "description": "Physical port 1/1/5/1",
-  "operational_state": "up",
-  "admin_state": "up",
+  "operational_state": "1",
+  "admin_state": "1",
   "upstream": 10000,
   "downstream": 25000,
   "upstream_max": 100000,
@@ -2814,8 +2814,8 @@ req='{
   "connected_id": '$port_1_1_5_1',
   "connected_type": "port",
   "name": "1/1/5/1",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_5_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -2849,7 +2849,7 @@ service_vlan_=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlans)
 req='{
   "port_id":'$port_1_1_5_1',
   "description": "Ont 1/1/5/1/1",
-  "admin_state": "up",
+  "admin_state": "1",
   "index": 1,
   "type": "10gbaselr",
   "basebx10d": "yes",
@@ -2898,7 +2898,8 @@ ont_1_1_5_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)
 req='{
   "ont_id": '$ont_1_1_5_1_1',
   "description": "OntPort 1/1/5/1/1/1/1",
-  "admin_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 ont_port_1_1_5_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
@@ -2909,8 +2910,8 @@ req='{
   "connected_id": '$ont_port_1_1_5_1_1_1_1',
   "connected_type": "ont",
   "name": "1/1/5/1/1/1/1",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_5_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -2945,7 +2946,7 @@ req='{
   "ont_port_id": '$ont_port_1_1_5_1_1_1_1',
   "description": "Cpe 1/1/5/1/1/1/1/1",
   "serial_no": "GFED135790XY",
-  "admin_state": "up",
+  "admin_state": "1",
   "mac": "29:62:57:a6:60:69"
 }'
 
@@ -2969,7 +2970,7 @@ cpe_port_1_1_5_1_1_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_
 req='{
   "port_id":'$port_1_1_5_1',
   "description": "Ont 1/1/5/1/2",
-  "admin_state": "up",
+  "admin_state": "1",
   "index": 1,
   "type": "10gbaselr",
   "basebx10d": "yes",
@@ -3018,7 +3019,7 @@ ont_1_1_5_1_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)
 req='{
   "ont_id": '$ont_1_1_5_1_2',
   "description": "OntPort 1/1/5/1/2/1/1",
-  "admin_state": "up"
+  "admin_state": "1"
 }'
 
 ont_port_1_1_5_1_2_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
@@ -3029,8 +3030,8 @@ req='{
   "connected_id": '$ont_port_1_1_5_1_2_1_1',
   "connected_type": "ont",
   "name": "1/1/5/1/2/1/1",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_5_1_2_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -3065,7 +3066,7 @@ req='{
   "ont_port_id": '$ont_port_1_1_5_1_2_1_1',
   "description": "Cpe 1/1/5/1/2/1/1/1",
   "serial_no": "GFED132546XY",
-  "admin_state": "up",
+  "admin_state": "1",
   "mac": "08:97:dc:ca:07:8e"
 }'
 
@@ -3089,7 +3090,7 @@ cpe_port_1_1_5_1_2_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_
 req='{
   "ont_id": '$ont_1_1_5_1_2',
   "description": "OntPort 1/1/5/1/2/1/2",
-  "admin_state": "up"
+  "admin_state": "1"
 }'
 
 ont_port_1_1_5_1_2_1_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
@@ -3100,8 +3101,8 @@ req='{
   "connected_id": '$ont_port_1_1_5_1_2_1_2',
   "connected_type": "ont",
   "name": "1/1/5/1/2/1/2",
-  "admin_state": "up",
-  "operational_state": "up"
+  "admin_state": "1",
+  "operational_state": "1"
 }'
 
 service_port_1_1_5_1_2_1_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
@@ -3136,7 +3137,7 @@ req='{
   "ont_port_id": '$ont_port_1_1_5_1_2_1_2',
   "description": "Cpe 1/1/5/1/2/1/2/1",
   "serial_no": "GFED213465XY",
-  "admin_state": "up",
+  "admin_state": "1",
   "mac": "6f:4a:1e:b4:51:f5"
 }'
 

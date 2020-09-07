@@ -30,19 +30,19 @@ class Port(base.Resource):
 
     def admin_up(self):
         """Set the admin port state to up"""
-        self.update(admin_state="up")
+        self.update(admin_state='1')
 
     def admin_down(self):
         """Set the admin port state to down"""
-        self.update(admin_state="down")
+        self.update(admin_state='0')
 
     def down(self):
         """Set the port state to down"""
-        self.update(operational_state="down")
+        self.update(operational_state='0')
 
     def up(self):
         """Set the port state to down"""
-        self.update(operational_state="up")
+        self.update(operational_state='1')
 
 
 class PortCollection(base.ResourceCollection):

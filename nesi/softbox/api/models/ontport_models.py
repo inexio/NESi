@@ -18,8 +18,8 @@ class OntPort(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64))
     description = db.Column(db.String())
-    operational_state = db.Column(db.Enum('up', 'down'), default='down')
-    admin_state = db.Column(db.Enum('up', 'down', 'not-appl'), default='down')
+    operational_state = db.Column(db.Enum('0', '1'), default='0')  # Alcatel: 0 => down, 1 => up; Huawei: 0 => offline, 1 => online
+    admin_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => offline, 1 => online
     # pon
     uni_idx = db.Column(db.String(64))
     config_indicator = db.Column(db.String(), default='100baset-fd')

@@ -209,19 +209,19 @@ class HuaweiPort(Port):
 
     def admin_up(self):
         """Set the admin port state to up"""
-        self.update(admin_state="activated")
+        self.update(admin_state='1')
 
     def admin_down(self):
         """Set the admin port state to down"""
-        self.update(admin_state="deactivated")
+        self.update(admin_state='0')
 
     def port_up(self):
         """Set the port status to 'UP'"""
-        self.update(operational_state="up")
+        self.update(operational_state='1')
 
     def port_down(self):
         """Set the port status to 'DOWN'"""
-        self.update(operational_state="down")
+        self.update(operational_state='0')
 
     def port_downstream_set(self, ds_rate):
         self.update(downstream_max=ds_rate)

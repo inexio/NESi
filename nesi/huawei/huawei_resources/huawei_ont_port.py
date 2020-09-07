@@ -49,11 +49,11 @@ class HuaweiOntPort(OntPort):
     
     def operational_state_down(self):
         """Change ont port operational state to down."""
-        self.update(operational_state="down")
+        self.update(operational_state='0')
         
     def operational_state_up(self):
         """Change ont port operational state to up."""
-        self.update(operational_state="up")
+        self.update(operational_state='1')
 
 
 class HuaweiOntPortCollection(OntPortCollection):

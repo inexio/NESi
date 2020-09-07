@@ -21,6 +21,43 @@ class BaseCommandProcessor(base.CommandProcessor):
     MODEL = 'Base'
     VERSION = '1'
 
+    def map_states(self, object, type):
+        if object.admin_state == '0':
+            if type == 'subrack':
+                object.admin_state = 'lock'
+            elif type in ('card', 'port', 'ont_port', 'service_port'):
+                object.admin_state = 'deactivated'
+            elif type in ('ont', 'ont_port', 'cpe'):
+                object.admin_state = 'offline'
+        elif object.admin_state == '1':
+            if type == 'subrack':
+                object.admin_state = 'unlock'
+            elif type in ('card', 'port', 'ont_port', 'service_port'):
+                object.admin_state = 'activated'
+            elif type in ('ont', 'ont_port', 'cpe'):
+                object.admin_state = 'online'
+        elif object.admin_state == '2':
+            if type == 'port':
+                object.admin_state = 'activating'
+
+        if object.operational_state == '0':
+            if type in ('subrack', 'card'):
+                object.operational_state = 'disabled'
+            elif type in ('port', 'service_port'):
+                object.operational_state = 'deactivated'
+            elif type in ('ont', 'ont_port'):
+                object.operational_state = 'offline'
+        elif object.operational_state == '1':
+            if type in ('subrack', 'card'):
+                object.operational_state = 'enabled'
+            elif type in ('port', 'service_port'):
+                object.operational_state = 'activated'
+            elif type in ('ont', 'ont_port'):
+                object.operational_state = 'online'
+        elif object.operational_state == '2':
+            if type in ('port', 'ont_port'):
+                object.operational_state = 'activating'
+
     def user_input(self, prompt, allow_history=True, tmp_boundary=None):
         self._write(prompt)
         prompt_end_pos = self.prompt_end_pos

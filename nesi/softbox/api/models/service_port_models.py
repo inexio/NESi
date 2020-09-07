@@ -5,8 +5,8 @@ class ServicePort(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64))
     box_id = db.Column(db.Integer, db.ForeignKey('box.id'))
-    admin_state = db.Column(db.Enum('enable', 'disable', 'up', 'down', 'not-appl'), default='enable')
-    operational_state = db.Column(db.Enum('up', 'down'), default='down')
+    admin_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => disable, 1 => enable
+    operational_state = db.Column(db.Enum('0', '1'), default='0')  # Alcatel: 0 => down, 1 => up; Huawei: 0 => disable, 1 => enable
     connected_id = db.Column(db.Integer(), nullable=False)
     connected_type = db.Column(db.Enum('port', 'ont', 'cpe'), nullable=False)
 

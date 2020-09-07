@@ -70,6 +70,7 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
 
                 try:
                     port = self._model.get_port("name", portname)
+                    self.map_states(port, 'port')
 
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)

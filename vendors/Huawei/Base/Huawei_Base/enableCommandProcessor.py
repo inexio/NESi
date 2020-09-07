@@ -75,6 +75,7 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
 
             try:
                 port = self._model.get_port("name", port_identifier)
+                self.map_states(port, 'port')
                 card = self._model.get_card('id', port.card_id)
 
             except exceptions.SoftboxenError:
@@ -105,6 +106,7 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
 
             try:
                 port = self._model.get_port("name", port_identifier)
+                self.map_states(port, 'port')
                 card = self._model.get_card('id', port.card_id)
 
             except exceptions.SoftboxenError:
@@ -119,7 +121,7 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
             context['channelname'] = channelname
 
             text = ''
-            if port.admin_state == 'activated':
+            if port.admin_state == '1':
                 context['spacer1'] = self.create_spacers((7,), (portname,))[0] * ' '
                 context['spacer2'] = self.create_spacers((15,), (port.admin_state,))[0] * ' '
                 context['spacer3'] = self.create_spacers((25,), (port.loopback,))[0] * ' '

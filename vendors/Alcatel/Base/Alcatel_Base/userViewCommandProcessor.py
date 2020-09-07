@@ -97,7 +97,7 @@ class UserViewCommandProcessor(BaseCommandProcessor, BaseMixIn):
             card = self._model.get_card("id", port.card_id)
             assert (card.product == 'ftth')
 
-            if port.admin_state == 'up':
+            if port.admin_state == '1':
                 context['admin_state'] = "admin-up"
             else:
                 context['admin_state'] = "no admin-up"
@@ -117,7 +117,7 @@ class UserViewCommandProcessor(BaseCommandProcessor, BaseMixIn):
                 card = self._model.get_card("id", port.card_id)
                 assert (product == 'adsl' or product == 'vdsl' or product == 'xdsl' or product == 'sdsl')
                 assert (card.product == product)
-                if port.admin_state == 'up':
+                if port.admin_state == '1':
                     context['admin_state'] = "admin-up"
                 else:
                     context['admin_state'] = "no admin-up"
@@ -160,10 +160,10 @@ class UserViewCommandProcessor(BaseCommandProcessor, BaseMixIn):
 
             try:
                 ont_port = self._model.get_ont_port("name", port_identifier)
+                self.map_states(ont_port, 'ont_port')
                 ont = self._model.get_ont('id', ont_port.ont_id)
                 port = self._model.get_port('id', ont.port_id)
                 card = self._model.get_card('id', port.card_id)
-
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 
