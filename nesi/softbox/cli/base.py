@@ -168,7 +168,7 @@ class CommandProcessor:
         self._write('\r')  # reset cursor to start of line
         self._write('\033[' + str(self.cursor_pos) + 'C')  # move cursor to correct position
 
-    def getline(self):
+    def getline(self, tmp_boundary=None):
         char = None
         line = ''
         self.history_pos = len(self.history)
@@ -193,10 +193,17 @@ class CommandProcessor:
                 self.cursor_boundary = self.prompt_end_pos + 1 + len(char)
                 line = char
             elif option == 'paste':
+                if tmp_boundary is not None:
+                    char_len = (self.prompt_end_pos + 1 + tmp_boundary) - self.cursor_pos
+                    char = char[:char_len]
+                if tmp_boundary is not None and self.cursor_pos + len(char) > self.prompt_end_pos + 1 + tmp_boundary:
+                    continue
                 line = line[:(self.cursor_pos - self.prompt_end_pos - 1)] + char + line[(self.cursor_pos - self.prompt_end_pos - 1):]
                 self.cursor_boundary = self.cursor_boundary + len(char)
                 self.cursor_pos = self.cursor_pos + len(char)
             elif option == 'character':
+                if tmp_boundary is not None and self.cursor_pos + 1 > self.prompt_end_pos + 1 + tmp_boundary:
+                    continue
                 line = line[:(self.cursor_pos - self.prompt_end_pos - 1)] + char + line[(self.cursor_pos - self.prompt_end_pos - 1):]
                 self.cursor_pos += 1
                 self.cursor_boundary += 1
@@ -256,11 +263,11 @@ class CommandProcessor:
 
         self._write(text)
 
-    def _read(self):
+    def _read(self, tmp_boundary=None):
         if self.daemon:
             line = self._input.readline().decode('utf-8')
         else:
-            line = self.getline()
+            line = self.getline(tmp_boundary)
 
         return line
 

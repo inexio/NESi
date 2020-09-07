@@ -21,13 +21,13 @@ class BaseCommandProcessor(base.CommandProcessor):
     MODEL = 'Base'
     VERSION = '1'
 
-    def user_input(self, prompt, allow_history=True):
+    def user_input(self, prompt, allow_history=True, tmp_boundary=None):
         self._write(prompt)
         prompt_end_pos = self.prompt_end_pos
         self.prompt_end_pos = len(prompt) - 1
         if not allow_history:
             self.history_enabled = False
-        input = self._read().strip()
+        input = self._read(tmp_boundary).strip()
         if not allow_history:
             self.history_enabled = True
         self.prompt_end_pos = prompt_end_pos
