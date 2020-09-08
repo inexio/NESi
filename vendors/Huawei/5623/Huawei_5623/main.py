@@ -71,7 +71,7 @@ class LoginCommandProcessor(ReadInputCommandProcessor):
                 raise exceptions.TerminalExitError()
             else:
                 if user.reenter_num_temp < 0:
-                    if user.level == 'Admin':
+                    if (user.level == 'Admin') or (user.level == 'Super'):
                         user.set_reenter_num_temp(user.reenter_num)
                         text = self._render('password', context=context)
                         self._write(text)

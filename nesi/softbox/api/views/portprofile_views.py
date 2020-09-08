@@ -40,6 +40,13 @@ def new_port_profile(box_id):
     return response, 201
 
 
+@app.route(PREFIX + '/boxen/<box_id>/port_profiles/<id>', methods=['PUT'])
+def update_port_profile(box_id, id):
+    req = flask.request.json
+    update_component(PortProfile, req, box_id, id)
+    return flask.Response(status=200)
+
+
 @app.route(PREFIX + '/boxen/<box_id>/port_profiles/<id>', methods=['DELETE'])
 def del_port_profile(box_id, id):
     del_component(PortProfile, box_id, id)
