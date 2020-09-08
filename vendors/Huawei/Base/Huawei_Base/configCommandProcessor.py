@@ -219,10 +219,22 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             _ = self.user_input('{ <cr>|vlanattr<K>|vlantype<E><mux,standard,smart> }:')
             text = self._render('display_vlan_all_top', context=context)
             count = 0
-            for vlan in self._model.vlans:  # TODO: STND_Port_NUM + SERV_Port_NUM hinzufügen + Service_Vlans?
+            for vlan in self._model.vlans:
+                portnum = 0
+                servportnum = 0
+                for port in self._model.ports:
+                    if port.vlan_id == vlan.number:
+                        portnum += 1
+                for sport in self._model.service_vlans:
+                    if sport.vlan_id == vlan.id:
+                        servportnum += 1
+
+                context['portnum'] = portnum
+                context['servportnum'] = servportnum
                 context['spacer1'] = self.create_spacers((6,), (vlan.number,))[0] * ' '
                 context['spacer2'] = self.create_spacers((10,), (vlan.type,))[0] * ' '
                 context['spacer3'] = self.create_spacers((23,), (vlan.attribute,))[0] * ' '
+                context['spacer4'] = self.create_spacers((16,), (len(str(servportnum)),))[0] * ' '
                 text += self._render('display_vlan_all_mid', context=dict(context, vlan=vlan))
                 count += 1
 
@@ -272,7 +284,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             text2 = ''
             for vlan in self._model.vlans:
                 try:
-                    if vlan.bind_service_profile_id != '-' and int(vlan.bind_service_profile_id) >= 0:
+                    if vlan.bind_service_profile_id is not None and int(vlan.bind_service_profile_id) >= 0:
                         profile = self._model.get_port_profile("id", int(vlan.bind_service_profile_id))
                         text += self._render('display_current_configuration_section_vlan_srvprof_mid',
                                              context=dict(context, vlan=vlan, profile=profile))
@@ -537,9 +549,10 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_time(self, command, *args, context=None):  # TODO: Functionality
+    def do_time(self, command, *args, context=None):
         if self._validate(args, 'dst', 'start', '3', 'last', 'Sun', '02:00:00', 'end', '10', 'last', 'Sun', '03:00:00',
                           'adjust', '01:00'):
+            #we dont have some internal time to set
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)
@@ -959,25 +972,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 
-            try:  # Check if s_port exists
-                service_port = self._model.get_service_port("name", portident)
-            except exceptions.SoftboxenError:
-                self._model.add_service_port(name=portident, connected_id=port.id, connected_type='port',
-                                             bytes_us=port.total_bytes_us, packets_us=port.total_packets_us,
-                                             bytes_ds=port.total_bytes_ds, packets_ds=port.total_packets_ds)
-                try:
-                    service_port = self._model.get_service_port("name", portident)
-                except exceptions.SoftboxenError:
-                    raise exceptions.CommandSyntaxError(command=command)
-
-            params = dict(name=str(vlan.number), service_port_id=service_port.id)
-            service_vlan = self._model.get_service_vlan_by_values(params)
-            if service_vlan is None:
-                self._model.add_service_vlan(name=vlan.number, vlan_id=vlan.id, service_port_id=service_port.id)
-                try:
-                    service_vlan = self._model.get_service_vlan_by_values(params)
-                except exceptions.SoftboxenError:
-                    raise exceptions.CommandSyntaxError(command=command)
+            port.set_vlan_id(vlan.number)
 
         else:
             raise exceptions.CommandSyntaxError(command=command)
