@@ -76,7 +76,6 @@ class HuaweiPortProfile(PortProfile):
     us0_psd_mask = base.Field('us0_psd_mask')
     vdsltoneblackout = base.Field('vdsltoneblackout')
 
-
     def set(self, field, value):
         mapping = {field: value}
         self.update(**mapping)

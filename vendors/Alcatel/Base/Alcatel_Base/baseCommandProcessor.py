@@ -33,11 +33,15 @@ class BaseCommandProcessor(base.CommandProcessor):
         if object.admin_state == '0':
             if type == 'subrack':
                 object.admin_state = 'lock'
+            elif type == 'vlan_interface':
+                object.admin_state = 'DOWN'
             elif type in ('card', 'port', 'ont', 'ont_port', 'cpe', 'service_port'):
                 object.admin_state = 'down'
         elif object.admin_state == '1':
             if type == 'subrack':
                 object.admin_state = 'unlock'
+            elif type == 'vlan_interface':
+                object.admin_state = 'UP'
             elif type in ('card', 'port', 'ont', 'ont_port', 'cpe', 'service_port'):
                 object.admin_state = 'up'
         elif object.admin_state == '2':

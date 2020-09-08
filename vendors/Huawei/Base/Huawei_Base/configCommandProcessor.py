@@ -210,6 +210,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             name = 'vlanif' + vlan_number
             try:
                 vlanif = self._model.get_vlan_interface("name", name)
+                self.map_states(vlanif, 'vlan_interface')
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 

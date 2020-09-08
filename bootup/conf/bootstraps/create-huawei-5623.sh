@@ -155,8 +155,8 @@ vlan_pppoe=$(create_resource "$req" $ENDPOINT/boxen/$box_id/vlans)
 req='{
   "name": "vlanif2620",
   "vlan_id": '$vlan_pppoe',
-  "admin_state": "UP",
-  "line_proto_state": "DOWN",
+  "admin_state": "1",
+  "line_proto_state": "1",
   "internet_protocol": "enabled",
   "internet_address": "127.0.0.1",
   "subnet_num": "24"

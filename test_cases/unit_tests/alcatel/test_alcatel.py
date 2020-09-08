@@ -296,7 +296,7 @@ class TestAlcatel(TestCore):
         except exceptions.SoftboxenError:
             assert True
 
-    def test_serviceport_fields(self):
+    def test_servicevlan_fields(self):
         port = self.model.get_service_vlan("name", '2620')
         assert port.l2fwder_vlan is None
         port.set_l2fwder_vlan(1)
