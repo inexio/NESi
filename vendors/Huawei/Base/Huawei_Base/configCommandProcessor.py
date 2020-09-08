@@ -273,9 +273,63 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
 
         elif self._validate(args, 'mac-address', 'all'):
             self.user_input('{ <cr>||<K> }:')
-            text = self._render(
-                'display_mac-address_all',
+
+            text = self._render('display_mac_address_all_top',
                 context=context)
+
+            for cpe in self._model.cpes:
+                port = None
+                ont_port = None
+                if cpe.port_id is not None:
+                    port = self._model.get_port('id', cpe.port_id)
+                elif cpe.ont_port_id is not None:
+                    ont_port = self._model.get_ont_port('id', cpe.ont_port_id)
+                else:
+                    pass
+                    #TODO: Raise exception: Floating CPE found
+
+                ont = None
+                if port is None:
+                    ont = self._model.get_ont('id', ont_port.ont_id)
+                    port = self._model.get_port('id', ont.port_id)
+
+                card = self._model.get_card('id', port.card_id)
+
+                if card.product == 'adsl':
+                    context['product'] = 'adl'
+                elif card.product == 'vdsl':
+                    context['product'] = 'vdl'
+                elif card.product == 'ftth':
+                    context['product'] = 'eth'
+                elif card.product == 'ftth-pon':
+                    context['product'] = 'pon'
+
+                ont_identifier = None
+                ont_port_identifier = None
+
+                if ont_port is None:
+                    subrack_identifier, card_identifier, port_identifier = port.name.split('/')
+                else:
+                    subrack_identifier, card_identifier, port_identifier, ont_identifier, ont_port_identifier = ont_port.name.split('/')
+
+                context['subrack'] = subrack_identifier
+                context['card'] = card_identifier
+                context['port'] = port_identifier
+                if ont is None:
+                    context['ont'] = '-'
+                else:
+                    context['ont'] = ont_identifier
+                if ont_port is None:
+                    context['ont_port'] = '-'
+                else:
+                    context['ont_port'] = ont_port_identifier
+                context['cpe_mac'] = cpe.mac
+                text += self._render('display_mac_address_all_middle',
+                context=context)
+
+            text += self._render('display_mac_address_all_bottom',
+                                 context=context)
+
             self._write(text)
 
         elif self._validate(args, 'current-configuration', 'section', 'vlan-srvprof'):
