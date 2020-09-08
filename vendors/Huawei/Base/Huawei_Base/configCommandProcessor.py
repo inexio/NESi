@@ -67,13 +67,19 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             if iftype == 'vlanif':
                 vlan_if_name = 'vlanif' + interface_id
                 try:
-                    component = self._model.get_vlan_interface("name", vlan_if_name)
-                    check = True
-
+                    vlan = self._model.get_vlan('number', int(interface_id))
                 except exceptions.SoftboxenError:
                     text = self._render('vlan_does_not_exist', context=context)
                     self._write(text)
                     return
+
+                try:
+                    component = self._model.get_vlan_interface("name", vlan_if_name)
+                    check = True
+                except exceptions.SoftboxenError:
+                    self._model.add_vlan_interface(name=vlan_if_name, vlan_id=vlan.id)
+                    component = self._model.get_vlan_interface('name', vlan_if_name)
+                    check = True
 
             elif iftype == 'emu':
                 try:
@@ -201,12 +207,13 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             self._write(text)
         elif self._validate(args, 'interface', 'vlanif', str):
             vlan_number, = self._dissect(args, 'interface', 'vlanif', str)
+            name = 'vlanif' + vlan_number
             try:
-                vlan = self._model.get_vlan("number", int(vlan_number))
+                vlanif = self._model.get_vlan_interface("name", name)
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 
-            text = self._render('display_interface_vlanif_num', context=dict(context, vlan=vlan))
+            text = self._render('display_interface_vlanif_num', context=dict(context, vlanif=vlanif))
             self._write(text)
         elif self._validate(args, 'vlan', 'all'):
             _ = self.user_input('{ <cr>|vlanattr<K>|vlantype<E><mux,standard,smart> }:')
@@ -566,9 +573,6 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 self._model.add_vlan(number=int(trafficvlan), name='VLAN_' + trafficvlan)
                 try:
                     vlan = self._model.get_vlan("number", int(trafficvlan))
-                    interface_name = 'vlanif' + trafficvlan
-                    self._model.add_vlan_interface(name=interface_name, vlan_id=vlan.id)
-                    vlan_interface = self._model.get_vlan_interface('name', interface_name)
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
                 return
