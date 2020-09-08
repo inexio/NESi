@@ -91,7 +91,7 @@ req='{
   "network_protocol": "telnet",
   "network_address": "127.0.0.1",
   "network_port": 9023,
-  "uuid": "5623"
+  "uuid": "2"
 }'
 
 box_id=$(create_resource "$req" $ENDPOINT/boxen) || exit 1
@@ -137,7 +137,6 @@ req='{
   "bind_service_profile_id": '$port_profile_id',
   "bind_RAIO_profile_index": "-",
   "priority": "-",
-  "state": "up",
   "native_vlan" : "1"
 }'
 

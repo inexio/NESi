@@ -59,10 +59,7 @@ class Vlan(db.Model):
     bind_service_profile_id = db.Column(db.Integer())
     bind_RAIO_profile_index = db.Column(db.String())
     priority = db.Column(db.String())
-    state = db.Column(db.Enum('up', 'down'), default='down')
     native_vlan = db.Column(db.Integer())
-    sending_frames_format = db.Column(db.String(), default='PKTFMT_ETHNT_2')
-    hardware_address = db.Column(db.String(), default='384c-4f1e-c1cc')
     vmac_ipoe = db.Column(db.Enum('enable', 'disable'), default='disable')
     vmac_pppoe = db.Column(db.Enum('enable', 'disable'), default='disable')
     vmac_pppoa = db.Column(db.Enum('enable', 'disable'), default='disable')
@@ -72,4 +69,3 @@ class Vlan(db.Model):
     security_anti_ipspoofing = db.Column(db.Enum('enable', 'disable'), default='disable')
     security_anti_macspoofing = db.Column(db.Enum('enable', 'disable'), default='disable')
     igmp_mismatch = db.Column(db.Enum('transparent'), default='transparent')
-

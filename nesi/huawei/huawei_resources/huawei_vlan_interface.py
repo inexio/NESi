@@ -30,6 +30,9 @@ class HuaweiVlanInterface(VlanInterface):
     internet_address = base.Field('internet_address')
     subnet_num = base.Field('subnet_num')
     broadcast_address = base.Field('broadcast_address')
+    sending_frames_format = base.Field('sending_frames_format')
+    hardware_address = base.Field('hardware_address')
+    mtu = base.Field('mtu')
 
     def set(self, field, value):
         mapping = {field: value}

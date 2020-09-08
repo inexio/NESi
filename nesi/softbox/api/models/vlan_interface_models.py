@@ -32,3 +32,6 @@ class VlanInterface(db.Model):
     internet_address = db.Column(db.String(), default=None, nullable=True)
     subnet_num = db.Column(db.String(), default=None, nullable=True)
     broadcast_address = db.Column(db.String(), default='0.0.0.0')
+    sending_frames_format = db.Column(db.String(), default='PKTFMT_ETHNT_2')
+    hardware_address = db.Column(db.String(), default='384c-4f1e-c1cc')
+    mtu = db.Column(db.Integer(), default=1500)

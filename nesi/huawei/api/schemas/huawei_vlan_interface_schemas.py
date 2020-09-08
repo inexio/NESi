@@ -19,4 +19,5 @@ class HuaweiVlanInterfaceSchema(VlanInterfaceSchema):
         fields = VlanInterfaceSchema.Meta.fields + ('admin_state', 'line_proto_state', 'input_packets', 'input_bytes',
                                                     'input_multicasts', 'output_packets', 'output_bytes',
                                                     'output_multicasts', 'internet_protocol', 'internet_address',
-                                                    'subnet_num', 'broadcast_address')
+                                                    'subnet_num', 'broadcast_address', 'sending_frames_format',
+                                                    'hardware_address', 'mtu')
