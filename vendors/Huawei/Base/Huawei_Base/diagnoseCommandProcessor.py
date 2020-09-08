@@ -50,10 +50,12 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
             for subrack in self._model.subracks:
                 result = ['Abnormal', 'Normal'][subrack.frame_status == 'active']
                 context['spacer'] = self.create_spacers((9,), (result,))[0] * ' '
-                text += self._render('display_system_status_collection_3', context=dict(context, subrack=subrack, result=result))
+                text += self._render('display_system_status_collection_3',
+                                     context=dict(context, subrack=subrack, result=result))
                 result = ['Abnormal', 'Normal'][int(subrack.temperature[:-1]) <= 80]
                 context['spacer'] = self.create_spacers((9,), (result,))[0] * ' '
-                text2 += self._render('display_system_status_collection_4', context=dict(context, subrack=subrack, result=result))
+                text2 += self._render('display_system_status_collection_4',
+                                      context=dict(context, subrack=subrack, result=result))
 
             text += self._render('display_system_status_collection_2', context=context)
             text += text2
@@ -64,7 +66,7 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
                     result = ['Abnormal', 'Normal'][emu.emu_state == 'Normal']
                     context['spacer'] = self.create_spacers((9,), (result,))[0] * ' '
                     text += self._render('display_system_status_collection_6',
-                                          context=dict(context, emu=emu, result=result))
+                                         context=dict(context, emu=emu, result=result))
                 else:
                     result = ['Abnormal', 'Normal'][emu.emu_state == 'Normal']
                     context['spacer'] = self.create_spacers((9,), (result,))[0] * ' '
@@ -74,10 +76,12 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
             for port in self._model.ports:
                 result = ['Abnormal', 'Normal'][port.admin_state == 'activated']
                 context['spacer'] = self.create_spacers((9,), (result,))[0] * ' '
-                text += self._render('display_system_status_collection_8', context=dict(context, port=port, result=result))
+                text += self._render('display_system_status_collection_8',
+                                     context=dict(context, port=port, result=result))
             text += self._render('display_system_status_collection_5', context=context)
             text += text2
-            text += self._render('display_system_status_collection_10', context=dict(context, time=datetime.now().strftime("%m/%d/%Y %H:%M:%S")))
+            text += self._render('display_system_status_collection_10',
+                                 context=dict(context, time=datetime.now().strftime("%m/%d/%Y %H:%M:%S")))
             context['text'] = text
         else:
             raise exceptions.CommandSyntaxError(command=command)
@@ -106,7 +110,7 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
             aone = self.user_input('Please enter y if you want to continue: ')
             if aone != 'y':
                 raise exceptions.InvalidInputError
-            atwo = self.user_input('Please enter y again to confirm:' )
+            atwo = self.user_input('Please enter y again to confirm: ')
             if atwo != 'y':
                 raise exceptions.InvalidInputError
         else:

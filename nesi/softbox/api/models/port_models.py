@@ -164,7 +164,7 @@ class Port(db.Model):
     channel_current_us = db.Column(db.Integer(), default=2008)
     channel_packets_discarded_ds = db.Column(db.Integer(), default=0)
 
-    channel_ds_data_rate_profile = db.Column(db.Enum('No.1016 QUICK_DSL_16000', ''), default='')
+    channel_ds_data_rate_profile = db.Column(db.Enum('No.1016 TEST_DSL_16000', ''), default='')
     channel_ds_data_rate_profile_num = db.Column(db.Integer(), nullable=True, default=None)
     channel_us_data_rate_profile = db.Column(db.Enum('No.2001 UP_1000', ''), default='')
     channel_us_data_rate_profile_num = db.Column(db.Integer(), nullable=True, default=None)

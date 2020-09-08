@@ -260,7 +260,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
 
         elif self._validate(args, 'current-configuration', 'section', 'vlan-srvprof'):
             self.user_input('{ <cr>||<K> }:')
-            text = self._render('display_current_configuration_section_vlan_srvprof_top', context=dict(context, box=self._model))
+            text = self._render('display_current_configuration_section_vlan_srvprof_top',
+                                context=dict(context, box=self._model))
             text2 = ''
             for vlan in self._model.vlans:
                 try:
@@ -377,7 +378,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 self._dissect(args, str, 'vlan', str, 'adsl', str, 'vpi', str, 'vci', str, 'multi-service',
                               'user-encap', 'pppoe', 'inbound', 'traffic-table', 'index', str, 'outbound',
                               'traffic-table', 'index', str)
-            
+
             try:
                 card = self._model.get_card('id', port.card_id)
                 assert card.product == 'adsl'
@@ -511,7 +512,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
 
     def do_ntp_service(self, command, *args, context=None):
         if self._validate(args, 'unicast-server', str):
-            addr,  = self._dissect(args, 'unicast-server', str)
+            addr, = self._dissect(args, 'unicast-server', str)
             try:
                 assert addr.count('.') == 3
                 for i in addr.split('.'):
@@ -558,11 +559,11 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             return
 
         elif self._validate(args, str, 'smart'):
-            trafficvlan,  = self._dissect(args, str, 'smart')
+            trafficvlan, = self._dissect(args, str, 'smart')
             try:
                 vlan = self._model.get_vlan("number", int(trafficvlan))
             except exceptions.SoftboxenError:
-                self._model.add_vlan(number=int(trafficvlan), name='VLAN_'+trafficvlan)
+                self._model.add_vlan(number=int(trafficvlan), name='VLAN_' + trafficvlan)
                 try:
                     vlan = self._model.get_vlan("number", int(trafficvlan))
                     interface_name = 'vlanif' + trafficvlan
@@ -804,7 +805,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 vlan.delete()
                 return
 
-            text = self._render('delete_vlan_if_first', context=context)    # TODO: create template
+            text = self._render('delete_vlan_if_first', context=context)
             self._write(text)
             return
 
@@ -865,8 +866,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 self._write(text)
                 password_repeat = self.user_input("  Confirm Password(length<6,15>):", False, 15)
 
-            profile = self.user_input("  User profile name(<=15 chars)[root]:", False)
-            while (profile != 'root') and (profile != 'admin') and (profile != 'operator') and (profile != 'commonuser'):
+            profile = self.user_input("  User profile name(<=15 chars)[root]:")
+            while (profile != 'root') and (profile != 'admin') and (profile != 'operator') \
+                    and (profile != 'commonuser'):
                 text = self._render('terminal_profile_error', context=context)
                 self._write(text)
                 profile = self.user_input("  User profile name(<=15 chars)[root]:", False, 15)
@@ -953,7 +955,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 
-            try:            # Check if s_port exists
+            try:  # Check if s_port exists
                 service_port = self._model.get_service_port("name", portident)
             except exceptions.SoftboxenError:
                 self._model.add_service_port(name=portident, connected_id=port.id, connected_type='port',
@@ -982,8 +984,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_xdsl(self, command, *args, context=None):  # TODO: Functionality
-        if self._validate(args, 'vectoring-group', 'link', 'add', str, str):
+    def do_xdsl(self, command, *args, context=None):
+        if self._validate(args, 'vectoring-group', 'link', 'add', str, str):  # TODO: Functionality
             profile_idx, port_idx = self._dissect(args, 'vectoring-group', 'link', 'add', str, str)
             portname = port_idx[0:3] + '/' + port_idx[4]
 
@@ -995,7 +997,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
 
             return
 
-        elif self._validate(args, 'vectoring-group', 'link', 'delete', str, str):
+        elif self._validate(args, 'vectoring-group', 'link', 'delete', str, str):  # TODO: Functionality
             profile_idx, port_idx = self._dissect(args, 'vectoring-group', 'link', 'delete', str, str)
             portname = port_idx[0:3] + '/' + port_idx[4]
 
@@ -1006,6 +1008,215 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 raise exceptions.CommandSyntaxError(command=command)
 
             return
+
+        elif self._validate(args[:3], 'data-rate-profile', 'quickadd', str):
+            profile_num, = self._dissect(args[:3], 'data-rate-profile', 'quickadd', str)
+            name = 'data_rate_' + profile_num
+            try:
+                _ = self._model.get_port_profile('name', name)
+            except exceptions.SoftboxenError:
+                self._model.add_port_profile(name=name, type='data-rate')
+                try:
+                    port_profile = self._model.get_port_profile('name', name)
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+            else:
+                text = self._render('port_profile_already_exists', context=context)
+                self._write(text)
+                return
+
+            self.data_rate_profile_setup(port_profile, args, command)
+
+        elif self._validate(args[:3], 'data-rate-profile', 'quickmodify', str):
+            profile_num, = self._dissect(args[:3], 'data-rate-profile', 'quickmodify', str)
+            name = 'data_rate_' + profile_num
+            try:
+                port_profile = self._model.get_port_profile('name', name)
+            except exceptions.SoftboxenError:
+                text = self._render('port_profile_does_not_exist', context=context)
+                self._write(text)
+                return
+            self.data_rate_profile_setup(port_profile, args, command)
+
+        elif self._validate(args[:3], 'dpbo-profile', 'quickadd', str):
+            profile_num, = self._dissect(args[:3], 'dpbo-profile', 'quickadd', str)
+            name = 'dpbo_' + profile_num
+            try:
+                _ = self._model.get_port_profile('name', name)
+            except exceptions.SoftboxenError:
+                self._model.add_port_profile(name=name, type='dpbo')
+                try:
+                    port_profile = self._model.get_port_profile('name', name)
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+            else:
+                text = self._render('port_profile_already_exists', context=context)
+                self._write(text)
+                return
+
+            i = 3
+            while i < len(args):
+                try:
+                    if args[i] == 'working-mode' and re.match("[0-9]+", args[i+1]):
+                        port_profile.set('working_mode', int(args[i+1]))
+                    elif args[i] == 'eside-electrical-length' and re.match("[0-9]+", args[i+1]) \
+                            and re.match("[0-9]+", args[i+2]):
+                        length = args[i+1] + ' ' + args[i+2]
+                        port_profile.set('eside_electrical_length', length)
+                    elif args[i] == 'assumed-exchange-psd' and args[i+1] == 'enable':
+                        exchange_psd = args[i+1] + ' ' + args[i+2]
+                        port_profile.set('assumed_exchange_psd', exchange_psd)
+                    elif args[i] == 'eside-cable-model' and re.match("[0-9]+", args[i+1])\
+                            and re.match("[0-9]+", args[i+2]) and re.match("[0-9]+", args[i+3]):
+                        model = args[i+1] + ' ' + args[i+2] + ' ' + args[i+3]
+                        port_profile.set('eside_cable_model', model)
+                    elif args[i] == 'min-usable-signal' and re.match("[0-9]+", args[i+1]):
+                        port_profile.set('min_usable_signal', int(args[i+1]))
+                    elif args[i] == 'span-frequency' and re.match("[0-9]+", args[i+1]) and re.match("[0-9]+", args[i+2]):
+                        freq = args[i+1] + ' ' + args[i+2]
+                        port_profile.set('span_frequency', freq)
+                    elif args[i] == 'dpbo-calculation' and re.match("[0-9]+", args[i+1]):
+                        port_profile.set('dpbo_calculation', int(args[i+1]))
+                    elif args[i] == 'desc':
+                        port_profile.set('description', args[i + 1])
+                except IndexError:
+                    raise exceptions.CommandSyntaxError(command=command)
+
+                i += 1
+
+        elif self._validate(args[:3], 'noise-margin-profile', 'quickadd', str):
+            profile_num, = self._dissect(args[:3], 'noise-margin-profile', 'quickadd', str)
+            name = 'noise_margin_' + profile_num
+            try:
+                _ = self._model.get_port_profile('name', name)
+            except exceptions.SoftboxenError:
+                self._model.add_port_profile(name=name, type='noise-margin')
+                try:
+                    port_profile = self._model.get_port_profile('name', name)
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+            else:
+                text = self._render('port_profile_already_exists', context=context)
+                self._write(text)
+                return
+
+            i = 3
+            while i < len(args):
+                try:
+                    if args[i] == 'snr-margin' and re.match("[0-9]+", args[i + 1]) and re.match("[0-9]+", args[i + 2]) \
+                            and re.match("[0-9]+", args[i + 3]) and re.match("[0-9]+", args[i + 4]) \
+                            and re.match("[0-9]+", args[i + 5]) and re.match("[0-9]+", args[i + 6]):
+                        margin = args[i+1] + ' ' + args[i+2] + ' ' + args[i+3] + ' ' + args[i+4] + ' ' + args[i+5] + ' ' + \
+                                 args[i+6]
+                        port_profile.set('snr_margin', margin)
+                    elif args[i] == 'rate-adapt' and re.match("[0-9]+", args[i+1]) and re.match("[0-9]+", args[i+2]):
+                        adapt = args[i+1] + ' ' + args[i+2]
+                        port_profile.set('rate_adapt', adapt)
+                    elif args[i] == 'snr-mode':
+                        snr_mode = args[i+1] + ' ' + args[i+2]
+                        port_profile.set('snr_mode', snr_mode)
+                    elif args[i] == 'desc':
+                        port_profile.set('description', args[i+1])
+                except IndexError:
+                    raise exceptions.CommandSyntaxError(command=command)
+
+                i += 1
+
+        elif self._validate(args[:3], 'inp-delay-profile', 'quickadd', str):
+            profile_num, = self._dissect(args[:3], 'inp-delay-profile', 'quickadd', str)
+            name = 'inp_delay_' + profile_num
+            try:
+                _ = self._model.get_port_profile('name', name)
+            except exceptions.SoftboxenError:
+                self._model.add_port_profile(name=profile_num, type='inp-delay')
+                try:
+                    port_profile = self._model.get_port_profile('name', name)
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+            else:
+                text = self._render('port_profile_already_exists', context=context)
+                self._write(text)
+                return
+
+            i = 3
+            while i < len(args):
+                try:
+                    if args[i] == ' inp-4.3125khz' and re.match("[0-9]+", args[i+1]) and re.match("[0-9]+", args[i+2]):
+                        inp_4 = args[i+1] + ' ' + args[i+2]
+                        port_profile.set('inp_4khz', inp_4)
+                    elif args[i] == 'inp-8.625khz' and re.match("[0-9]+", args[i+1]) and re.match("[0-9]+", args[i+2]):
+                        inp_8 = args[i + 1] + ' ' + args[i + 2]
+                        port_profile.set('inp_8khz', inp_8)
+                    elif args[i] == 'interleaved-delay' and re.match("[0-9]+", args[i+1]) \
+                            and re.match("[0-9]+", args[i+2]):
+                        delay = args[i+1] + ' ' + args[i+2]
+                        port_profile.set('interleaved_delay', delay)
+                    elif args[i] == 'delay-variation' and re.match("[0-9]+", args[i+1]):
+                        port_profile.set('delay_variation', int(args[i+1]))
+                    elif args[i] == 'channel-policy' and re.match("[0-9]+", args[i+1]):
+                        port_profile.set('channel_policy', int(args[i+1]))
+                    elif args[i] == 'desc':
+                        port_profile.set('description', args[i + 1])
+                except IndexError:
+                    raise exceptions.CommandSyntaxError(command=command)
+
+                i += 1
+
+        elif self._validate(args[:3], 'mode-specific-psd-profile', 'quickadd', str):
+            profile_num, = self._dissect(args[:3], 'mode-specific-psd-profile', 'quickadd', str)
+            name = 'mode_specific_psd_' + profile_num
+            try:
+                _ = self._model.get_port_profile('name', name)
+            except exceptions.SoftboxenError:
+                self._model.add_port_profile(name=name, type='mode-specific-psd')
+                try:
+                    port_profile = self._model.get_port_profile('name', name)
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+            else:
+                text = self._render('port_profile_already_exists', context=context)
+                self._write(text)
+                return
+            self.mode_specific_psd_profile_setup(port_profile, args, command)
+
+        elif self._validate(args[:3], 'mode-specific-psd-profile', 'quickmodify', str):
+            profile_num, = self._dissect(args[:3], 'mode-specific-psd-profile', 'quickmodify', str)
+            name = 'mode_specific_psd_' + profile_num
+            try:
+                port_profile = self._model.get_port_profile('name', name)
+            except exceptions.SoftboxenError:
+                text = self._render('port_profile_does_not_exist', context=context)
+                self._write(text)
+                return
+            self.mode_specific_psd_profile_setup(port_profile, args, command)
+
+        elif self._validate(args[:3], 'line-spectrum-profile', 'quickadd', str):
+            profile_num, = self._dissect(args[:3], 'line-spectrum-profile', 'quickadd', str)
+            name = 'line_spectrum_' + profile_num
+            try:
+                _ = self._model.get_port_profile('name', name)
+            except exceptions.SoftboxenError:
+                self._model.add_port_profile(name=name, type='spectrum')
+                try:
+                    port_profile = self._model.get_port_profile('name', name)
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+            else:
+                text = self._render('port_profile_already_exists', context=context)
+                self._write(text)
+                return
+            self.line_spectrum_profile_setup(port_profile, args, command)
+
+        elif self._validate(args[:3], 'line-spectrum-profile', 'quickmodify', str):
+            profile_num, = self._dissect(args[:3], 'line-spectrum-profile', 'quickmodify', str)
+            name = 'line_spectrum_' + profile_num
+            try:
+                port_profile = self._model.get_port_profile('name', name)
+            except exceptions.SoftboxenError:
+                text = self._render('port_profile_does_not_exist', context=context)
+                self._write(text)
+                return
+            self.line_spectrum_profile_setup(port_profile, args, command)
 
         else:
             raise exceptions.CommandSyntaxError(command=command)
@@ -1041,7 +1252,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             except (AssertionError, ValueError):
                 raise exceptions.CommandSyntaxError(command=command)
 
-            if not(file_name.endswith('.txt')):
+            if not (file_name.endswith('.txt')):
                 raise exceptions.CommandSyntaxError(command=command)
 
             return
@@ -1076,3 +1287,130 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             self._model.add_route(dst=dst, gw=gw, sub_mask=sub)
         else:
             raise exceptions.CommandSyntaxError(command=command)
+
+    def data_rate_profile_setup(self, port_profile, args, command):
+        i = 3
+        while i < len(args):
+            try:
+                if args[i] == 'maximum-bit-error-ratio' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('maximum_bit_error_ratio', int(args[i + 1]))
+                elif args[i] == 'path-mode' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('path_mode', int(args[i + 1]))
+                elif args[i] == 'rate' and re.match("[0-9]+", args[i + 1]) and re.match("[0-9]+", args[i + 2]) \
+                        and re.match("[0-9]+", args[i + 3]) and re.match("[0-9]+", args[i + 4]) \
+                        and re.match("[0-9]+", args[i + 5]) and re.match("[0-9]+", args[i + 6]):
+
+                    rate = args[i + 1] + ' ' + args[i + 2] + ' ' + args[i + 3] + ' ' + args[i + 4] + ' ' + args[
+                        i + 5] + ' ' + args[i + 6]
+                    port_profile.set('rate', rate)
+                elif args[i] == 'etr-min' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('etr_min', int(args[i + 1]))
+                elif args[i] == 'etr-max' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('etr_max', int(args[i + 1]))
+                elif args[i] == 'ndr-max' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('ndr_max', int(args[i + 1]))
+                elif args[i] == 'desc':
+                    port_profile.set('description', args[i + 1])
+            except IndexError:
+                raise exceptions.CommandSyntaxError(command=command)
+
+            i += 1
+        return
+
+    def mode_specific_psd_profile_setup(self, port_profile, args, command):
+        i = 3
+        while i < len(args):
+            try:
+                if args[i] == 'nominal-transmit-PSD-ds' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('nominal_transmit_PSD_ds', int(args[i + 1]))
+                elif args[i] == 'nominal-transmit-PSD-us' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('nominal_transmit_PSD_us', int(args[i + 1]))
+                elif args[i] == 'aggregate-transmit-power-ds' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('aggregate_transmit_power_ds', int(args[i + 1]))
+                elif args[i] == 'aggregate-transmit-power-us' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('aggregate_transmit_power_us', int(args[i + 1]))
+                elif args[i] == 'aggregate-receive-power-us' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('aggregate_receive_power_us', int(args[i + 1]))
+                elif args[i] == 'upstream-psd-mask-selection' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('upstream_psd_mask_selection', int(args[i + 1]))
+                elif args[i] == 'psd-class-mask' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('psd_class_mask', int(args[i + 1]))
+                elif args[i] == 'psd-limit-mask' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('psd_limit_mask', int(args[i + 1]))
+                elif args[i] == 'desc':
+                    port_profile.set('description', args[i + 1])
+            except IndexError:
+                raise exceptions.CommandSyntaxError(command=command)
+
+            i += 1
+        return
+
+    def line_spectrum_profile_setup(self, port_profile, args, command):
+        i = 3
+        while i < len(args):
+            try:
+                if args[i] == 'l0-time ' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('l0_time', int(args[i + 1]))
+                elif args[i] == 'l2-time' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('l2_time', int(args[i + 1]))
+                elif args[i] == 'l3-time' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('l3_time', int(args[i + 1]))
+                elif args[i] == 'max-transmite-power-reduction' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('max_transmite_power_reduction', int(args[i + 1]))
+                elif args[i] == 'total-max-power-reduction' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('total_max_power_reduction', int(args[i + 1]))
+                elif args[i] == 'bit-swap-ds' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('bit_swap_ds', int(args[i + 1]))
+                elif args[i] == 'bit-swap-us' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('bit_swap_us', int(args[i + 1]))
+                elif args[i] == 'overhead-datarate-us' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('overhead_datarate_us', int(args[i + 1]))
+                elif args[i] == 'overhead-datarate-ds' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('overhead_datarate_ds', int(args[i + 1]))
+                elif args[i] == 'allow-transitions-to-idle' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('allow_transitions_to_idle', int(args[i + 1]))
+                elif args[i] == 'allow-transitions-to-lowpower' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('allow_transitions_to_lowpower', int(args[i + 1]))
+                elif args[i] == 'reference-clock':
+                    port_profile.set('reference_clock', args[i + 1])
+                elif args[i] == 'cyclic-extension-flag' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('cyclic_extension_flag', int(args[i + 1]))
+                elif args[i] == 'force-inp-ds' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('force_inp_ds', int(args[i + 1]))
+                elif args[i] == 'force-inp-us' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('force_inp_us', int(args[i + 1]))
+                elif args[i] == 'g.993.2-profile' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('g_993_2_profile', int(args[i + 1]))
+                elif args[i] == 'mode-specific' and re.match("[a-z]+", args[i+1]) and re.match("[0-9]+", args[i+2])\
+                        and re.match("[0-9]+", args[i+3]):
+                    mode = args[i+1] + ' ' + args[i+2] + ' ' + args[i+3]
+                    port_profile.set('mode_specific', mode)
+                elif args[i] == 'transmode':
+                    port_profile.set('transmode', args[i+1])
+                elif args[i] == 'T1.413':
+                    port_profile.set('T1_413', args[i+1])
+                elif args[i] == 'G.992.1':
+                    port_profile.set('G_992_1', args[i+1])
+                elif args[i] == 'G.992.2':
+                    port_profile.set('G_992_2', args[i+1])
+                elif args[i] == 'G.992.3':
+                    port_profile.set('G_992_3', args[i+1])
+                elif args[i] == 'G.992.4':
+                    port_profile.set('G_992_4', args[i+1])
+                elif args[i] == 'G.992.5':
+                    port_profile.set('G_992_5', args[i+1])
+                elif args[i] == 'AnnexB' and args[i+1] == 'G.993.2':
+                    port_profile.set('AnnexB_G_993_2', args[i+2])
+                elif args[i] == 'ETSI':
+                    port_profile.set('ETSI', args[i+1])
+                elif args[i] == 'us0-psd-mask' and re.match("[0-9]+", args[i + 1]):
+                    port_profile.set('us0_psd_mask', int(args[i + 1]))
+                elif args[i] == 'vdsltoneblackout':
+                    blackout = args[i+1] + ' ' + args[i+2]
+                    port_profile.set('vdsltoneblackout', blackout)
+                elif args[i] == 'desc':
+                    port_profile.set('description', args[i + 1])
+            except IndexError:
+                raise exceptions.CommandSyntaxError(command=command)
+            i += 1
+        return

@@ -18,7 +18,7 @@ LOG = logging.getLogger(__name__)
 
 
 class PortProfile(base.Resource):
-    """Represent a VLAN resource."""
+    """Represent a port profile resource."""
 
     id = base.Field('id')
     name = base.Field('name')

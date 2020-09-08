@@ -367,6 +367,14 @@ class HuaweiBox(Box):
             **fields
         )
 
+    def add_port_profile(self, **fields):
+        """Add a new port profile"""
+        return huawei_port_profile.HuaweiPortProfile.create(
+            self._conn,
+            os.path.join(self.path, 'port_profiles'),
+            **fields
+        )
+
     def change_hostname(self, name):
         """Change the hostname of a box"""
         self.update(hostname=name)
