@@ -78,7 +78,6 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
                 port = self._model.get_port("name", port_identifier)
                 self.map_states(port, 'port')
                 card = self._model.get_card('id', port.card_id)
-
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 
@@ -88,6 +87,19 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
             context['spaced_out_name'] = self.space_out_port_name(port.name)
             context['spacer'] = self.create_spacers((7,), (port.dynamic_profile_index,))[0] * ' '
 
+            try:
+                service_port = self._model.get_service_port('connected_id', port.id)
+            except exceptions.SoftboxenError:
+                context['vlan_fields'] = False
+            else:
+                context['vlan_fields'] = True
+                try:
+                    service_vlan = self._model.get_service_vlan('service_port_id', service_port.id)
+                    vlan = self._model.get_vlan('id', service_vlan.vlan_id)
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+                context['s_port'] = service_port
+                context['vlan'] = vlan
             text = self._render(
                 'display_interface_product_port',
                 context=dict(context, port=port, card=card))

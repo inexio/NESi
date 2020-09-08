@@ -26,16 +26,16 @@
   Packets num discarded downstream
   Due to congestion(packet)                   : {{ context.port.channel_packets_discarded_ds }}
 
-  Flow type                                   : {{ context.port.flow_type }}
-  Flow para                                   : {{ context.port.flow_para }}
-  Rx-cttr                                     : {{ context.port.rx_cttr }}
-  Tx-cttr                                     : {{ context.port.tx_cttr }}
-  VLAN                                        : {{ context.port.vlan }}
-  Max mac-address learning count              : {{ context.port.max_addr_learn_count }}
-  Support down multicast stream               : {{ context.port.support_down_multicast_stream }}
-  Support IGMP packet                         : {{ context.port.support_igmp_packet }}
-  Bytes num upstream(byte)                    : {{ context.port.bytes_us }}
-  Packets num upstream(packet)                : {{ context.port.packets_us }}
-  Bytes num downstream(byte)                  : {{ context.port.bytes_ds }}
-  Packets num downstream(packet)              : {{ context.port.packets_ds }}
-
+{% if context.vlan_fields %}  Flow type                                   : {{ context.s_port.flow_type }}
+  Flow para                                   : {{ context.s_port.flow_para }}
+  Rx-cttr                                     : {{ context.s_port.rx_cttr }}
+  Tx-cttr                                     : {{ context.s_port.tx_cttr }}
+  VLAN                                        : {{ context.vlan.number }}
+  Max mac-address learning count              : {{ context.s_port.max_mac_count }}
+  Support down multicast stream               : {{ context.s_port.support_down_multicast_stream }}
+  Support IGMP packet                         : {{ context.s_port.support_igmp_packet }}
+  Bytes num upstream(byte)                    : {{ context.s_port.bytes_us }}
+  Packets num upstream(packet)                : {{ context.s_port.packets_us }}
+  Bytes num downstream(byte)                  : {{ context.s_port.bytes_ds }}
+  Packets num downstream(packet)              : {{ context.s_port.packets_ds }}
+{% endif %}

@@ -23,6 +23,8 @@ class ServicePort(db.Model):
     flow_para = db.Column(db.Enum('untag', 'pppoe', '-'), default='untag')
     rx = db.Column(db.Integer(), default=560)
     tx = db.Column(db.Integer(), default=520)
+    rx_cttr = db.Column(db.String(), default='-')
+    tx_cttr = db.Column(db.String(), default='-')
     max_mac_count = db.Column(db.Integer(), default=600)
     support_down_multicast_stream = db.Column(db.String(), default='disable')
     support_igmp_packet = db.Column(db.String(), default='disable')
