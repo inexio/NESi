@@ -209,8 +209,16 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_save(self, command, *args, context=None):  # TODO: Functionality
+    def do_save(self, command, *args, context=None):
         if args == ():
+            # all data are stored directly into the database
+            return
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_reboot(self, command, *args, context=None):
+        if self._validate(args, 'system'):
+            # cant restart api
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)

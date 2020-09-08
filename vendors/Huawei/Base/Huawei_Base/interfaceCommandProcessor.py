@@ -509,6 +509,7 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
 
         elif self._validate(args, 'delete', str, str):
             # delete all subcomponents
+            #TODO: delelte service_ports + service_vlans
             port_idx, ont_idx = self._dissect(args, 'delete', str, str)
             card = context['component']
             try:
