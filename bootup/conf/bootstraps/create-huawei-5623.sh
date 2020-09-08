@@ -256,7 +256,7 @@ service_vlan_0_0_0=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlan
 req='{
   "port_id": '$port_0_0_0',
   "description": "Cpe 0/0/0 1",
-  "mac": "03:ed:5d:a1:4d:5d",
+  "mac": "03ed-5da1-4d5d",
   "admin_state": "1"
 }'
 
@@ -295,7 +295,7 @@ port_0_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
 req='{
   "port_id": '$port_0_0_1',
   "description": "Cpe 0/0/1 1",
-  "mac": "8e:1c:02:05:a3:dc",
+  "mac": "8e1c-0205-a3dc",
   "admin_state": "0"
 }'
 
@@ -363,7 +363,7 @@ port_0_1_0=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
 req='{
   "port_id": '$port_0_1_0',
   "description": "Cpe 0/1/0 1",
-  "mac": "61:26:5c:eb:8a:a6",
+  "mac": "6126-5ceb-8aa6",
   "admin_state": "1"
 }'
 
@@ -402,7 +402,7 @@ port_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
 req='{
   "port_id": '$port_0_1_1',
   "description": "Cpe 0/1/1 1",
-  "mac": "49:a6:23:91:f4:7b",
+  "mac": "49a6-2391-f47b",
   "admin_state": "0"
 }'
 
@@ -500,7 +500,7 @@ req='{
   "ont_port_id": '$ont_port_0_2_0_0_1',
   "description": "Cpe 0/2/0 0/1 1",
   "admin_state": "1",
-  "mac": "a7:10:05:3f:57:96"
+  "mac": "a710-053f-5796"
 }'
 
 cpe_0_2_0_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpes)
@@ -568,7 +568,7 @@ req='{
   "ont_port_id": '$ont_port_0_2_1_0_1',
   "description": "Cpe 0/2/1 0/1 1",
   "admin_state": "0",
-  "mac": "d4:3f:3d:ef:d9:9a"
+  "mac": "d43f-3def-d99a"
 }'
 
 cpe_0_2_1_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpes)
@@ -694,7 +694,7 @@ req='{
   "ont_port_id": '$ont_port_0_3_0_0_1',
   "description": "Cpe 0/3/0 0/1 1",
   "admin_state": "0",
-  "mac": "7b:80:95:99:65:90"
+  "mac": "7b80-9599-6590"
 }'
 
 cpe_0_3_0_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpes)
@@ -745,7 +745,7 @@ req='{
   "ont_port_id": '$ont_port_0_3_0_1_1',
   "description": "Cpe 0/3/0 1/1 1",
   "admin_state": "1",
-  "mac": "26:1b:9d:83:54:5a"
+  "mac": "261b-9d83-545a"
 }'
 
 cpe_0_3_0_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpes)
@@ -781,7 +781,7 @@ req='{
   "ont_port_id": '$ont_port_0_3_0_1_2',
   "description": "Cpe 0/3/0 1/2 1",
   "admin_state": "0",
-  "mac": "26:1b:9d:83:54:5a"
+  "mac": "261b-9d83-545a"
 }'
 
 cpe_0_3_0_1_2_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpes)
