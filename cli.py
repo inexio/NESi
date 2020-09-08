@@ -197,17 +197,24 @@ def main():
             stdin = os.fdopen(sys.stdin.fileno(), 'rb', 0)
             stdout = os.fdopen(sys.stdout.fileno(), 'wb', 0)
 
-            command_processor = cli(
-                model, stdin, stdout, (), template_root=args.template_root, daemon=False)
+            while True:
+                command_processor = cli(
+                    model, stdin, stdout, (), template_root=args.template_root, daemon=False)
 
-            try:
-                context = dict()
-                context['login_banner'] = model.login_banner
-                command_processor.history_enabled = False
-                command_processor.loop(context=context)
-            except exceptions.TerminalExitError as exc:
-                if exc.return_to is not None and exc.return_to != 'sysexit':
-                    raise exc
+                try:
+                    context = dict()
+                    context['login_banner'] = model.login_banner
+                    command_processor.history_enabled = False
+                    command_processor.loop(context=context)
+                except exceptions.TerminalExitError as exc:
+                    if exc.return_to is not None and exc.return_to == 'sysexit':
+                        break
+                    elif exc.return_to is not None and exc.return_to == 'sysreboot':
+                        continue
+                    elif exc.return_to is not None and exc.return_to != 'sysexit':
+                        raise exc
+                    else:
+                        return
     finally:
         if args.standalone:
             p.terminate()

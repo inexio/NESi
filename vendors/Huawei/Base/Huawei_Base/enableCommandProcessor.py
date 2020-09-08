@@ -13,6 +13,7 @@ from datetime import datetime
 
 from nesi import exceptions
 from .huaweiBaseCommandProcessor import HuaweiBaseCommandProcessor
+import time
 
 
 class EnableCommandProcessor(HuaweiBaseCommandProcessor):
@@ -218,7 +219,12 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
 
     def do_reboot(self, command, *args, context=None):
         if self._validate(args, 'system'):
-            # cant restart api
-            return
+            time.sleep(10)
+            self._model.set_last_logout(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
+            user = self._model.get_user('status', 'Online')
+            user.set_offline()
+            exc = exceptions.TerminalExitError()
+            exc.return_to = 'sysreboot'
+            raise exc
         else:
             raise exceptions.CommandSyntaxError(command=command)
