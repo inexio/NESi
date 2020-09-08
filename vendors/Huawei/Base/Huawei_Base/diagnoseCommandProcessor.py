@@ -105,13 +105,23 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_switch(self, command, *args, context=None):  # TODO: Functionality (that isn't how the switch command works)
+    def do_switch(self, command, *args, context=None):  # TODO: Functionality
         if self._validate(args, 'vdsl', 'mode', 'to', str):
+            user = self._model.get_user('status', 'Online')
+            if user.level != 'Super':
+                raise exceptions.CommandSyntaxError(command=command)
+
+            dsl_mode, = self._dissect(args, 'vdsl', 'mode', 'to', str)
+            if dsl_mode != 'timode' and dsl_mode != 'tr129' and dsl_mode != 'tr165':
+                raise exceptions.CommandSyntaxError(command=command)
+
             aone = self.user_input('Please enter y if you want to continue: ')
             if aone != 'y':
-                raise exceptions.InvalidInputError
+                raise exceptions.CommandSyntaxError(command=command)
             atwo = self.user_input('Please enter y again to confirm: ')
             if atwo != 'y':
-                raise exceptions.InvalidInputError
+                raise exceptions.CommandSyntaxError(command=command)
+
+            return
         else:
             raise exceptions.CommandSyntaxError(command=command)
