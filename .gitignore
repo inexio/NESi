@@ -134,3 +134,4 @@ dmypy.json
 
 # Tests
 /test_cases/integration_tests/alcatel/output.txt
+/test_cases/integration_tests/huawei/output.txt
