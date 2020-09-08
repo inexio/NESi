@@ -12,6 +12,8 @@ class HuaweiServicePort(ServicePort):
     flow_para = base.Field('flow_para')
     rx = base.Field('rx')
     tx = base.Field('tx')
+    rx_cttr = base.Field('rx_cttr')
+    tx_cttr = base.Field('tx_cttr')
     support_down_multicast_stream = base.Field('support_down_multicast_stream')
     support_igmp_packet = base.Field('support_igmp_packet')
     bytes_us = base.Field('bytes_us')
