@@ -354,7 +354,7 @@ class CommandProcessor:
                 if not exc.return_to:
                     exc.return_to = return_to
 
-                if not exc.return_to or exc.return_to == 'sysexit' or not isinstance(self, exc.return_to):
+                if not exc.return_to or exc.return_to == 'sysexit' or exc.return_to == 'sysreboot' or not isinstance(self, exc.return_to):
                     raise exc
 
                 # This is the first instance of the desired
