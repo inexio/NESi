@@ -30,7 +30,7 @@ class PreLoginCommandProcessor(ReadInputCommandProcessor):
         subprocessor = self._create_subprocessor(
             LoginCommandProcessor, 'login')
 
-        context['username'] = context['raw_line']
+        context['username'] = context['raw_line'].replace('\r', '').replace('\n', '')
 
         try:
             subprocessor.history_enabled = False
