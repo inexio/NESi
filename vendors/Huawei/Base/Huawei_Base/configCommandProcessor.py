@@ -19,9 +19,6 @@ from .huaweiBaseCommandProcessor import HuaweiBaseCommandProcessor
 from .baseMixIn import BaseMixIn
 
 
-# TODO: Functionality of most functions
-
-
 class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
 
     def do_disable(self, command, *args, context=None):
@@ -274,8 +271,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         elif self._validate(args, 'mac-address', 'all'):
             self.user_input('{ <cr>||<K> }:')
 
-            text = self._render('display_mac_address_all_top',
-                context=context)
+            text = self._render('display_mac_address_all_top', context=context)
 
             for cpe in self._model.cpes:
                 port = None
@@ -310,7 +306,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 if ont_port is None:
                     subrack_identifier, card_identifier, port_identifier = port.name.split('/')
                 else:
-                    subrack_identifier, card_identifier, port_identifier, ont_identifier, ont_port_identifier = ont_port.name.split('/')
+                    subrack_identifier, card_identifier, port_identifier, ont_identifier, ont_port_identifier = \
+                        ont_port.name.split('/')
 
                 context['subrack'] = subrack_identifier
                 context['card'] = card_identifier
@@ -324,11 +321,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 else:
                     context['ont_port'] = ont_port_identifier
                 context['cpe_mac'] = cpe.mac
-                text += self._render('display_mac_address_all_middle',
-                context=context)
+                text += self._render('display_mac_address_all_middle', context=context)
 
-            text += self._render('display_mac_address_all_bottom',
-                                 context=context)
+            text += self._render('display_mac_address_all_bottom', context=context)
 
             self._write(text)
 
@@ -607,7 +602,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
     def do_time(self, command, *args, context=None):
         if self._validate(args, 'dst', 'start', '3', 'last', 'Sun', '02:00:00', 'end', '10', 'last', 'Sun', '03:00:00',
                           'adjust', '01:00'):
-            #we dont have some internal time to set
+            # we dont have some internal time to set
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)
@@ -1182,7 +1177,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             try:
                 _ = self._model.get_port_profile('name', name)
             except exceptions.SoftboxenError:
-                self._model.add_port_profile(name=profile_num, type='inp-delay')
+                self._model.add_port_profile(name=name, type='inp-delay')
                 try:
                     port_profile = self._model.get_port_profile('name', name)
                 except exceptions.SoftboxenError:
