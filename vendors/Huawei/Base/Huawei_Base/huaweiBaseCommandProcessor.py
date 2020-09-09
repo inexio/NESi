@@ -107,7 +107,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
                                                                                                       port=port))
 
                 context['activated_count'] = activated_count
-                context['port_counter'] = port_counter
+                context['port_counter'] = port_counter - activated_count
                 text1 += self._render('display_board_dsl_product_top_bottom', context=context)
                 text2 += self._render('display_board_dsl_product_middle_bottom', context=context)
                 text3 += self._render('display_board_dsl_product_bottom_bottom', context=context)
