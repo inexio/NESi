@@ -42,8 +42,6 @@ class HuaweiPort(Port):
     total_bytes_ds = base.Field('total_bytes_ds')
     total_packets_ds = base.Field('total_packets_ds')
     total_discarded_packets_ds = base.Field('total_discarded_packets_ds')
-    channel_current_ds = base.Field('channel_current_ds')
-    channel_current_us = base.Field('channel_current_us')
     channel_packets_discarded_ds = base.Field('channel_packets_discarded_ds')
 
     dynamic_profile = base.Field('dynamic_profile')

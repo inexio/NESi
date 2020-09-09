@@ -21,8 +21,8 @@
   due to congestion(packet)                   : {{ context.port.total_discarded_packets_ds }}
 
   Channel 1
-  Current rate downstream(kbps)               : {{ context.port.channel_current_ds }}
-  Current rate upstream(kbps)                 : {{ context.port.channel_current_us }}
+  Current rate downstream(kbps)               : {{ context.port.downstream }}
+  Current rate upstream(kbps)                 : {{ context.port.upstream }}
   Packets num discarded downstream
   Due to congestion(packet)                   : {{ context.port.channel_packets_discarded_ds }}
 
