@@ -1,0 +1,18 @@
+root
+secret
+enable
+config
+undo smart
+undo system snmp-user password security
+sysname test
+snmp-agent community read blablablub
+snmp-agent community write blubblabla
+snmp-agent target-host trap-hostname test_U2000 address 1.1.1.1 udp-port 1 trap-paramsname test_U2000
+snmp-agent target-host trap-paramsname test_U2000 v1 securityname secret
+snmp-agent trap enable standard
+system handshake interval 400
+system handshake enable
+save
+quit
+quit
+y

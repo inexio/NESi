@@ -1,0 +1,19 @@
+root
+secret
+enable
+diagnose
+system status collect all
+display system status collection
+quit
+display temperature 0/0
+display temperature 0/1
+config
+display version
+
+display alarm active alarmtype environment detail
+display pitp config
+interface emu 2
+display power run info
+return
+quit
+y

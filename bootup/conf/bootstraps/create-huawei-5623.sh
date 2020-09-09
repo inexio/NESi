@@ -185,6 +185,15 @@ req='{
 }'
 emu_fan=$(create_resource "$req" $ENDPOINT/boxen/$box_id/emus)
 
+### Emu 2 ###
+
+# Create a physical emu at the network device (admin operation)
+req='{
+  "type": "H831PMU",
+  "number": 2
+}'
+emu2_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/emus)
+
 ### Subrack 0 ###
 
 # Create a physical subrack at the network device (admin operation)

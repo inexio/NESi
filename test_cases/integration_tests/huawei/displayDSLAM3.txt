@@ -1,0 +1,9 @@
+root
+secret
+enable
+config
+display version
+
+return
+quit
+y
