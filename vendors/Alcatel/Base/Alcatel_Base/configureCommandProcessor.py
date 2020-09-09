@@ -1468,9 +1468,7 @@ class ConfigureSystemSecuritySubProcessor(BaseCommandProcessor, BaseMixIn):
             if prompt.endswith('%d%c'):
                 prompt = prompt[:-4]
 
-            box = self._model
-            box.set_hostname(prompt)
-            self._model.hostname = prompt
+            self._model.set_hostname(prompt)
 
             self.process(ConfigureSystemSecurityOperatorCommandProcessor, 'login', 'mainloop', 'configure', 'system',
                          'security', 'operator', 'user_name', args=(), return_to=ConfigureSystemSecuritySubProcessor,

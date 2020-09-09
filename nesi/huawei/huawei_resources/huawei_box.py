@@ -375,10 +375,6 @@ class HuaweiBox(Box):
             **fields
         )
 
-    def change_hostname(self, name):
-        """Change the hostname of a box"""
-        self.update(hostname=name)
-
     def set_network_address(self, addr):
         """Change the hostname of a box"""
         self.update(network_address=addr)

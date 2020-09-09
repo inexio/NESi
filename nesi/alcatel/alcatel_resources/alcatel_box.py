@@ -330,10 +330,6 @@ class AlcatelBox(Box):
         """Change isam location of a box."""
         self.update(isam_location=isam_location)
 
-    def set_hostname(self, hostname):
-        """Change hostname of a box."""
-        self.update(hostname=hostname)
-
     def set_board_missing_reporting_logging(self, bool):
         """Change borad missing alarm value."""
         self.update(board_missing_reporting_logging=bool)
