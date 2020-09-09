@@ -28,7 +28,7 @@ class BaseCommandProcessor(base.CommandProcessor):
             elif type in ('card', 'port', 'ont_port'):
                 object.admin_state = 'deactivated'
             elif type == 'service_port':
-                object.admin_state = 'disable'
+                object.admin_state = 'down'
             elif type in ('ont', 'ont_port', 'cpe'):
                 object.admin_state = 'offline'
         elif object.admin_state == '1':
@@ -37,7 +37,7 @@ class BaseCommandProcessor(base.CommandProcessor):
             elif type in ('card', 'port', 'ont_port'):
                 object.admin_state = 'activated'
             elif type == 'service_port':
-                object.admin_state = 'enable'
+                object.admin_state = 'up'
             elif type in ('ont', 'ont_port', 'cpe'):
                 object.admin_state = 'online'
         elif object.admin_state == '2':

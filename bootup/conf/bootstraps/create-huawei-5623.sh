@@ -141,7 +141,6 @@ req='{
   "type": "smart",
   "attribute": "common",
   "bind_service_profile_id": '$service_profile',
-  "bind_RAIO_profile_index": "-",
   "priority": "-",
   "native_vlan" : "1"
 }'
@@ -171,8 +170,6 @@ req='{
   "description": "The standard CPE Management Vlan",
   "type": "smart",
   "attribute": "common",
-  "bind_service_profile_id": "-",
-  "bind_RAIO_profile_index": "-",
   "priority": "-",
   "native_vlan" : "1"
 }'

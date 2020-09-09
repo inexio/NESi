@@ -56,8 +56,8 @@ class Vlan(db.Model):
     # Huawei Data
     type = db.Column(db.Enum('smart'), default='smart')
     attribute = db.Column(db.Enum('common', 'uncommon'), default='common')
-    bind_service_profile_id = db.Column(db.Integer())
-    bind_RAIO_profile_index = db.Column(db.String())
+    bind_service_profile_id = db.Column(db.Integer(), default=None)
+    bind_RAIO_profile_index = db.Column(db.String(), default='-')
     priority = db.Column(db.String())
     native_vlan = db.Column(db.Integer())
     vmac_ipoe = db.Column(db.Enum('enable', 'disable'), default='disable')
