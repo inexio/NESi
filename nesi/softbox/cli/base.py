@@ -356,12 +356,13 @@ class CommandProcessor:
 
                 if not exc.return_to or exc.return_to == 'sysexit' or exc.return_to == 'sysreboot' or not isinstance(self, exc.return_to):
                     raise exc
+                # set prompt_len anew in case of prompt_len change in command-processor beneath
+                self.set_prompt_end_pos(context)
 
                 # This is the first instance of the desired
                 # CommandProcessor to unwind to, continuing
 
             self.on_cycle(context)
-
         self.on_exit(context)
 
     def get_prompt_len(self):

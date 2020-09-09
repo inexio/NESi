@@ -1313,7 +1313,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             name = ''
             for arg in args:
                 name += arg
-            self._model.change_hostname(name)
+            self._model.set_hostname(name)
+            self.set_prompt_end_pos(context)
         else:
             raise exceptions.CommandSyntaxError(command=command)
 

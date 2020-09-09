@@ -71,6 +71,10 @@ class Box(base.Resource):
     timezone_offset = base.Field('timezone_offset')
     sntp_server_ip_address = base.Field('sntp_server_ip_address')
 
+    def set_hostname(self, name):
+        """Change the hostname value."""
+        self.update(hostname=name)
+
     def set_last_login(self, time):
         """Change last_login value."""
         self.update(last_login=time)
