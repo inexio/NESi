@@ -90,6 +90,7 @@ class TestHuawei(TestCore):
             assert False
         except exceptions.SoftboxenError:
             assert True
+        port.set('type', 'service')
 
     def test_service_port(self):
         port = self.model.get_service_port("name", "0/0/0")
@@ -131,6 +132,8 @@ class TestHuawei(TestCore):
 
         assert port.connected_id is not None
         assert port.connected_type is not None
+        id = port.connected_id
+        type =port.connected_type
         port.set_connected_id(20)
         assert port.connected_id == 20
         port.set_connected_type('ont')
@@ -145,12 +148,14 @@ class TestHuawei(TestCore):
             assert False
         except exceptions.SoftboxenError:
             assert True
+        port.set_connected_id(id)
+        port.set_connected_type(type)
         port.set_admin_state('0')
         assert port.admin_state == '0'
         port.set_admin_state('1')
         assert port.admin_state == '1'
         try:
-            port.set_connected_id(0)
+            port.set_admin_state(0)
             assert False
         except exceptions.SoftboxenError:
             assert True
@@ -238,6 +243,7 @@ class TestHuawei(TestCore):
             assert False
         except exceptions.SoftboxenError:
             assert True
+        vlan.set_service_profile_id(1)
 
     def test_vlaninterface(self):
         port = self.model.get_vlan_interface("name", "vlanif2620")
@@ -253,23 +259,20 @@ class TestHuawei(TestCore):
     def test_box_properties(self):
         assert len(self.model.subracks) == 1
         assert len(self.model.cards) == 5
-        assert len(self.model.get_cards()) == len(self.model.cards)
-        assert len(self.model.ports) == len(self.model.get_ports())
-        assert len(self.model.onts) == len(self.model.get_onts())
-        assert len(self.model.ont_ports) == len(self.model.get_ont_ports())
-        assert len(self.model.cpes) == len(self.model.get_cpes())
-        assert len(self.model.cpe_ports) == len(self.model.get_cpe_ports())
+        assert len(self.model.ports) == 13
+        assert len(self.model.onts) == 8
+        assert len(self.model.ont_ports) == 9
+        assert len(self.model.cpes) == 11
+        assert len(self.model.cpe_ports) == 11
         assert len(self.model.vlans) == 2
         assert len(self.model.service_vlans) == 1
         assert len(self.model.service_ports) == 1
         assert len(self.model.credentials) == 1
         assert len(self.model.routes) == 0
         assert len(self.model.port_profiles) == 1
-        assert len(self.model.qos_interfaces) == 0
-        assert len(self.model.emus) == 1
+        assert len(self.model.emus) == 2
         assert len(self.model.users) == 1
         assert len(self.model.vlan_interfaces) == 1
-        assert self.model.get_user("name", 'root') == self.model.get_users("name", 'root').find_by_field_value("name", 'root')
 
     @pytest.mark.parametrize("path", DATA)
     def test_integration(self, path):

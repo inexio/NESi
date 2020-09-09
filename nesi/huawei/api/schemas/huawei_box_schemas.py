@@ -16,7 +16,8 @@ from nesi.softbox.api.schemas.box_schemas import *
 class HuaweiBoxSchema(BoxSchema):
     class Meta:
         model = Box
-        fields = BoxSchema.Meta.fields + ('cpu_occupancy', 'vlan_interfaces', 'raio_anid')
+        fields = BoxSchema.Meta.fields + ('cpu_occupancy', 'vlan_interfaces', 'raio_anid', 'handshake_mode',
+                                          'handshake_interval')
 
     vlan_interfaces = ma.Hyperlinks(
         {'_links': {

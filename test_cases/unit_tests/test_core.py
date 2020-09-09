@@ -67,14 +67,21 @@ class TestCore:
         fd1 = os.open(inpath, os.O_RDONLY)
         stdin1 = os.fdopen(fd1, 'rb', 0)
 
-        command_processor = self.cli(self.model, stdin1, stdout1, (), template_root='templates/', daemon=True)
-        try:
-            context = dict()
-            context['login_banner'] = self.model.login_banner
-            command_processor.loop(context=context)
-        except exceptions.TerminalExitError as exc:
-            if exc.return_to is not None and exc.return_to != 'sysexit':
-                pass
+        while True:
+            command_processor = self.cli(self.model, stdin1, stdout1, (), template_root='templates/', daemon=True)
+            try:
+                context = dict()
+                context['login_banner'] = self.model.login_banner
+                command_processor.history_enabled = False
+                command_processor.loop(context=context)
+            except exceptions.TerminalExitError as exc:
+                if exc.return_to is not None and exc.return_to == 'sysexit':
+                    break
+                elif exc.return_to is not None and exc.return_to == 'sysreboot':
+                    continue
+                else:
+                    pass
+
         stdin1.close()
         stdout1.close()
         del stdin1

@@ -27,6 +27,8 @@ class HuaweiBox(Box):
     """
     cpu_occupancy = base.Field('cpu_occupancy')
     raio_anid = base.Field('raio_anid')
+    handshake_mode = base.Field('handshake_mode')
+    handshake_interval = base.Field('handshake_interval')
 
     @property
     def credentials(self):
@@ -383,6 +385,13 @@ class HuaweiBox(Box):
         """Change the raio anid of a box"""
         self.update(raio_anid=addr)
 
+    def set_handshake_mode(self, mode):
+        """Change the handshake mode of a box"""
+        self.update(handshake_mode=mode)
+
+    def set_handshake_interval(self, interval):
+        """Change the handshake interval of a box"""
+        self.update(handshake_interval=interval)
 
 class HuaweiBoxCollection(BoxCollection):
     """Represent a collection of boxen.

@@ -207,7 +207,6 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             name = 'vlanif' + vlan_number
             try:
                 vlanif = self._model.get_vlan_interface("name", name)
-                self.map_states(vlanif, 'vlan_interface')
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 
@@ -600,9 +599,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_time(self, command, *args, context=None):
-        if self._validate(args, 'dst', 'start', '3', 'last', 'Sun', '02:00:00', 'end', '10', 'last', 'Sun', '03:00:00',
-                          'adjust', '01:00'):
-            # we dont have some internal time to set
+        if self._validate(args, 'dst', 'start', str, 'last', 'Sun', str, 'end', str, 'last', 'Sun', str,
+                          'adjust', str):
+            #we dont have some internal time to set
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)
@@ -880,26 +879,29 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_snmp_agent(self, command, *args, context=None):  # TODO: Functionality
-        if self._validate(args, 'community', 'read', '%S0O&R^7OW*+Xa9W4YQ.U=1!!B#A8&)VAB\']]F;U$19\'2_1!!%"'):
+        if self._validate(args, 'community', 'read', str):
             return
-        elif self._validate(args, 'community', 'write', '%0;OY:ZN9E3#]`FQ^XRO$#A!!B#A8&)VAB\']]F;U$19\'2_1!!%"'):
+        elif self._validate(args, 'community', 'write', str):
             return
-        elif self._validate(args, 'target-host', 'trap-hostname', 'test_U2000', 'address', str,
-                            'udp-port', '162', 'trap-paramsname', 'test_U2000"'):
+        elif self._validate(args, 'target-host', 'trap-hostname', str, 'address', str,
+                            'udp-port', str , 'trap-paramsname', str):
             return
-        elif self._validate(args, 'target-host', 'trap-paramsname', 'test_U2000', 'v1', 'securityname',
-                            '%S0O&R^7OW*+Xa9W4YQ.U=1!!B#A8&)VAB\']]F;U$19\'2_1!!%"'):
+        elif self._validate(args, 'target-host', 'trap-paramsname', str, 'v1', 'securityname',
+                            str):
             return
         elif self._validate(args, 'trap', 'enable', 'standard'):
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_system(self, command, *args, context=None):  # TODO: Functionality
-        if self._validate(args, 'handshake', 'interval', '300'):
-            return
-        elif self._validate(args, 'handshake', 'enable'):
-            return
+    def do_system(self, command, *args, context=None):
+        if self._validate(args, 'handshake', 'interval', str):
+            interval, = self._dissect(args, 'handshake', 'interval', str)
+            self._model.set_handshake_interval(interval)
+        elif self._validate(args, 'handshake', str):
+            mode, = self._dissect(args, 'handshake', str)
+            if mode == 'enable' or mode == 'disable':
+                self._model.set_handshake_mode(mode)
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
@@ -1308,7 +1310,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_sysname(self, command, *args, context=None):  # TODO: Functionality
+    def do_sysname(self, command, *args, context=None):
         if args != ():
             name = ''
             for arg in args:

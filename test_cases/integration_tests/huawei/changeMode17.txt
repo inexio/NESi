@@ -1,0 +1,11 @@
+root
+secret
+enable
+config
+diagnose
+switch vdsl mode to timode
+y
+y
+return
+quit
+y

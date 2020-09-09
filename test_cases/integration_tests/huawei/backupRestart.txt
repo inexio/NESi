@@ -1,0 +1,9 @@
+root
+secret
+enable
+reboot system
+root
+secret
+enable
+quit
+y

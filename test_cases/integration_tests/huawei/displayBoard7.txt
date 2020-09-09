@@ -1,0 +1,10 @@
+root
+secret
+display board 0/0
+enable
+display board 0/0
+config
+display board 0/0
+return
+quit
+y

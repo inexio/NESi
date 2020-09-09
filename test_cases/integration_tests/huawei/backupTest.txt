@@ -1,0 +1,10 @@
+root
+secret
+enable
+config
+test
+xdsl melt 0/0/0 measured-frequency 25Hz busy force
+
+return
+quit
+y

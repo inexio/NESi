@@ -1,0 +1,19 @@
+root
+secret
+enable
+config
+interface vdsl 0/0
+deactivate 1
+quit
+interface adsl 0/1
+deactivate 2
+quit
+interface opg 0/4
+shutdown 1
+quit
+interface eth 0/2
+shutdown 1
+quit
+return
+quit
+y

@@ -101,3 +101,5 @@ class Box(db.Model):
 
     cpu_occupancy = db.Column(db.String(), default='20%')
     raio_anid = db.Column(db.String(), default='127.0.0.1')
+    handshake_mode = db.Column(db.Enum('enable', 'disable'), default='disable')
+    handshake_interval = db.Column(db.Integer(), default=None)
