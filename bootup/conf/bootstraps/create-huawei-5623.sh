@@ -803,7 +803,7 @@ req='{
   "subrack_id": '$subrack_0',
   "description": "Physical card 0/4",
   "product": "ftth",
-  "board_name": "H807GPBH"
+  "board_name": "H802OPGE"
 }'
 
 card_0_4=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)

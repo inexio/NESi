@@ -12,10 +12,10 @@
 from datetime import datetime
 
 from nesi import exceptions
-from .baseCommandProcessor import BaseCommandProcessor
+from .huaweiBaseCommandProcessor import HuaweiBaseCommandProcessor
 
 
-class UserViewCommandProcessor(BaseCommandProcessor):
+class UserViewCommandProcessor(HuaweiBaseCommandProcessor):
 
     def do_enable(self, command, *args, context=None):
 
@@ -47,12 +47,19 @@ class UserViewCommandProcessor(BaseCommandProcessor):
             raise exc
         return
 
-    def on_help(self, command, args, context=None):
+    def on_help(self, command, *args, context=None):
         if self._validate(command, 'help'):
             text = self._render(
                 'help',
                 context=context)
             self._write(text)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_display(self, command, *args, context=None):
+        if self._validate(args, 'board', str):
+            self.display_board(command, args, context)
+
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
