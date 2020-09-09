@@ -365,7 +365,7 @@ class CommandProcessor:
         self.on_exit(context)
 
     def get_prompt_len(self):
-        text = self._render('on_cycle', context=dict(), ignore_errors=True)
+        text = self._render('on_cycle', context=dict(), ignore_errors=True).replace('\n', '')
 
         if text is None or len(text) == 0:
             text = self._render('on_enter', context=dict(), ignore_errors=True)
@@ -378,7 +378,7 @@ class CommandProcessor:
         return result
 
     def set_prompt_end_pos(self, context):
-        text = self._render('on_cycle', context=context, ignore_errors=True)
+        text = self._render('on_cycle', context=context, ignore_errors=True).replace('\n', '')
 
         if len(text) == 0:
             text = self._render('on_enter', context=context, ignore_errors=True)
