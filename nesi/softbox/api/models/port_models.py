@@ -160,8 +160,6 @@ class Port(db.Model):
     total_bytes_ds = db.Column(db.Integer(), default=430667320)
     total_packets_ds = db.Column(db.Integer(), default=6493472)
     total_discarded_packets_ds = db.Column(db.Integer(), default=0)
-    channel_current_ds = db.Column(db.Integer(), default=30008)
-    channel_current_us = db.Column(db.Integer(), default=2008)
     channel_packets_discarded_ds = db.Column(db.Integer(), default=0)
 
     channel_ds_data_rate_profile = db.Column(db.Enum('No.1016 TEST_DSL_16000', ''), default='')
