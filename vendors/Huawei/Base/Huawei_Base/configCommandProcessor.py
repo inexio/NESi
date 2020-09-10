@@ -289,8 +289,11 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         elif self._validate(args, 'mac-address', 'all'):
             self.user_input('{ <cr>||<K> }:')
 
+            self._write('  It will take some time, please wait...\n')
+
             text = self._render('display_mac_address_all_top', context=context)
 
+            mac_address_count = 0
             for cpe in self._model.cpes:
                 port = None
                 ont_port = None
@@ -310,13 +313,13 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 card = self._model.get_card('id', port.card_id)
 
                 if card.product == 'adsl':
-                    context['product'] = 'adl'
+                    context['product'] = 'adl '
                 elif card.product == 'vdsl':
-                    context['product'] = 'vdl'
+                    context['product'] = 'vdl '
                 elif card.product == 'ftth':
-                    context['product'] = 'eth'
+                    context['product'] = 'eth '
                 elif card.product == 'ftth-pon':
-                    context['product'] = 'pon'
+                    context['product'] = 'gpon'
 
                 ont_identifier = None
                 ont_port_identifier = None
@@ -340,7 +343,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                     context['ont_port'] = ont_port_identifier
                 context['cpe_mac'] = cpe.mac
                 text += self._render('display_mac_address_all_middle', context=context)
+                mac_address_count += 1
 
+            context['mac_address_count'] = mac_address_count
             text += self._render('display_mac_address_all_bottom', context=context)
 
             self._write(text)
