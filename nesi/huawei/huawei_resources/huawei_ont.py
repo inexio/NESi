@@ -16,7 +16,6 @@ from nesi.softbox.base_resources.ont import Ont, OntCollection, base
 class HuaweiOnt(Ont):
     """Represent physical shelf resource."""
 
-    run_state = base.Field('run_state')
     serial_number = base.Field('serial_number')
     control_flag = base.Field('control_flag')
     config_state = base.Field('config_state')

@@ -147,8 +147,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 onts = self._model.get_onts('port_id', port.id)
                 distance = random.randint(0, 7) * 1000
                 for ont in onts:
+                    self.map_states(ont, 'ont')
                     context['ont_count'] += 1
-                    if ont.run_state == 'online':
+                    if ont.admin_state == 'online':
                         context['ont_online_count'] += 1
                     context['ont_idx'] = ont.name.split("/")[-1]
                     context['ont_serial_number'] = ont.serial_number
@@ -156,9 +157,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                     context['ont_distance'] = random.randint(distance, distance + 1000)
                     context['rx_power'] = round(random.uniform(15, 25), 2)
                     context['tx_power'] = round(random.uniform(1, 3), 2)
-                    context['ont_run_state'] = ont.run_state
+                    context['ont_admin_state'] = ont.admin_state
                     date = datetime.date.today() - datetime.timedelta(days=random.randint(7, 28))
-                    if ont.run_state == 'online':
+                    if ont.admin_state == 'online':
                         context['last_uptime'] = date.strftime('%Y-%m-%d %H:%M:%S')
                         context['last_downtime'] = (date - datetime.timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
                     else:
@@ -178,6 +179,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             identifier, = self._dissect(args, 'ont', 'info', 'summary', str)
 
             components = identifier.split("/")
+            self._write('  Command is being executed. Please wait\n')
             text = ''
             if len(components) == 1:
                 try:
@@ -187,7 +189,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                     return
                 cards = self._model.get_cards('subrack_id', subrack.id)
                 for card in cards:
-                    if card.product != 'ftth-pon':
+                    if card.product not in ('ftth-pon', 'ftth'):
                         continue
                     ports = self._model.get_ports('card_id', card.id)
                     for port in ports:
@@ -198,8 +200,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 except exceptions.InvalidInputError:
                     self.on_error(context=context)
                     return
-                if card.product != 'ftth-pon':
-                    self.on_error(context=context)
+                if card.product not in ('ftth-pon', 'ftth'):
+                    self._write(self._render('operation_not_supported_by_board_failure', context=context))
+                    return
                 ports = self._model.get_ports('card_id', card.id)
                 for port in ports:
                     text += generate_ont_info_summary(port)
@@ -210,8 +213,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                     self.on_error(context=context)
                     return
                 card = self._model.get_card('id', port.card_id)
-                if card.product != 'ftth-pon':
-                    self.on_error(context=context)
+                if card.product not in ('ftth-pon', 'ftth'):
+                    self._write(self._render('operation_not_supported_by_port_failure', context=context))
+                    return
                 text += generate_ont_info_summary(port)
             else:
                 raise exceptions.CommandSyntaxError
