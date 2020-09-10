@@ -30,6 +30,8 @@ class HuaweiBox(Box):
     handshake_mode = base.Field('handshake_mode')
     handshake_interval = base.Field('handshake_interval')
     interactive_mode = base.Field('interactive_mode')
+    pitp = base.Field('pitp')
+    pitp_mode = base.Field('pitp_mode')
 
     @property
     def credentials(self):
@@ -402,6 +404,14 @@ class HuaweiBox(Box):
         """Enable Interactive function."""
         self.update(interactive_mode=True)
 
+
+    def set_pitp(self, state):
+        """Change the pitp of a box"""
+        self.update(pitp=state)
+
+    def set_pitp_mode(self, mode):
+        """Change the pitp mode of a box"""
+        self.update(pitp_mode=mode)
 
 class HuaweiBoxCollection(BoxCollection):
     """Represent a collection of boxen.

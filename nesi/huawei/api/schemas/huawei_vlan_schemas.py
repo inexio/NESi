@@ -19,6 +19,4 @@ class HuaweiVlanSchema(VlanSchema):
         fields = VlanSchema.Meta.fields + \
                  ('type', 'attribute', 'bind_service_profile_id', 
                   'bind_RAIO_profile_index', 'priority',
-                  'native_vlan', 'vmac_ipoe', 'vmac_pppoe', 'vmac_pppoa',
-                  'vlan_mac', 'packet_policy_multicast', 'packet_policy_unicast', 'security_anti_ipspoofing',
-                  'security_anti_macspoofing', 'igmp_mismatch', 'tag')
+                  'native_vlan', 'tag')

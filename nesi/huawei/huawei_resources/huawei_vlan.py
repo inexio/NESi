@@ -24,15 +24,6 @@ class HuaweiVlan(Vlan):
     bind_RAIO_profile_index = base.Field('bind_RAIO_profile_index')
     priority = base.Field('priority')
     native_vlan = base.Field('native_vlan')
-    vmac_ipoe = base.Field('vmac_ipoe')
-    vmac_pppoe = base.Field('vmac_pppoe')
-    vmac_pppoa = base.Field('vmac_pppoa')
-    vlan_mac = base.Field('vlan_mac')
-    packet_policy_multicast = base.Field('packet_policy_multicast')
-    packet_policy_unicast = base.Field('packet_policy_unicast')
-    security_anti_ipspoofing = base.Field('security_anti_ipspoofing')
-    security_anti_macspoofing = base.Field('security_anti_macspoofing')
-    igmp_mismatch = base.Field('igmp_mismatch')
     tag = base.Field('tag')
 
     def set_tag(self, tag):
