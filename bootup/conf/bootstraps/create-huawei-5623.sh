@@ -480,7 +480,11 @@ req='{
   "cpu_occupation": "1%",
   "operational_state": "1",
   "admin_state": "1",
-  "index": 0
+  "index": 0,
+  "autofind": true,
+  "vendor_id": "HWTC",
+  "version": "535.B",
+  "software_version": "V3R025C29D195"
 }'
 
 ont_0_2_0_0=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)
@@ -616,7 +620,11 @@ req='{
   "cpu_occupation": "1%",
   "operational_state": "1",
   "admin_state": "1",
-  "index": 0
+  "index": 0,
+  "autofind": true,
+  "vendor_id": "HWTC",
+  "version": "535.B",
+  "software_version": "V3R025C29D195"
 }'
 
 ont_0_2_2_0=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)
@@ -867,7 +875,7 @@ req='{
   "ont_port_id": '$ont_port_0_4_0_0_1',
   "description": "Cpe 0/4/0 0/1 1",
   "admin_state": "1",
-  "mac": "a7:10:05:3f:57:96"
+  "mac": "0cdb-be79-2528"
 }'
 
 cpe_0_4_0_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpes)
@@ -935,7 +943,7 @@ req='{
   "ont_port_id": '$ont_port_0_4_1_0_1',
   "description": "Cpe 0/4/1 0/1 1",
   "admin_state": "0",
-  "mac": "d4:3f:3d:ef:d9:9a"
+  "mac": "c8cd-656b-7110"
 }'
 
 cpe_0_4_1_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpes)
