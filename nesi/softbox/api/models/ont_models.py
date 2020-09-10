@@ -115,7 +115,6 @@ class Ont(db.Model):
     olt_rx_sig_level = db.Column(db.Float(), default=-18.8)
 
     # Huawei data
-    run_state = db.Column(db.Enum('online', 'offline'), default='online')
     serial_number = db.Column(db.String(), default='485754433AD3209C')
     control_flag = db.Column(db.Enum('active'), default='active')
     config_state = db.Column(db.Enum('normal'), default='normal')

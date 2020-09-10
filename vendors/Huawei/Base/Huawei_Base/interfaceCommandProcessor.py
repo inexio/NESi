@@ -144,6 +144,7 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                 online_duration = time_now - last_up
                 ont.set_online_duration(str(online_duration))
                 ont = self._model.get_ont("name", ontname)
+                self.map_states(ont, 'ont')
 
                 context['ont_idx'] = ont.index
 

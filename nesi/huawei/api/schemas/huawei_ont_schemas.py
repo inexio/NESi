@@ -16,7 +16,7 @@ from nesi.softbox.api.schemas.ont_schemas import *
 class HuaweiOntSchema(OntSchema):
     class Meta:
         model = Ont
-        fields = OntSchema.Meta.fields + ('run_state', 'serial_number', 'control_flag', 'config_state', 'match_state',
+        fields = OntSchema.Meta.fields + ('serial_number', 'control_flag', 'config_state', 'match_state',
                                           'protect_side', 'dba_type', 'ont_distance', 'ont_last_distance',
                                           'ont_battery_state', 'memory_occupation', 'cpu_occupation', 'temperature',
                                           'authentic_type', 'management_mode', 'software_work_mode', 'isolation_state',

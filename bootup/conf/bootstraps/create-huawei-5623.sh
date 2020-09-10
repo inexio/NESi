@@ -983,8 +983,8 @@ req='{
   "description": "Ont 0/4/2 0",
   "memory_occupation": "50%",
   "cpu_occupation": "1%",
-  "operational_state": "1",
-  "admin_state": "1",
+  "operational_state": "0",
+  "admin_state": "0",
   "index": 0
 }'
 

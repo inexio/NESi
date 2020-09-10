@@ -148,7 +148,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
                         for ont in onts:
                             if ont.port_id == port.id:
                                 ontcounter += 1
-                                if ont.run_state == 'online':
+                                if ont.admin_state == '1':
                                     onlinecounter += 1
 
                         subrackname, cardportname = port.name.split('/', maxsplit=1)
@@ -164,13 +164,14 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
                         else:
                             text2 += self._render('display_board_ftth_pon_middle_top', context=context)
                             for ont in onts:
+                                self.map_states(ont, 'ont')
                                 context['ont_id'] = ont.index
                                 context['spacer_beg2'] = self.create_spacers((4,), (subrackname,))[0] * ' '
                                 context['spacer7'] = self.create_spacers((4,), (cardportname,))[0] * ' '
                                 context['spacer8'] = self.create_spacers((5,), (ont.index,))[0] * ' '
                                 context['spacer9'] = self.create_spacers((18,), (ont.serial_number,))[0] * ' '
                                 context['spacer10'] = self.create_spacers((8,), (ont.control_flag,))[0] * ' '
-                                context['spacer11'] = self.create_spacers((12,), (ont.run_state,))[0] * ' '
+                                context['spacer11'] = self.create_spacers((12,), (ont.admin_state,))[0] * ' '
                                 context['spacer12'] = self.create_spacers((9,), (ont.config_state,))[0] * ' '
                                 context['spacer13'] = self.create_spacers((8,), (ont.match_state,))[0] * ' '
                                 context['spacer14'] = self.create_spacers((4,), ('',))[0] * ' '
