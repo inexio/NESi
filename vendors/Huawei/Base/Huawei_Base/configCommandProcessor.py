@@ -121,6 +121,21 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
     def do_display(self, command, *args, context=None):
         if self._validate(args, 'board', str):
             self.display_board(command, args, context)
+        elif self._validate(args, 'ont', 'autofind', 'all'):
+            autofind_onts = []
+
+            for ont in self._model.onts:
+                if ont.autofind:
+                    autofind_onts.append(ont)
+
+            for autofind_ont in autofind_onts:
+                port = self._model.get_port('id', autofind_ont.port_id)
+                context['port_identifier'] = port.name
+                context['ont'] = autofind_ont
+                self._write(self._render('display_ont_autofind_all_body', context=context))
+
+            context['autofind_count'] = len(autofind_onts)
+            self._write(self._render('display_ont_autofind_all_footer', context=context))
         elif self._validate(args, 'ont', 'info', 'summary', str):
             def generate_ont_info_summary(port):
                 text = ''

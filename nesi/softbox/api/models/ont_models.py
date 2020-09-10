@@ -20,6 +20,8 @@ class Ont(db.Model):
     description = db.Column(db.String())
     admin_state = db.Column(db.Enum('0', '1'), default='0')  # Alcatel: 0 => down, 1 => up; Huawei: 0 => offline, 1 => online
     operational_state = db.Column(db.Enum('0', '1'), default='0')  # Alcatel: 0 => down, 1 => up; Huawei: 0 => offline, 1 => online
+    vendor_id = db.Column(db.String(), default=None)
+    version = db.Column(db.String(), default=None)
 
     box_id = db.Column(db.Integer, db.ForeignKey('box.id'))
     port_id = db.Column(db.Integer, db.ForeignKey('port.id'))
@@ -89,10 +91,8 @@ class Ont(db.Model):
     eqpt_ver_num = db.Column(db.String(), default='3FE56389AEBA01')
     sw_ver_act = db.Column(db.String(), default='3FE56065AFGB89')
     sw_ver_psv = db.Column(db.String(), default='3FE56065AFBB48')
-    vendor_id = db.Column(db.Enum('ALCL'), default='ALCL')
     equip_id = db.Column(db.String(), default='3FE56389AEBA01')
     actual_num_slots = db.Column(db.Integer(), default=1)
-    version_number = db.Column(db.String(), default='3FE56389AEBA01')
     num_tconts = db.Column(db.Integer(), default=32)
     num_trf_sched = db.Column(db.Integer(), default=32)
     num_prio_queues = db.Column(db.Integer(), default=124)
@@ -151,4 +151,6 @@ class Ont(db.Model):
     max_adaptive_num_vdsl = db.Column(db.String(), default='-')
     lineprofile_id = db.Column(db.Integer(), nullable=True)
     srvprofile_id = db.Column(db.Integer(), nullable=True)
+    autofind = db.Column(db.Boolean(), default=False)
+    software_version = db.Column(db.String(), default=None)
 
