@@ -10,6 +10,8 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
+from datetime import datetime
+from time import sleep
 from nesi import exceptions
 from .baseCommandProcessor import BaseCommandProcessor
 
@@ -47,7 +49,20 @@ class TestCommandProcessor(BaseCommandProcessor):
             if self._model.interactive_mode:
                 self.user_input('{ <cr>|discharge<K>|fault-force-test<K> }:')
 
-            text = self._render('melt_failure', context=context)
+            context['port_name'] = port.name
+            s_num, card_num, port_num = port.name.split('/')
+            context['subrack_num'] = s_num
+            context['card_num'] = card_num
+            context['port_num'] = port_num
+
+            context['time_beg'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            text = self._render('melt_test_wait', context=context)
+            self._write(text)
+            sleep(2)
+
+            context['time_end'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            text = self._render('melt_test', context=context)
             self._write(text)
 
         else:
