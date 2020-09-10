@@ -232,7 +232,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             text = self._render('display_interface_vlanif_num', context=dict(context, vlanif=vlanif))
             self._write(text)
         elif self._validate(args, 'vlan', 'all'):
-            _ = self.user_input('{ <cr>|vlanattr<K>|vlantype<E><mux,standard,smart> }:')
+            if self._model.interactive_mode:
+                self.user_input('{ <cr>|vlanattr<K>|vlantype<E><mux,standard,smart> }:')
             text = self._render('display_vlan_all_top', context=context)
             count = 0
             for vlan in self._model.vlans:
@@ -270,7 +271,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             self._write(text)
 
         elif self._validate(args, 'version'):
-            self.user_input('{ <cr>|backplane<K>|frameid/slotid<S><Length 1-15> }:')
+            if self._model.interactive_mode:
+                self.user_input('{ <cr>|backplane<K>|frameid/slotid<S><Length 1-15> }:')
             text = self._render('display_version', context=dict(context, box=self._model))
             self._write(text)
 
@@ -287,7 +289,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             self._write(text)
 
         elif self._validate(args, 'mac-address', 'all'):
-            self.user_input('{ <cr>||<K> }:')
+            if self._model.interactive_mode:
+                self.user_input('{ <cr>||<K> }:')
 
             self._write('  It will take some time, please wait...\n')
 
@@ -351,7 +354,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             self._write(text)
 
         elif self._validate(args, 'current-configuration', 'section', 'vlan-srvprof'):
-            self.user_input('{ <cr>||<K> }:')
+            if self._model.interactive_mode:
+                self.user_input('{ <cr>||<K> }:')
             text = self._render('display_current_configuration_section_vlan_srvprof_top',
                                 context=dict(context, box=self._model))
             text2 = ''

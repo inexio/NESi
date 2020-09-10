@@ -98,7 +98,8 @@ class BaseCommandProcessor(base.CommandProcessor):
 
     def do_scroll(self, command, *args, context=None):
         if args == ():
-            _ = self.user_input('{ <cr>|number<U><10,512> }:')
+            if self._model.interactive_mode:
+                self.user_input('{ <cr>|number<U><10,512> }:')
             return
         elif self._validate(args, str):
             return

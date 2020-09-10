@@ -44,7 +44,8 @@ class TestCommandProcessor(BaseCommandProcessor):
             except (exceptions.SoftboxenError, AssertionError):
                 raise exceptions.CommandSyntaxError(command=command)
 
-            _ = self.user_input('{ <cr>|discharge<K>|fault-force-test<K> }:')
+            if self._model.interactive_mode:
+                self.user_input('{ <cr>|discharge<K>|fault-force-test<K> }:')
 
             text = self._render('melt_failure', context=context)
             self._write(text)

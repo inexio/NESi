@@ -261,7 +261,8 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
 
-                self.user_input('{ <cr>|sort-by<K>||<K> }:')
+                if self._model.interactive_mode:
+                    self.user_input('{ <cr>|sort-by<K>||<K> }:')
                 text = self._render(
                     'display_port_ddm-info',
                     context=dict(context, port=port))
