@@ -18,6 +18,20 @@ import time
 
 class EnableCommandProcessor(HuaweiBaseCommandProcessor):
 
+    def do_undo(self, command, *args, context=None):
+        if self._validate(args, 'smart'):
+            self._write("  Interactive function is disabled\n")
+            self._model.disable_interactive()
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_smart(self, command, *args, context=None):
+        if self._validate(args,):
+            self._write("  Interactive function is enabled\n")
+            self._model.enable_interactive()
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def do_disable(self, command, *args, context=None):
 
         from .userViewCommandProcessor import UserViewCommandProcessor

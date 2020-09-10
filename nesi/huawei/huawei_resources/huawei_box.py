@@ -29,6 +29,7 @@ class HuaweiBox(Box):
     raio_anid = base.Field('raio_anid')
     handshake_mode = base.Field('handshake_mode')
     handshake_interval = base.Field('handshake_interval')
+    interactive_mode = base.Field('interactive_mode')
 
     @property
     def credentials(self):
@@ -392,6 +393,15 @@ class HuaweiBox(Box):
     def set_handshake_interval(self, interval):
         """Change the handshake interval of a box"""
         self.update(handshake_interval=interval)
+
+    def disable_interactive(self):
+        """Disable Interactive function."""
+        self.update(interactive_mode=False)
+
+    def enable_interactive(self):
+        """Enable Interactive function."""
+        self.update(interactive_mode=True)
+
 
 class HuaweiBoxCollection(BoxCollection):
     """Represent a collection of boxen.
