@@ -60,12 +60,4 @@ class Vlan(db.Model):
     bind_RAIO_profile_index = db.Column(db.String(), default='-')
     priority = db.Column(db.String())
     native_vlan = db.Column(db.Integer())
-    vmac_ipoe = db.Column(db.Enum('enable', 'disable'), default='disable')
-    vmac_pppoe = db.Column(db.Enum('enable', 'disable'), default='disable')
-    vmac_pppoa = db.Column(db.Enum('enable', 'disable'), default='disable')
-    vlan_mac = db.Column(db.Enum('forwarding', 'discard'), default='forwarding')
-    packet_policy_multicast = db.Column(db.Enum('forward', 'discard'), default='forward')
-    packet_policy_unicast = db.Column(db.Enum('forward', 'discard'), default='discard')
-    security_anti_ipspoofing = db.Column(db.Enum('enable', 'disable'), default='disable')
-    security_anti_macspoofing = db.Column(db.Enum('enable', 'disable'), default='disable')
-    igmp_mismatch = db.Column(db.Enum('transparent'), default='transparent')
+

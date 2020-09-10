@@ -1,17 +1,22 @@
- vlan service-profile profile-id {{ context.vlan.bind_service_profile_id}} profile-name "{{ context.profile.name}}"
-  vmac {{ context.vlan.vmac_ipoe}} ipoe
-  vmac {{ context.vlan.vmac_pppoe}} pppoe
-  vmac {{ context.vlan.vmac_ppoa}} pppoa
-  {% if 'forwarding' == context.vlan.vlan_mac %}  forwarding vlan-mac{% endif %}
-
-  {% if 'forward' == context.vlan.packet_policy_multicast %}  packet-policy multicast forward{% endif %}
-
-  {% if 'discard' == context.vlan.packet_policy_unicast %}  packet-policy unicast discard{% endif %}
-
-  {% if 'disable' == context.vlan.security_anti_ipspoofing %}  security anti-ipspoofing disable{% endif %}
-
-  {% if 'disable' == context.vlan.security_anti_macspoofing %}  security anti-macspoofing disable{% endif %}
-
-  igmp mismatch {{ context.vlan.igmp_mismatch}}
-  commit
+ vlan service-profile profile-id {{ context.profile.id}} profile-name {{ context.profile.name}}
+ {% if context.profile.vmac_ipoe != None %}  vmac {{ context.profile.vmac_ipoe}} ipoe
+{% endif %}
+  {% if context.profile.vmac_pppoe != None %}  vmac {{ context.profile.vmac_pppoe}} pppoe
+{% endif %}
+  {% if context.profile.vmac_pppoa != None %}  vmac {{ context.profile.vmac_pppoa}} pppoa
+{% endif %}
+  {% if None != context.profile.vlan_mac %}  {{ context.profile.vlan_mac}} vlan-mac
+{% endif %}
+  {% if context.profile.packet_policy_multicast != None %}  packet-policy multicast {{ context.profile.packet_policy_multicast}}
+{% endif %}
+  {% if context.profile.packet_policy_unicast != None %}  packet-policy unicast {{ context.profile.packet_policy_unicast}}
+{% endif %}
+  {% if context.profile.security_anti_ipspoofing != None %}  security anti-ipspoofing {{ context.profile.security_anti_ipspoofing}}
+{% endif %}
+  {% if context.profile.security_anti_macspoofing != None %}  security anti-macspoofing {{ context.profile.security_anti_macspoofing}}
+{% endif %}
+  {% if context.profile.igmp_mismatch != None %}  igmp mismatch {{ context.profile.igmp_mismatch}}
+{% endif %}
+  {% if context.profile.commit == True %}  commit
+{% endif %}
 

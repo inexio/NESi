@@ -32,4 +32,8 @@ class HuaweiPortProfileSchema(PortProfileSchema):
                                                   'reference_clock', 'cyclic_extension_flag', 'force_inp_ds',
                                                   'force_inp_us', 'g_993_2_profile', 'mode_specific', 'transmode',
                                                   'T1_413', 'G_992_1', 'G_992_2', 'G_992_3', 'G_992_4', 'G_992_5',
-                                                  'AnnexB_G_993_2', 'ETSI', 'us0_psd_mask', 'vdsltoneblackout')
+                                                  'AnnexB_G_993_2', 'ETSI', 'us0_psd_mask', 'vdsltoneblackout',
+                                                  'vmac_ipoe', 'vmac_pppoe', 'vmac_pppoa',
+                                                  'vlan_mac', 'packet_policy_multicast', 'packet_policy_unicast',
+                                                  'security_anti_ipspoofing',
+                                                  'security_anti_macspoofing', 'igmp_mismatch', 'commit')

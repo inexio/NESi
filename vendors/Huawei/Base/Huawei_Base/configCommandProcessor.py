@@ -17,6 +17,7 @@ import time
 from nesi import exceptions
 from .huaweiBaseCommandProcessor import HuaweiBaseCommandProcessor
 from .baseMixIn import BaseMixIn
+from .vlanSrvprofCommandProcessor import VlanSrvprofCommandProcessor
 
 
 class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
@@ -50,6 +51,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         if self._validate(args, 'configuration', 'tftp', str, str):
             ip, path = self._dissect(args, 'configuration', 'tftp', str, str)
             time.sleep(5)
+            text = self._render('backup_configuration_tftp', context=context)
+            self._write(text)
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)
@@ -277,15 +280,13 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             self._write(text)
 
         elif self._validate(args, 'alarm', 'active', 'alarmtype', 'environment', 'detail'):
-            text = self._render(
-                'display_alarm_active_alarmtype_environment_detail',
-                context=context)
+            text = self._render('display_alarm_active_alarmtype_environment_detail', context=context)
             self._write(text)
 
         elif self._validate(args, 'pitp', 'config'):
             text = self._render(
                 'display_pitp_config',
-                context=context)
+                context=dict(context, box=self._model))
             self._write(text)
 
         elif self._validate(args, 'mac-address', 'all'):
@@ -362,14 +363,16 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             for vlan in self._model.vlans:
                 try:
                     if vlan.bind_service_profile_id is not None and int(vlan.bind_service_profile_id) >= 0:
-                        profile = self._model.get_port_profile("id", int(vlan.bind_service_profile_id))
-                        text += self._render('display_current_configuration_section_vlan_srvprof_mid',
-                                             context=dict(context, vlan=vlan, profile=profile))
                         text2 += self._render('display_current_configuration_section_vlan_srvprof_bot',
-                                              context=dict(context, vlan=vlan, profile=profile))
-
+                                              context=dict(context, vlan=vlan))
                 except ValueError:
                     raise exceptions.CommandSyntaxError(command=command)
+
+            for profile in self._model.port_profiles:
+                if profile.type == 'service':
+                    text += self._render('display_current_configuration_section_vlan_srvprof_mid',
+                                         context=dict(context, profile=profile))
+
             text += text2
             text += self._render('display_current_configuration_section_vlan_srvprof_bot2',
                                  context=context)
@@ -629,7 +632,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
     def do_time(self, command, *args, context=None):
         if self._validate(args, 'dst', 'start', str, 'last', 'Sun', str, 'end', str, 'last', 'Sun', str,
                           'adjust', str):
-            #we dont have some internal time to set
+            # we dont have some internal time to set
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)
@@ -651,9 +654,28 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 context=context)
             self._write(text)
 
-        elif self._validate(args, 'service-profile', 'profile-name', str, 'profile-id', str):  # TODO: Functionality
+        elif self._validate(args, 'service-profile', 'profile-name', str, 'profile-id', str):
             name, id = self._dissect(args, 'service-profile', 'profile-name', str, 'profile-id', str)
-            return
+            try:
+                profile = self._model.get_port_profile('id', int(id))
+                assert profile.type == "service"
+            except exceptions.SoftboxenError:
+                try:
+                    self._model.add_port_profile(name=name, type='service', id=id)
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+            except AssertionError:
+                raise exceptions.CommandSyntaxError(command=command)
+            try:
+                profile = self._model.get_port_profile('id', int(id))
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+
+            context['srvprof'] = profile
+            subprocessor = self._create_subprocessor(
+                VlanSrvprofCommandProcessor, 'login', 'mainloop', 'enable', 'config', 'srvprof')
+
+            subprocessor.loop(context=context, return_to=ConfigCommandProcessor)
 
         elif self._validate(args, str, 'smart'):
             trafficvlan, = self._dissect(args, str, 'smart')
@@ -674,7 +696,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_raio_format(self, command, *args, context=None):  # TODO: Functionality
+    def do_raio_format(self, command, *args, context=None):
+        # not needed in simulation
         if self._validate(args, 'pitp-pmode', 'cid', 'eth', '"anid', 'eth', 'slot/port+1"'):
             return
 
@@ -687,7 +710,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_raio(self, command, *args, context=None):  # TODO: Functionality
+    def do_raio(self, command, *args, context=None):
+        # not needed in simulation
         if self._validate(args, 'sub-option', '0x81', 'pitp-pmode', 'enable'):
             return
 
@@ -703,30 +727,20 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_pitp(self, command, *args, context=None):  # TODO: Functionality
-        if self._validate(args, 'enable', 'pmode'):
-            text = self._render(
-                'pitp_enable_pmode',
-                context=context)
-            self._write(text)
-
-        elif self._validate(args, 'enable'):
-            text = self._render(
-                'please_wait_commit',
-                context=context)
-            self._write(text)
-
-        elif self._validate(args, 'disable'):
-            text = self._render(
-                'please_wait_commit',
-                context=context)
-            self._write(text)
-
+    def do_pitp(self, command, *args, context=None):
+        if self._validate(args, str, str):
+            pitp, mode = self._dissect(args, str, str)
+            if pitp == 'enable' or pitp == 'disable':
+                self._model.set_pitp(pitp)
+                self._model.set_pitp_mode(mode)
+                text = self._render('pitp_enable_pmode', context=context)
+                self._write(text)
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_raio_mode(self, command, *args, context=None):  # TODO: Functionality
+    def do_raio_mode(self, command, *args, context=None):
         if self._validate(args, 'user-defined', 'pitp-pmode'):
+            # not needed in simulation
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)
@@ -748,90 +762,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_forwarding(self, command, *args, context=None):  # TODO: Functionality
-        if self._validate(args, 'vlan-mac'):
-            text = self._render(
-                'please_wait_commit',
-                context=context)
-            self._write(text)
-        else:
-            raise exceptions.CommandSyntaxError(command=command)
-
-    def do_packet_policy(self, command, *args, context=None):  # TODO: Functionality
-        if self._validate(args, 'multicast', 'forward'):
-            text = self._render(
-                'please_wait_commit',
-                context=context)
-            self._write(text)
-
-        elif self._validate(args, 'unicast', 'discard'):
-            text = self._render(
-                'please_wait_commit',
-                context=context)
-            self._write(text)
-
-        else:
-            raise exceptions.CommandSyntaxError(command=command)
-
-    def do_security(self, command, *args, context=None):  # TODO: Functionality
-        if self._validate(args, 'anti-macspoofing', 'disable'):
-            text = self._render(
-                'please_wait_commit',
-                context=context)
-            self._write(text)
-
-        elif self._validate(args, 'anti-macspoofing', 'enable'):
-            text = self._render(
-                'please_wait_commit',
-                context=context)
-            self._write(text)
-
-        elif self._validate(args, 'anti-ipspoofing', 'disable'):
-            text = self._render(
-                'please_wait_commit',
-                context=context)
-            self._write(text)
-
-        elif self._validate(args, 'anti-ipspoofing', 'enable'):
-            text = self._render(
-                'please_wait_commit',
-                context=context)
-            self._write(text)
-
-        else:
-            raise exceptions.CommandSyntaxError(command=command)
-
-    def do_vmac(self, command, *args, context=None):  # TODO: Functionality
-        if self._validate(args, 'disable'):
-            text = self._render(
-                'please_wait_commit',
-                context=context)
-            self._write(text)
-
-        elif self._validate(args, 'enable'):
-            text = self._render(
-                'please_wait_commit',
-                context=context)
-            self._write(text)
-
-        else:
-            raise exceptions.CommandSyntaxError(command=command)
-
-    def do_igmp(self, command, *args, context=None):  # TODO: Functionality
-        if self._validate(args, 'mismatch', 'transparent'):
-            text = self._render(
-                'please_wait_commit',
-                context=context)
-            self._write(text)
-
-        else:
-            raise exceptions.CommandSyntaxError(command=command)
-
-    def do_commit(self, command, *args, context=None):  # TODO: Functionality
-        return
-
-    def do_undo(self, command, *args, context=None):  # TODO: Functionality
+    def do_undo(self, command, *args, context=None):
         if self._validate(args, 'system', 'snmp-user', 'password', 'security'):
+            # importend for future snmp interactions
             return
         elif self._validate(args, 'service-port', str):
             s_port_idx, = self._dissect(args, 'service-port', str)
@@ -906,7 +839,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_snmp_agent(self, command, *args, context=None):  # TODO: Functionality
+    def do_snmp_agent(self, command, *args, context=None):
+        # importend for future snmp interactions
         if self._validate(args, 'community', 'read', str):
             return
         elif self._validate(args, 'community', 'write', str):
@@ -1314,7 +1248,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
 
     def do_save(self, command, *args, context=None):
         if args == ():
-            # Saves the config that was entered
+            # command would save config but other commands do that automatically
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)

@@ -74,7 +74,7 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
                                           context=dict(context, emu=emu, result=result))
             text += self._render('display_system_status_collection_7', context=context)
             for port in self._model.ports:
-                result = ['Abnormal', 'Normal'][port.admin_state == 'activated']
+                result = ['Abnormal', 'Normal'][port.admin_state == '1']
                 context['spacer'] = self.create_spacers((9,), (result,))[0] * ' '
                 text += self._render('display_system_status_collection_8',
                                      context=dict(context, port=port, result=result))
