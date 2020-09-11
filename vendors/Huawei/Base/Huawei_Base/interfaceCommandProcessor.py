@@ -406,7 +406,10 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
 
             else:
                 raise exceptions.CommandSyntaxError(command=command)
-
+        elif self._validate(args, 'all'):
+            if context['iftype'] == 'vlanif':
+                raise exceptions.CommandSyntaxError(command=command)
+            self.card_ports_up(card)
         elif self._validate(args, str):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
@@ -426,8 +429,21 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_deactivate(self, command, *args, context=None):
-        if self._validate(args, str):
-            self.card_ports_down(args, context, command)
+        if context['iftype'] == 'vlanif':
+            raise exceptions.CommandSyntaxError(command=command)
+        card = context['component']
+        if self._validate(args, 'all'):
+            self.card_ports_down(card)
+        elif self._validate(args, str):
+            port_identifier, = self._dissect(args, str)
+            try:
+                portname = card.name + '/' + port_identifier
+                port = self._model.get_port("name", portname)
+
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+
+            port.admin_down()
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
@@ -476,8 +492,21 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_shutdown(self, command, *args, context=None):
-        if self._validate(args, str):
-            self.card_ports_down(args, context, command)
+        if context['iftype'] == 'vlanif':
+            raise exceptions.CommandSyntaxError(command=command)
+        card = context['component']
+        if self._validate(args, 'all'):
+            self.card_ports_down(card)
+        elif self._validate(args, str):
+            port_identifier, = self._dissect(args, str)
+            try:
+                portname = card.name + '/' + port_identifier
+                port = self._model.get_port("name", portname)
+
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+
+            port.admin_down()
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
@@ -610,24 +639,19 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                 vlan_if.set('subnet_num', None)
             else:
                 raise exceptions.CommandSyntaxError(command=command)
-        else:
-            raise exceptions.CommandSyntaxError(command=command)
-
-    def card_ports_down(self, args, context, command):
-        card = context['component']
-        if context['iftype'] == 'vlanif':
-            raise exceptions.CommandSyntaxError(command=command)
-        port_identifier, = self._dissect(
-            args, str)
-
-        if port_identifier == 'all':
-            ports = self._model.get_ports('card_id', card.id)
-            if not ports:
+        elif self._validate(args, 'shutdown', 'all'):
+            if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
-            for port in ports:
-                port.admin_down()
 
-        else:
+            card = context['component']
+            self.card_ports_up(card)
+        elif self._validate(args, 'shutdown', str):
+            if context['iftype'] == 'vlanif':
+                raise exceptions.CommandSyntaxError(command=command)
+
+            port_identifier, = self._dissect(args, 'shutdown', str)
+            card = context['component']
+
             try:
                 portname = card.name + '/' + port_identifier
                 port = self._model.get_port("name", portname)
@@ -635,6 +659,20 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 
+            port.admin_up()
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def card_ports_down(self, card):
+        ports = self._model.get_ports('card_id', card.id)
+        if not ports:
+            raise exceptions.CommandSyntaxError()
+        for port in ports:
             port.admin_down()
 
-
+    def card_ports_up(self, card):
+        ports = self._model.get_ports('card_id', card.id)
+        if not ports:
+            raise exceptions.CommandSyntaxError()
+        for port in ports:
+            port.admin_up()
