@@ -117,7 +117,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 subprocessor.loop(context=dict(context, component=component, iftype=iftype),
                                   return_to=ConfigCommandProcessor)
             else:
-                raise exceptions.CommandSyntaxError(command=command)
+                self._write(self._render('board_type_error', context=context))
+                return
         else:
             raise exceptions.CommandSyntaxError(command=command)
 

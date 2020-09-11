@@ -205,6 +205,12 @@ class HuaweiPort(Port):
     rx_power_h = base.Field('rx_power_h')
     vlan_id = base.Field('vlan_id')
 
+    def admin_up(self):
+        self.update(admin_state='2')
+
+    def admin_down(self):
+        self.update(admin_state='0')
+
     def port_downstream_set(self, ds_rate):
         self.update(downstream_max=ds_rate)
 
