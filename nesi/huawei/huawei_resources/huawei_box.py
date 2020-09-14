@@ -32,6 +32,7 @@ class HuaweiBox(Box):
     interactive_mode = base.Field('interactive_mode')
     pitp = base.Field('pitp')
     pitp_mode = base.Field('pitp_mode')
+    dsl_mode = base.Field('dsl_mode')
 
     @property
     def credentials(self):
@@ -403,6 +404,10 @@ class HuaweiBox(Box):
     def enable_interactive(self):
         """Enable Interactive function."""
         self.update(interactive_mode=True)
+
+    def set_dsl_mode(self, mode):
+        """Change the dsl mode of a box"""
+        self.update(dsl_mode=mode)
 
 
     def set_pitp(self, state):
