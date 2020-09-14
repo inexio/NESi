@@ -296,16 +296,19 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
         if self._validate(args, str, 'prof-desc', 'ds-rate', str, 'us-rate', str):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
+            if self._model.dsl_mode == 'tr129':
+                raise exceptions.CommandSyntaxError(command=command)
             if card.product == 'vdsl':
                 port_idx, ds_rate, us_rate, = self._dissect(
                     args, str, 'prof-desc', 'ds-rate', str, 'us-rate', str)
 
                 try:
-                    port = self._model.get_port("name", port_idx)
-                    port.port_downstream_set(ds_rate)
-                    port.port_upstream_set(us_rate)
+                    port_name = card.name + '/' + port_idx
+                    port = self._model.get_port("name", port_name)
+                    port.port_downstream_set(int(ds_rate))
+                    port.port_upstream_set(int(us_rate))
 
-                except exceptions.SoftboxenError:
+                except (exceptions.SoftboxenError, ValueError):
                     raise exceptions.CommandSyntaxError(command=command)
 
                 if port.downstream_max != int(ds_rate) and port.upstream_max != int(us_rate):
@@ -319,13 +322,16 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             # TODO: Brackets mean optional parameters, so make them optional...
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
+            if self._model.dsl_mode == 'tr129':
+                raise exceptions.CommandSyntaxError(command=command)
             if card.product == 'vdsl':
                 port_idx, ds_rate, us_rate = self._dissect(args, str, 'prof.desc', 'ds-rate', str, 'us-rate', str,
                                                            'noise-margin', 'VDSL_6db', 'inp-delay', 'VDSL_(FAST)',
                                                            '(spectrum str)', '(dpbo DPBO:str)')
 
                 try:
-                    _ = self._model.get_port("name", port_idx)
+                    port_name = card.name + '/' + port_idx
+                    port = self._model.get_port("name", port_name)
 
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
@@ -340,13 +346,16 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             # TODO: Brackets mean optional parameters, so make them optional...
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
+            if self._model.dsl_mode == 'tr129':
+                raise exceptions.CommandSyntaxError(command=command)
             if card.product == 'vdsl':
                 port_idx, ds_rate, us_rate = self._dissect(args, str, 'prof.desc', 'ds-rate', str, 'us-rate', str,
                                                            'noise-margin', 'ADSL_6db', 'inp-delay', 'ADSL_(FAST)',
                                                            '(spectrum str)', '(dpbo DPBO:str)')
 
                 try:
-                    _ = self._model.get_port("name", port_idx)
+                    port_name = card.name + '/' + port_idx
+                    port = self._model.get_port("name", port_name)
 
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
@@ -361,13 +370,16 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             # TODO: Brackets mean optional parameters, so make them optional...
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
+            if self._model.dsl_mode == 'tr129':
+                raise exceptions.CommandSyntaxError(command=command)
             if card.product == 'vdsl':
                 port_idx, ds_rate, us_rate = self._dissect(args, str, 'prof.desc', 'ds-rate', str, 'us-rate', str,
                                                            'noise-margin', 'ADSL_6db', 'inp-delay', 'ADSL',
                                                            '(spectrum str)', '(dpbo DPBO:str)')
 
                 try:
-                    _ = self._model.get_port("name", port_idx)
+                    port_name = card.name + '/' + port_idx
+                    port = self._model.get_port("name", port_name)
 
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
@@ -380,12 +392,15 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
         elif self._validate(args, str, 'template-name', str):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
+            if self._model.dsl_mode == 'tr165':
+                raise exceptions.CommandSyntaxError(command=command)
             if card.product == 'adsl':
                 # TODO: Template looks like this: {huawei_downstream}_{huawei_downstream}_ADSL
                 port_idx, template_name = self._dissect(args, str, 'template-name', str)
 
                 try:
-                    _ = self._model.get_port("name", port_idx)
+                    port_name = card.name + '/' + port_idx
+                    port = self._model.get_port("name", port_name)
 
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
@@ -397,7 +412,8 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                 port_idx, template_name = self._dissect(args, str, 'template-name', str)
 
                 try:
-                    _ = self._model.get_port("name", port_idx)
+                    port_name = card.name + '/' + port_idx
+                    port = self._model.get_port("name", port_name)
 
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
