@@ -10,10 +10,11 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 from datetime import datetime
-
 from nesi import exceptions
 from .baseCommandProcessor import BaseCommandProcessor
 from .baseMixIn import BaseMixIn
+
+import time
 
 
 class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
@@ -126,15 +127,25 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
                 self._write(text)
                 return
 
-            answer_one = self.user_input('Warning: The operation will result in loss of all VDSL configuration. '
+            answer_one = self.user_input('  Warning: The operation will result in loss of all VDSL configuration. '
                                          'Are you sure to proceed? (y/n)[n]:', False)
             if answer_one != 'y':
                 return
-            answer_two = self.user_input('Please enter y again to confirm:', False)
+            answer_two = self.user_input('  Warning: The operation will automatically save and reboot system. '
+                                         'Are you sure you want to proceed? (y/n)[n]:', False)
             if answer_two != 'y':
                 return
 
+            text = self._render('switch_dsl_mode_temp_2', context=context)
+            self._write(text)
             self._model.set_dsl_mode(dsl_mode)
+            time.sleep(10)
+            self._model.set_last_logout(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
+            user = self._model.get_user('status', 'Online')
+            user.set_offline()
+            exc = exceptions.TerminalExitError()
+            exc.return_to = 'sysreboot'
+            raise exc
 
         else:
             raise exceptions.CommandSyntaxError(command=command)
