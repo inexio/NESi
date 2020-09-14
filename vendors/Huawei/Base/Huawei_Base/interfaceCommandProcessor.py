@@ -556,7 +556,6 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
 
         elif self._validate(args, 'delete', str, str):
             # delete all subcomponents
-            # TODO: delete service_ports + service_vlans
             port_idx, ont_idx = self._dissect(args, 'delete', str, str)
             card = context['component']
             try:
@@ -574,11 +573,37 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                         if len(cpe_ports) != 0:
                             for cpe_port_coll in cpe_ports:
                                 for cpe_port in cpe_port_coll:
+                                    while True:
+                                        params = dict(connected_type='cpe', connected_id=cpe_port.id)
+                                        service_port = self._model.get_service_port_by_values(params)
+                                        if service_port is None:
+                                            break
+                                        try:
+                                            service_vlan = self._model.get_service_vlan('service_port_id',
+                                                                                        service_port.id)
+                                        except exceptions.SoftboxenError:
+                                            pass
+                                        else:
+                                            service_vlan.delete()
+                                        service_port.delete()
                                     cpe_port.delete()
                         for cpe_coll in cpes:
                             for cpe in cpe_coll:
                                 cpe.delete()
                     for ont_port in ont_ports:
+                        while True:
+                            params = dict(connected_type='ont', connected_id=ont_port.id)
+                            service_port = self._model.get_service_port_by_values(params)
+                            if service_port is None:
+                                break
+                            else:
+                                try:
+                                    service_vlan = self._model.get_service_vlan('service_port_id', service_port.id)
+                                except exceptions.SoftboxenError:
+                                    pass
+                                else:
+                                    service_vlan.delete()
+                                service_port.delete()
                         ont_port.delete()
                 ont.delete()
             except exceptions.SoftboxenError:
