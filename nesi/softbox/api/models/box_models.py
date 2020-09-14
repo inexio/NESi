@@ -106,3 +106,5 @@ class Box(db.Model):
     interactive_mode = db.Column(db.Boolean(), default=True)
     pitp = db.Column(db.Enum('enable', 'disable'), default='disable')
     pitp_mode = db.Column(db.String(), default='')
+    dsl_mode = db.Column(db.Enum('tr165', 'tr129'), default='tr165')
+

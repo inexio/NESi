@@ -47,13 +47,13 @@ class HuaweiOntPort(OntPort):
     max_mac_count = base.Field('max_mac_count')
     vlan_id = base.Field('vlan_id')
     
-    def operational_state_down(self):
-        """Change ont port operational state to down."""
-        self.update(operational_state='0')
+    def down(self):
+        """Change ont port admin state to down."""
+        self.update(admin_state='0')
         
-    def operational_state_up(self):
-        """Change ont port operational state to up."""
-        self.update(operational_state='1')
+    def up(self):
+        """Change ont port admin state to up."""
+        self.update(admin_state='1')
 
 
 class HuaweiOntPortCollection(OntPortCollection):

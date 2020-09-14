@@ -518,7 +518,7 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                               'ont-srvprofile-id', str, 'desc', str)
             card = context['component']
             # create ont
-            '''port = self._model.get_port('name', card.name + '/' + port_idx)
+            port = self._model.get_port('name', card.name + '/' + port_idx)
             try:
                 self._model.get_ont('name', card.name + '/' + port_idx + '/' + ont_idx)
                 raise exceptions.CommandSyntaxError(command=command)
@@ -536,11 +536,11 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                 raise exceptions.CommandSyntaxError(command=command)
             ont_port = self._model.add_ont_port(ont_id=ont.id)
             if ont_port is None:
-                raise exceptions.CommandSyntaxError(command=command)'''
+                raise exceptions.CommandSyntaxError(command=command)
 
         elif self._validate(args, 'delete', str, str):
             # delete all subcomponents
-            #TODO: delelte service_ports + service_vlans
+            # TODO: delete service_ports + service_vlans
             port_idx, ont_idx = self._dissect(args, 'delete', str, str)
             card = context['component']
             try:
@@ -586,9 +586,9 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                 raise exceptions.CommandSyntaxError(command=command)
 
             if state == 'on':
-                ont_port.operational_state_up()
+                ont_port.up()
             elif state == 'off':
-                ont_port.operational_state_down()
+                ont_port.down()
             else:
                 raise exceptions.CommandSyntaxError(command=command)
 

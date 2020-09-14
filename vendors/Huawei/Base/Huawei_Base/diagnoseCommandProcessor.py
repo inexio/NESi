@@ -112,16 +112,29 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
                 raise exceptions.CommandSyntaxError(command=command)
 
             dsl_mode, = self._dissect(args, 'vdsl', 'mode', 'to', str)
-            if dsl_mode != 'timode' and dsl_mode != 'tr129' and dsl_mode != 'tr165':
+            context['dsl_mode'] = dsl_mode
+            if dsl_mode != 'tr129' and dsl_mode != 'tr165':
                 raise exceptions.CommandSyntaxError(command=command)
 
-            aone = self.user_input('Please enter y if you want to continue: ')
-            if aone != 'y':
-                raise exceptions.CommandSyntaxError(command=command)
-            atwo = self.user_input('Please enter y again to confirm: ')
-            if atwo != 'y':
-                raise exceptions.CommandSyntaxError(command=command)
+            self.user_input('{ <cr>|adsl<K> }:', False)
 
-            return
+            text = self._render('switch_dsl_mode_temp_1', context=context)
+            self._write(text)
+
+            if self._model.dsl_mode == dsl_mode:
+                text = self._render('switch_dsl_mode_failure', context=context)
+                self._write(text)
+                return
+
+            answer_one = self.user_input('Warning: The operation will result in loss of all VDSL configuration. '
+                                         'Are you sure to proceed? (y/n)[n]:', False)
+            if answer_one != 'y':
+                return
+            answer_two = self.user_input('Please enter y again to confirm:', False)
+            if answer_two != 'y':
+                return
+
+            self._model.set_dsl_mode(dsl_mode)
+
         else:
             raise exceptions.CommandSyntaxError(command=command)

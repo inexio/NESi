@@ -59,7 +59,7 @@ class BaseCommandProcessor(base.CommandProcessor):
             elif type == 'port':
                 object.operational_state = 'activated'
             elif type == 'service_port':
-                object.operational_state = 'disable'
+                object.operational_state = 'up'
             elif type in ('ont', 'ont_port'):
                 object.operational_state = 'online'
         elif object.operational_state == '2':

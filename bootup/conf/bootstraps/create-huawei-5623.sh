@@ -97,6 +97,7 @@ req='{
   "network_protocol": "telnet",
   "network_address": "127.0.0.1",
   "network_port": 9023,
+  "dsl_mode": "tr165",
   "uuid": "5623"
 }'
 
