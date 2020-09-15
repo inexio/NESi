@@ -33,7 +33,7 @@ class HuaweiPortSchema(PortSchema):
                                            'channel_ds_data_rate_profile', 'channel_ds_data_rate_profile_num',
                                            'channel_us_data_rate_profile', 'channel_us_data_rate_profile_num',
                                            'channel_inp_delay_profile', 'channel_inp_data_rate_profile_num',
-                                           'channel_ds_rate_adapt_ratio', 'channel_us_rate_adapt_ratio', 'group_id',
+                                           'channel_ds_rate_adapt_ratio', 'channel_us_rate_adapt_ratio',
                                            'current_power_management_state', 'retransmission_used_us',
                                            'retransmission_used_ds', 'signal_attenuation_ds_1',
                                            'signal_attenuation_us_1', 'line_attenuation_ds_1',
@@ -74,4 +74,4 @@ class HuaweiPortSchema(PortSchema):
                                            'auto_sensing', 'alm_prof_15_min', 'warn_prof_15_min', 'alm_prof_24_hour',
                                            'warn_prof_24_hour', 'optic_status', 'combo_status', 'temperature_h_exact',
                                            'supply_voltage_h_exact', 'tx_bias_current_h_exact', 'tx_power_h_exact',
-                                           'rx_power_h_exact', 'vlan_id', 'rx_power_h')
+                                           'rx_power_h_exact', 'vlan_id', 'rx_power_h', 'vectoring_group')

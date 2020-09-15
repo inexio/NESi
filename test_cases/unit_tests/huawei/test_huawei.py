@@ -27,7 +27,7 @@ class TestHuawei(TestCore):
         port.admin_down()
         assert(self.model.get_port("name", '0/0/0').admin_state == '0')
         port.admin_up()
-        assert(self.model.get_port("name", '0/0/0').admin_state == '1')
+        assert(self.model.get_port("name", '0/0/0').admin_state == '2')
         port.up()
         assert port.operational_state == '1'
         port.down()
@@ -75,10 +75,10 @@ class TestHuawei(TestCore):
 
     def test_ont_ports(self):
         port = self.model.get_ont_port("name", '0/2/0/0/1')
-        port.operational_state_up()
-        assert (port.operational_state == '1')
-        port.operational_state_down()
-        assert (port.operational_state == '0')
+        port.up()
+        assert (port.admin_state == '1')
+        port.down()
+        assert (port.admin_state == '0')
 
     def test_port_profiles(self):
         port = self.model.get_port_profile("name", "PPPoE")

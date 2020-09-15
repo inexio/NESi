@@ -18,7 +18,7 @@ LOG = logging.getLogger(__name__)
 class HuaweiOntPort(OntPort):
     """Represent physical ONT port resource."""
 
-    operational_state = base.Field('operational_state')
+    admin_state = base.Field('admin_state')
     ont_port_index = base.Field('ont_port_index')
     ont_port_type = base.Field('ont_port_type')
     speed = base.Field('speed')
