@@ -380,7 +380,8 @@ req='{
   "mgnt_entity_oamipaddr": "0.0.0.0",
   "mgnt_entity_pairnum": 0,
   "dual_host_ip": "0.0.0.0",
-  "dual_host_loc": "none"
+  "dual_host_loc": "none",
+  "product": "mgnt"
 }'
 
 card_nt_a=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)

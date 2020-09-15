@@ -61,50 +61,49 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
 
                 for port in ports:
                     self.map_states(port, 'port')
-                    if card.id == port.card_id:
-                        if port.admin_state == 'activated':
-                            activated_count += 1
-                        _, _, portname = port.name.split('/')
-                        context['portname'] = portname
-                        if card.product == 'vdsl':
-                            porttype = 'VDSL'
-                        else:
-                            porttype = 'ADSL'
-                        context['porttype'] = porttype
-                        context['spacer_beg1'] = self.create_spacers((6,), (portname,))[0] * ' '
-                        context['spacer1'] = self.create_spacers((7,), (porttype,))[0] * ' '
-                        context['spacer2'] = self.create_spacers((3,), ('',))[0] * ' '
-                        context['spacer3'] = self.create_spacers(
-                            (25,), (port.admin_state + str(port.alarm_template_num),))[0] * ' '
-                        context['spacer4'] = self.create_spacers((13,), (port.spectrum_profile_num,))[0] * ' '
-                        context['spacer5'] = self.create_spacers((13,), (port.upbo_profile_num,))[0] * ' '
-                        text1 += self._render('display_board_dsl_product_top_middle',
-                                              context=dict(context, port=port))
-                        port_counter += 1
+                    if port.admin_state == 'activated':
+                        activated_count += 1
+                    _, _, portname = port.name.split('/')
+                    context['portname'] = portname
+                    if card.product == 'vdsl':
+                        porttype = 'VDSL'
+                    else:
+                        porttype = 'ADSL'
+                    context['porttype'] = porttype
+                    context['spacer_beg1'] = self.create_spacers((6,), (portname,))[0] * ' '
+                    context['spacer1'] = self.create_spacers((7,), (porttype,))[0] * ' '
+                    context['spacer2'] = self.create_spacers((3,), ('',))[0] * ' '
+                    context['spacer3'] = self.create_spacers(
+                        (25,), (port.admin_state + str(port.alarm_template_num),))[0] * ' '
+                    context['spacer4'] = self.create_spacers((13,), (port.spectrum_profile_num,))[0] * ' '
+                    context['spacer5'] = self.create_spacers((13,), (port.upbo_profile_num,))[0] * ' '
+                    text1 += self._render('display_board_dsl_product_top_middle',
+                                          context=dict(context, port=port))
+                    port_counter += 1
 
-                        context['spacer_beg2'] = self.create_spacers((6,), (portname,))[0] * ' '
-                        context['spacer6'] = self.create_spacers((11,), (port.sos_profile_num,))[0] * ' '
-                        context['spacer7'] = self.create_spacers((11,), (port.dpbo_profile_num,))[0] * ' '
-                        context['spacer8'] = self.create_spacers((13,), (port.rfi_profile_num,))[0] * ' '
-                        context['spacer9'] = self.create_spacers((13,), (port.noise_margin_profile_num,))[0] * ' '
-                        context['spacer10'] = self.create_spacers((13,), (port.virtual_noise_profile_num,))[0] * ' '
-                        context['spacer11'] = self.create_spacers((13,), (port.inm_profile_num,))[0] * ' '
-                        text2 += self._render('display_board_dsl_product_middle_middle', context=dict(context,
-                                                                                                      port=port))
+                    context['spacer_beg2'] = self.create_spacers((6,), (portname,))[0] * ' '
+                    context['spacer6'] = self.create_spacers((11,), (port.sos_profile_num,))[0] * ' '
+                    context['spacer7'] = self.create_spacers((11,), (port.dpbo_profile_num,))[0] * ' '
+                    context['spacer8'] = self.create_spacers((13,), (port.rfi_profile_num,))[0] * ' '
+                    context['spacer9'] = self.create_spacers((13,), (port.noise_margin_profile_num,))[0] * ' '
+                    context['spacer10'] = self.create_spacers((13,), (port.virtual_noise_profile_num,))[0] * ' '
+                    context['spacer11'] = self.create_spacers((13,), (port.inm_profile_num,))[0] * ' '
+                    text2 += self._render('display_board_dsl_product_middle_middle', context=dict(context,
+                                                                                                  port=port))
 
-                        channelname = portname + '.1'
-                        context['channelname'] = channelname
-                        context['spacer_beg3'] = self.create_spacers((7,), (channelname,))[0] * ' '
-                        context['spacer12'] = self.create_spacers((21,),
-                                                                  (port.channel_ds_data_rate_profile_num,))[0] * ' '
-                        context['spacer13'] = self.create_spacers((13,),
-                                                                  (port.channel_us_data_rate_profile_num,))[0] * ' '
-                        context['spacer14'] = self.create_spacers((13,),
-                                                                  (port.channel_inp_data_rate_profile_num,))[0] * ' '
-                        context['spacer15'] = self.create_spacers((13,), (port.channel_ds_rate_adapt_ratio,))[0] * ' '
-                        context['spacer16'] = self.create_spacers((13,), (port.channel_us_rate_adapt_ratio,))[0] * ' '
-                        text3 += self._render('display_board_dsl_product_bottom_middle', context=dict(context,
-                                                                                                      port=port))
+                    channelname = portname + '.1'
+                    context['channelname'] = channelname
+                    context['spacer_beg3'] = self.create_spacers((7,), (channelname,))[0] * ' '
+                    context['spacer12'] = self.create_spacers((21,),
+                                                              (port.channel_ds_data_rate_profile_num,))[0] * ' '
+                    context['spacer13'] = self.create_spacers((13,),
+                                                              (port.channel_us_data_rate_profile_num,))[0] * ' '
+                    context['spacer14'] = self.create_spacers((13,),
+                                                              (port.channel_inp_data_rate_profile_num,))[0] * ' '
+                    context['spacer15'] = self.create_spacers((13,), (port.channel_ds_rate_adapt_ratio,))[0] * ' '
+                    context['spacer16'] = self.create_spacers((13,), (port.channel_us_rate_adapt_ratio,))[0] * ' '
+                    text3 += self._render('display_board_dsl_product_bottom_middle', context=dict(context,
+                                                                                                  port=port))
 
                 context['activated_count'] = activated_count
                 context['port_counter'] = port_counter - activated_count
@@ -129,67 +128,66 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
                 ports = self._model.get_ports('card_id', card.id)
 
                 for port in ports:
-                    if card.id == port.card_id:
-                        _, _, portname = port.name.split('/')
-                        context['portname'] = portname
-                        porttype = 'GPON'
-                        context['porttype'] = porttype
-                        context['spacer_beg1'] = self.create_spacers((5,), (portname,))[0] * ' '
-                        context['spacer3'] = self.create_spacers((9,), (porttype,))[0] * ' '
-                        context['spacer4'] = self.create_spacers((9,), (port.min_distance,))[0] * ' '
-                        context['spacer5'] = self.create_spacers((16,), (port.max_distance,))[0] * ' '
-                        context['spacer6'] = self.create_spacers((19,), (port.optical_module_status,))[0] * ' '
-                        text1 += self._render('display_board_ftth_pon_top_middle', context=dict(context, port=port))
+                    _, _, portname = port.name.split('/')
+                    context['portname'] = portname
+                    porttype = 'GPON'
+                    context['porttype'] = porttype
+                    context['spacer_beg1'] = self.create_spacers((5,), (portname,))[0] * ' '
+                    context['spacer3'] = self.create_spacers((9,), (porttype,))[0] * ' '
+                    context['spacer4'] = self.create_spacers((9,), (port.min_distance,))[0] * ' '
+                    context['spacer5'] = self.create_spacers((16,), (port.max_distance,))[0] * ' '
+                    context['spacer6'] = self.create_spacers((19,), (port.optical_module_status,))[0] * ' '
+                    text1 += self._render('display_board_ftth_pon_top_middle', context=dict(context, port=port))
 
-                        onts = self._model.get_onts('port_id', port.id)
+                    onts = self._model.get_onts('port_id', port.id)
 
-                        ontcounter = 0
-                        onlinecounter = 0
+                    ontcounter = 0
+                    onlinecounter = 0
+                    for ont in onts:
+                        if ont.port_id == port.id:
+                            ontcounter += 1
+                            if ont.admin_state == '1':
+                                onlinecounter += 1
+
+                    subrackname, cardportname = port.name.split('/', maxsplit=1)
+                    subrackname = subrackname + '/'
+                    context['subrackname'] = subrackname
+                    context['cardportname'] = cardportname
+                    context['ontcounter'] = ontcounter
+                    context['onlinecounter'] = onlinecounter
+
+                    if not onts:
+                        text2 += self._render('display_board_ftth_pon_ont_summary', context=context)
+
+                    else:
+                        text2 += self._render('display_board_ftth_pon_middle_top', context=context)
                         for ont in onts:
-                            if ont.port_id == port.id:
-                                ontcounter += 1
-                                if ont.admin_state == '1':
-                                    onlinecounter += 1
+                            self.map_states(ont, 'ont')
+                            context['ont_id'] = ont.index
+                            context['spacer_beg2'] = self.create_spacers((4,), (subrackname,))[0] * ' '
+                            context['spacer7'] = self.create_spacers((4,), (cardportname,))[0] * ' '
+                            context['spacer8'] = self.create_spacers((5,), (ont.index,))[0] * ' '
+                            context['spacer9'] = self.create_spacers((18,), (ont.serial_number,))[0] * ' '
+                            context['spacer10'] = self.create_spacers((8,), (ont.control_flag,))[0] * ' '
+                            context['spacer11'] = self.create_spacers((12,), (ont.admin_state,))[0] * ' '
+                            context['spacer12'] = self.create_spacers((9,), (ont.config_state,))[0] * ' '
+                            context['spacer13'] = self.create_spacers((8,), (ont.match_state,))[0] * ' '
+                            context['spacer14'] = self.create_spacers((4,), ('',))[0] * ' '
 
-                        subrackname, cardportname = port.name.split('/', maxsplit=1)
-                        subrackname = subrackname + '/'
-                        context['subrackname'] = subrackname
-                        context['cardportname'] = cardportname
-                        context['ontcounter'] = ontcounter
-                        context['onlinecounter'] = onlinecounter
+                            text2 += self._render('display_board_ftth_pon_middle_middle',
+                                                  context=dict(context, ont=ont))
 
-                        if not onts:
+                            text2 += self._render('display_board_ftth_pon_bottom_top', context=context)
+                            context['ont_id'] = ont.index
+                            context['spacer_beg3'] = self.create_spacers((4,), (subrackname,))[0] * ' '
+                            context['spacer15'] = self.create_spacers((4,), (cardportname,))[0] * ' '
+                            context['spacer16'] = self.create_spacers((8,), (ont.index,))[0] * ' '
+                            context['spacer17'] = self.create_spacers((3,), ('',))[0] * ' '
+                            text2 += self._render('display_board_ftth_pon_bottom_middle',
+                                                  context=dict(context, ont=ont))
+
+                            text2 += self._render('display_board_ftth_pon_bottom_bottom', context=context)
                             text2 += self._render('display_board_ftth_pon_ont_summary', context=context)
-
-                        else:
-                            text2 += self._render('display_board_ftth_pon_middle_top', context=context)
-                            for ont in onts:
-                                self.map_states(ont, 'ont')
-                                context['ont_id'] = ont.index
-                                context['spacer_beg2'] = self.create_spacers((4,), (subrackname,))[0] * ' '
-                                context['spacer7'] = self.create_spacers((4,), (cardportname,))[0] * ' '
-                                context['spacer8'] = self.create_spacers((5,), (ont.index,))[0] * ' '
-                                context['spacer9'] = self.create_spacers((18,), (ont.serial_number,))[0] * ' '
-                                context['spacer10'] = self.create_spacers((8,), (ont.control_flag,))[0] * ' '
-                                context['spacer11'] = self.create_spacers((12,), (ont.admin_state,))[0] * ' '
-                                context['spacer12'] = self.create_spacers((9,), (ont.config_state,))[0] * ' '
-                                context['spacer13'] = self.create_spacers((8,), (ont.match_state,))[0] * ' '
-                                context['spacer14'] = self.create_spacers((4,), ('',))[0] * ' '
-
-                                text2 += self._render('display_board_ftth_pon_middle_middle',
-                                                      context=dict(context, ont=ont))
-
-                                text2 += self._render('display_board_ftth_pon_bottom_top', context=context)
-                                context['ont_id'] = ont.index
-                                context['spacer_beg3'] = self.create_spacers((4,), (subrackname,))[0] * ' '
-                                context['spacer15'] = self.create_spacers((4,), (cardportname,))[0] * ' '
-                                context['spacer16'] = self.create_spacers((8,), (ont.index,))[0] * ' '
-                                context['spacer17'] = self.create_spacers((3,), ('',))[0] * ' '
-                                text2 += self._render('display_board_ftth_pon_bottom_middle',
-                                                      context=dict(context, ont=ont))
-
-                                text2 += self._render('display_board_ftth_pon_bottom_bottom', context=context)
-                                text2 += self._render('display_board_ftth_pon_ont_summary', context=context)
 
                 text1 += self._render('display_board_ftth_pon_top_bottom', context=context)
 
@@ -218,7 +216,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
                 ports = self._model.get_ports('card_id', card.id)
 
                 for port in ports:
-                    if port.card_id == card.id and port.link != 'failed':
+                    if port.link != 'failed':
                         _, _, portname = port.name.split('/')
                         context['portname'] = portname
                         porttype = ''
@@ -309,7 +307,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
                 ports = self._model.get_ports('card_id', card.id)
 
                 for port in ports:
-                    if port.card_id == card.id and port.link != 'failed':
+                    if port.link != 'failed':
                         _, _, portname = port.name.split('/')
                         porttype = ''
                         if port.speed_h == '1000':
@@ -373,6 +371,76 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
 
                 self._write(text_header)
 
+            elif card.product == 'mgnt':
+                text_header = self._render('display_board_mgnt_header', context=dict(context, card=card))
+                text_top = ''
+                text_bottom = ''
+                text_failed = ''
+
+                text_top += self._render('display_board_mgnt_top_top', context=context)
+                text_bottom += self._render('display_board_mgnt_bottom_top', context=context)
+                ports = self._model.get_ports('card_id', card.id)
+                for port in ports:
+                    if port.link == 'failed':
+                        text_failed += self._render('display_board_mgnt_failed_top', context=context)
+
+                        _, _, port_num = port.name.split('/')
+                        context['port_num'] = port_num
+                        port_type = 'AUTO'
+                        context['port_type'] = port_type
+                        link_down = 'DOWN'
+                        context['link_down'] = link_down
+
+                        context['spacer1'] = self.create_spacers((6,), (port_num,))[0] * ' '
+                        context['spacer2'] = self.create_spacers((2,), ('',))[0] * ' '
+                        context['spacer3'] = self.create_spacers((17,), (port_type,))[0] * ' '
+                        text_failed += self._render('display_board_mgnt_failed_mid', context=dict(context, port=port))
+
+                        text_failed += self._render('display_board_mgnt_failed_bottom', context=context)
+
+                    else:
+                        port_type = 'GE'
+                        _, _, port_num = port.name.split('/')
+                        context['port_num'] = port_num
+                        context['port_type'] = port_type
+
+                        context['spacer1'] = self.create_spacers((5,), ('',))[0] * ' '
+                        context['spacer2'] = self.create_spacers((2,), (port_num,))[0] * ' '
+                        context['spacer3'] = self.create_spacers((5,), (port_type,))[0] * ' '
+                        context['spacer4'] = self.create_spacers((9,), (port.combo_status,))[0] * ' '
+                        context['spacer5'] = self.create_spacers((9,), (port.optic_status,))[0] * ' '
+                        context['spacer6'] = self.create_spacers((7,), (port.mdi,))[0] * ' '
+                        context['spacer7'] = self.create_spacers((11,), (port.speed_h,))[0] * ' '
+                        context['spacer8'] = self.create_spacers((10,), (port.duplex,))[0] * ' '
+                        context['spacer9'] = self.create_spacers((6,), (port.flow_ctrl,))[0] * ' '
+                        context['spacer10'] = self.create_spacers((9,), (port.active_state,))[0] * ' '
+                        text_top += self._render('display_board_mgnt_top_mid', context=dict(context, port=port))
+
+                        context['spacer1'] = self.create_spacers((6,), (port_num,))[0] * ' '
+                        context['spacer2'] = self.create_spacers((9,), (port.alm_prof_15_min,))[0] * ' '
+                        context['spacer3'] = self.create_spacers((9,), (port.warn_prof_15_min,))[0] * ' '
+                        context['spacer4'] = self.create_spacers((8,), (port.alm_prof_24_hour,))[0] * ' '
+                        context['spacer5'] = self.create_spacers((9,), (port.warn_prof_24_hour,))[0] * ' '
+                        text_bottom += self._render('display_board_mgnt_bottom_mid', context=dict(context, port=port))
+
+                text_top += self._render('display_board_mgnt_top_bottom', context=context)
+                text_bottom += self._render('display_board_mgnt_bottom_bottom', context=context)
+
+                try:
+                    port_name_0 = card.name + '/0'
+                    port_0 = self._model.get_port('name', port_name_0)
+                    port_name_1 = card.name + '/1'
+                    port_1 = self._model.get_port('name', port_name_1)
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+
+                if port_0.link == 'failed':
+                    text = text_header + text_failed + text_top + text_bottom
+                elif port_1.link == 'failed':
+                    text = text_header + text_top + text_bottom + text_failed
+                else:
+                    text = text_header + text_top + text_bottom
+                self._write(text)
             else:
                 raise exceptions.CommandSyntaxError(command=command)
         return

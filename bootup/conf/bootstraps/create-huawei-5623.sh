@@ -751,6 +751,29 @@ req='{
 
 ont_port_0_3_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
 
+### Serviceport 0/3/0/1/1 ###
+
+req='{
+  "name": "0/3/0/1/1",
+  "connected_id": '$ont_port_0_3_0_1_1',
+  "connected_type": "ont",
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+service_port_0_3_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
+
+### Service PPPoE Vlan at ServicePort 0/3/0/1/1  ###
+
+req='{
+  "name": "2620",
+  "service_port_id": '$service_port_0_3_0_1_1',
+  "vlan_id": '$vlan_pppoe',
+  "card_id": '$card_0_3'
+}'
+
+service_vlan_0_3_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlans)
+
 ### Cpe 0/3/0 1/1 1 ###
 
 # Create a physical cpe at the ont-port (admin operation)
@@ -772,6 +795,29 @@ req='{
 }'
 
 cpe_port_0_3_0_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_ports)
+
+### Serviceport 0/3/0/1/1/1/1 ###
+
+req='{
+  "name": "0/3/0/1/1/1/1",
+  "connected_id": '$cpe_port_0_3_0_1_1_1_1',
+  "connected_type": "cpe",
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+service_port_0_3_0_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
+
+### Service PPPoE Vlan at ServicePort 0/3/0/1/1/1/1  ###
+
+req='{
+  "name": "2620",
+  "service_port_id": '$service_port_0_3_0_1_1_1_1',
+  "vlan_id": '$vlan_pppoe',
+  "card_id": '$card_0_3'
+}'
+
+service_vlan_0_3_0_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlans)
 
 ### OntPort 0/3/0 1/2 ###
 
@@ -1002,3 +1048,75 @@ req='{
 }'
 
 ont_port_0_4_2_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
+
+### Management Card 0/6 ###
+
+# Create a physical card at the network device (admin operation)
+req='{
+  "subrack_id": '$subrack_0',
+  "name": "0/6",
+  "description": "Physical card 0/6",
+  "product": "mgnt",
+  "board_name": "HS22CCVW",
+  "board_status": "Active_normal"
+}'
+
+card_0_6=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
+
+### PORT 0/6/0 and deps ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$card_0_6',
+  "description": "Physical port 0/6/0",
+  "loopback": "disable",
+  "upstream": 10000,
+  "downstream": 25000,
+  "upstream_max": 100000,
+  "downstream_max": 100000,
+  "admin_state": "1",
+  "operational_state": "1",
+  "combo_status": "-",
+  "optic_status": "normal",
+  "mdi": "-",
+  "speed_h": "auto_1000",
+  "duplex": "auto_full",
+  "flow_ctrl": "off",
+  "active_state": "active",
+  "link": "online",
+  "alm_prof_15_min" : "-",
+  "warn_prof_15_min": "-",
+  "alm_prof_24_hour": "-",
+  "warn_prof_24_hour": "-"
+}'
+
+port_0_6_0=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### PORT 0/6/1 and deps ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$card_0_6',
+  "description": "Physical port 0/6/1",
+  "loopback": "disable",
+  "upstream": 10000,
+  "downstream": 25000,
+  "upstream_max": 100000,
+  "downstream_max": 100000,
+  "admin_state": "1",
+  "operational_state": "1",
+  "combo_status": "-",
+  "optic_status": "normal",
+  "mdi": "-",
+  "speed_h": "auto_1000",
+  "duplex": "auto_full",
+  "flow_ctrl": "off",
+  "active_state": "active",
+  "link": "online",
+  "alm_prof_15_min" : "-",
+  "warn_prof_15_min": "-",
+  "alm_prof_24_hour": "-",
+  "warn_prof_24_hour": "-"
+}'
+
+port_0_6_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)

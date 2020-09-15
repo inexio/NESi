@@ -988,6 +988,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             trafficvlan, cardident, portid = self._dissect(args, 'vlan', str, str, str)
             portident = cardident + '/' + portid
             try:
+                card = self._model.get_card('name', cardident)
+                if card.product != 'mgnt':
+                    raise exceptions.CommandSyntaxError(command=command)
                 port = self._model.get_port("name", portident)
                 vlan = self._model.get_vlan("number", int(trafficvlan))
             except exceptions.SoftboxenError:
