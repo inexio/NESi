@@ -148,7 +148,7 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
             context['channelname'] = channelname
 
             text = ''
-            if port.admin_state == '1':
+            if port.admin_state == 'activated':
                 context['spacer1'] = self.create_spacers((7,), (portname,))[0] * ' '
                 context['spacer2'] = self.create_spacers((15,), (port.admin_state,))[0] * ' '
                 context['spacer3'] = self.create_spacers((25,), (port.loopback,))[0] * ' '

@@ -21,4 +21,4 @@ class HuaweiOntPortSchema(OntPortSchema):
                                               'outbound', 'downstream_mode', 'mismatch_policy',
                                               'dscp_mapping_table_index', 'service_type', 'service_index', 's_vlan',
                                               's_pri', 'c_vlan', 'c_pri', 'encap', 's_pri_policy', 'igmp_mode',
-                                              'igmp_vlan', 'igmp_pri', 'max_mac_count', 'vlan_id', 'operational_state')
+                                              'igmp_vlan', 'igmp_pri', 'max_mac_count', 'vlan_id', 'admin_state')

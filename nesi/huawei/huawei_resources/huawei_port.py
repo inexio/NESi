@@ -71,7 +71,6 @@ class HuaweiPort(Port):
     channel_inp_data_rate_profile_num = base.Field('channel_inp_data_rate_profile_num')
     channel_ds_rate_adapt_ratio = base.Field('channel_ds_rate_adapt_ratio')
     channel_us_rate_adapt_ratio = base.Field('channel_us_rate_adapt_ratio')
-    group_id = base.Field('group_id')
     standard_port_in_training = base.Field('standard_port_in_training')
     current_power_management_state = base.Field('current_power_management_state')
     retransmission_used_us = base.Field('retransmission_used_us')
@@ -204,6 +203,7 @@ class HuaweiPort(Port):
     rx_power_h_exact = base.Field('rx_power_h_exact')
     rx_power_h = base.Field('rx_power_h')
     vlan_id = base.Field('vlan_id')
+    vectoring_group = base.Field('vectoring_group')
 
     def admin_up(self):
         self.update(admin_state='2')
@@ -219,6 +219,9 @@ class HuaweiPort(Port):
 
     def set_vlan_id(self, id):
         self.update(vlan_id=id)
+
+    def set_vectoring_group(self, group):
+        self.update(vectoring_group=group)
 
 
 class HuaweiPortCollection(PortCollection):

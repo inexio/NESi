@@ -170,7 +170,6 @@ class Port(db.Model):
     channel_inp_data_rate_profile_num = db.Column(db.Integer(), nullable=True, default=None)
     channel_ds_rate_adapt_ratio = db.Column(db.Integer(), nullable=True, default=None)
     channel_us_rate_adapt_ratio = db.Column(db.Integer(), nullable=True, default=None)
-    group_id = db.Column(db.String(), default='-')
     standard_port_in_training = db.Column(db.String(), default='G.993.2-Annex B')
     current_power_management_state = db.Column(db.String(), default='Full-on state')
     retransmission_used_us = db.Column(db.String(), default='Unused, retransmission mode is forbidden')
@@ -302,3 +301,4 @@ class Port(db.Model):
     warn_prof_24_hour = db.Column(db.String(), default='-')
     combo_status = db.Column(db.Enum('-', 'optic', 'electric'), default='optic')
     vlan_id = db.Column(db.Integer())
+    vectoring_group = db.Column(db.Integer(), default=None)

@@ -999,26 +999,29 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_xdsl(self, command, *args, context=None):
-        if self._validate(args, 'vectoring-group', 'link', 'add', str, str):  # TODO: Functionality
+        if self._validate(args, 'vectoring-group', 'link', 'add', str, str):
             profile_idx, port_idx = self._dissect(args, 'vectoring-group', 'link', 'add', str, str)
+            print(port_idx)
             portname = port_idx[0:3] + '/' + port_idx[4]
 
             try:
-                _ = self._model.get_port("name", portname)
+                port = self._model.get_port("name", portname)
+                port.set_vectoring_group(int(profile_idx))
 
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 
             return
 
-        elif self._validate(args, 'vectoring-group', 'link', 'delete', str, str):  # TODO: Functionality
+        elif self._validate(args, 'vectoring-group', 'link', 'delete', str, str):
             profile_idx, port_idx = self._dissect(args, 'vectoring-group', 'link', 'delete', str, str)
-            portname = port_idx[0:3] + '/' + port_idx[4]
-
+            portname = str(port_idx[0:3] + '/' + port_idx[4])
             try:
-                _ = self._model.get_port("name", portname)
+                port = self._model.get_port("name", portname)
+                assert int(port.vectoring_group) == int(profile_idx)
+                port.set_vectoring_group(None)
 
-            except exceptions.SoftboxenError:
+            except (exceptions.SoftboxenError, AssertionError):
                 raise exceptions.CommandSyntaxError(command=command)
 
             return
