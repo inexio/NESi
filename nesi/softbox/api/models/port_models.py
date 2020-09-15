@@ -285,7 +285,7 @@ class Port(db.Model):
     optic_status = db.Column(db.Enum('normal', 'absence'), default='normal')
     native_vlan = db.Column(db.String(), default='-')
     mdi = db.Column(db.String(), default='-')
-    speed_h = db.Column(db.Enum('100', '1000', '10000', '100000', 'auto_1000'), default='1000')
+    speed_h = db.Column(db.Enum('100', '1000', '10000', '100000', 'auto_1000', 'auto'), default='1000')
     duplex = db.Column(db.Enum('full', 'auto_full', 'auto'), default='full')
     flow_ctrl = db.Column(db.Enum('on', 'off'), default='off')
     active_state = db.Column(db.Enum('active', 'deactive'), default='deactive')
