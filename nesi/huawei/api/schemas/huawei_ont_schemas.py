@@ -25,5 +25,5 @@ class HuaweiOntSchema(OntSchema):
                                           'interoperability_mode', 'power_reduction_status', 'fec_upstream_state',
                                           'port_number_pots', 'max_adaptive_num_pots', 'port_number_eth',
                                           'max_adaptive_num_eth', 'port_number_vdsl', 'max_adaptive_num_vdsl',
-                                          'lineprofile_id', 'srvprofile_id', 'index', 'autofind', 'version',
+                                          'lineprofile_id', 'srvprofile_id', 'index', 'version',
                                           'software_version', 'vendor_id')

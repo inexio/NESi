@@ -122,6 +122,7 @@ class Port(db.Model):
     egress_port = db.Column(db.Boolean(), default=False)
 
     # Huawei data
+    ont_autofind = db.Column(db.Boolean(), default=False)
     loopback = db.Column(db.Enum('enable', 'disable'), default='disable')
     dynamic_profile = db.Column(db.Enum('Bind no dynamic-profile', ''), default='')
     dynamic_profile_index = db.Column(db.String(), default='-')

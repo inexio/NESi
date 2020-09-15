@@ -636,6 +636,27 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
+    def do_port(self, command, *args, context=None):
+        if context['iftype'] == 'vlanif':
+            raise exceptions.CommandSyntaxError(command=command)
+        card = context['component']
+        if card.product != 'ftth-pon':
+            self._write(self._render('operation_not_supported_by_port_failure', context=context))
+            return
+        if self._validate(args, str, 'ont-auto-find', str):
+            port_identifier, mode = self._dissect(args, str, 'ont-auto-find', str)
+
+            port = self._model.get_port('name', card.name + "/" + port_identifier)
+
+            if mode == 'enable':
+                port.enable_ont_autofind()
+            elif mode == 'disable':
+                port.disable_ont_autofind()
+            else:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def do_ip(self, command, *args, context=None):
         if self._validate(args, 'address', str, str):
             ip, subnet_mask = self._dissect(args, 'address', str, str)
