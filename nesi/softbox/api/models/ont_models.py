@@ -150,6 +150,5 @@ class Ont(db.Model):
     max_adaptive_num_vdsl = db.Column(db.String(), default='-')
     lineprofile_id = db.Column(db.Integer(), nullable=True)
     srvprofile_id = db.Column(db.Integer(), nullable=True)
-    autofind = db.Column(db.Boolean(), default=False)
     software_version = db.Column(db.String(), default=None)
 

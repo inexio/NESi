@@ -128,15 +128,21 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         elif self._validate(args, 'ont', 'autofind', 'all'):
             autofind_onts = []
 
-            for ont in self._model.onts:
-                if ont.autofind:
-                    autofind_onts.append(ont)
+            for port in self._model.ports:
+                if port.ont_autofind:
+                    onts = self._model.get_onts('port_id', port.id)
+                    for ont in onts:
+                        autofind_onts.append(ont)
 
             for autofind_ont in autofind_onts:
                 port = self._model.get_port('id', autofind_ont.port_id)
                 context['port_identifier'] = port.name
                 context['ont'] = autofind_ont
                 self._write(self._render('display_ont_autofind_all_body', context=context))
+
+            if len(autofind_onts) == 0:
+                self._write(self._render('display_ont_autofind_all_failure', context=context))
+                return
 
             context['autofind_count'] = len(autofind_onts)
             self._write(self._render('display_ont_autofind_all_footer', context=context))

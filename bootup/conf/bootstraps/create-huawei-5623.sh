@@ -482,7 +482,6 @@ req='{
   "operational_state": "1",
   "admin_state": "1",
   "index": 0,
-  "autofind": true,
   "vendor_id": "HWTC",
   "version": "535.B",
   "software_version": "V3R025C29D195"
@@ -622,7 +621,6 @@ req='{
   "operational_state": "1",
   "admin_state": "1",
   "index": 0,
-  "autofind": true,
   "vendor_id": "HWTC",
   "version": "535.B",
   "software_version": "V3R025C29D195"

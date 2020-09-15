@@ -204,6 +204,7 @@ class HuaweiPort(Port):
     rx_power_h = base.Field('rx_power_h')
     vlan_id = base.Field('vlan_id')
     vectoring_group = base.Field('vectoring_group')
+    ont_autofind = base.Field('ont_autofind')
 
     def admin_up(self):
         self.update(admin_state='2')
@@ -222,6 +223,12 @@ class HuaweiPort(Port):
 
     def set_vectoring_group(self, group):
         self.update(vectoring_group=group)
+
+    def enable_ont_autofind(self):
+        self.update(ont_autofind=True)
+
+    def disable_ont_autofind(self):
+        self.update(ont_autofind=False)
 
 
 class HuaweiPortCollection(PortCollection):

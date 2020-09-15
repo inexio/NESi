@@ -51,7 +51,6 @@ class HuaweiOnt(Ont):
     max_adaptive_num_vdsl = base.Field('max_adaptive_num_vdsl')
     lineprofile_id = base.Field('lineprofile_id')
     srvprofile_id = base.Field('srvprofile_id')
-    autofind = base.Field('autofind')
     version = base.Field('version')
     vendor_id = base.Field('vendor_id')
     software_version = base.Field('software_version')
