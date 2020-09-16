@@ -1,0 +1,33 @@
+------------------------------------------------------------------------------
+  Profile index :{{ context.profile.id }}   Name: ADSL  LINE PROFILE {{ context.profile.id }}
+  ADSL transmission mode                        : {{ context.trmode }}
+  Trellis mode                                  : Enable
+  Upstream channel bit swap                     :{% if context.profile.bit_swap_us == 1 %} Enable {% else %} Disable {% endif %}
+
+  Downstream channel bit swap                   :{% if context.profile.bit_swap_ds == 1 %} Enable {% else %} Disable {% endif %}
+
+  Channel mode                                  :{% if context.profile.mode_specific == 'enable' %} Interleaved {% else %} Disable {% endif %}
+
+  Maximum downstream interleaved delay(ms)      : 16
+  Maximum upstream interleaved delay(ms)        : 6
+  Target downstream SNR margin(dB)              : 6
+  Maximum acceptable downstream SNR margin(dB)  : 16
+  Minimum acceptable downstream SNR margin(dB)  : 0
+  Target upstream SNR margin(dB)                : 6
+  Maximum acceptable upstream SNR margin(dB)    : 16
+  Minimum acceptable upstream SNR margin(dB)    : 0
+  Downstream SNR margin for rate downshift(dB)  : 0
+  Downstream SNR margin for rate upshift(dB)    : 0
+  Upstream SNR margin for rate downshift(dB)    : 0
+  Upstream SNR margin for rate upshift(dB)      : 0
+  Minimum upshift time in downstream(seconds)   : 0
+  Minimum downshift time in downstream(seconds) : 0
+  Minimum upshift time in upstream(seconds)     : 0
+  Minimum downshift time in upstream(seconds)   : 0
+  Downstream form of transmit rate adaptation   : Adapting at startup
+  Minimum transmit rate downstream(Kbps)        : 32
+  Maximum transmit rate downstream(Kbps)        : 24544
+  Minimum transmit rate upstream(Kbps)          : 32
+  Maximum transmit rate upstream(Kbps)          : 1024
+  ------------------------------------------------------------------------------
+

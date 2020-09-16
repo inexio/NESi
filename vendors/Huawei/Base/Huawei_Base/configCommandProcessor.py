@@ -268,18 +268,6 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             text += self._render('display_vlan_all_bottom', context=dict(context, count=count))
             self._write(text)
 
-        elif self._validate(args, 'vdsl', 'line-profile', str):  # TODO: Check if line-profile exists
-            vdsl_id, = self._dissect(args, 'vdsl', 'line-profile', str)
-            context['vdsl_id'] = vdsl_id
-            text = self._render('display_vdsl_line-profile_num', context=context)
-            self._write(text)
-
-        elif self._validate(args, 'adsl', 'line-profile', str):  # TODO: Check if line-profile exists
-            adsl_id, = self._dissect(args, 'adsl', 'line-profile', str)
-            context['adsl_id'] = adsl_id
-            text = self._render('display_adsl_line-profile_num', context=context)
-            self._write(text)
-
         elif self._validate(args, 'version'):
             if self._model.interactive_mode:
                 self.user_input('{ <cr>|backplane<K>|frameid/slotid<S><Length 1-15> }:')

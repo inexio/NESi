@@ -127,6 +127,37 @@ root_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
 
 # Service Profile
 req='{
+  "name": "line_spectrum_1",
+  "type": "service",
+  "description": "Service Profile",
+  "l0_time": 255,
+  "l2_time": 30,
+  "l3_time": 255,
+  "max_transmite_power_reduction": 3,
+  "total_max_power_reduction": 9,
+  "bit_swap_ds": 1,
+  "bit_swap_us": 1,
+  "allow_transitions_to_idle": 2,
+  "allow_transitions_to_lowpower": 2,
+  "reference_clock": "FreeRun",
+  "force_inp_ds": 1,
+  "force_inp_us": 1,
+  "g_993_2_profile": 12,
+  "mode_specific": "enable",
+  "T1_413": "enable",
+  "G_992_1": "enable",
+  "G_992_2": "enable",
+  "G_992_3": "enable",
+  "G_992_4": "enable",
+  "G_992_5": "enable",
+  "AnnexB_G_993_2": "enable",
+  "us0_psd_mask": 32
+}'
+
+line_profile=$(create_resource "$req" $ENDPOINT/boxen/$box_id/port_profiles)
+
+# Service Profile
+req='{
   "name": "PPPoE",
   "type": "service",
   "description": "Service Profile"

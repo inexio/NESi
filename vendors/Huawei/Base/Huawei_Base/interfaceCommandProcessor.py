@@ -50,6 +50,57 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                     'display_inventory_cpe',
                     context=dict(context, cpe=cpe))
                 self._write(text)
+
+        elif self._validate(args, 'vdsl', 'line-profile', str):
+            if context['iftype'] == 'vlanif':
+                raise exceptions.CommandSyntaxError(command=command)
+            if self._model.dsl_mode == 'tr129':
+                raise exceptions.CommandSyntaxError(command=command)
+            if card.product == 'vdsl':
+                vdsl_id, = self._dissect(args, 'vdsl', 'line-profile', str)
+                try:
+                    profile = self._model.get_port_profile('name', 'line_spectrum_' + str(vdsl_id))
+
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+                text = self._render('display_vdsl_line-profile_num', context=dict(context, profile=profile))
+                self._write(text)
+            else:
+                raise exceptions.CommandSyntaxError(command=command)
+
+        elif self._validate(args, 'adsl', 'line-profile', str):
+            if context['iftype'] == 'vlanif':
+                raise exceptions.CommandSyntaxError(command=command)
+            if self._model.dsl_mode == 'tr129':
+                raise exceptions.CommandSyntaxError(command=command)
+            if card.product == 'adsl':
+                adsl_id, = self._dissect(args, 'adsl', 'line-profile', str)
+                try:
+                    profile = self._model.get_port_profile('name', 'line_spectrum_' + str(adsl_id))
+                    txt = ''
+                    if profile.G_992_1 == 'enable':
+                        txt += 'G_992_1'
+                    if profile.G_992_2 == 'enable':
+                        txt += ', G_992_2'
+                    if profile.G_992_3 == 'enable':
+                        txt += ', G_992_3'
+                    if profile.G_992_4 == 'enable':
+                        txt += ', G_992_4'
+                    if profile.G_992_5 == 'enable':
+                        txt += ', G_992_5'
+                    if profile.T1_413 == 'enable':
+                        txt += ', T1.413'
+                    if len(txt.split(',')) == 6:
+                        context['trmode'] = 'All(G.992.1~5,T1.413)'
+                    else:
+                        context['trmode'] = txt
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+                text = self._render('display_adsl_line-profile_num', context=dict(context, profile=profile))
+                self._write(text)
+            else:
+                raise exceptions.CommandSyntaxError(command=command)
+
         elif self._validate(args, 'power', 'run', 'info'):
             emu = context['component']
             if context['iftype'] == 'emu' and emu.type == 'H831PMU':
