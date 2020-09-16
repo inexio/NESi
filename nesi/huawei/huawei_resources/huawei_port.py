@@ -204,7 +204,9 @@ class HuaweiPort(Port):
     rx_power_h = base.Field('rx_power_h')
     vlan_id = base.Field('vlan_id')
     vectoring_group = base.Field('vectoring_group')
+    vectoring_profile_id = base.Field('vectoring_profile_id')
     ont_autofind = base.Field('ont_autofind')
+    template_name = base.Field('template_name')
 
     def admin_up(self):
         self.update(admin_state='2')
@@ -229,6 +231,16 @@ class HuaweiPort(Port):
 
     def disable_ont_autofind(self):
         self.update(ont_autofind=False)
+
+    def set_template_name(self, template):
+        self.update(template_name=template)
+
+    def set_vectoring_profile_id(self, id):
+        self.update(vectoring_profile_id=id)
+
+    def set(self, field, value):
+        mapping = {field: value}
+        self.update(**mapping)
 
 
 class HuaweiPortCollection(PortCollection):

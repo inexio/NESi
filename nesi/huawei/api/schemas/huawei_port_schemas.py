@@ -74,4 +74,5 @@ class HuaweiPortSchema(PortSchema):
                                            'auto_sensing', 'alm_prof_15_min', 'warn_prof_15_min', 'alm_prof_24_hour',
                                            'warn_prof_24_hour', 'optic_status', 'combo_status', 'temperature_h_exact',
                                            'supply_voltage_h_exact', 'tx_bias_current_h_exact', 'tx_power_h_exact',
-                                           'rx_power_h_exact', 'vlan_id', 'rx_power_h', 'vectoring_group', 'ont_autofind')
+                                           'rx_power_h_exact', 'vlan_id', 'rx_power_h', 'vectoring_group',
+                                           'vectoring_profile_id', 'template_name', 'ont_autofind')
