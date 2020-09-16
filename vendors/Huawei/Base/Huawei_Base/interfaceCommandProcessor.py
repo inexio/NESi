@@ -344,78 +344,7 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
 
     def do_activate(self, command, *args, context=None):
         card = context['component']
-        if self._validate(args, str, 'prof-desc', 'ds-rate', str, 'us-rate', str):
-            if context['iftype'] == 'vlanif':
-                raise exceptions.CommandSyntaxError(command=command)
-            if self._model.dsl_mode == 'tr129':
-                raise exceptions.CommandSyntaxError(command=command)
-            if card.product == 'vdsl':
-                port_idx, ds_rate, us_rate, = self._dissect(
-                    args, str, 'prof-desc', 'ds-rate', str, 'us-rate', str)
-
-                try:
-                    port_name = card.name + '/' + port_idx
-                    port = self._model.get_port("name", port_name)
-                    port.port_downstream_set(int(ds_rate))
-                    port.port_upstream_set(int(us_rate))
-
-                except (exceptions.SoftboxenError, ValueError):
-                    raise exceptions.CommandSyntaxError(command=command)
-
-                if port.downstream_max != int(ds_rate) and port.upstream_max != int(us_rate):
-                    raise exceptions.CommandSyntaxError(command=command)
-
-            else:
-                raise exceptions.CommandSyntaxError(command=command)
-
-        elif self._validate(args, str, 'prof.desc', 'ds-rate', str, 'us-rate', str, 'noise-margin', 'VDSL_6db',
-                            'inp-delay', 'VDSL_(FAST)', '(spectrum str)', '(dpbo DPBO:str)'):
-            # TODO: Brackets mean optional parameters, so make them optional...
-            if context['iftype'] == 'vlanif':
-                raise exceptions.CommandSyntaxError(command=command)
-            if self._model.dsl_mode == 'tr129':
-                raise exceptions.CommandSyntaxError(command=command)
-            if card.product == 'vdsl':
-                port_idx, ds_rate, us_rate = self._dissect(args, str, 'prof.desc', 'ds-rate', str, 'us-rate', str,
-                                                           'noise-margin', 'VDSL_6db', 'inp-delay', 'VDSL_(FAST)',
-                                                           '(spectrum str)', '(dpbo DPBO:str)')
-
-                try:
-                    port_name = card.name + '/' + port_idx
-                    port = self._model.get_port("name", port_name)
-
-                except exceptions.SoftboxenError:
-                    raise exceptions.CommandSyntaxError(command=command)
-
-                return
-
-            else:
-                raise exceptions.CommandSyntaxError(command=command)
-
-        elif self._validate(args, str, 'prof.desc', 'ds-rate', str, 'us-rate', str, 'noise-margin', 'ADSL_6db',
-                            'inp-delay', 'ADSL_(FAST)', '(spectrum str)', '(dpbo DPBO:str)'):
-            # TODO: Brackets mean optional parameters, so make them optional...
-            if context['iftype'] == 'vlanif':
-                raise exceptions.CommandSyntaxError(command=command)
-            if self._model.dsl_mode == 'tr129':
-                raise exceptions.CommandSyntaxError(command=command)
-            if card.product == 'vdsl':
-                port_idx, ds_rate, us_rate = self._dissect(args, str, 'prof.desc', 'ds-rate', str, 'us-rate', str,
-                                                           'noise-margin', 'ADSL_6db', 'inp-delay', 'ADSL_(FAST)',
-                                                           '(spectrum str)', '(dpbo DPBO:str)')
-
-                try:
-                    port_name = card.name + '/' + port_idx
-                    port = self._model.get_port("name", port_name)
-
-                except exceptions.SoftboxenError:
-                    raise exceptions.CommandSyntaxError(command=command)
-
-                return
-
-            else:
-                raise exceptions.CommandSyntaxError(command=command)
-        elif self._validate(args[:6], str, 'prof-desc', 'ds-rate', str, 'us-rate', str):
+        if self._validate(args[:6], str, 'prof-desc', 'ds-rate', str, 'us-rate', str):
         #elif self._validate(args, str, 'prof.desc', 'ds-rate', str, 'us-rate', str, '(spectrum str)', 'noise-margin', 'ADSL_6db', 'inp-delay', 'ADSL','(dpbo DPBO:str)'):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
@@ -575,7 +504,10 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                 else:
                     raise exceptions.CommandSyntaxError(command=command)
             else:
-                # TODO: print VLAN help
+                text = self._render(
+                    'vlan_help',
+                    context=context)
+                self._write(text)
                 raise exceptions.CommandSyntaxError(command=command)
         else:
             raise exceptions.CommandSyntaxError(command=command)

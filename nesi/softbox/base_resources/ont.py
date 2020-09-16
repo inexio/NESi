@@ -24,6 +24,14 @@ class Ont(base.Resource):
     admin_state = base.Field('admin_state')
     operational_state = base.Field('operational_state')
 
+    def down(self):
+        """Change ont port admin state to down."""
+        self.update(admin_state='0')
+
+    def up(self):
+        """Change ont port admin state to up."""
+        self.update(admin_state='1')
+
 
 class OntCollection(base.ResourceCollection):
     """Represent a collection of ONTs."""

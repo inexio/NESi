@@ -39,4 +39,4 @@ class Cpe(db.Model):
     version_number = db.Column(db.String(), default='1.180.129.93 AB')
     version_number_oct = db.Column(db.String(), default='0x312E3138302E3132392E393320414200')
     vendor_serial_number = db.Column(db.String(), default='444E6DCD4770 F!Box7530 164.07.14')
-    self_test_result = db.Column(db.Enum('PASS'), default='PASS')       # TODO: find corresponding value(s)
+    self_test_result = db.Column(db.Enum('PASS'), default='PASS')       # find corresponding value(s)

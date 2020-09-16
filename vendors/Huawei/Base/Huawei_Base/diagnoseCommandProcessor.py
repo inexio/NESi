@@ -106,7 +106,7 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_switch(self, command, *args, context=None):  # TODO: Functionality
+    def do_switch(self, command, *args, context=None):
         if self._validate(args, 'vdsl', 'mode', 'to', str):
             user = self._model.get_user('status', 'Online')
             if user.level != 'Super':
