@@ -22,18 +22,33 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
         if identifier == '0':
             text = self._render('display_board_0_top', context=context)
 
-            cards = self._model.cards
-            for card in cards:
-                _, cardname = card.name.split('/')
-                context['cardname'] = cardname
+            sorted_cards = []
+            for card in self._model.cards:
+                card_id = int(card.name[2:])
+                sorted_cards.append(card_id)
 
-                context['spacer1'] = self.create_spacers((8,), (cardname,))[0] * ' '
-                context['spacer2'] = self.create_spacers((11,), (card.board_name,))[0] * ' '
-                context['spacer3'] = self.create_spacers((17,), (card.board_status,))[0] * ' '
-                context['spacer4'] = self.create_spacers((9,), (card.sub_type_0,))[0] * ' '
-                context['spacer5'] = self.create_spacers((12,), (card.sub_type_1,))[0] * ' '
+            sorted_cards = sorted(sorted_cards)
 
-                text += self._render('display_board_0_middle', context=dict(context, card=card))
+            for i in range(0, sorted_cards[-1]+1):
+                if i not in sorted_cards:
+                    context['cardname'] = i
+                    text += self._render('display_board_0_empty', context=context)
+
+                else:
+                    try:
+                        cardname = '0/' + str(i)
+                        card = self._model.get_card('name', cardname)
+                    except exceptions.SoftboxenError:
+                        raise exceptions.CommandSyntaxError(command=command)
+                    context['cardname'] = i
+
+                    context['spacer1'] = self.create_spacers((8,), (cardname,))[0] * ' '
+                    context['spacer2'] = self.create_spacers((11,), (card.board_name,))[0] * ' '
+                    context['spacer3'] = self.create_spacers((17,), (card.board_status,))[0] * ' '
+                    context['spacer4'] = self.create_spacers((9,), (card.sub_type_0,))[0] * ' '
+                    context['spacer5'] = self.create_spacers((12,), (card.sub_type_1,))[0] * ' '
+
+                    text += self._render('display_board_0_middle', context=dict(context, card=card))
 
             text += self._render('display_board_0_bottom', context=context)
             self._write(text)
