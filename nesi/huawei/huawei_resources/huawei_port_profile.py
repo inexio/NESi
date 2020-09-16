@@ -47,6 +47,7 @@ class HuaweiPortProfile(PortProfile):
     upstream_psd_mask_selection = base.Field('upstream_psd_mask_selection')
     psd_class_mask = base.Field('psd_class_mask')
     psd_limit_mask = base.Field('psd_limit_mask')
+
     l0_time = base.Field('l0_time')
     l2_time = base.Field('l2_time')
     l3_time = base.Field('l3_time')
