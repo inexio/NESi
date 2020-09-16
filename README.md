@@ -33,7 +33,7 @@ For more information on `softboxen` or `NESi` please refer to our local [documen
 
 ### Supported Vendors
  - Alcatel  (nearly feature complete)
- - Huawei   (nearly feature complete)(work in progress)
+ - Huawei   (nearly feature complete)
  - Edgecore (not implemented yet)
  - Keymile  (work in progress)
  - Pbn      (not implemented yet)
