@@ -81,13 +81,15 @@ class BaseCommandProcessor(base.CommandProcessor):
     def do_quit(self, command, *args, context=None):
         raise exceptions.TerminalExitError()
 
-    def do_undo(self, command, *args, context=None):      # TODO: Functionality
+    def do_undo(self, command, *args, context=None):
         if self._validate(args, 'alarm', 'output', 'all'):
+            # importend for future snmp interactions
             return
         elif self._validate(args, 'event', 'output', 'all'):
             return
         elif self._validate(args, 'smart'):
-            return
+            self._write("  Interactive function is disabled\n")
+            self._model.disable_interactive()
         elif self._validate(args, 'system', 'snmp-user', 'password', 'security'):
             return
         else:

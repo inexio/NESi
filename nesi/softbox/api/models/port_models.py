@@ -155,7 +155,7 @@ class Port(db.Model):
     current_operational_mode = db.Column(db.String(), default='No Protocol Selected')
     total_count_of_line_training = db.Column(db.Integer(), nullable=False, default=0)
     result_last_initialization = db.Column(db.Enum('No failure'),
-                                           default='No failure')  # TODO: Find corresponding value(s)
+                                           default='No failure')  # Find corresponding value(s)
     total_bytes_us = db.Column(db.Integer(), default=448203129)
     total_packets_us = db.Column(db.Integer(), default=6386689)
     total_bytes_ds = db.Column(db.Integer(), default=430667320)

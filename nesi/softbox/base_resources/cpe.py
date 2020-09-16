@@ -29,6 +29,14 @@ class Cpe(base.Resource):
     admin_state = base.Field('admin_state')
     mac = base.Field('mac')
 
+    def down(self):
+        """Change ont port admin state to down."""
+        self.update(admin_state='0')
+
+    def up(self):
+        """Change ont port admin state to up."""
+        self.update(admin_state='1')
+
 
 class CpeCollection(base.ResourceCollection):
     """Represent a collection of cpes."""

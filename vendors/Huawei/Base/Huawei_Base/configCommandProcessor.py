@@ -774,7 +774,8 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             s_vlan.delete()
 
         elif self._validate(args, 'smart'):
-            return
+            self._write("  Interactive function is disabled\n")
+            self._model.disable_interactive()
         elif self._validate(args, 'interactive'):
             return
 
@@ -989,8 +990,18 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_deactivate(self, command, *args, context=None):  # TODO: Functionality
+    def do_deactivate(self, command, *args, context=None):
         if self._validate(args, 'all'):
+            for component in self._model.cpes:
+                component.down()
+            for component in self._model.ont_ports:
+                component.down()
+            for component in self._model.onts:
+                component.down()
+            for component in self._model.ports:
+                component.admin_down()
+            for component in self._model.service_ports:
+                component.set_admin_state(0)
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)
@@ -1254,7 +1265,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_load(self, command, *args, context=None):  # TODO: Read in file
+    def do_load(self, command, *args, context=None):  # Read in file
         if self._validate(args, 'script', 'tftp', str, str):
             ip, file_name = self._dissect(args, 'script', 'tftp', str, str)
 
