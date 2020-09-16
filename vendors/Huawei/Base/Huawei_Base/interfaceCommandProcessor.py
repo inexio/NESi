@@ -364,27 +364,78 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
 
             else:
                 raise exceptions.CommandSyntaxError(command=command)
-
-        elif self._validate(args, str, 'prof.desc', 'ds-rate', str, 'us-rate', str, 'noise-margin', 'ADSL_6db',
-                            'inp-delay', 'ADSL', '(spectrum str)', '(dpbo DPBO:str)'):
-            # TODO: Brackets mean optional parameters, so make them optional...
+        elif self._validate(args[:6], str, 'prof-desc', 'ds-rate', str, 'us-rate', str):
+        #elif self._validate(args, str, 'prof.desc', 'ds-rate', str, 'us-rate', str, '(spectrum str)', 'noise-margin', 'ADSL_6db', 'inp-delay', 'ADSL','(dpbo DPBO:str)'):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
             if self._model.dsl_mode == 'tr129':
                 raise exceptions.CommandSyntaxError(command=command)
             if card.product == 'vdsl':
-                port_idx, ds_rate, us_rate = self._dissect(args, str, 'prof.desc', 'ds-rate', str, 'us-rate', str,
-                                                           'noise-margin', 'ADSL_6db', 'inp-delay', 'ADSL',
-                                                           '(spectrum str)', '(dpbo DPBO:str)')
+                port_idx, ds_rate, us_rate = self._dissect(args[:6], str, 'prof-desc', 'ds-rate', str, 'us-rate', str)
 
                 try:
                     port_name = card.name + '/' + port_idx
                     port = self._model.get_port("name", port_name)
-
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
 
-                return
+                i = 6
+                while i < len(args):
+                    if args[i] == 'spectrum':
+                        spectrum = args[i+1]
+                        i += 2
+                        try:
+                            profile = self._model.get_port_profile('description', spectrum)
+                            spectrum_profile = 'No. ' + profile.id + ' ' + spectrum
+                            spectrum_id = profile.id
+                        except exceptions.SoftboxenError:
+                            raise exceptions.CommandSyntaxError(command=command)
+                    elif args[i] == 'noise-margin':
+                        noise = args[i+1]
+                        i += 2
+                        try:
+                            profile = self._model.get_port_profile('description', noise)
+                            noise_profile = 'No. ' + profile.id + ' ' + noise
+                            noise_id = profile.id
+                        except exceptions.SoftboxenError:
+                            raise exceptions.CommandSyntaxError(command=command)
+                    elif args[i] == 'inp-delay':
+                        inp = args[i+1]
+                        i += 2
+                        try:
+                            profile = self._model.get_port_profile('description', inp)
+                            inp_profile = 'No. ' + profile.id + ' ' + inp
+                            inp_id = profile.id
+                        except exceptions.SoftboxenError:
+                            raise exceptions.CommandSyntaxError(command=command)
+                    elif args[i] == 'dpbo':
+                        dpbo = args[i+1]
+                        i += 2
+                        try:
+                            profile = self._model.get_port_profile('description', dpbo)
+                            dpbo_profile = 'No. ' + profile.id + ' ' + dpbo
+                            dpbo_id = profile.id
+                        except exceptions.SoftboxenError:
+                            raise exceptions.CommandSyntaxError(command=command)
+
+                    else:
+                        raise exceptions.CommandSyntaxError(command=command)
+
+                try:
+                    port.admin_up()
+                    port.set('downstream_max', int(ds_rate))
+                    port.set('upstream_max', int(us_rate))
+                    port.set('line_spectrum_profile', spectrum_profile)
+                    port.set('spectrum_profile_num', int(spectrum_id))
+                    port.set('noise_margin_profile', noise_profile)
+                    port.set('noise_margin_profile_num', int(noise_id))
+                    port.set('line_spectrum_profile', inp_profile)
+                    port.set('spectrum_profile_num', int(inp_id))
+                    port.set('line_spectrum_profile', dpbo_profile)
+                    port.set('spectrum_profile_num', int(dpbo_id))
+
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
 
             else:
                 raise exceptions.CommandSyntaxError(command=command)
@@ -394,31 +445,19 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                 raise exceptions.CommandSyntaxError(command=command)
             if self._model.dsl_mode == 'tr165':
                 raise exceptions.CommandSyntaxError(command=command)
-            if card.product == 'adsl':
-                # TODO: Template looks like this: {huawei_downstream}_{huawei_downstream}_ADSL
+            if card.product == 'adsl' or card.product == 'vdsl':
+                #Template looks like this: {huawei_downstream}_{huawei_downstream}_ADSL
+                #Template looks like this: {huawei_downstream}_{huawei_downstream}_{summary} vdsl
                 port_idx, template_name = self._dissect(args, str, 'template-name', str)
 
                 try:
                     port_name = card.name + '/' + port_idx
                     port = self._model.get_port("name", port_name)
+                    port.admin_up()
+                    port.set_template_name(template_name)
 
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
-
-                return
-
-            elif card.product == 'vdsl':
-                # TODO: Template looks like this: {huawei_downstream}_{huawei_downstream}_{summary}
-                port_idx, template_name = self._dissect(args, str, 'template-name', str)
-
-                try:
-                    port_name = card.name + '/' + port_idx
-                    port = self._model.get_port("name", port_name)
-
-                except exceptions.SoftboxenError:
-                    raise exceptions.CommandSyntaxError(command=command)
-
-                return
 
             else:
                 raise exceptions.CommandSyntaxError(command=command)
@@ -490,19 +529,20 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_vectoring_config(self, command, *args, context=None):  # TODO: Functionality
+    def do_vectoring_config(self, command, *args, context=None):
         card = context['component']
         if self._validate(args, str, 'profile-index', str):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
-            port_idx, profile_idx = self._dissect(args, str, 'profile-index', str)
+            port_identifier, profile_idx = self._dissect(args, str, 'profile-index', str)
             try:
-                _ = self._model.get_port("name", port_idx)
+                portname = card.name + '/' + port_identifier
+                port = self._model.get_port("name", portname)
+                self._model.get_port_profile('id', int(profile_idx))
+                port.set_vectoring_profile_id(int(profile_idx))
 
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
-
-            return
 
         else:
             raise exceptions.CommandSyntaxError(command=command)
