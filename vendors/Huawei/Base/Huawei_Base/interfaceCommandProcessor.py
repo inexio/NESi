@@ -155,7 +155,8 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                     ont_port = self._model.get_ont_port('name', ont_portname)
 
                 except exceptions.SoftboxenError:
-                    raise exceptions.CommandSyntaxError(command=command)
+                    self._write(self._render('ont_not_online', context=context))
+                    return
 
                 if port.id != ont.port_id or ont_port.ont_id != ont.id:
                     raise exceptions.CommandSyntaxError(command=command)
@@ -555,33 +556,50 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_ont(self, command, *args, context=None):
-        if self._validate(args, 'add', str, str, 'sn-auth', str, 'omci', 'ont-lineprofile-id', str, 'ont-srvprofile-id',
-                          str, 'desc', str):
-            port_idx, ont_idx, cpe_device_id, lineprofile_id, srvprofile_id, description = \
-                self._dissect(args, 'add', str, str, 'sn-auth', str, 'omci', 'ont-lineprofile-id', str,
-                              'ont-srvprofile-id', str, 'desc', str)
-            card = context['component']
-            # create ont
-            port = self._model.get_port('name', card.name + '/' + port_idx)
-            try:
-                self._model.get_ont('name', card.name + '/' + port_idx + '/' + ont_idx)
-                raise exceptions.CommandSyntaxError(command=command)
-            except exceptions.InvalidInputError:
-                pass
-            ont = self._model.add_ont(port_id=port.id, name=card.name + '/' + port_idx + '/' + ont_idx,
-                                      description=description, lineprofile_id=lineprofile_id,
-                                      srvprofile_id=srvprofile_id)
-            if ont is None:
-                raise exceptions.CommandSyntaxError(command=command)
+        if self._validate(args[:11], 'add', str, str, 'sn-auth', str, 'omci', 'ont-lineprofile-id', str, 'ont-srvprofile-id',
+                          str, 'desc'):
+            port_idx, ont_idx, cpe_device_id, lineprofile_id, srvprofile_id = \
+                self._dissect(args[:11], 'add', str, str, 'sn-auth', str, 'omci', 'ont-lineprofile-id', str,
+                              'ont-srvprofile-id', str, 'desc')
 
+            def arg_joiner(arguments):
+                saved_args = []
+                save = False
+
+                if len(arguments) == 1:
+                    return arguments
+
+                for i in range(len(arguments)):
+                    if arguments[i].startswith("\""):
+                        save = True
+                    if save:
+                        saved_args.append(arguments[i])
+                    if arguments[i].endswith("\""):
+                        save = False
+                arg = ' '.join(saved_args).replace("\"", "")
+
+                return arg
+
+            description = arg_joiner(args[11:])
+
+            card = context['component']
+            port = self._model.get_port('name', card.name + '/' + port_idx)
+
+            ont = None
             try:
                 ont = self._model.get_ont('name', card.name + '/' + port_idx + '/' + ont_idx)
-            except exceptions.SoftboxenError:
-                raise exceptions.CommandSyntaxError(command=command)
-            ont_port = self._model.add_ont_port(ont_id=ont.id)
-            if ont_port is None:
-                raise exceptions.CommandSyntaxError(command=command)
+            except exceptions.InvalidInputError:
+                pass
 
+            if ont is not None:
+                self._write(self._render('ont_already_exists', context=context))
+                return
+
+            self._model.add_ont(port_id=port.id, name=card.name + '/' + port_idx + '/' + ont_idx,
+                                      description=description, lineprofile_id=lineprofile_id,
+                                      srvprofile_id=srvprofile_id)
+
+            self._write(self._render('ont_added', context=context))
         elif self._validate(args, 'delete', str, str):
             # delete all subcomponents
             port_idx, ont_idx = self._dissect(args, 'delete', str, str)
