@@ -100,6 +100,10 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
 
             context['spaced_out_name'] = self.space_out_port_name(port.name)
             context['spacer'] = self.create_spacers((7,), (port.dynamic_profile_index,))[0] * ' '
+            if port.operational_state == 'activated':
+                context['port_o_state'] = 'up'
+            else:
+                context['port_o_state'] = 'down'
 
             try:
                 service_port = self._model.get_service_port('connected_id', port.id)
@@ -146,24 +150,32 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
             channelname = portname + '.1'
             context['portname'] = portname
             context['channelname'] = channelname
+            context['port_a_state'] = port.admin_state.capitalize()
+            port_a_state = port.admin_state.capitalize()
+            context['port_loopback'] = port.loopback.capitalize()
+            port_loopback = port.loopback.capitalize()
 
-            text = ''
             if port.admin_state == 'activated':
-                context['spacer1'] = self.create_spacers((7,), (portname,))[0] * ' '
-                context['spacer2'] = self.create_spacers((15,), (port.admin_state,))[0] * ' '
-                context['spacer3'] = self.create_spacers((25,), (port.loopback,))[0] * ' '
-                context['spacer4'] = self.create_spacers((14,), (port.alarm_template_num,))[0] * ' '
-                context['spacer5'] = self.create_spacers((13,), (port.spectrum_profile_num,))[0] * ' '
-                context['spacer6'] = self.create_spacers((17,), (portname,))[0] * ' '
-                context['spacer7'] = self.create_spacers((14,), (port.dpbo_profile_num,))[0] * ' '
-                context['spacer8'] = self.create_spacers((14,), (port.rfi_profile_num,))[0] * ' '
-                context['spacer9'] = self.create_spacers((13,), (port.noise_margin_profile_num,))[0] * ' '
-                context['spacer10'] = self.create_spacers((12,), (port.virtual_noise_profile_num,))[0] * ' '
-                context['spacer11'] = self.create_spacers((18,), (channelname,))[0] * ' '
-                context['spacer12'] = self.create_spacers((13,), (port.channel_ds_data_rate_profile_num,))[0] * ' '
-                context['spacer13'] = self.create_spacers((13,), (port.channel_us_data_rate_profile_num,))[0] * ' '
-                context['spacer14'] = self.create_spacers((11,), (port.channel_inp_data_rate_profile_num,))[0] * ' '
-                context['spacer15'] = self.create_spacers((15,), (port.channel_ds_rate_adapt_ratio,))[0] * ' '
+                context['spacer_beg1'] = self.create_spacers((6,), (portname,))[0] * ' '
+                context['spacer1'] = self.create_spacers((3,), ('',))[0] * ' '
+                context['spacer2'] = self.create_spacers((15,), (port_a_state,))[0] * ' '
+                context['spacer3'] = self.create_spacers((30,), (port_loopback + str(port.alarm_template_num),))[0] * ' '
+                context['spacer4'] = self.create_spacers((13,), (port.spectrum_profile_num,))[0] * ' '
+                context['spacer5'] = self.create_spacers((13,), (port.upbo_profile_num,))[0] * ' '
+
+                context['spacer_beg2'] = self.create_spacers((6,), (portname,))[0] * ' '
+                context['spacer6'] = self.create_spacers((22,), (port.dpbo_profile_num,))[0] * ' '
+                context['spacer7'] = self.create_spacers((13,), (port.rfi_profile_num,))[0] * ' '
+                context['spacer8'] = self.create_spacers((13,), (port.noise_margin_profile_num,))[0] * ' '
+                context['spacer9'] = self.create_spacers((13,), (port.virtual_noise_profile_num,))[0] * ' '
+                context['spacer10'] = self.create_spacers((13,), (port.inm_profile_num,))[0] * ' '
+
+                context['spacer_beg3'] = self.create_spacers((7,), (channelname,))[0] * ' '
+                context['spacer11'] = self.create_spacers((21,), (port.channel_ds_data_rate_profile_num,))[0] * ' '
+                context['spacer12'] = self.create_spacers((13,), (port.channel_us_data_rate_profile_num,))[0] * ' '
+                context['spacer13'] = self.create_spacers((13,), (port.channel_inp_data_rate_profile_num,))[0] * ' '
+                context['spacer14'] = self.create_spacers((13,), (port.channel_ds_rate_adapt_ratio,))[0] * ' '
+                context['spacer15'] = self.create_spacers((13,), (port.channel_us_rate_adapt_ratio,))[0] * ' '
                 text = self._render(
                     'display_product_port_state_num_card_port_activated',
                     context=dict(context, port=port))

@@ -1,0 +1,12 @@
+  ----------------------------------------------------------------------------
+  F/S/P                        {{ context.port.name }}
+  Optical Module status        {{ context.port.optical_module_status }}
+  Port state                   {% if context.port.operational_state == 'activated' %}Online{% else %}Offline{% endif %}
+
+  Port energy-saving flag      {{ context.port.port_energy_saving_flag }}
+  xPON MAC chipset state       {{ context.port.xpon_mac_chipset_state }}
+  Last down cause              -
+  Last up time                 -
+  Last down time               -
+  ----------------------------------------------------------------------------
+

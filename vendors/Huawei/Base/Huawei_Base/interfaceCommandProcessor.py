@@ -126,9 +126,14 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
 
-                text = self._render(
-                    'display_port_state',
-                    context=dict(context, port=port))
+                if port.operational_state == 'activated':
+                    text = self._render(
+                        'display_port_state',
+                        context=dict(context, port=port))
+                else:
+                    text = self._render(
+                        'display_port_state_offline',
+                        context=dict(context, port=port))
                 self._write(text)
 
             else:
@@ -426,8 +431,8 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             if self._model.dsl_mode == 'tr165':
                 raise exceptions.CommandSyntaxError(command=command)
             if card.product == 'adsl' or card.product == 'vdsl':
-                #Template looks like this: {huawei_downstream}_{huawei_downstream}_ADSL
-                #Template looks like this: {huawei_downstream}_{huawei_downstream}_{summary} vdsl
+                # Template looks like this: {huawei_downstream}_{huawei_downstream}_ADSL
+                # Template looks like this: {huawei_downstream}_{huawei_downstream}_{summary} vdsl
                 port_idx, template_name = self._dissect(args, str, 'template-name', str)
 
                 try:

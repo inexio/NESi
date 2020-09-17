@@ -4,13 +4,13 @@
   Port   Status         Loopback                 Alarm         Spec         UPBO
                                                  Temp          Prof         Prof
   ------------------------------------------------------------------------------
-  {{ context.portname }}{{ context.spacer1 }}{{ context.port.admin_state }}{{ context.spacer2 }}{{ context.port.loopback }}{{ context.spacer3 }}{{ context.port.alarm_template_num }}{{ context.spacer4 }}{{ context.port.spectrum_profile_num }}{{ context.spacer5 }}{{ context.port.upbo_profile_num }}
+{{ context.spacer_beg1 }}{{ context.portname }}{{ context.spacer1 }}{{ context.port_a_state }}{{ context.spacer2 }}{{ context.port_loopback }}{{ context.spacer3 }}{{ context.port.alarm_template_num }}{{ context.spacer4 }}{{ context.port.spectrum_profile_num }}{{ context.spacer5 }}{{ context.port.upbo_profile_num }}
   ------------------------------------------------------------------------------
 
   ------------------------------------------------------------------------------
   Port             DPBO prof     RFI prof      NM prof      VN prof     INM prof
   ------------------------------------------------------------------------------
-  {{ context.portname }}{{ context.spacer6 }}{{ context.port.dpbo_profile_num }}{{ context.spacer7 }}{{ context.port.rfi_profile_num }}{{ context.spacer8 }}{{ context.port.noise_margin_profile_num }}{{ context.spacer9 }}{{ context.port.virtual_noise_profile_num }}{{ context.spacer10 }}{{ context.port.inm_profile_num }}
+{{ context.spacer_beg2 }}{{ context.portname }}{{ context.spacer6 }}{{ context.port.dpbo_profile_num }}{{ context.spacer7 }}{{ context.port.rfi_profile_num }}{{ context.spacer8 }}{{ context.port.noise_margin_profile_num }}{{ context.spacer9 }}{{ context.port.virtual_noise_profile_num }}{{ context.spacer10 }}{{ context.port.inm_profile_num }}
   ------------------------------------------------------------------------------
   Note:
   NM:  Noise Margin                        VN: Virtual Noise
@@ -20,7 +20,7 @@
   ------------------------------------------------------------------------------
   Channel           DDR prof     UDR prof     INP prof   DsRa ratio   UsRa ratio
   ------------------------------------------------------------------------------
-  {{ context.channelname }}{{ context.spacer11 }}{{ context.port.channel_ds_data_rate_profile_num }}{{ context.spacer12 }}{{ context.port.channel_us_data_rate_profile_num }}{{ context.spacer13 }}{{ context.port.channel_inp_data_rate_profile_num }}{{ context.spacer14 }}{{ context.port.channel_ds_rate_adapt_ratio }}{{ context.spacer15 }}{{ context.port.channel_us_rate_adapt_ratio }}
+{{ context.spacer_beg3 }}{{ context.channelname }}{{ context.spacer11 }}{{ context.port.channel_ds_data_rate_profile_num }}{{ context.spacer12 }}{{ context.port.channel_us_data_rate_profile_num }}{{ context.spacer13 }}{{ context.port.channel_inp_data_rate_profile_num }}{{ context.spacer14 }}{{ context.port.channel_ds_rate_adapt_ratio }}{{ context.spacer15 }}{{ context.port.channel_us_rate_adapt_ratio }}
   ------------------------------------------------------------------------------
   Note:
   DDR: Downstream Data Rate                UDR: Upstream Data Rate
