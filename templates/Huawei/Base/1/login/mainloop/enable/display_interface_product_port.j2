@@ -1,4 +1,4 @@
-  {% if context.card.product == 'vdsl'%}  VDSL {% endif %}{% if context.card.product == 'adsl'%}ADSL {% endif %}{{ context.spaced_out_name }} is {{ context.port.operational_state }}
+  {% if context.card.product == 'vdsl'%}  VDSL {% endif %}{% if context.card.product == 'adsl'%}ADSL {% endif %}{{ context.spaced_out_name }} is {{ context.port_o_state }}
   The {% if context.card.product == 'vdsl'%}VDSL {% endif %}{% if context.card.product == 'adsl'%}ADSL {% endif %}port state is {{ context.port.admin_state }}
   The {% if context.card.product == 'vdsl'%}VDSL {% endif %}{% if context.card.product == 'adsl'%}ADSL {% endif %}port loopback state is {{ context.port.loopback }}
   Description : {{ context.port.description }}
