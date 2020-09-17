@@ -52,8 +52,18 @@ path="`dirname \"$0\"`"
 #   |     |           |-> Cpe 0/2/1 0/1 1                #
 #   |     |               |-> CpePort 0/2/1 0/1 1/1      #
 #   |     |-> Port 0/2/2                                 #
-#   |         |-> Ont 0/2/2 0                            #
-#   |             |-> OntPort 0/2/2 0/1                  #
+#   |     |   |-> Ont 0/2/2 0                            #
+#   |     |       |-> OntPort 0/2/2 0/1                  #
+#   |     |-> Port 0/2/3                                 #
+#   |     |   |-> Ont 0/2/3 0                            #
+#   |     |       |-> OntPort 0/2/3 0/1                  #
+#   |     |           |-> Cpe 0/2/3 0/1 1                #
+#   |     |               |-> CpePort 0/2/3 0/1 1/1      #
+#   |     |-> Port 0/2/4                                 #
+#   |         |-> Ont 0/2/4 0                            #
+#   |             |-> OntPort 0/2/4 0/1                  #
+#   |     |           |-> Cpe 0/2/4 0/1 1                #
+#   |     |               |-> CpePort 0/2/4 0/1 1/1      #
 #   |                                                    #
 #   |---> Card 0/3   (ftth-pon)                          #
 #   |     |-> Port 0/3/0                                 #
@@ -81,8 +91,18 @@ path="`dirname \"$0\"`"
 #   |     |           |-> Cpe 0/4/1 0/1 1                #
 #   |     |               |-> CpePort 0/4/1 0/1 1/1      #
 #   |     |-> Port 0/4/2                                 #
-#   |         |-> Ont 0/4/2 0                            #
-#   |             |-> OntPort 0/4/2 0/1                  #
+#   |     |   |-> Ont 0/4/2 0                            #
+#   |     |       |-> OntPort 0/4/2 0/1                  #
+#   |     |-> Port 0/4/3                                 #
+#   |     |   |-> Ont 0/4/3 0                            #
+#   |     |       |-> OntPort 0/4/3 0/1                  #
+#   |     |           |-> Cpe 0/4/3 0/1 1                #
+#   |     |               |-> CpePort 0/4/3 0/1 1/1      #
+#   |     |-> Port 0/4/4                                 #
+#   |         |-> Ont 0/4/4 0                            #
+#   |             |-> OntPort 0/4/4 0/1                  #
+#   |     |           |-> Cpe 0/4/4 0/1 1                #
+#   |     |               |-> CpePort 0/4/4 0/1 1/1      #
 #--------------------------------------------------------#
 
 # Create a network device (admin operation)
@@ -673,6 +693,149 @@ req='{
 
 ont_port_0_2_2_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
 
+### PORT 0/2/3 and deps ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$card_0_2',
+  "description": "Physical port 0/2/3",
+  "loopback": "disable",
+  "upstream": 0,
+  "downstream": 0,
+  "upstream_max": 100000,
+  "downstream_max": 100000,
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_0_2_3=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### Ont at port 0/2/3 ###
+
+# Create a physical ont at the network device (admin operation)
+req='{
+  "port_id":'$port_0_2_3',
+  "description": "Ont 0/2/3 0",
+  "memory_occupation": "50%",
+  "cpu_occupation": "1%",
+  "operational_state": "1",
+  "admin_state": "1",
+  "index": 0,
+  "vendor_id": "HWTC",
+  "version": "535.B",
+  "software_version": "V3R025C29D195"
+}'
+
+ont_0_2_3_0=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)
+
+### OntPort 0/2/3 0/1 ###
+
+# Create a physical ont-port at the ont (admin operation)
+req='{
+  "ont_id": '$ont_0_2_3_0',
+  "ont_port_index": 0,
+  "description": "0/2/3 0/1",
+  "operational_state": "1",
+  "admin_state": "1",
+  "ont_port_type": "ETH"
+}'
+
+ont_port_0_2_3_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
+
+### Cpe 0/2/3 0/1 1 ###
+
+# Create a physical cpe at the ont-port (admin operation)
+req='{
+  "ont_port_id": '$ont_port_0_2_3_0_1',
+  "description": "Cpe 0/2/3 0/1 1",
+  "admin_state": "1",
+  "mac": "e8a0-c51e-8adc"
+}'
+
+cpe_0_2_3_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpes)
+
+### CpePort 0/2/3 0/1 1/1 ###
+
+# Create a physical cpe-port at the cpe (admin operation)
+req='{
+  "cpe_id": '$cpe_0_2_3_0_1_1',
+  "description": "CpePort 0/2/3 0/1 1/1"
+}'
+
+cpe_port_0_2_3_0_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_ports)
+
+### PORT 0/2/4 and deps ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$card_0_2',
+  "description": "Physical port 0/2/4",
+  "loopback": "disable",
+  "upstream": 0,
+  "downstream": 0,
+  "upstream_max": 100000,
+  "downstream_max": 100000,
+  "admin_state": "1",
+  "operational_state": "1",
+  "speed_h": "100"
+}'
+
+port_0_2_4=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### Ont at port 0/2/4 ###
+
+# Create a physical ont at the network device (admin operation)
+req='{
+  "port_id":'$port_0_2_4',
+  "description": "Ont 0/2/4 0",
+  "memory_occupation": "50%",
+  "cpu_occupation": "1%",
+  "operational_state": "1",
+  "admin_state": "1",
+  "index": 0,
+  "vendor_id": "HWTC",
+  "version": "535.B",
+  "software_version": "V3R025C29D195"
+}'
+
+ont_0_2_4_0=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)
+
+### OntPort 0/2/4 0/1 ###
+
+# Create a physical ont-port at the ont (admin operation)
+req='{
+  "ont_id": '$ont_0_2_4_0',
+  "ont_port_index": 0,
+  "description": "0/2/4 0/1",
+  "operational_state": "1",
+  "admin_state": "1",
+  "ont_port_type": "ETH"
+}'
+
+ont_port_0_2_4_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
+
+### Cpe 0/2/4 0/1 1 ###
+
+# Create a physical cpe at the ont-port (admin operation)
+req='{
+  "ont_port_id": '$ont_port_0_2_4_0_1',
+  "description": "Cpe 0/2/4 0/1 1",
+  "admin_state": "1",
+  "mac": "b2b5-e273-7860"
+}'
+
+cpe_0_2_4_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpes)
+
+### CpePort 0/2/4 0/1 1/1 ###
+
+# Create a physical cpe-port at the cpe (admin operation)
+req='{
+  "cpe_id": '$cpe_0_2_4_0_1_1',
+  "description": "CpePort 0/2/4 0/1 1/1"
+}'
+
+cpe_port_0_2_4_0_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_ports)
+
 ### Card 0/3 ###
 
 # Create a physical card at the network device (admin operation)
@@ -1079,6 +1242,148 @@ req='{
 }'
 
 ont_port_0_4_2_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
+
+### PORT 0/4/3 and deps ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$card_0_4',
+  "description": "Physical port 0/4/3",
+  "loopback": "disable",
+  "upstream": 0,
+  "downstream": 0,
+  "upstream_max": 100000,
+  "downstream_max": 100000,
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_0_4_3=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### Ont at port 0/4/3 ###
+
+# Create a physical ont at the network device (admin operation)
+req='{
+  "port_id":'$port_0_4_3',
+  "description": "Ont 0/4/3 0",
+  "memory_occupation": "50%",
+  "cpu_occupation": "1%",
+  "operational_state": "1",
+  "admin_state": "1",
+  "index": 0,
+  "vendor_id": "HWTC",
+  "version": "535.B",
+  "software_version": "V3R025C29D195"
+}'
+
+ont_0_4_3_0=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)
+
+### OntPort 0/4/3 0/1 ###
+
+# Create a physical ont-port at the ont (admin operation)
+req='{
+  "ont_id": '$ont_0_4_3_0',
+  "ont_port_index": 0,
+  "description": "0/4/3 0/1",
+  "operational_state": "1",
+  "admin_state": "1",
+  "ont_port_type": "ETH"
+}'
+
+ont_port_0_4_3_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
+
+### Cpe 0/4/3 0/1 1 ###
+
+# Create a physical cpe at the ont-port (admin operation)
+req='{
+  "ont_port_id": '$ont_port_0_4_3_0_1',
+  "description": "Cpe 0/4/3 0/1 1",
+  "admin_state": "1",
+  "mac": "e8a0-c51e-8adc"
+}'
+
+cpe_0_4_3_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpes)
+
+### CpePort 0/4/3 0/1 1/1 ###
+
+# Create a physical cpe-port at the cpe (admin operation)
+req='{
+  "cpe_id": '$cpe_0_4_3_0_1_1',
+  "description": "CpePort 0/4/3 0/1 1/1"
+}'
+
+cpe_port_0_2_4_0_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_ports)
+
+### PORT 0/4/4 and deps ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$card_0_4',
+  "description": "Physical port 0/4/4",
+  "loopback": "disable",
+  "upstream": 0,
+  "downstream": 0,
+  "upstream_max": 100000,
+  "downstream_max": 100000,
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_0_4_4=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### Ont at port 0/4/4 ###
+
+# Create a physical ont at the network device (admin operation)
+req='{
+  "port_id":'$port_0_4_4',
+  "description": "Ont 0/4/4 0",
+  "memory_occupation": "50%",
+  "cpu_occupation": "1%",
+  "operational_state": "1",
+  "admin_state": "1",
+  "index": 0,
+  "vendor_id": "HWTC",
+  "version": "535.B",
+  "software_version": "V3R025C29D195"
+}'
+
+ont_0_4_4_0=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)
+
+### OntPort 0/4/4 0/1 ###
+
+# Create a physical ont-port at the ont (admin operation)
+req='{
+  "ont_id": '$ont_0_4_4_0',
+  "ont_port_index": 0,
+  "description": "0/4/4 0/1",
+  "operational_state": "1",
+  "admin_state": "1",
+  "ont_port_type": "ETH"
+}'
+
+ont_port_0_4_4_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
+
+### Cpe 0/4/4 0/1 1 ###
+
+# Create a physical cpe at the ont-port (admin operation)
+req='{
+  "ont_port_id": '$ont_port_0_4_4_0_1',
+  "description": "Cpe 0/4/4 0/1 1",
+  "admin_state": "1",
+  "mac": "444c-8a1a-7596"
+}'
+
+cpe_0_4_4_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpes)
+
+### CpePort 0/4/4 0/1 1/1 ###
+
+# Create a physical cpe-port at the cpe (admin operation)
+req='{
+  "cpe_id": '$cpe_0_4_4_0_1_1',
+  "description": "CpePort 0/4/4 0/1 1/1"
+}'
+
+cpe_port_0_4_4_0_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_ports)
 
 ### Management Card 0/6 ###
 

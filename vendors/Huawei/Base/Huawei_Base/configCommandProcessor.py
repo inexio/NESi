@@ -990,22 +990,6 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_deactivate(self, command, *args, context=None):
-        if self._validate(args, 'all'):
-            for component in self._model.cpes:
-                component.down()
-            for component in self._model.ont_ports:
-                component.down()
-            for component in self._model.onts:
-                component.down()
-            for component in self._model.ports:
-                component.admin_down()
-            for component in self._model.service_ports:
-                component.set_admin_state(0)
-            return
-        else:
-            raise exceptions.CommandSyntaxError(command=command)
-
     def do_xdsl(self, command, *args, context=None):
         if self._validate(args, 'vectoring-group', 'link', 'add', str, str):
             profile_idx, port_idx = self._dissect(args, 'vectoring-group', 'link', 'add', str, str)
