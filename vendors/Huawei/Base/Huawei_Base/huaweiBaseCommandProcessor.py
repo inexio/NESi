@@ -498,7 +498,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
                 text += self._render('display_service_port_all_middle',
                                      context=dict(context, port=port, s_port=s_port, vlan=vlan))
 
-                if s_port.operational_state == '1':
+                if s_port.operational_state == 'up':
                     s_port_up += 1
                 else:
                     s_port_down += 1

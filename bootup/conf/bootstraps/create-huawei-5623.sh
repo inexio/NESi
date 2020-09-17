@@ -265,10 +265,10 @@ req='{
 
 port_0_0_0=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
 
-### Serviceport 0/0/0 ###
+### Serviceport 0 ###
 
 req='{
-  "name": "0/0/0",
+  "name": "0",
   "connected_id": '$port_0_0_0',
   "connected_type": "port",
   "admin_state": "1",
@@ -277,7 +277,7 @@ req='{
 
 service_port_0_0_0=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
 
-### Service PPPoE Vlan at ServicePort 0/0/0  ###
+### Service PPPoE Vlan at ServicePort 0  ###
 
 req='{
   "name": "2620",
@@ -782,10 +782,10 @@ req='{
 
 ont_port_0_3_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
 
-### Serviceport 0/3/0/1/1 ###
+### Serviceport 1 ###
 
 req='{
-  "name": "0/3/0/1/1",
+  "name": "1",
   "connected_id": '$ont_port_0_3_0_1_1',
   "connected_type": "ont",
   "admin_state": "1",
@@ -794,7 +794,7 @@ req='{
 
 service_port_0_3_0_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
 
-### Service PPPoE Vlan at ServicePort 0/3/0/1/1  ###
+### Service PPPoE Vlan at ServicePort 1  ###
 
 req='{
   "name": "2620",
@@ -827,10 +827,10 @@ req='{
 
 cpe_port_0_3_0_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cpe_ports)
 
-### Serviceport 0/3/0/1/1/1/1 ###
+### Serviceport 2 ###
 
 req='{
-  "name": "0/3/0/1/1/1/1",
+  "name": "2",
   "connected_id": '$cpe_port_0_3_0_1_1_1_1',
   "connected_type": "cpe",
   "admin_state": "1",
@@ -839,7 +839,7 @@ req='{
 
 service_port_0_3_0_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
 
-### Service PPPoE Vlan at ServicePort 0/3/0/1/1/1/1  ###
+### Service PPPoE Vlan at ServicePort 2  ###
 
 req='{
   "name": "2620",
