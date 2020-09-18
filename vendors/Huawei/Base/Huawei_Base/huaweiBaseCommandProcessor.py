@@ -134,6 +134,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
             elif card.product == 'ftth-pon':
                 text1 = ''
                 text2 = ''
+                text3 = ''
 
                 context['spacer1'] = self.create_spacers((18,), (card.power_status,))[0] * ' '
                 context['spacer2'] = self.create_spacers((35,), (card.power_off_cause,))[0] * ' '
@@ -176,6 +177,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
 
                     else:
                         text2 += self._render('display_board_ftth_pon_middle_top', context=context)
+                        text3 += self._render('display_board_ftth_pon_bottom_top', context=context)
                         for ont in onts:
                             self.map_states(ont, 'ont')
                             context['ont_id'] = ont.index
@@ -188,25 +190,23 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
                             context['spacer12'] = self.create_spacers((9,), (ont.config_state,))[0] * ' '
                             context['spacer13'] = self.create_spacers((8,), (ont.match_state,))[0] * ' '
                             context['spacer14'] = self.create_spacers((4,), ('',))[0] * ' '
-
                             text2 += self._render('display_board_ftth_pon_middle_middle',
                                                   context=dict(context, ont=ont))
 
-                            text2 += self._render('display_board_ftth_pon_bottom_top', context=context)
                             context['ont_id'] = ont.index
                             context['spacer_beg3'] = self.create_spacers((4,), (subrackname,))[0] * ' '
                             context['spacer15'] = self.create_spacers((4,), (cardportname,))[0] * ' '
                             context['spacer16'] = self.create_spacers((8,), (ont.index,))[0] * ' '
                             context['spacer17'] = self.create_spacers((3,), ('',))[0] * ' '
-                            text2 += self._render('display_board_ftth_pon_bottom_middle',
+                            text3 += self._render('display_board_ftth_pon_bottom_middle',
                                                   context=dict(context, ont=ont))
 
-                            text2 += self._render('display_board_ftth_pon_bottom_bottom', context=context)
-                            text2 += self._render('display_board_ftth_pon_ont_summary', context=context)
+                        text3 += self._render('display_board_ftth_pon_bottom_bottom', context=context)
+                        text3 += self._render('display_board_ftth_pon_ont_summary', context=context)
 
                 text1 += self._render('display_board_ftth_pon_top_bottom', context=context)
 
-                text1 += text2
+                text1 += text2 + text3
 
                 self._write(text1)
 
