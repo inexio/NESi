@@ -886,6 +886,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 self._write(text)
                 login = self.user_input("  User Name(length<6,15>):", False, 15)
 
+            self.hide_input = True
             password = self.user_input("  User Password(length<6,15>):", False, 15)
             while len(password) < 6:
                 text = self._render('terminal_pw_short', context=context)
@@ -897,8 +898,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 text = self._render('terminal_pw_error', context=context)
                 self._write(text)
                 password_repeat = self.user_input("  Confirm Password(length<6,15>):", False, 15)
+            self.hide_input = False
 
-            profile = self.user_input("  User profile name(<=15 chars)[root]:")
+            profile = self.user_input("  User profile name(<=15 chars)[root]:", False, 15)
             while (profile != 'root') and (profile != 'admin') and (profile != 'operator') \
                     and (profile != 'commonuser'):
                 text = self._render('terminal_profile_error', context=context)
@@ -949,7 +951,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             text = self._render('user_created', context=context)
             self._write(text)
 
-            var_n = self.user_input("  Repeat this operation? (y/n)[n]:", False)
+            var_n = self.user_input("  Repeat this operation? (y/n)[n]:", False, 1)
             if var_n == 'y':
                 self.do_terminal(command, 'user', 'name', context=context)
                 return
