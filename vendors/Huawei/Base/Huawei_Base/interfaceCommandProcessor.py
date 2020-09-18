@@ -450,10 +450,16 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
         elif self._validate(args, 'all'):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
+            if context['iftype'] not in ('adsl', 'vdsl'):
+                self._write(self._render('operation_not_supported_by_port_failure', context=context))
+                return
             self.card_ports_up(card)
         elif self._validate(args, str):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
+            if context['iftype'] not in ('adsl', 'vdsl'):
+                self._write(self._render('operation_not_supported_by_port_failure', context=context))
+                return
             port_identifier, = self._dissect(
                 args, str)
 
@@ -464,6 +470,10 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 
+            if port.admin_state == '2':
+                self._write(self._render('port_has_been_activated', context=dict(context, port_name=port.name.split('/')[2])))
+                return
+
             port.admin_up()
 
         else:
@@ -472,6 +482,9 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
     def do_deactivate(self, command, *args, context=None):
         if context['iftype'] == 'vlanif':
             raise exceptions.CommandSyntaxError(command=command)
+        if context['iftype'] not in ('adsl', 'vdsl'):
+            self._write(self._render('operation_not_supported_by_port_failure', context=context))
+            return
         card = context['component']
         if self._validate(args, 'all'):
             self.card_ports_down(card)
@@ -483,6 +496,10 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
 
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
+
+            if port.admin_state == '0':
+                self._write(self._render('port_has_been_deactivated', context=dict(context, port_name=port.name.split('/')[2])))
+                return
 
             port.admin_down()
         else:
@@ -539,6 +556,9 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
     def do_shutdown(self, command, *args, context=None):
         if context['iftype'] == 'vlanif':
             raise exceptions.CommandSyntaxError(command=command)
+        if context['iftype'] not in ('opg', 'eth'):
+            self._write(self._render('operation_not_supported_by_port_failure', context=context))
+            return
         card = context['component']
         if self._validate(args, 'all'):
             self.card_ports_down(card)
@@ -750,13 +770,17 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
         elif self._validate(args, 'shutdown', 'all'):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
-
+            if context['iftype'] not in ('opg', 'eth'):
+                self._write(self._render('operation_not_supported_by_port_failure', context=context))
+                return
             card = context['component']
             self.card_ports_up(card)
         elif self._validate(args, 'shutdown', str):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
-
+            if context['iftype'] not in ('opg', 'eth'):
+                self._write(self._render('operation_not_supported_by_port_failure', context=context))
+                return
             port_identifier, = self._dissect(args, 'shutdown', str)
             card = context['component']
 
@@ -776,6 +800,9 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
         if not ports:
             raise exceptions.CommandSyntaxError()
         for port in ports:
+            if port.admin_state == '0':
+                self._write(self._render('port_has_been_deactivated', context=dict(port_name=port.name.split('/')[2])))
+                continue
             port.admin_down()
 
     def card_ports_up(self, card):
@@ -783,4 +810,7 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
         if not ports:
             raise exceptions.CommandSyntaxError()
         for port in ports:
+            if port.admin_state == '2':
+                self._write(self._render('port_has_been_activated', context=dict(port_name=port.name.split('/')[2])))
+                continue
             port.admin_up()
