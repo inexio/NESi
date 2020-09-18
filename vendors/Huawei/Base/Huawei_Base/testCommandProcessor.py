@@ -61,6 +61,9 @@ class TestCommandProcessor(BaseCommandProcessor):
             self._write(text)
             sleep(2)
 
+            text = self._render('on_cycle', context=context)
+            self._write(text)
+
             context['time_end'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             text = self._render('melt_test', context=context)
             self._write(text)
