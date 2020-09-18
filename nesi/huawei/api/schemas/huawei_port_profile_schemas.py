@@ -35,5 +35,5 @@ class HuaweiPortProfileSchema(PortProfileSchema):
                                                   'AnnexB_G_993_2', 'ETSI', 'us0_psd_mask', 'vdsltoneblackout',
                                                   'vmac_ipoe', 'vmac_pppoe', 'vmac_pppoa',
                                                   'vlan_mac', 'packet_policy_multicast', 'packet_policy_unicast',
-                                                  'security_anti_ipspoofing',
-                                                  'security_anti_macspoofing', 'igmp_mismatch', 'commit')
+                                                  'security_anti_ipspoofing', 'security_anti_macspoofing',
+                                                  'igmp_mismatch', 'commit', 'internal_id')

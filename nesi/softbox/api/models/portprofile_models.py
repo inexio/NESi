@@ -87,6 +87,7 @@ class PortProfile(db.Model):
     ETSI = db.Column(db.String(), default=None)
     us0_psd_mask = db.Column(db.Integer(), default=None)
     vdsltoneblackout = db.Column(db.String(), default=None)
+    internal_id = db.Column(db.Integer(), default=None)
 
     vmac_ipoe = db.Column(db.Enum('enable', 'disable'), default=None)
     vmac_pppoe = db.Column(db.Enum('enable', 'disable'), default=None)

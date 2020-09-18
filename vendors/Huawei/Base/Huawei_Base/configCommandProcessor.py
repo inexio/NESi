@@ -636,14 +636,19 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         if self._validate(args, 'bind', 'service-profile', str, 'profile-id', str):
             trafficvlan, id = self._dissect(args, 'bind', 'service-profile', str, 'profile-id', str)
             try:
-                vlan = self._model.get_vlan("number", int(trafficvlan))
-                profile = self._model.get_port_profile("id", int(id))
+                profile = self._model.get_port_profile('internal_id', int(id))
                 assert profile.box_id == self._model.id
                 assert profile.type == "service"
-            except (exceptions.SoftboxenError, AssertionError):
-                raise exceptions.CommandSyntaxError(command=command)
+            except (exceptions.InvalidInputError, AssertionError):
+                self._write(self._render('vlan_service_profile_does_not_exist', context=context))
+                return
+            try:
+                vlan = self._model.get_vlan("number", int(trafficvlan))
+            except exceptions.InvalidInputError:
+                self._write(self._render('vlan_does_not_exist', context=context))
+                return
 
-            vlan.set_service_profile_id(int(id))
+            vlan.set_service_profile_id(int(profile.id))
             text = self._render(
                 'vlan_bind_service-profile_vlan-id_profile-id_profile-id',
                 context=context)
@@ -652,17 +657,17 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         elif self._validate(args, 'service-profile', 'profile-name', str, 'profile-id', str):
             name, id = self._dissect(args, 'service-profile', 'profile-name', str, 'profile-id', str)
             try:
-                profile = self._model.get_port_profile('id', int(id))
+                profile = self._model.get_port_profile('internal_id', int(id))
                 assert profile.type == "service"
             except exceptions.SoftboxenError:
                 try:
-                    self._model.add_port_profile(name=name, type='service', id=id)
+                    self._model.add_port_profile(name=name, type='service', internal_id=id)
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
             except AssertionError:
                 raise exceptions.CommandSyntaxError(command=command)
             try:
-                profile = self._model.get_port_profile('id', int(id))
+                profile = self._model.get_port_profile('internal_id', int(id))
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 
@@ -881,7 +886,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 self._write(text)
                 login = self.user_input("  User Name(length<6,15>):", False, 15)
 
-            password = self.user_input("  User Password(length<6,15>):", False, )
+            password = self.user_input("  User Password(length<6,15>):", False, 15)
             while len(password) < 6:
                 text = self._render('terminal_pw_short', context=context)
                 self._write(text)
@@ -979,11 +984,16 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             try:
                 card = self._model.get_card('name', cardident)
                 if card.product != 'mgnt':
-                    raise exceptions.CommandSyntaxError(command=command)
+                    self._write(self._render('operation_not_supported_by_board', context=context))
+                    return
                 port = self._model.get_port("name", portident)
                 vlan = self._model.get_vlan("number", int(trafficvlan))
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
+
+            if port.vlan_id == vlan.number:
+                self._write(self._render('port_already_in_vlan', context=context))
+                return
 
             port.set_vlan_id(vlan.number)
 
