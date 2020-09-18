@@ -110,7 +110,7 @@ req='{
   "vendor": "Huawei",
   "model": "5623",
   "version": "A",
-  "description": "Example Switch",
+  "description": "Huawei 5623A box",
   "hostname": "Huawei_5623A",
   "mgmt_address": "10.0.0.12",
   "software_version": "MA5623V800R016C00",
