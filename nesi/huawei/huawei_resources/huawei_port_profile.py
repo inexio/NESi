@@ -76,6 +76,7 @@ class HuaweiPortProfile(PortProfile):
     ETSI = base.Field('ETSI')
     us0_psd_mask = base.Field('us0_psd_mask')
     vdsltoneblackout = base.Field('vdsltoneblackout')
+    internal_id = base.Field('internal_id')
 
     vmac_ipoe = base.Field('vmac_ipoe')
     vmac_pppoe = base.Field('vmac_pppoe')
