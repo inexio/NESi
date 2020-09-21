@@ -33,8 +33,8 @@ class Port(db.Model):
     admin_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating
     upstream = db.Column(db.Integer(), default=0)
     downstream = db.Column(db.Integer(), default=0)
-    upstream_max = db.Column(db.Integer(), default=100000)
-    downstream_max = db.Column(db.Integer(), default=100000)
+    upstream_max = db.Column(db.String(), default="100000")
+    downstream_max = db.Column(db.String(), default="100000")
     cur_init_state = db.Column(db.Enum('up', 'down', 'shutdown'), default='down')
     auto_negotiation = db.Column(db.Boolean(), default=True)
     mtu = db.Column(db.Integer(), default=1500)
