@@ -409,8 +409,8 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
 
                 try:
                     port.admin_up()
-                    port.set('downstream_max', int(ds_rate))
-                    port.set('upstream_max', int(us_rate))
+                    port.set('downstream_max', ds_rate)
+                    port.set('upstream_max', us_rate)
                     port.set('line_spectrum_profile', spectrum_profile)
                     port.set('spectrum_profile_num', int(spectrum_id))
                     port.set('noise_margin_profile', noise_profile)

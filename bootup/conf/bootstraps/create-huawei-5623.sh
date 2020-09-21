@@ -278,8 +278,8 @@ req='{
   "loopback": "disable",
   "upstream": 10000,
   "downstream": 25000,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "1",
   "combo_status": "-",
@@ -307,8 +307,8 @@ req='{
   "loopback": "disable",
   "upstream": 10000,
   "downstream": 25000,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "1",
   "combo_status": "-",
@@ -348,8 +348,8 @@ req='{
   "loopback": "disable",
   "upstream": 10000,
   "downstream": 25000,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "1"
 }'
@@ -410,8 +410,8 @@ req='{
   "loopback": "disable",
   "upstream": 0,
   "downstream": 0,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "0"
 }'
@@ -449,8 +449,8 @@ req='{
   "loopback": "disable",
   "upstream": 0,
   "downstream": 0,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "0",
   "operational_state": "0"
 }'
@@ -478,8 +478,8 @@ req='{
   "loopback": "disable",
   "upstream": 10000,
   "downstream": 25000,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "1"
 }'
@@ -517,8 +517,8 @@ req='{
   "loopback": "disable",
   "upstream": 0,
   "downstream": 0,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "0"
 }'
@@ -556,8 +556,8 @@ req='{
   "loopback": "disable",
   "upstream": 0,
   "downstream": 0,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "0",
   "operational_state": "0"
 }'
@@ -585,8 +585,8 @@ req='{
   "loopback": "disable",
   "upstream": 10000,
   "downstream": 25000,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "1"
 }'
@@ -656,8 +656,8 @@ req='{
   "loopback": "disable",
   "upstream": 0,
   "downstream": 0,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "0"
 }'
@@ -724,8 +724,8 @@ req='{
   "loopback": "disable",
   "upstream": 0,
   "downstream": 0,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "0",
   "operational_state": "0"
 }'
@@ -773,8 +773,8 @@ req='{
   "loopback": "disable",
   "upstream": 0,
   "downstream": 0,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "1"
 }'
@@ -844,8 +844,8 @@ req='{
   "loopback": "disable",
   "upstream": 0,
   "downstream": 0,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "1",
   "speed_h": "100"
@@ -928,8 +928,8 @@ req='{
   "loopback": "disable",
   "upstream": 10000,
   "downstream": 25000,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "1"
 }'
@@ -1141,8 +1141,8 @@ req='{
   "loopback": "disable",
   "upstream": 10000,
   "downstream": 25000,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "1"
 }'
@@ -1209,8 +1209,8 @@ req='{
   "loopback": "disable",
   "upstream": 0,
   "downstream": 0,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "0"
 }'
@@ -1277,8 +1277,8 @@ req='{
   "loopback": "disable",
   "upstream": 0,
   "downstream": 0,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "0",
   "operational_state": "0"
 }'
@@ -1323,8 +1323,8 @@ req='{
   "loopback": "disable",
   "upstream": 0,
   "downstream": 0,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "1"
 }'
@@ -1394,8 +1394,8 @@ req='{
   "loopback": "disable",
   "upstream": 0,
   "downstream": 0,
-  "upstream_max": 100000,
-  "downstream_max": 100000,
+  "upstream_max": "100000",
+  "downstream_max": "100000",
   "admin_state": "1",
   "operational_state": "1"
 }'

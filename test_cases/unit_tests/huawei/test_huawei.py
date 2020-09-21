@@ -35,9 +35,9 @@ class TestHuawei(TestCore):
 
     def test_port_rest(self):
         port = self.model.get_port("name", '0/0/0')
-        assert port.downstream_max == 100000
+        assert port.downstream_max == "100000"
         port.port_downstream_set(1)
-        assert port.downstream_max == 1
+        assert port.downstream_max == "1"
         try:
             port.port_downstream_set('failure')
             assert False
