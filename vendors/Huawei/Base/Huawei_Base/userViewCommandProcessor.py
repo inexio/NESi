@@ -42,6 +42,7 @@ class UserViewCommandProcessor(HuaweiBaseCommandProcessor):
             self._model.set_last_logout(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
             user = self._model.get_user('status', 'Online')
             user.set_offline()
+            self._model.enable_interactive()
             exc = exceptions.TerminalExitError()
             exc.return_to = 'sysexit'
             raise exc

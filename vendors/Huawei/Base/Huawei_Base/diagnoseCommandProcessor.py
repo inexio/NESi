@@ -117,10 +117,10 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
             if dsl_mode != 'tr129' and dsl_mode != 'tr165':
                 raise exceptions.CommandSyntaxError(command=command)
 
-            self.user_input('{ <cr>|adsl<K> }:', False)
-
-            text = self._render('switch_dsl_mode_temp_1', context=context)
-            self._write(text)
+            if self._model.interactive_mode:
+                self.user_input('{ <cr>|adsl<K> }:', False)
+                text = self._render('switch_dsl_mode_temp_1', context=context)
+                self._write(text)
 
             if self._model.dsl_mode == dsl_mode:
                 text = self._render('switch_dsl_mode_failure', context=context)
