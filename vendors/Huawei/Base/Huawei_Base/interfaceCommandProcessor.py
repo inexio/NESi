@@ -483,8 +483,7 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
         if context['iftype'] == 'vlanif':
             raise exceptions.CommandSyntaxError(command=command)
         if context['iftype'] not in ('adsl', 'vdsl'):
-            self._write(self._render('operation_not_supported_by_port_failure', context=context))
-            return
+            raise exceptions.CommandSyntaxError(command=command)
         card = context['component']
         if self._validate(args, 'all'):
             self.card_ports_down(card)
@@ -771,16 +770,14 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
             if context['iftype'] not in ('opg', 'eth'):
-                self._write(self._render('operation_not_supported_by_port_failure', context=context))
-                return
+                raise exceptions.CommandSyntaxError(command=command)
             card = context['component']
             self.card_ports_up(card)
         elif self._validate(args, 'shutdown', str):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
             if context['iftype'] not in ('opg', 'eth'):
-                self._write(self._render('operation_not_supported_by_port_failure', context=context))
-                return
+                raise exceptions.CommandSyntaxError(command=command)
             port_identifier, = self._dissect(args, 'shutdown', str)
             card = context['component']
 
