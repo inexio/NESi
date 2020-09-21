@@ -2,16 +2,16 @@ root
 secret
 enable
 config
-interface vdsl 0/0
+interface vdsl 0/1
 deactivate 1
 quit
-interface adsl 0/1
+interface adsl 0/2
 deactivate 2
 quit
-interface opg 0/4
+interface opg 0/5
 shutdown 1
 quit
-interface eth 0/2
+interface eth 0/3
 shutdown 1
 quit
 return

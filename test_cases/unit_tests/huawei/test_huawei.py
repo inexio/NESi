@@ -36,7 +36,7 @@ class TestHuawei(TestCore):
     def test_port_rest(self):
         port = self.model.get_port("name", '0/0/0')
         assert port.downstream_max == "100000"
-        port.port_downstream_set(1)
+        port.port_downstream_set("1")
         assert port.downstream_max == "1"
         try:
             port.port_downstream_set('failure')
@@ -44,9 +44,9 @@ class TestHuawei(TestCore):
         except exceptions.SoftboxenError:
             assert True
 
-        assert port.upstream_max == 100000
-        port.port_upstream_set(1)
-        assert port.upstream_max == 1
+        assert port.upstream_max == "100000"
+        port.port_upstream_set("1")
+        assert port.upstream_max == "1"
         try:
             port.port_upstream_set('failure')
             assert False
@@ -63,7 +63,7 @@ class TestHuawei(TestCore):
             assert True
 
     def test_ont_fields(self):
-        port = self.model.get_ont("name", '0/2/0/0')
+        port = self.model.get_ont("name", '0/3/0/0')
         assert port.ont_online_duration is None
         port.set_online_duration('1')
         assert (port.ont_online_duration == '1')
@@ -74,7 +74,7 @@ class TestHuawei(TestCore):
             assert True
 
     def test_ont_ports(self):
-        port = self.model.get_ont_port("name", '0/2/0/0/1')
+        port = self.model.get_ont_port("name", '0/3/0/0/1')
         port.up()
         assert (port.admin_state == '1')
         port.down()
@@ -93,7 +93,7 @@ class TestHuawei(TestCore):
         port.set('type', 'service')
 
     def test_service_port(self):
-        port = self.model.get_service_port("name", "0/0/0")
+        port = self.model.get_service_port("name", "0")
         assert port.vpi == '-'
         port.set_vpi('vpi')
         assert port.vpi == 'vpi'
@@ -235,7 +235,7 @@ class TestHuawei(TestCore):
         except exceptions.SoftboxenError:
             assert True
 
-        assert vlan.bind_service_profile_id == 1
+        assert vlan.bind_service_profile_id == 2
         vlan.set_service_profile_id(22)
         assert vlan.bind_service_profile_id == 22
         try:
@@ -258,18 +258,18 @@ class TestHuawei(TestCore):
 
     def test_box_properties(self):
         assert len(self.model.subracks) == 1
-        assert len(self.model.cards) == 5
-        assert len(self.model.ports) == 13
-        assert len(self.model.onts) == 8
-        assert len(self.model.ont_ports) == 9
-        assert len(self.model.cpes) == 11
-        assert len(self.model.cpe_ports) == 11
+        assert len(self.model.cards) == 6
+        assert len(self.model.ports) == 19
+        assert len(self.model.onts) == 12
+        assert len(self.model.ont_ports) == 13
+        assert len(self.model.cpes) == 15
+        assert len(self.model.cpe_ports) == 15
         assert len(self.model.vlans) == 2
-        assert len(self.model.service_vlans) == 1
-        assert len(self.model.service_ports) == 1
+        assert len(self.model.service_vlans) == 3
+        assert len(self.model.service_ports) == 3
         assert len(self.model.credentials) == 1
         assert len(self.model.routes) == 0
-        assert len(self.model.port_profiles) == 1
+        assert len(self.model.port_profiles) == 2
         assert len(self.model.emus) == 2
         assert len(self.model.users) == 1
         assert len(self.model.vlan_interfaces) == 1
