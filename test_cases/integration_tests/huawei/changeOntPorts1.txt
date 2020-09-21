@@ -2,7 +2,7 @@ root
 secret
 enable
 config
-interface gpon 0/3
+interface gpon 0/4
 ont port attribute 0 0 eth 1 operational-state on
 quit
 save

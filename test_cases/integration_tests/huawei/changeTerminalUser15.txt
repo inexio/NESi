@@ -9,7 +9,7 @@ testuser
 root
 3
 4
-\r\n
+
 n
 return
 quit

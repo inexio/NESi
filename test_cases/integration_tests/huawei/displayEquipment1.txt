@@ -3,7 +3,7 @@ secret
 enable
 config
 display board 0
-display board 0/0
+display board 0/1
 display vlan all
 
 display interface vlanif 2620

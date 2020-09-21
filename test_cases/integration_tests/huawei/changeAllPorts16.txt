@@ -2,15 +2,15 @@ root
 secret
 enable
 config
-interface vdsl 0/0
+interface vdsl 0/1
 deactivate all
 shutdown all
 quit
-interface eth 0/2
+interface eth 0/3
 deactivate all
 shutdown all
 quit
-interface gpon 0/3
+interface gpon 0/4
 deactivate all
 shutdown all
 quit

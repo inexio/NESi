@@ -2,7 +2,7 @@ root
 secret
 enable
 config
-interface gpon 0/3
+interface gpon 0/4
 ont delete 0 0
 quit
 save
