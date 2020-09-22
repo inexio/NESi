@@ -262,6 +262,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 context['spacer2'] = self.create_spacers((10,), (vlan.type,))[0] * ' '
                 context['spacer3'] = self.create_spacers((23,), (vlan.attribute,))[0] * ' '
                 context['spacer4'] = self.create_spacers((16,), (len(str(servportnum)),))[0] * ' '
+                context['spacer5'] = ' '
                 text += self._render('display_vlan_all_mid', context=dict(context, vlan=vlan))
                 count += 1
 
