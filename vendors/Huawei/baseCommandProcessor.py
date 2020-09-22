@@ -17,10 +17,6 @@ from nesi.softbox.cli import base
 class BaseCommandProcessor(base.CommandProcessor):
     """Create CLI REPR loop for example switch."""
 
-    VENDOR = 'Huawei'
-    MODEL = 'Base'
-    VERSION = '1'
-
     def map_states(self, object, type):
         if object.admin_state == '0':
             if type == 'subrack':

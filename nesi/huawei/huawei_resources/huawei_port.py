@@ -10,7 +10,8 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from nesi.softbox.base_resources.port import Port, PortCollection, logging, base
+from nesi.softbox.base_resources.port import Port, PortCollection, logging
+from nesi.softbox.base_resources import base
 
 LOG = logging.getLogger(__name__)
 

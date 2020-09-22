@@ -17,10 +17,6 @@ from nesi.softbox.cli import base
 class BaseCommandProcessor(base.CommandProcessor):
     """Create CLI REPR loop for example switch."""
 
-    VENDOR = 'Alcatel'
-    MODEL = 'Base'
-    VERSION = '1'
-
     def do_exit(self, command, *args, context=None):
         raise exceptions.TerminalExitError()
 

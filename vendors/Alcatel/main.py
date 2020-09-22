@@ -12,19 +12,11 @@
 
 from nesi.softbox.cli import base
 from nesi import exceptions
-from datetime import datetime, date
-from vendors.Alcatel.Base.Alcatel_Base.userViewCommandProcessor import UserViewCommandProcessor
+from datetime import datetime
+from vendors.Alcatel.userViewCommandProcessor import UserViewCommandProcessor
 
 
-class ReadInputCommandProcessor(base.CommandProcessor):
-    """Create CLI REPR loop for example switch."""
-
-    VENDOR = 'Alcatel'
-    MODEL = '7360'
-    VERSION = 'FX-4'
-
-
-class PreLoginCommandProcessor(ReadInputCommandProcessor):
+class PreLoginCommandProcessor(base.CommandProcessor):
 
     def on_unknown_command(self, command, *args, context=None):
         subprocessor = self._create_subprocessor(
@@ -44,7 +36,7 @@ class PreLoginCommandProcessor(ReadInputCommandProcessor):
                 raise exc
 
 
-class LoginCommandProcessor(ReadInputCommandProcessor):
+class LoginCommandProcessor(base.CommandProcessor):
 
     def on_unknown_command(self, command, *args, context=None):
         context['welcome_banner'] = self._model.welcome_banner

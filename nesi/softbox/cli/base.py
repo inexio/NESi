@@ -44,11 +44,6 @@ class CommandProcessor:
         followed by the name of this command processor
     """
 
-    # Identify backend models to load and use
-    VENDOR = '?'
-    MODEL = '?'
-    VERSION = '?'
-
     def __init__(self, model, input_stream, output_stream, history,
                  template_root=None, scopes=(), daemon=False):
         self._model = model
@@ -57,8 +52,7 @@ class CommandProcessor:
         self._scopes = scopes
         self._template_root = template_root
         self._template_dir = os.path.join(
-            template_root, self.VENDOR, self.MODEL, self.VERSION,
-            *scopes)
+            template_root, *scopes)
 
         self._jenv = jinja2.Environment(
             loader=(jinja2.FileSystemLoader(self._template_dir)
@@ -229,9 +223,7 @@ class CommandProcessor:
 
         try:
             if scopes:
-                template_dir = os.path.join(
-                    self._template_root, self.VENDOR, self.MODEL, self.VERSION,
-                    *scopes)
+                template_dir = os.path.join(self._template_root,  *scopes)
                 tmp_jenv = jinja2.Environment(
                     loader=(jinja2.FileSystemLoader(template_dir)
                             if self._template_root else None),

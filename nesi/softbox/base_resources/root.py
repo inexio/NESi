@@ -10,8 +10,6 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-import logging
-
 from nesi.alcatel.alcatel_resources.alcatel_box import *
 from nesi.huawei.huawei_resources.huawei_box import *
 from nesi.edgecore.edgecore_resources.edgecore_box import *

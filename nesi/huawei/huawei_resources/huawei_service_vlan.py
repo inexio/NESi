@@ -1,4 +1,5 @@
-from nesi.softbox.base_resources.service_vlan import ServiceVlan, ServiceVlanCollection, logging, base
+from nesi.softbox.base_resources.service_vlan import ServiceVlan, ServiceVlanCollection, logging
+from nesi.softbox.base_resources import base
 
 LOG = logging.getLogger(__name__)
 

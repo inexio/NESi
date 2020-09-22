@@ -10,14 +10,12 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-import os, sys
+import os
 from nesi import exceptions
-from os import listdir
-from os.path import isfile, join
 from urllib.parse import urlparse
 import importlib
-from nesi.softbox import rest_client
-from nesi.softbox import root, base
+from nesi.softbox.cli import rest_client
+from nesi.softbox.base_resources import root, base
 import pytest
 
 
@@ -25,7 +23,7 @@ class TestCore:
 
     def prep_cli(self):
         self.prep_model()
-        main = importlib.import_module('vendors.' + self.model.vendor + '.' + self.model.model + '.' + self.model.vendor + '_' + self.model.model + '.main')
+        main = importlib.import_module('vendors.' + self.model.vendor + '.main')
         cli = main.PreLoginCommandProcessor
         self.cli = cli
         return cli
@@ -68,7 +66,8 @@ class TestCore:
         stdin1 = os.fdopen(fd1, 'rb', 0)
 
         while True:
-            command_processor = self.cli(self.model, stdin1, stdout1, (), template_root='templates/', daemon=True)
+            templ_root ='templates/' + str(self.model.vendor)
+            command_processor = self.cli(self.model, stdin1, stdout1, (), template_root=templ_root, daemon=True)
             try:
                 context = dict()
                 context['login_banner'] = self.model.login_banner
@@ -80,7 +79,7 @@ class TestCore:
                 elif exc.return_to is not None and exc.return_to == 'sysreboot':
                     continue
                 else:
-                    pass
+                    break
 
         stdin1.close()
         stdout1.close()

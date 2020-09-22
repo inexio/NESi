@@ -12,9 +12,9 @@
 
 from nesi.huawei.huawei_resources import *
 
-from nesi.softbox.base_resources import credentials
+from nesi.softbox.base_resources import credentials, base
 from nesi.softbox.base_resources import route
-from nesi.softbox.base_resources.box import BoxCollection, Box, logging, base, os
+from nesi.softbox.base_resources.box import BoxCollection, Box, logging, os
 
 LOG = logging.getLogger(__name__)
 

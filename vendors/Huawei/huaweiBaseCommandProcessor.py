@@ -9,9 +9,8 @@
 # - Alexander Dincher <https://github.com/Dinker1996>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
-import os
 
-from vendors.Huawei.Base.Huawei_Base.baseCommandProcessor import BaseCommandProcessor
+from vendors.Huawei.baseCommandProcessor import BaseCommandProcessor
 from nesi import exceptions
 
 

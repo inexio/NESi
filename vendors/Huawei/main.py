@@ -9,22 +9,13 @@
 # - Alexander Dincher <https://github.com/Dinker1996>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
-from datetime import datetime
 
 from nesi.softbox.cli import base
-from vendors.Huawei.Base.Huawei_Base.userViewCommandProcessor import *
+from vendors.Huawei.userViewCommandProcessor import *
 from nesi import exceptions
 
 
-class ReadInputCommandProcessor(base.CommandProcessor):
-    """Create CLI REPR loop for example switch."""
-
-    VENDOR = 'Huawei'
-    MODEL = '5623'
-    VERSION = 'A'
-
-
-class PreLoginCommandProcessor(ReadInputCommandProcessor):
+class PreLoginCommandProcessor(base.CommandProcessor):
 
     def on_unknown_command(self, command, *args, context=None):
         subprocessor = self._create_subprocessor(
@@ -44,7 +35,7 @@ class PreLoginCommandProcessor(ReadInputCommandProcessor):
                 raise exc
 
 
-class LoginCommandProcessor(ReadInputCommandProcessor):
+class LoginCommandProcessor(base.CommandProcessor):
 
     def on_unknown_command(self, command, *args, context=None):
         username = context.pop('username')

@@ -12,7 +12,7 @@
 
 import logging
 import os
-from nesi.softbox import base
+from nesi.softbox.base_resources import base
 from nesi.exceptions import PropertyNotFoundError
 from nesi.exceptions import FunctionNotFoundError
 

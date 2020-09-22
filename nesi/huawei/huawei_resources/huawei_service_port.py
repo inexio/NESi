@@ -1,4 +1,5 @@
-from nesi.softbox.base_resources.service_port import ServicePort, ServicePortCollection, base, logging
+from nesi.softbox.base_resources.service_port import ServicePort, ServicePortCollection, logging
+from nesi.softbox.base_resources import base
 
 LOG = logging.getLogger(__name__)
 

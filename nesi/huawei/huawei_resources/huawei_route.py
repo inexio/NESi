@@ -1,4 +1,5 @@
-from nesi.softbox.base_resources.route import Route, RouteCollection, base, logging
+from nesi.softbox.base_resources.route import Route, RouteCollection, logging
+from nesi.softbox.base_resources import base
 
 LOG = logging.getLogger(__name__)
 
