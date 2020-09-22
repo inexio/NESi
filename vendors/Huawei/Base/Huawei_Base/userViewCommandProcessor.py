@@ -37,11 +37,14 @@ class UserViewCommandProcessor(HuaweiBaseCommandProcessor):
 
     def do_quit(self, command, *args, context=None):
         self._write("  Check whether system data has been changed. Please save data before logout.\n")
-        answer = self.user_input("Are you sure to log out? (y/n)[n]:", False, 1)
+        answer = 'y'
+        if self._model.interactive_mode:
+            answer = self.user_input("Are you sure to log out? (y/n)[n]:", False, 1)
         if answer == "y":
             self._model.set_last_logout(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
             user = self._model.get_user('status', 'Online')
             user.set_offline()
+            self._model.enable_smart()
             self._model.enable_interactive()
             exc = exceptions.TerminalExitError()
             exc.return_to = 'sysexit'

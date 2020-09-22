@@ -39,7 +39,7 @@ class CardsSchema(ma.ModelSchema):
     class CardSchema(ma.ModelSchema):
         class Meta:
             model = Card
-            fields = ('id', 'name', 'ppc', 'operational_state', 'ports', '_links')
+            fields = ('id', 'name', 'product', 'ppc', 'operational_state', 'ports', '_links')
 
         ports = ma.Nested(PortsSchema.PortSchema, many=True)
 

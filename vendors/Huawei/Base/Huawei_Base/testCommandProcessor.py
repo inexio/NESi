@@ -46,7 +46,7 @@ class TestCommandProcessor(BaseCommandProcessor):
             except (exceptions.SoftboxenError, AssertionError):
                 raise exceptions.CommandSyntaxError(command=command)
 
-            if self._model.interactive_mode:
+            if self._model.smart_mode:
                 self.user_input('{ <cr>|discharge<K>|fault-force-test<K> }:')
 
             context['port_name'] = port.name
