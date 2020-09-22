@@ -351,6 +351,8 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
     def do_activate(self, command, *args, context=None):
         card = context['component']
         if self._validate(args[:6], str, 'prof-desc', 'ds-rate', str, 'us-rate', str):
+            spectrum_flag = False
+            dpbo_flag = False
         #elif self._validate(args, str, 'prof.desc', 'ds-rate', str, 'us-rate', str, '(spectrum str)', 'noise-margin', 'ADSL_6db', 'inp-delay', 'ADSL','(dpbo DPBO:str)'):
             if context['iftype'] == 'vlanif':
                 raise exceptions.CommandSyntaxError(command=command)
@@ -372,17 +374,19 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                         i += 2
                         try:
                             profile = self._model.get_port_profile('description', spectrum)
-                            spectrum_profile = 'No. ' + profile.id + ' ' + spectrum
-                            spectrum_id = profile.id
+                            spectrum_profile = 'No. ' + str(profile.number) + ' ' + spectrum
+                            spectrum_id = str(profile.number)
                         except exceptions.SoftboxenError:
                             raise exceptions.CommandSyntaxError(command=command)
+                        else:
+                            spectrum_flag = True
                     elif args[i] == 'noise-margin':
                         noise = args[i+1]
                         i += 2
                         try:
                             profile = self._model.get_port_profile('description', noise)
-                            noise_profile = 'No. ' + profile.id + ' ' + noise
-                            noise_id = profile.id
+                            noise_profile = 'No. ' + str(profile.number) + ' ' + noise
+                            noise_id = str(profile.number)
                         except exceptions.SoftboxenError:
                             raise exceptions.CommandSyntaxError(command=command)
                     elif args[i] == 'inp-delay':
@@ -390,8 +394,8 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                         i += 2
                         try:
                             profile = self._model.get_port_profile('description', inp)
-                            inp_profile = 'No. ' + profile.id + ' ' + inp
-                            inp_id = profile.id
+                            inp_profile = 'No. ' + str(profile.number) + ' ' + inp
+                            inp_id = str(profile.number)
                         except exceptions.SoftboxenError:
                             raise exceptions.CommandSyntaxError(command=command)
                     elif args[i] == 'dpbo':
@@ -399,11 +403,12 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                         i += 2
                         try:
                             profile = self._model.get_port_profile('description', dpbo)
-                            dpbo_profile = 'No. ' + profile.id + ' ' + dpbo
-                            dpbo_id = profile.id
+                            dpbo_profile = 'No. ' + str(profile.number) + ' ' + dpbo
+                            dpbo_id = str(profile.number)
                         except exceptions.SoftboxenError:
                             raise exceptions.CommandSyntaxError(command=command)
-
+                        else:
+                            dpbo_flag = True
                     else:
                         raise exceptions.CommandSyntaxError(command=command)
 
@@ -411,15 +416,16 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                     port.admin_up()
                     port.set('downstream_max', ds_rate)
                     port.set('upstream_max', us_rate)
-                    port.set('line_spectrum_profile', spectrum_profile)
-                    port.set('spectrum_profile_num', int(spectrum_id))
+                    if spectrum_flag:
+                        port.set('line_spectrum_profile', spectrum_profile)
+                        port.set('spectrum_profile_num', spectrum_id)
                     port.set('noise_margin_profile', noise_profile)
-                    port.set('noise_margin_profile_num', int(noise_id))
-                    port.set('line_spectrum_profile', inp_profile)
-                    port.set('spectrum_profile_num', int(inp_id))
-                    port.set('line_spectrum_profile', dpbo_profile)
-                    port.set('spectrum_profile_num', int(dpbo_id))
-
+                    port.set('noise_margin_profile_num', noise_id)
+                    port.set('inm_profile', inp_profile)
+                    port.set('inm_profile_num', inp_id)
+                    if dpbo_flag:
+                        port.set('dpbo_profile', dpbo_profile)
+                        port.set('dpbo_profile_num', dpbo_id)
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
 

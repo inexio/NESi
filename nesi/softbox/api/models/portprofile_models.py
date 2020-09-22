@@ -99,3 +99,4 @@ class PortProfile(db.Model):
     security_anti_macspoofing = db.Column(db.Enum('enable', 'disable'), default=None)
     igmp_mismatch = db.Column(db.Enum('transparent'), default=None)
     commit = db.Column(db.Boolean(), default=False)
+    number = db.Column(db.Integer, default=None)
