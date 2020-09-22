@@ -1,5 +1,7 @@
-{{ context.vlanif.name }} current state : {{ context.vlanif.admin_state }}
-Line protocol current state : {{ context.vlanif.line_proto_state }}
+{{ context.vlanif.name }} current state : {% if context.vlanif.admin_state  == '1' %} UP {% else %} DOWN {% endif %}
+
+Line protocol current state : {% if context.vlanif.line_proto_state == '1' %} UP {% else %} DOWN {% endif %}
+
 Description : HUAWEI, SmartAX Series, {{ context.vlanif.name }} Interface
 The Maximum Transmit Unit is {{ context.vlanif.mtu }} bytes
 {% if context.vlanif.internet_protocol == 'enabled' %}Internet Address is {{ context.vlanif.internet_address }}/{{ context.vlanif.subnet_num }}

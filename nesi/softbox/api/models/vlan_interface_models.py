@@ -20,7 +20,7 @@ class VlanInterface(db.Model):
     name = db.Column(db.String())
     box_id = db.Column(db.Integer, db.ForeignKey('box.id'))
     vlan_id = db.Column(db.Integer, db.ForeignKey('vlan.id'))
-    admin_state = db.Column(db.Enum('0', '1'), default='0')
+    admin_state = db.Column(db.Enum('0', '1'), default='0') # 0 => DOWN, 1 => UP
     line_proto_state = db.Column(db.Enum('0', '1'), default='0')  # 0 => DOWN, 1 => UP
     input_packets = db.Column(db.Integer(), default=0)
     input_bytes = db.Column(db.Integer(), default=0)
