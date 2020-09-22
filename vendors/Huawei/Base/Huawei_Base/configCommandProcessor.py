@@ -881,6 +881,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                 context['user_name'] = login
                 text = self._render('user_already_exists', context=context)
                 self._write(text)
+                self.line_buffer = []  # manually clear buffer in case of 'Exception'
                 return
             while len(login) < 6:
                 text = self._render('terminal_name_short', context=context)

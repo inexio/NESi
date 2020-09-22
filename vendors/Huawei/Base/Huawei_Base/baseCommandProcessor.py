@@ -72,7 +72,11 @@ class BaseCommandProcessor(base.CommandProcessor):
         self.prompt_end_pos = len(prompt) - 1
         if not allow_history:
             self.history_enabled = False
-        input = self._read(tmp_boundary).strip()
+
+        if len(self.line_buffer) != 0:
+            input = self.line_buffer.pop(0)
+        else:
+            input = self._read(tmp_boundary).strip()
         if not allow_history:
             self.history_enabled = True
         self.prompt_end_pos = prompt_end_pos

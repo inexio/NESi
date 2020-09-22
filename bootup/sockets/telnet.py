@@ -59,7 +59,7 @@ class TelnetSocket:
                 self.telnet.lock.release()
 
         def readline(self):
-            return self.socket.recv(1024)
+            return self.socket.recv(4096)
 
         def write(self, data):
             return self.socket.sendall(data)
