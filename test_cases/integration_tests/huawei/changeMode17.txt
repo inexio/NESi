@@ -2,10 +2,12 @@ root
 secret
 enable
 config
+undo smart
+undo interactive
 diagnose
-switch vdsl mode to timode
-y
-y
-return
+switch vdsl mode to tr129
+root
+secret
+enable
 quit
 y
