@@ -60,7 +60,7 @@ do
 done
 
 if $list_boxen; then
-    python3 ./cli.py --service-root http://127.0.0.1:5000/nesi/v1 --template-root templates/ --list-boxen
+    python3 ./cli.py --service-root http://127.0.0.1:5000/nesi/v1 --list-boxen
 elif [ "$uuid" != "" ]; then
     args=''
 
@@ -75,6 +75,6 @@ elif [ "$uuid" != "" ]; then
     if $standalone; then
       args="${args} --standalone"
     fi
-    python3 ./cli.py --service-root http://127.0.0.1:5000/nesi/v1 --template-root templates/ --box-uuid $uuid $args
+    python3 ./cli.py --service-root http://127.0.0.1:5000/nesi/v1 --box-uuid $uuid $args
 fi
 

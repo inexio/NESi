@@ -10,7 +10,8 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from nesi.softbox.base_resources.ont import OntCollection, Ont, base
+from nesi.softbox.base_resources.ont import OntCollection, Ont
+from nesi.softbox.base_resources import base
 
 
 class AlcatelOnt(Ont):

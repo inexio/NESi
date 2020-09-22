@@ -10,7 +10,8 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from nesi.softbox.base_resources.ont import Ont, OntCollection, base
+from nesi.softbox.base_resources.ont import Ont, OntCollection
+from nesi.softbox.base_resources import base
 
 
 class HuaweiOnt(Ont):

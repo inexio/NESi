@@ -10,7 +10,8 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from nesi.softbox.base_resources.qos_interface import QosInterface, QosInterfaceCollection, logging, base
+from nesi.softbox.base_resources.qos_interface import QosInterface, QosInterfaceCollection, logging
+from nesi.softbox.base_resources import base
 
 LOG = logging.getLogger(__name__)
 

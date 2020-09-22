@@ -13,10 +13,10 @@
 
 from nesi.alcatel.alcatel_resources import *
 import logging
-from nesi.softbox.base_resources import credentials
+from nesi.softbox.base_resources import credentials, base
 from nesi.softbox.base_resources import user
 from nesi.softbox.base_resources import route
-from nesi.softbox.base_resources.box import Box, BoxCollection, base, os
+from nesi.softbox.base_resources.box import Box, BoxCollection, os
 
 LOG = logging.getLogger(__name__)
 

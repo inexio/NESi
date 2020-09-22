@@ -10,7 +10,8 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from nesi.softbox.base_resources.vlan import Vlan, VlanCollection, base, logging
+from nesi.softbox.base_resources.vlan import Vlan, VlanCollection, logging
+from nesi.softbox.base_resources import base
 
 LOG = logging.getLogger(__name__)
 

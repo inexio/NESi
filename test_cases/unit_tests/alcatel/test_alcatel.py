@@ -501,8 +501,8 @@ class TestAlcatel(TestCore):
 
     def test_box_add_resources(self):
         count = len(self.model.vlans)
-        self.model.add_vlan(name='lala', number=10101)
-        self.model.add_vlan(name='test_vlan2', number=9999, shutdown=False, tag='tagged')
+        self.model.add_vlan(name='lala', number=101)
+        self.model.add_vlan(name='test_vlan2', number=999, shutdown=False, tag='tagged')
         assert count + 2 == len(self.model.vlans)
         try:
             broken_vlan = self.model.add_vlan(tag='untagged')
@@ -530,7 +530,7 @@ class TestAlcatel(TestCore):
         self.model.add_service_vlan(name='test_svlan1', vlan_id=1, service_port_id=1)
         assert count+2 == len(self.model.service_vlans)
         try:
-            broken_sport = self.model.add_service_vlan(name='test_svlan2')
+            broken_svort = self.model.add_service_vlan(name='test_svlan2')
             assert False
         except exceptions.SoftboxenError:
             assert True

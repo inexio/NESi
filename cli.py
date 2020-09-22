@@ -20,15 +20,12 @@ import importlib
 
 from nesi import __version__
 from nesi import exceptions
-from nesi.softbox import rest_client
-from nesi.softbox import root, base
+from nesi.softbox.cli import rest_client
+from nesi.softbox.base_resources import root, base
 from bootup.sockets.telnet import TelnetSocket
-import pydevd_pycharm
 import pytest
 
 import subprocess
-from nesi.softbox.api import app
-from nesi.softbox.api import db
 from nesi.softbox.api.views import *  # noqa
 import pydevd_pycharm
 import time
@@ -53,10 +50,6 @@ def main():
     parser.add_argument(
         '--insecure', action='store_true',
         help='Disable TLS X.509 validation.')
-
-    parser.add_argument(
-        '--template-root', metavar='<DIR>', type=str,
-        help='Top directory of CLI command loop Jinja2 templates')
 
     parser.add_argument(
         '--list-boxen', action='store_true',
@@ -164,8 +157,9 @@ def main():
 
         try:
             model = root_resource.get_box(base.get_member_identity(model.json), model.vendor)
-            main = importlib.import_module('vendors.' + model.vendor + '.' + model.model + '.' + model.vendor + '_' + model.model + '.main')
+            main = importlib.import_module('vendors.' + model.vendor + '.main')
             cli = main.PreLoginCommandProcessor
+            template_root = 'templates/' + str(model.vendor)
 
         except exceptions.ExtensionNotFoundError as exc:
             parser.error(exc)
@@ -187,7 +181,7 @@ def main():
                 return
 
             if model.network_protocol == 'telnet':
-                telnet = TelnetSocket(cli, model, args.template_root, ip_address, int(port))
+                telnet = TelnetSocket(cli, model, template_root, ip_address, int(port))
                 telnet.start()
             elif model.network_protocol == 'ssh':
                 ssh = None
@@ -199,7 +193,7 @@ def main():
 
             while True:
                 command_processor = cli(
-                    model, stdin, stdout, (), template_root=args.template_root, daemon=False)
+                    model, stdin, stdout, (), template_root=template_root, daemon=False)
 
                 try:
                     context = dict()
