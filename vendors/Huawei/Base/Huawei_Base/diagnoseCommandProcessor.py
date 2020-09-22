@@ -115,6 +115,7 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
             dsl_mode, = self._dissect(args, 'vdsl', 'mode', 'to', str)
             context['dsl_mode'] = dsl_mode
             if dsl_mode != 'tr129' and dsl_mode != 'tr165':
+                self.line_buffer = []
                 raise exceptions.CommandSyntaxError(command=command)
 
             if self._model.interactive_mode:
@@ -125,20 +126,24 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
             if self._model.dsl_mode == dsl_mode:
                 text = self._render('switch_dsl_mode_failure', context=context)
                 self._write(text)
+                self.line_buffer = []
                 return
 
             answer_one = self.user_input('  Warning: The operation will result in loss of all VDSL configuration. '
                                          'Are you sure to proceed? (y/n)[n]:', False)
             if answer_one != 'y':
+                self.line_buffer = []
                 return
             answer_two = self.user_input('  Warning: The operation will automatically save and reboot system. '
                                          'Are you sure you want to proceed? (y/n)[n]:', False)
             if answer_two != 'y':
+                self.line_buffer = []
                 return
 
             text = self._render('switch_dsl_mode_temp_2', context=context)
             self._write(text)
             self._model.set_dsl_mode(dsl_mode)
+            self.on_cycle(context=context)
             time.sleep(10)
             self._model.set_last_logout(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
             user = self._model.get_user('status', 'Online')

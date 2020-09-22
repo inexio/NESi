@@ -67,6 +67,7 @@ class CommandProcessor:
         self.daemon = daemon
 
         # CLI specific attributes
+        self.line_buffer = []
         self.history_enabled = True
         self.hide_input = False
         self.history_pos = 0
@@ -337,8 +338,14 @@ class CommandProcessor:
             self.on_cycle(context)
 
         while True:
-            if command is None:
+            line = ''
+            if len(self.line_buffer) != 0 and command is None:
+                command = self.line_buffer.pop(0)
+            if command is None and line == '':
                 line = self._read()
+                if '\r\n' in line and len(line.split('\r\n')) > 2:
+                    self.line_buffer = line.split('\r\n')
+                    continue
                 context['raw_line'] = line
             else:
                 line = command
@@ -348,9 +355,11 @@ class CommandProcessor:
                 self.process_command(line, context)
 
             except exceptions.CommandSyntaxError as exc:
+                self.line_buffer = []  # manually clear buffer in case of exception
                 self.on_error(dict(context, command=exc.command))
 
             except exceptions.TerminalExitError as exc:
+                self.line_buffer = []  # manually clear buffer in case of exception
                 if not exc.return_to:
                     exc.return_to = return_to
 
