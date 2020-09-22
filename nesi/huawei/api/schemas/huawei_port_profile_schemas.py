@@ -36,4 +36,4 @@ class HuaweiPortProfileSchema(PortProfileSchema):
                                                   'vmac_ipoe', 'vmac_pppoe', 'vmac_pppoa',
                                                   'vlan_mac', 'packet_policy_multicast', 'packet_policy_unicast',
                                                   'security_anti_ipspoofing', 'security_anti_macspoofing',
-                                                  'igmp_mismatch', 'commit', 'internal_id')
+                                                  'igmp_mismatch', 'commit', 'internal_id', 'number')

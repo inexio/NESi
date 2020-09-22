@@ -870,6 +870,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_terminal(self, command, *args, context=None):
+        creating_user = self._model.get_user('status', 'Online')
+        if creating_user.level != 'Super' and creating_user.level != 'Admin':
+            raise exceptions.CommandSyntaxError(command=command)
         if self._validate(args, 'user', 'name'):
             login = self.user_input("  User Name(length<6,15>):", False, 15)
 
@@ -911,13 +914,17 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
 
             text = self._render('user_level', context=context)
             self._write(text)
-            level = self.user_input("     1. Common User  2. Operator  3. Administrator:", False)
+            if creating_user.level == 'Super':
+                prompt = "     1. Common User  2. Operator  3. Administrator:"
+            else:
+                prompt = "     1. Common User  2. Operator:"
+            level = self.user_input(prompt, False)
             while (level != '1') and (level != '2') and (level != '3'):
                 text = self._render('terminal_level_error', context=context)
                 self._write(text)
                 text = self._render('user_level', context=context)
                 self._write(text)
-                level = self.user_input("     1. Common User  2. Operator  3. Administrator:", False)
+                level = self.user_input(prompt, False)
 
             if level == '1':
                 lvl = 'User'
@@ -1038,7 +1045,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             try:
                 _ = self._model.get_port_profile('name', name)
             except exceptions.SoftboxenError:
-                self._model.add_port_profile(name=name, type='data-rate')
+                self._model.add_port_profile(name=name, type='data-rate', number=profile_num)
                 try:
                     port_profile = self._model.get_port_profile('name', name)
                 except exceptions.SoftboxenError:
@@ -1067,7 +1074,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             try:
                 _ = self._model.get_port_profile('name', name)
             except exceptions.SoftboxenError:
-                self._model.add_port_profile(name=name, type='dpbo')
+                self._model.add_port_profile(name=name, type='dpbo', number=profile_num)
                 try:
                     port_profile = self._model.get_port_profile('name', name)
                 except exceptions.SoftboxenError:
@@ -1113,7 +1120,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             try:
                 _ = self._model.get_port_profile('name', name)
             except exceptions.SoftboxenError:
-                self._model.add_port_profile(name=name, type='noise-margin')
+                self._model.add_port_profile(name=name, type='noise-margin', number=profile_num)
                 try:
                     port_profile = self._model.get_port_profile('name', name)
                 except exceptions.SoftboxenError:
@@ -1151,7 +1158,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             try:
                 _ = self._model.get_port_profile('name', name)
             except exceptions.SoftboxenError:
-                self._model.add_port_profile(name=name, type='inp-delay')
+                self._model.add_port_profile(name=name, type='inp-delay', number=profile_num)
                 try:
                     port_profile = self._model.get_port_profile('name', name)
                 except exceptions.SoftboxenError:
@@ -1191,7 +1198,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             try:
                 _ = self._model.get_port_profile('name', name)
             except exceptions.SoftboxenError:
-                self._model.add_port_profile(name=name, type='mode-specific-psd')
+                self._model.add_port_profile(name=name, type='mode-specific-psd', number=profile_num)
                 try:
                     port_profile = self._model.get_port_profile('name', name)
                 except exceptions.SoftboxenError:
@@ -1219,7 +1226,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             try:
                 _ = self._model.get_port_profile('name', name)
             except exceptions.SoftboxenError:
-                self._model.add_port_profile(name=name, type='spectrum')
+                self._model.add_port_profile(name=name, type='spectrum', number=profile_num)
                 try:
                     port_profile = self._model.get_port_profile('name', name)
                 except exceptions.SoftboxenError:

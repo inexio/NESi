@@ -88,6 +88,7 @@ class HuaweiPortProfile(PortProfile):
     security_anti_macspoofing = base.Field('security_anti_macspoofing')
     igmp_mismatch = base.Field('igmp_mismatch')
     commit = base.Field('commit')
+    number = base.Field('number')
 
     def set(self, field, value):
         mapping = {field: value}
