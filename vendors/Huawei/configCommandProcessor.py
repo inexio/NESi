@@ -441,7 +441,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         try:
             port = self._model.get_port('name', port_idx)
         except exceptions.SoftboxenError:
-            raise exceptions.CommandSyntaxError(command=command)
+            raise exceptions.CommandSyntaxError(command=command) # FIXME: parameter error
         if args[5] == 'ont':
             ont_idx = args[6]
             ont_port_idx = args[8]
@@ -511,7 +511,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
 
             try:
                 card = self._model.get_card('id', port.card_id)
-                assert (card.product == 'vdsl') or (card.product == 'xdsl')
+                assert card.product in ('adsl', 'vdsl', 'xdsl')
             except (exceptions.SoftboxenError, AssertionError):
                 service_vlan.delete()
                 service_port.delete()
@@ -531,7 +531,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                                                          'index', str)
             try:
                 card = self._model.get_card('id', port.card_id)
-                assert (card.product == 'vdsl') or (card.product == 'xdsl')
+                assert card.product in ('adsl', 'vdsl', 'xdsl')
             except (exceptions.SoftboxenError, AssertionError):
                 service_vlan.delete()
                 service_port.delete()
@@ -569,7 +569,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                             'untagged'):
             try:
                 card = self._model.get_card('id', port.card_id)
-                assert card.product == 'vdsl'
+                assert card.product in ('adsl', 'vdsl', 'xdsl')
             except (exceptions.SoftboxenError, AssertionError):
                 service_vlan.delete()
                 service_port.delete()
@@ -585,7 +585,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
                                               str, 'multi-service', 'user-vlan', 'untagged')
             try:
                 card = self._model.get_card('id', port.card_id)
-                assert (card.product == 'adsl') or (card.product == 'xdsl')
+                assert card.product in ('adsl', 'vdsl', 'xdsl')
             except (exceptions.SoftboxenError, AssertionError):
                 service_vlan.delete()
                 service_port.delete()
