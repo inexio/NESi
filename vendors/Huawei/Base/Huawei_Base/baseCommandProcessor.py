@@ -66,6 +66,20 @@ class BaseCommandProcessor(base.CommandProcessor):
             if type in ('port', 'ont_port'):
                 object.operational_state = 'activating'
 
+    def do_smart(self, command, *args, context=None):
+        if self._validate(args,):
+            self._write("  Interactive function is enabled\n")
+            self._model.enable_smart()
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_interactive(self, command, *args, context=None):
+        if self._validate(args,):
+            self._write("  Interactive function is enabled\n")
+            self._model.enable_interactive()
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def user_input(self, prompt, allow_history=True, tmp_boundary=None):
         self._write(prompt)
         prompt_end_pos = self.prompt_end_pos
@@ -91,11 +105,14 @@ class BaseCommandProcessor(base.CommandProcessor):
             return
         elif self._validate(args, 'event', 'output', 'all'):
             return
-        elif self._validate(args, 'smart'):
-            self._write("  Interactive function is disabled\n")
-            self._model.disable_interactive()
         elif self._validate(args, 'system', 'snmp-user', 'password', 'security'):
             return
+        elif self._validate(args, 'smart'):
+            self._write("  Interactive function is disabled\n")
+            self._model.disable_smart()
+        elif self._validate(args, 'interactive'):
+            self._write("  Interactive function is disabled\n")
+            self._model.disable_interactive()
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
@@ -104,7 +121,7 @@ class BaseCommandProcessor(base.CommandProcessor):
 
     def do_scroll(self, command, *args, context=None):
         if args == ():
-            if self._model.interactive_mode:
+            if self._model.smart_mode:
                 self.user_input('{ <cr>|number<U><10,512> }:')
             return
         elif self._validate(args, str):

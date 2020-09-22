@@ -118,7 +118,7 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
                 self.line_buffer = []
                 raise exceptions.CommandSyntaxError(command=command)
 
-            if self._model.interactive_mode:
+            if self._model.smart_mode:
                 self.user_input('{ <cr>|adsl<K> }:', False)
                 text = self._render('switch_dsl_mode_temp_1', context=context)
                 self._write(text)
@@ -129,13 +129,18 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
                 self.line_buffer = []
                 return
 
-            answer_one = self.user_input('  Warning: The operation will result in loss of all VDSL configuration. '
-                                         'Are you sure to proceed? (y/n)[n]:', False)
+            answer_one = 'y'
+            if self._model.interactive_mode:
+                answer_one = self.user_input('  Warning: The operation will result in loss of all VDSL configuration. '
+                                             'Are you sure to proceed? (y/n)[n]:', False)
             if answer_one != 'y':
                 self.line_buffer = []
                 return
-            answer_two = self.user_input('  Warning: The operation will automatically save and reboot system. '
-                                         'Are you sure you want to proceed? (y/n)[n]:', False)
+
+            answer_two = 'y'
+            if self._model.interactive_mode:
+                answer_two = self.user_input('  Warning: The operation will automatically save and reboot system. '
+                                             'Are you sure you want to proceed? (y/n)[n]:', False)
             if answer_two != 'y':
                 self.line_buffer = []
                 return
@@ -143,6 +148,21 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
             text = self._render('switch_dsl_mode_temp_2', context=context)
             self._write(text)
             self._model.set_dsl_mode(dsl_mode)
+            self.on_cycle(context=context)
+
+            mgmt_card = self._model.get_card('product', 'mgnt')
+            context['mgmt_card'] = mgmt_card.name[2:]
+            x = 6
+            while x <= 100:
+                time.sleep(1)
+                context['current_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                context['progress'] = x
+                self._write(self._render('saving_progress', context=context))
+                self.on_cycle(context=context)
+                x += 6
+
+            context['current_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            self._write(self._render('saving_complete', context=context))
             self.on_cycle(context=context)
             time.sleep(10)
             self._model.set_last_logout(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))

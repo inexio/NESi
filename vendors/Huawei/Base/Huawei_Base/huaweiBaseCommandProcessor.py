@@ -464,7 +464,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
         s_port_idx, = self._dissect(args, 'service-port', str)
 
         if s_port_idx == 'all':
-            if self._model.interactive_mode:
+            if self._model.smart_mode:
                 self.user_input('{ <cr>|sort-by<K>||<K> }:')
             text = self._render('display_service_port_all_top', context=context)
 

@@ -30,6 +30,7 @@ class HuaweiBox(Box):
     handshake_mode = base.Field('handshake_mode')
     handshake_interval = base.Field('handshake_interval')
     interactive_mode = base.Field('interactive_mode')
+    smart_mode = base.Field('smart_mode')
     pitp = base.Field('pitp')
     pitp_mode = base.Field('pitp_mode')
     dsl_mode = base.Field('dsl_mode')
@@ -396,6 +397,14 @@ class HuaweiBox(Box):
     def set_handshake_interval(self, interval):
         """Change the handshake interval of a box"""
         self.update(handshake_interval=interval)
+
+    def disable_smart(self):
+        """Disable Smart function."""
+        self.update(smart_mode=False)
+
+    def enable_smart(self):
+        """Enable Smart function."""
+        self.update(smart_mode=True)
 
     def disable_interactive(self):
         """Disable Interactive function."""

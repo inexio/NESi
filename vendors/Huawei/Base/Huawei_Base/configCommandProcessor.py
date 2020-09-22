@@ -242,7 +242,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             text = self._render('display_interface_vlanif_num', context=dict(context, vlanif=vlanif))
             self._write(text)
         elif self._validate(args, 'vlan', 'all'):
-            if self._model.interactive_mode:
+            if self._model.smart_mode:
                 self.user_input('{ <cr>|vlanattr<K>|vlantype<E><mux,standard,smart> }:')
             text = self._render('display_vlan_all_top', context=context)
             count = 0
@@ -270,7 +270,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             self._write(text)
 
         elif self._validate(args, 'version'):
-            if self._model.interactive_mode:
+            if self._model.smart_mode:
                 self.user_input('{ <cr>|backplane<K>|frameid/slotid<S><Length 1-15> }:')
             text = self._render('display_version', context=dict(context, box=self._model))
             self._write(text)
@@ -286,7 +286,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             self._write(text)
 
         elif self._validate(args, 'mac-address', 'all'):
-            if self._model.interactive_mode:
+            if self._model.smart_mode:
                 self.user_input('{ <cr>||<K> }:')
 
             self._write('  It will take some time, please wait...\n')
@@ -351,7 +351,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             self._write(text)
 
         elif self._validate(args, 'current-configuration', 'section', 'vlan-srvprof'):
-            if self._model.interactive_mode:
+            if self._model.smart_mode:
                 self.user_input('{ <cr>||<K> }:')
             text = self._render('display_current_configuration_section_vlan_srvprof_top',
                                 context=dict(context, box=self._model))
@@ -416,6 +416,20 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         elif self._validate(args, 'terminal', 'user', 'all'):
             self.display_terminal_user(command, context)
 
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_smart(self, command, *args, context=None):
+        if self._validate(args,):
+            self._write("  Interactive function is enabled\n")
+            self._model.enable_smart()
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_interactive(self, command, *args, context=None):
+        if self._validate(args,):
+            self._write("  Interactive function is enabled\n")
+            self._model.enable_interactive()
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
@@ -767,6 +781,12 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
         if self._validate(args, 'system', 'snmp-user', 'password', 'security'):
             # importend for future snmp interactions
             return
+        elif self._validate(args, 'smart'):
+            self._write("  Interactive function is disabled\n")
+            self._model.disable_smart()
+        elif self._validate(args, 'interactive'):
+            self._write("  Interactive function is disabled\n")
+            self._model.disable_interactive()
         elif self._validate(args, 'service-port', str):
             s_port_idx, = self._dissect(args, 'service-port', str)
 
@@ -778,13 +798,6 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
 
             s_port.delete()
             s_vlan.delete()
-
-        elif self._validate(args, 'smart'):
-            self._write("  Interactive function is disabled\n")
-            self._model.disable_interactive()
-        elif self._validate(args, 'interactive'):
-            return
-
         elif self._validate(args, 'ip', 'route-static', 'all'):
             answer = self.user_input('Are you sure? [Y/N]:')
             if answer != 'Y':
@@ -960,7 +973,9 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             text = self._render('user_created', context=context)
             self._write(text)
 
-            var_n = self.user_input("  Repeat this operation? (y/n)[n]:", False, 1)
+            var_n = 'n'
+            if self._model.interactive_mode:
+                var_n = self.user_input("  Repeat this operation? (y/n)[n]:", False, 1)
             if var_n == 'y':
                 self.do_terminal(command, 'user', 'name', context=context)
                 return

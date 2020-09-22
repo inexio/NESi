@@ -17,7 +17,7 @@ class HuaweiBoxSchema(BoxSchema):
     class Meta:
         model = Box
         fields = BoxSchema.Meta.fields + ('cpu_occupancy', 'vlan_interfaces', 'raio_anid', 'handshake_mode',
-                                          'handshake_interval', 'interactive_mode', 'pitp', 'pitp_mode', 'dsl_mode')
+                                          'handshake_interval', 'interactive_mode', 'smart_mode', 'pitp', 'pitp_mode', 'dsl_mode')
 
     vlan_interfaces = ma.Hyperlinks(
         {'_links': {

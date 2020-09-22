@@ -318,7 +318,7 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
 
-                if self._model.interactive_mode:
+                if self._model.smart_mode:
                     self.user_input('{ <cr>|sort-by<K>||<K> }:')
                 text = self._render(
                     'display_port_ddm-info',
@@ -758,6 +758,20 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
+    def do_smart(self, command, *args, context=None):
+        if self._validate(args,):
+            self._write("  Interactive function is enabled\n")
+            self._model.enable_smart()
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_interactive(self, command, *args, context=None):
+        if self._validate(args,):
+            self._write("  Interactive function is enabled\n")
+            self._model.enable_interactive()
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def do_undo(self, command, *args, context=None):
         if self._validate(args, 'ip', 'address', str, str):
             if context['iftype'] == 'vlanif':
@@ -795,6 +809,12 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
                 raise exceptions.CommandSyntaxError(command=command)
 
             port.admin_up()
+        elif self._validate(args, 'smart'):
+            self._write("  Interactive function is disabled\n")
+            self._model.disable_smart()
+        elif self._validate(args, 'interactive'):
+            self._write("  Interactive function is disabled\n")
+            self._model.disable_interactive()
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
