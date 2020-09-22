@@ -39,7 +39,7 @@ class TestHuawei(TestCore):
         port.port_downstream_set("1")
         assert port.downstream_max == "1"
         try:
-            port.port_downstream_set('failure')
+            port.port_downstream_set(0)
             assert False
         except exceptions.SoftboxenError:
             assert True
@@ -48,7 +48,7 @@ class TestHuawei(TestCore):
         port.port_upstream_set("1")
         assert port.upstream_max == "1"
         try:
-            port.port_upstream_set('failure')
+            port.port_upstream_set(0)
             assert False
         except exceptions.SoftboxenError:
             assert True
