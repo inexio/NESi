@@ -64,6 +64,7 @@ class CommandProcessor:
         self.line_buffer = []
         self.history_enabled = True
         self.hide_input = False
+        self.star_input = False
         self.history_pos = 0
         self.history = history
         self.prompt_end_pos = self.get_prompt_len() - 1
@@ -209,7 +210,10 @@ class CommandProcessor:
                 break
 
             if not self.hide_input:
-                self.updateline(line)
+                out = line
+                if self.star_input:
+                    out = len(line) * '*'
+                self.updateline(out)
 
         if line != '\r' and line != '' and self.history_enabled:
             self.history += (line.replace('\r', '').rstrip(),)
@@ -382,7 +386,7 @@ class CommandProcessor:
     def set_prompt_end_pos(self, context):
         text = self._render('on_cycle', context=context, ignore_errors=True)
 
-        if len(text) == 0:
+        if text is None or len(text) == 0:
             text = self._render('on_enter', context=context, ignore_errors=True)
 
         self.prompt_end_pos = len(text.replace('\n', '')) - 1
