@@ -9,10 +9,9 @@
 # - Alexander Dincher <https://github.com/Dinker1996>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
-from nesi.keymile.keymile_resources import *
 
+from nesi.keymile.keymile_resources import keymile_card
 from nesi.softbox.base_resources import credentials
-from nesi.softbox.base_resources import route
 from nesi.softbox.base_resources.box import *
 
 LOG = logging.getLogger(__name__)
@@ -25,6 +24,20 @@ class KeyMileBox(Box):
     :param identity: The identity of the System resource
     """
     # Define Keymile Properties
+
+    @property
+    def credentials(self):
+        """Return `CredentialsCollection` object."""
+        return credentials.CredentialsCollection(
+            self._conn, base.get_sub_resource_path_by(
+                self, 'credentials'))
+
+    @property
+    def cards(self):
+        """Return `CredentialsCollection` object."""
+        return keymile_card.KeyMileCardCollection(
+            self._conn, base.get_sub_resource_path_by(
+                self, 'cards'))
 
 
 class KeyMileBoxCollection(BoxCollection):
