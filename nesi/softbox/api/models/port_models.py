@@ -14,6 +14,8 @@ import uuid
 from nesi.softbox.api import db
 from .ont_models import Ont
 from .cpe_models import Cpe
+from .channel_models import Channel
+from .interface_models import Interface
 
 
 class Port(db.Model):
@@ -305,3 +307,7 @@ class Port(db.Model):
     vectoring_group = db.Column(db.Integer(), default=None)
     vectoring_profile_id = db.Column(db.Integer(), default=None)
     template_name = db.Column(db.String(), default=None)
+
+    # KeyMile
+    channels = db.relationship('Channel', backref='Port', lazy='dynamic')
+    interfaces = db.relationship('Interface', backref='Port', lazy='dynamic')
