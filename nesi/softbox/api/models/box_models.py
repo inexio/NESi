@@ -27,6 +27,7 @@ from .vlan_interface_models import VlanInterface
 from .route_models import Route
 from .emu_models import Emu
 from .user_models import User
+from .channel_models import Channel
 
 
 class Box(db.Model):
@@ -56,6 +57,8 @@ class Box(db.Model):
     subrack_details = db.relationship('Subrack', backref='subracks', lazy='dynamic')
     cards = db.relationship('Card', backref='Box', lazy='dynamic')
     ports = db.relationship('Port', backref='Box', lazy='dynamic')
+    channels = db.relationship('Channel', backref='Box', lazy='dynamic')
+    interfaces = db.relationship('Interface', backref='Box', lazy='dynamic')
     cpes = db.relationship('Cpe', backref='Box', lazy='dynamic')
     cpe_ports = db.relationship('CpePort', backref='Box', lazy='dynamic')
     onts = db.relationship('Ont', backref='Box', lazy='dynamic')

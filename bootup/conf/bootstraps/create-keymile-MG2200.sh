@@ -64,6 +64,36 @@ req='{
 
 unit_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 
+### Port-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$unit_1',
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### Chan-1 ###
+
+# Create a logical channel at the network device (admin operation)
+req='{
+  "port_id": '$port_1_1',
+  "description": "Channel #1"
+}'
+
+chan_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/channels)
+
+### Interface-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "chan_id": '$chan_1_1_1'
+}'
+
+interface_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/interfaces)
+
 ### Unit-2 ###
 
 # Create a physical card at the network device (admin operation)
@@ -73,6 +103,28 @@ req='{
 }'
 
 unit_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
+
+### Port-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$unit_2',
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_2_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### Port-2 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$unit_2',
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_2_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
 
 ### Unit-3 ###
 
@@ -84,7 +136,27 @@ req='{
 
 unit_3=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 
-### Unit-2 ###
+### Port-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$unit_3',
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_3_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### Interface-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "port_id": '$port_3_1'
+}'
+
+interface_3_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/interfaces)
+
+### Unit-4 ###
 
 # Create a physical card at the network device (admin operation)
 req='{

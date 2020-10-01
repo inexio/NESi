@@ -10,9 +10,11 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from nesi.keymile.keymile_resources import keymile_card
-from nesi.softbox.base_resources import credentials
-from nesi.softbox.base_resources.box import *
+from nesi.keymile.keymile_resources import *
+
+
+from nesi.softbox.base_resources import credentials, base
+from nesi.softbox.base_resources.box import BoxCollection, Box, logging
 
 LOG = logging.getLogger(__name__)
 
@@ -24,6 +26,18 @@ class KeyMileBox(Box):
     :param identity: The identity of the System resource
     """
     # Define Keymile Properties
+
+    @property
+    def channels(self):
+        """Return `CpePortCollection` object."""
+        return keymile_channel.KeyMileChannelCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'channels'))
+
+    @property
+    def interfaces(self):
+        """Return `CpePortCollection` object."""
+        return keymile_interface.KeyMileInterfaceCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'interfaces'))
 
     @property
     def credentials(self):
@@ -38,6 +52,53 @@ class KeyMileBox(Box):
         return keymile_card.KeyMileCardCollection(
             self._conn, base.get_sub_resource_path_by(
                 self, 'cards'))
+
+    def get_card(self, field, value):
+        """Get specific card object."""
+        return keymile_card.KeyMileCardCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'cards'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_cards(self, field, value):
+        """Get all cards."""
+        return keymile_card.KeyMileCardCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'cards'),
+            params={field: value})
+
+    def get_port(self, field, value):
+        """Get specific port object."""
+        return keymile_port.KeyMilePortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'ports'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_ports(self, field, value):
+        """Get specific port object."""
+        return keymile_port.KeyMilePortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'ports'),
+            params={field: value})
+
+    def get_chan(self, field, value):
+        """Get specific channel object."""
+        return keymile_channel.KeyMileChannelCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'channels'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_chans(self, field, value):
+        return keymile_channel.KeyMileChannelCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'channels'),
+            params={field: value})
+
+    def get_interface(self, field, value):
+        """Get specific interface object."""
+        return keymile_interface.KeyMileInterfaceCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'interfaces'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_interfaces(self, field, value):
+        """Get specific interface object."""
+        return keymile_interface.KeyMileInterfaceCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'interfaces'),
+            params={field: value})
 
 
 class KeyMileBoxCollection(BoxCollection):

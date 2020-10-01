@@ -11,19 +11,11 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi.softbox.cli import base
+from vendors.KeyMile.accessPoints.root.rootCommandProcessor import RootCommandProcessor
 from nesi import exceptions
-from vendors.KeyMile.rootCommandProcessor import RootCommandProcessor
 
 
-class ReadInputCommandProcessor(base.CommandProcessor):
-    """Create CLI REPR loop for example switch."""
-
-    VENDOR = 'KeyMile'
-    MODEL = 'MG2200'
-    VERSION = '1'
-
-
-class PreLoginCommandProcessor(ReadInputCommandProcessor):
+class PreLoginCommandProcessor(base.CommandProcessor):
 
     def on_unknown_command(self, command, *args, context=None):
         subprocessor = self._create_subprocessor(
@@ -43,7 +35,7 @@ class PreLoginCommandProcessor(ReadInputCommandProcessor):
                 raise exc
 
 
-class LoginCommandProcessor(ReadInputCommandProcessor):
+class LoginCommandProcessor(base.CommandProcessor):
 
     def on_unknown_command(self, command, *args, context=None):
         username = context.pop('username')
@@ -59,8 +51,12 @@ class LoginCommandProcessor(ReadInputCommandProcessor):
             raise exceptions.TerminalExitError()
 
         subprocessor = self._create_subprocessor(
-            RootCommandProcessor, 'login', 'mainloop')
+            RootCommandProcessor, 'login', 'base')
 
-        subprocessor.loop(context=context)
+        context['path'] = '/'
+
+        self._write(self._render('login_message', 'login', 'base', context=context))
+
+        subprocessor.loop(context=context, return_to=RootCommandProcessor)
 
         self.on_exit(context)

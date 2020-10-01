@@ -10,11 +10,20 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-import re
 from nesi import exceptions
+from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 
 
-class ChangeDirectoryProcessor:
+class FanAlarmCommandProcessor(BaseCommandProcessor):
+    __name__ = 'fanAlarm'
+    management_functions = ('main', 'cfgm', 'fm')
+    access_points = ()
 
-    def do_cd(self, command, *args, context=None):
-        pass
+    main = {}
+
+    cfgm = {}
+
+    fm = {}
+
+    def on_unknown_command(self, command, *args, context=None):
+        raise exceptions.CommandSyntaxError(command=command)

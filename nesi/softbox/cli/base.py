@@ -350,9 +350,9 @@ class CommandProcessor:
             try:
                 self.process_command(line, context)
 
-            except exceptions.CommandSyntaxError as exc:
-                self.line_buffer = []  # manually clear buffer in case of exception
-                self.on_error(dict(context, command=exc.command))
+            except (exceptions.CommandExecutionError, exceptions.CommandSyntaxError) as exc:
+                self.line_buffer = []
+                self.write_error_message(context, exc.template, *exc.template_scopes)
 
             except exceptions.TerminalExitError as exc:
                 self.line_buffer = []  # manually clear buffer in case of exception
@@ -364,11 +364,18 @@ class CommandProcessor:
                 # set prompt_len anew in case of prompt_len change in command-processor beneath
                 self.set_prompt_end_pos(context)
 
+                if exc.command is not None:
+                    command = exc.command
+                    continue
+
                 # This is the first instance of the desired
                 # CommandProcessor to unwind to, continuing
 
             self.on_cycle(context)
         self.on_exit(context)
+
+    def _terminate(self, command=None):
+        del self
 
     def get_prompt_len(self):
         text = self._render('on_cycle', context=dict(), ignore_errors=True)
@@ -408,6 +415,13 @@ class CommandProcessor:
 
     def on_error(self, context):
         text = self._render('on_error', context=context, ignore_errors=True)
+        if text is not None:
+            self._write(text)
+
+    def write_error_message(self, context, template, *scopes):
+        if template is None:
+            template = 'on_error'
+        text = self._render(template, context=context, *scopes, ignore_errors=True)
         if text is not None:
             self._write(text)
 

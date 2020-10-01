@@ -76,14 +76,23 @@ class TerminalExitError(SoftboxenError):
     def __init__(self, **kwargs):
         super(TerminalExitError, self).__init__(**kwargs)
         self._return_to = None
+        self._command = None
 
     @property
     def return_to(self):
         return self._return_to
 
+    @property
+    def command(self):
+        return self._command
+
     @return_to.setter
     def return_to(self, return_to):
         self._return_to = return_to
+
+    @command.setter
+    def command(self, command):
+        self._command = command
 
 
 class TemplateError(SoftboxenError):
@@ -102,6 +111,20 @@ class CommandSyntaxError(SoftboxenError):
     def __init__(self, **kwargs):
         super(CommandSyntaxError, self).__init__(**kwargs)
         self.command = kwargs.get('command')
+        self.template = None
+        self.template_scopes = ()
+
+
+class CommandExecutionError(SoftboxenError):
+    """Raise on CLI command execution error."""
+
+    message = 'Command execution error: %(command)s'
+
+    def __init__(self, **kwargs):
+        super(CommandExecutionError, self).__init__(**kwargs)
+        self.command = kwargs.get('command')
+        self.template = kwargs.get('template')
+        self.template_scopes = kwargs.get('template_scopes')
 
 
 class RestApiError(SoftboxenError):
