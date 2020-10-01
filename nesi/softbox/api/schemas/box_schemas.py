@@ -30,10 +30,10 @@ class BoxSchema(ma.ModelSchema):
     class Meta:
         model = Box
         fields = ('id', 'vendor', 'model', 'version', 'software_version', 'network_protocol', 'network_address',
-                  'network_port', 'uuid', 'description',
+                  'network_port', 'uuid', 'description', 'interfaces',
                   'hostname', 'mgmt_address', 'credentials', 'credential_details', 'port_profiles',
                   'port_profile_details', 'vlans', 'service_vlans', 'vlan_details',
-                  'subracks', 'subrack_details', 'cards', 'ports', 'service_ports', 'emus', 'onts', 'ont_ports', 'cpes',
+                  'subracks', 'subrack_details', 'cards', 'ports', 'channels', 'service_ports', 'emus', 'onts', 'ont_ports', 'cpes',
                   'cpe_ports', 'routes', 'login_banner', 'vlan_interfaces', 'users',
                   'welcome_banner', 'last_login', 'last_logout', 'sntp_server_ip_address', 'timezone_offset', '_links')
 
@@ -60,6 +60,14 @@ class BoxSchema(ma.ModelSchema):
     ports = ma.Hyperlinks(
         {'_links': {
             'self': ma.URLFor('show_ports', box_id='<id>')}})
+
+    channels = ma.Hyperlinks(
+        {'_links': {
+            'self': ma.URLFor('show_channels', box_id='<id>')}})
+
+    interfaces = ma.Hyperlinks(
+        {'_links': {
+            'self': ma.URLFor('show_interfaces', box_id='<id>')}})
 
     service_ports = ma.Hyperlinks(
         {'_links': {
