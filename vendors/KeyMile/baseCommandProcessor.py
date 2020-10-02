@@ -21,17 +21,30 @@ class BaseCommandProcessor(base.CommandProcessor):
     management_functions = ()
     access_points = ()
 
-    def create_spacers(self, positions, args):
-        spacers = []
-        previous_pos = 0
-        i = 0
-        for position in positions:
-            spacer = position - (previous_pos + len(str(args[i])))
-            spacers.append(spacer)
-            previous_pos = position
-            i += 1
+    main = {}
 
-        return spacers
+    cfgm = {}
+
+    fm = {}
+
+    pm = {}
+
+    status = {}
+
+    def map_states(self, object, type):
+        if object.admin_state == '0':
+            if type == 'port':
+                object.admin_state = 'Down'
+        elif object.admin_state == '1':
+            if type == 'port':
+                object.admin_state = 'Down'
+
+        if object.operational_state == '0':
+            if type == 'port':
+                object.operational_state = 'Down'
+        elif object.operational_state == '1':
+            if type == 'port':
+                object.operational_state = 'Down'
 
     def do_help(self, command, *args, context=None):
         help_scopes = ('login', 'base', 'help')
@@ -76,10 +89,16 @@ class BaseCommandProcessor(base.CommandProcessor):
         self._write(self._render('pwd', 'login', 'base', context=context))
 
     def do_cd(self, command, *args, context=None):
+        if len(args) == 0:
+            exc = exceptions.CommandSyntaxError(command=command)
+            exc.template = 'syntax_error'
+            exc.template_scopes = ('login', 'base', 'syntax_errors')
+            raise exc
+
         if args[0] == '/':
             context['path'] = '/'
             from vendors.KeyMile.accessPoints.root.rootCommandProcessor import RootCommandProcessor
-            exc = exceptions.TerminalExitError
+            exc = exceptions.TerminalExitError()
             exc.return_to = RootCommandProcessor
 
             raise exc
@@ -87,7 +106,7 @@ class BaseCommandProcessor(base.CommandProcessor):
         components = [x for x in args[0].split('/') if x]
 
         if not re.search(
-                '^(unit-[0-9]+|port-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|tdmConnection|\.|\.\.)$',
+                '^(unit-[0-9]+|port-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|alarm-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|tdmConnection|\.|\.\.)$',
                 components[0]):
             raise exceptions.CommandExecutionError(command=None, template=None,
                                                    template_scopes=())  # TODO: fix exception to not require all fields as empty
@@ -152,7 +171,7 @@ class BaseCommandProcessor(base.CommandProcessor):
                 component_number = components[0].split('-')[1]
                 command_processor = component_type.capitalize() + 'CommandProcessor'
             else:
-                command_processor = self.__name__.capitalize() + components[0].capitalize() + 'CommandProcessor'
+                command_processor = components[0].capitalize() + 'CommandProcessor'
 
             if component_type == 'unit':
                 if self.__name__ != 'root':
@@ -175,6 +194,10 @@ class BaseCommandProcessor(base.CommandProcessor):
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
                 context['chan'] = component_number
 
+            if components[0] in ('fan', 'eoam', 'tdmConnections', 'multicast', 'services'):
+                if self.__name__ != 'root':
+                    raise exceptions.CommandExecutionError(command=None, template=None, template_scopes=())  # TODO: fix exception to not require all fields as empty
+
             if components[0] in ('main', 'cfgm', 'fm', 'pm', 'status'):
                 if re.search('(main|cfgm|fm|pm|status)', context['path']):
                     return
@@ -190,6 +213,12 @@ class BaseCommandProcessor(base.CommandProcessor):
             from vendors.KeyMile.accessPoints.root.unit.port.portCommandProcessor import PortCommandProcessor
             from vendors.KeyMile.accessPoints.root.unit.port.chan.chanCommandProcessor import ChanCommandProcessor
             from vendors.KeyMile.accessPoints.root.unit.port.interface.interfaceCommandProcessor import InterfaceCommandProcessor
+            from vendors.KeyMile.accessPoints.root.fan.fanCommandProcessor import FanCommandProcessor
+            from vendors.KeyMile.accessPoints.root.fan.alarmCommandProcessor import AlarmCommandProcessor
+            from vendors.KeyMile.accessPoints.root.eoamCommandProcessor import EoamCommandProcessor
+            from vendors.KeyMile.accessPoints.root.multicastCommandProcessor import MulticastCommandProcessor
+            from vendors.KeyMile.accessPoints.root.tdmConnectionsCommandProcessor import TdmConnectionsCommandProcessor
+            from vendors.KeyMile.accessPoints.root.services.servicesCommandProcessor import ServicesCommandProcessor
             subprocessor = self._create_subprocessor(eval(command_processor), 'login', 'base')
 
             if len(remaining_args) > 0:
@@ -279,4 +308,4 @@ class BaseCommandProcessor(base.CommandProcessor):
             raise exceptions.CommandExecutionError(template='invalid_management_function_error', template_scopes=('login', 'base', 'execution_errors'), command=command)
 
     def _init_access_points(self, context=None):
-        raise exceptions.SoftboxenError(message='Abstract method not implemented.')
+        pass # Abstract method not implemented
