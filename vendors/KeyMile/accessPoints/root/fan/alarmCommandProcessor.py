@@ -19,38 +19,9 @@ class AlarmCommandProcessor(BaseCommandProcessor):
     management_functions = ('main', 'cfgm', 'fm')
     access_points = ()
 
-    main = {
-        'General': {
-            'Prop': {
-                'Labels': 'rw',
-                'AlarmStatus': 'r-'
-            }
-        }
-    }
-
-    cfgm = {
-        'General': {
-            'Prop': {
-                'Polarity': 'rw'
-            }
-        }
-    }
-
-    fm = {
-        'Status': {
-            'Prop': {
-                'AlarmStatus': 'r-'
-            },
-            'Cmd': (
-                'Acknowledge',
-            )
-        },
-        'Configuration': {
-            'Prop': {
-                'AlarmConfiguration': 'rw'
-            }
-        }
-    }
+    from .alarmManagementFunctions import main
+    from .alarmManagementFunctions import cfgm
+    from .alarmManagementFunctions import fm
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)

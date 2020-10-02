@@ -19,36 +19,9 @@ class ServicesCommandProcessor(BaseCommandProcessor):
     management_functions = ('main', 'fm', 'status')
     access_points = ()
 
-    main = {
-        'General': {
-            'Prop': {
-                'Labels': 'rw',
-                'AlarmStatus': 'r-'
-            }
-        }
-    }
-
-    fm = {
-        'Status': {
-            'Prop': {
-                'AlarmStatus': 'r-'
-            },
-            'Cmd': (
-                'Acknowledge',
-            )
-        },
-        'Configuration': {
-            'Prop': {
-                'AlarmConfiguration': 'rw'
-            }
-        }
-    }
-
-    status = {
-        'Prop': {
-            'conflictList': 'r-'
-        }
-    }
+    from .servicesManagementFunctions import main
+    from .servicesManagementFunctions import fm
+    from .servicesManagementFunctions import status
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
