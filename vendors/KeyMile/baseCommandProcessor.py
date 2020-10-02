@@ -46,6 +46,18 @@ class BaseCommandProcessor(base.CommandProcessor):
             if type == 'port':
                 object.operational_state = 'Down'
 
+    def create_spacers(self, positions, args):
+        spacers = []
+        previous_pos = 0
+        i = 0
+        for position in positions:
+            spacer = position - (previous_pos + len(str(args[i])))
+            spacers.append(spacer)
+            previous_pos = position
+            i += 1
+
+        return spacers
+
     def do_help(self, command, *args, context=None):
         help_scopes = ('login', 'base', 'help')
         if self._validate(args, str):
@@ -87,6 +99,9 @@ class BaseCommandProcessor(base.CommandProcessor):
     def do_pwd(self, command, *args, context=None):
         context['spacer'] = self.create_spacers((67,), (context['path'],))[0] * ' '
         self._write(self._render('pwd', 'login', 'base', context=context))
+
+    def exec_in_path(self, path, command, *args, context=None):
+        pass
 
     def do_cd(self, command, *args, context=None):
         if len(args) == 0:
@@ -304,6 +319,12 @@ class BaseCommandProcessor(base.CommandProcessor):
                     text += self._render('ls_list_body', *scopes, context=context)
 
                 self._write(text)
+        elif self._validate(args, '-e'):
+            pass
+        elif self._validate([args[0]], str):
+            path = args[0]
+
+            self.do_cd('cd', path, context=context)
         else:
             raise exceptions.CommandExecutionError(template='invalid_management_function_error', template_scopes=('login', 'base', 'execution_errors'), command=command)
 
