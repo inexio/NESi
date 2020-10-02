@@ -13,6 +13,7 @@ import uuid
 
 from nesi.softbox.api import db
 from .card_models import Card
+from .mgmt_card_models import MgmtCard
 
 
 class Subrack(db.Model):
@@ -20,6 +21,7 @@ class Subrack(db.Model):
     name = db.Column(db.String(64), default='test')
     box_id = db.Column(db.Integer, db.ForeignKey('box.id'))
     cards = db.relationship('Card', backref='Subrack', lazy='dynamic')
+    mgmt_cards = db.relationship('MgmtCard', backref='Subrack', lazy='dynamic')
     # data
     description = db.Column(db.String(), default='')
     planned_type = db.Column(db.Enum('rvxs-a', 'not-planned', 'planned', 'nfxs-f'), default='not-planned')
