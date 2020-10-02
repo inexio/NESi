@@ -19,11 +19,38 @@ class FanAlarmCommandProcessor(BaseCommandProcessor):
     management_functions = ('main', 'cfgm', 'fm')
     access_points = ()
 
-    main = {}
+    main = {
+        'General': {
+            'Prop': {
+                'Labels': 'rw',
+                'AlarmStatus': 'r-'
+            }
+        }
+    }
 
-    cfgm = {}
+    cfgm = {
+        'General': {
+            'Prop': {
+                'Polarity': 'rw'
+            }
+        }
+    }
 
-    fm = {}
+    fm = {
+        'Status': {
+            'Prop': {
+                'AlarmStatus': 'r-'
+            },
+            'Cmd': (
+                'Acknowledge',
+            )
+        },
+        'Configuration': {
+            'Prop': {
+                'AlarmConfiguration': 'rw'
+            }
+        }
+    }
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)

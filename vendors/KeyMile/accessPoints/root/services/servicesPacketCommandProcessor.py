@@ -19,7 +19,14 @@ class ServicesPacketCommandProcessor(BaseCommandProcessor):
     management_functions = ('main',)
     access_points = ('1to1DoubleTag', '1to1SingeTag', 'mcast', 'nto1', 'pls', 'tls')
 
-    main = {}
+    main = {
+        'General': {
+            'Prop': {
+                'Labels': 'rw',
+                'AlarmStatus': 'r-'
+            }
+        }
+    }
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
