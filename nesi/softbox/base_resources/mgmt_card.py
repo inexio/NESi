@@ -18,19 +18,18 @@ from nesi.softbox.base_resources import base
 LOG = logging.getLogger(__name__)
 
 
-class Card(base.Resource):
+class MgmtCard(base.Resource):
     """Represent physical shelf resource."""
     id = base.Field('id')
     name = base.Field('name')
     box_id = base.Field('box_id')
-    subrack_id = base.Field('subrack_id')
-    product = base.Field('product')
     description = base.Field('description')
+    subrack_id = base.Field('subrack_id')
 
 
-class CardCollection(base.ResourceCollection):
+class MgmtCardCollection(base.ResourceCollection):
     """Represent a collection of cards."""
 
     @property
     def _resource_type(self):
-        return Card
+        return MgmtCard
