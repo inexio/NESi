@@ -14,19 +14,12 @@ from nesi import exceptions
 from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 
 
-class ServicesPacketCommandProcessor(BaseCommandProcessor):
-    __name__ = 'servicesPacket'
+class PacketCommandProcessor(BaseCommandProcessor):
+    __name__ = 'packet'
     management_functions = ('main',)
     access_points = ('1to1DoubleTag', '1to1SingeTag', 'mcast', 'nto1', 'pls', 'tls')
 
-    main = {
-        'General': {
-            'Prop': {
-                'Labels': 'rw',
-                'AlarmStatus': 'r-'
-            }
-        }
-    }
+    from .packetManagementFunctions import main
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)

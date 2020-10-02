@@ -19,48 +19,9 @@ class FanCommandProcessor(BaseCommandProcessor):
     management_functions = ('main', 'cfgm', 'fm')
     access_points = ()
 
-    main = {
-        'General': {
-            'Prop': {
-                'Labels': 'rw',
-                'AlarmStatus': 'r-'
-            }
-        },
-        'Equipment': {
-            'Prop': {
-                'CurrentStatus': 'r-'
-            }
-        },
-        'Inventory': {
-            'Prop': {
-                'EquipmentInventory': 'r-'
-            }
-        }
-    }
-
-    cfgm = {
-        'General': {
-            'Prop': {
-                'Option': 'rw'
-            }
-        }
-    }
-
-    fm = {
-        'Status': {
-            'Prop': {
-                'AlarmStatus': 'r-'
-            },
-            'Cmd': (
-                'Acknowledge',
-            )
-        },
-        'Configuration': {
-            'Prop': {
-                'AlarmConfiguration': 'rw'
-            }
-        }
-    }
+    from .fanManagementFunctions import main
+    from .fanManagementFunctions import cfgm
+    from .fanManagementFunctions import fm
 
     def _init_access_points(self, context=None):
         for i in range(1, 12):
