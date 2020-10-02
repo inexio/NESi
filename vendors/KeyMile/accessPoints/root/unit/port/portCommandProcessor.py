@@ -354,6 +354,25 @@ class PortCommandProcessor(BaseCommandProcessor):
         }
     }
 
+    def do_get(self, command, *args, context=None):
+        scopes = ('login', 'base', 'get')
+        if self._validate(args, *()):
+            exc = exceptions.CommandSyntaxError(command=command)
+            exc.template = 'syntax_error'
+            exc.template_scopes = ('login', 'base', 'syntax_errors')
+            raise exc
+        if self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status':
+            text = self._render('attainable_rate', *scopes, context=context)
+            self._write(text)
+        elif self._validate((args[0],), 'AdministrativeStatus') and context['path'].split('/')[-1] == 'main':
+            text = self._render('administrative_status', *scopes, context=context)
+            self._write(text)
+        elif self._validate((args[0],), 'OperationalStatus') and context['path'].split('/')[-1] == 'main':
+            text = self._render('operational_status', *scopes, context=context)
+            self._write(text)
+        else:
+            raise exceptions.CommandExecutionError(command=command, template='invalid_property', template_scopes=('login', 'base', 'execution_errors'))
+
     def _init_access_points(self, context=None):
         port = self._model.get_port('name', context['unit'] + '/' + context['port'])
 
