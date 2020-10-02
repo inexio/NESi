@@ -62,5 +62,12 @@ class FanCommandProcessor(BaseCommandProcessor):
         }
     }
 
+    def _init_access_points(self, context=None):
+        for i in range(1, 12):
+            identifier = 'alarm-' + str(i)
+            if identifier in self.access_points:
+                continue
+            self.access_points += (identifier,)
+
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)

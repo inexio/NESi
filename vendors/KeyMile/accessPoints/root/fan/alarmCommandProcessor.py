@@ -14,8 +14,8 @@ from nesi import exceptions
 from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 
 
-class FanAlarmCommandProcessor(BaseCommandProcessor):
-    __name__ = 'fanAlarm'
+class AlarmCommandProcessor(BaseCommandProcessor):
+    __name__ = 'alarm'
     management_functions = ('main', 'cfgm', 'fm')
     access_points = ()
 

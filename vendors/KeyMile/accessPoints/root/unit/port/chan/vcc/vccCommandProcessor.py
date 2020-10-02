@@ -15,7 +15,7 @@ from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 
 
 class VccCommandProcessor(BaseCommandProcessor):
-    __name__ = 'port'
+    __name__ = 'vcc'
     management_functions = ('main', 'cfgm', 'pm', 'status')
     access_points = ()
 
