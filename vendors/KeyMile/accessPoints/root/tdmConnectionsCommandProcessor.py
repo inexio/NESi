@@ -19,9 +19,39 @@ class TdmConnectionsCommandProcessor(BaseCommandProcessor):
     management_functions = ('main', 'cfgm')
     access_points = ()
 
-    main = {}
+    main = {
+        'General': {
+            'Prop': {
+                'Labels': 'rw',
+                'AlarmStatus': 'r-'
+            }
+        }
+    }
 
-    cfgm = {}
+    cfgm = {
+        'Connections': {
+            'Cmd': (
+                'CreateConnection',
+                'CreateBulkConnection',
+                'CreateAdvancedConnection',
+                'DeleteConnection',
+                'DeleteMultipleConnections',
+                'ShowConnections',
+                'SetLabel1',
+                'SetLabel2'
+            )
+        },
+        'Ctps': {
+            'Cmd': (
+                'ShowCtps',
+            )
+        },
+        'Pbus': {
+            'Prop': {
+                'PbusUsage': 'r-'
+            }
+        }
+    }
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)

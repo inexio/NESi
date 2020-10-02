@@ -19,11 +19,58 @@ class EoamCommandProcessor(BaseCommandProcessor):
     management_functions = ('main', 'cfgm', 'status')
     access_points = ()
 
-    main = {}
+    main = {
+        'General': {
+            'Prop': {
+                'Labels': 'rw',
+                'AlarmStatus': 'r-'
+            }
+        },
+        'AdminAndOperStatus': {
+            'Prop': {
+                'AdministrativeStatus': 'rw',
+                'OperationalStatus': 'r-'
+            }
+        }
+    }
 
-    cfgm = {}
+    cfgm = {
+        'DefaultMdLevel': {
+            'Prop': {
+                'DefaultMdSettings': 'rw'
+            }
+        },
+        'ContextMap': {
+            'Prop': {
+                'Mapping': 'rw'
+            }
+        },
+        'Aggregation': {
+            'Prop': {
+                'Role': 'rw',
+                'Address': 'rw'
+            }
+        },
+        'Md': {
+            'Cmd': (
+                'CreateMd',
+                'DeleteMd'
+            )
+        }
+    }
 
-    status = {}
+    status = {
+        'DefaultMdMips': {
+            'Prop': {
+                'Mips': 'r-'
+            }
+        },
+        'ConfigurationErrors': {
+            'Prop': {
+                'InterfacesInError': 'r-'
+            }
+        }
+    }
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)

@@ -19,13 +19,67 @@ class ServicesMacAccessCtrlCommandProcessor(BaseCommandProcessor):
     management_functions = ('main', 'cfgm', 'fm', 'status')
     access_points = ()
 
-    main = {}
+    main = {
+        'General': {
+            'Prop': {
+                'Labels': 'rw',
+                'AlarmStatus': 'r-'
+            }
+        }
+    }
 
-    cfgm = {}
+    cfgm = {
+        'General': {
+            'Prop': {
+                'Blacklist': 'rw'
+            }
+        }
+    }
 
-    fm = {}
+    fm = {
+        'Status': {
+            'Prop': {
+                'AlarmStatus': 'r-'
+            },
+            'Cmd': (
+                'Acknowledge',
+            )
+        },
+        'Configuration': {
+            'Prop': {
+                'AlarmConfiguration': 'rw'
+            }
+        },
+        'DuplicatedMac': {
+            'Prop': {
+                'DuplicatedMacAccessList': 'r-'
+            },
+            'Cmd': (
+                'FlushMacAccessDuplicatedList',
+            )
+        }
+    }
 
-    status = {}
+    status = {
+        'DynamicList': {
+            'Prop': {
+                'DynamicList': 'r-'
+            },
+            'Cmd': (
+                'FlushMacAccessDynamicList',
+                'DeleteMacAccessDynamicListEntry'
+            )
+        },
+        'UNIBlacklist': {
+            'Prop': {
+                'Blacklist': 'r-',
+                'BNGlist': 'r-'
+            },
+            'Cmd': (
+                'DeleteMacAccessBNGlistEntry',
+            )
+        }
+    }
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
