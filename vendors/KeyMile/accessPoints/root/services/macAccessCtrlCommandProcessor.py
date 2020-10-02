@@ -14,13 +14,15 @@ from nesi import exceptions
 from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 
 
-class TdmConnectionsCommandProcessor(BaseCommandProcessor):
-    __name__ = 'tdmConnections'
-    management_functions = ('main', 'cfgm')
+class MacAccessCtrlCommandProcessor(BaseCommandProcessor):
+    __name__ = 'macAccessCtrl'
+    management_functions = ('main', 'cfgm', 'fm', 'status')
     access_points = ()
 
-    from .tdmConnectionsManagementFunctions import main
-    from .tdmConnectionsManagementFunctions import cfgm
+    from .macAccessCtrlManagementFunctions import main
+    from .macAccessCtrlManagementFunctions import cfgm
+    from .macAccessCtrlManagementFunctions import fm
+    from .macAccessCtrlManagementFunctions import status
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
