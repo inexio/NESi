@@ -20,6 +20,7 @@ from nesi.softbox.api.models.box_models import Box
 from nesi.softbox.api.schemas import *
 from nesi.alcatel.api.schemas import *
 from nesi.huawei.api.schemas import *
+from nesi.keymile.api.schemas import *
 # important for other view classes
 from nesi.softbox.api import db
 
