@@ -11,23 +11,34 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from test_cases.unit_tests.test_core import TestCore
+import pytest
+from os import listdir
+from os.path import isfile, join
 
 
 class TestKeymile(TestCore):
+    PATH = 'test_cases/integration_tests/keymile/'
+    DATA = [f for f in listdir('test_cases/integration_tests/keymile/') if
+            isfile(join('test_cases/integration_tests/keymile/', f)) and f != 'output.txt']
 
-    def test_portup_portdown(self):
-        port = self.model.get_port("name", '1/1/1/1')
-        assert(self.model.get_port("name", '1/1/1/1').admin_state == '0')
-        port.admin_up()
-        assert(self.model.get_port("name", '1/1/1/1').admin_state == '1')
-        port.admin_down()
-        assert(self.model.get_port("name", '1/1/1/1').admin_state == '0')
+    def test_box(self):
+        assert True
 
-    def test_ontportup_portdown(self):
-        port = self.model.get_ont_port("name", '1/1/4/1/1/1/1')
-        assert(self.model.get_ont_port("name", '1/1/4/1/1/1/1').admin_state == '0')
-        port.admin_up()
-        assert(self.model.get_ont_port("name", '1/1/4/1/1/1/1').admin_state == '1')
-        port.admin_down()
-        assert(self.model.get_ont_port("name", '1/1/4/1/1/1/1').admin_state == '0')
+    def test_card(self):
+        assert True
 
+    def test_channel(self):
+        assert True
+
+    def test_interface(self):
+        assert True
+
+    def test_port(self):
+        assert True
+
+    def test_subrack(self):
+        assert True
+
+    @pytest.mark.parametrize("path", DATA)
+    def test_integration(self, path):
+        self.run(self.PATH + path, self.PATH + 'output.txt')
