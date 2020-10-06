@@ -45,11 +45,12 @@ class CommandProcessor:
     """
 
     def __init__(self, model, input_stream, output_stream, history,
-                 template_root=None, scopes=(), daemon=False):
+                 template_root=None, scopes=(), daemon=False, parent=None, case_sensitive=True):
         self._model = model
         self._input = input_stream
         self._output = output_stream
         self._scopes = scopes
+        self._parent = parent
         self._template_root = template_root
         self._template_dir = os.path.join(
             template_root, *scopes)
@@ -61,6 +62,7 @@ class CommandProcessor:
         self.daemon = daemon
 
         # CLI specific attributes
+        self.case_sensitive = case_sensitive
         self.line_buffer = []
         self.history_enabled = True
         self.hide_input = False
@@ -279,6 +281,9 @@ class CommandProcessor:
         command = args[0]
         args = args[1:]
 
+        if self.case_sensitive is False:
+            command = command.lower()
+
         if command == self.negation:
             command += "_" + args.pop(0)
 
@@ -318,7 +323,7 @@ class CommandProcessor:
         return subprocessor(
             self._model, self._input, self._output, self.history,
             template_root=self._template_root,
-            scopes=scopes, daemon=self.daemon)
+            scopes=scopes, daemon=self.daemon, parent=self, case_sensitive=self.case_sensitive)
 
     def process_command(self, line, context):
         self._parse_and_execute_command(line, context)
@@ -443,6 +448,11 @@ class CommandProcessor:
             except IndexError:
                 raise exceptions.CommandSyntaxError(command=' '.join(args))
 
+            if self.case_sensitive is False:
+                arg = arg.lower()
+                if not isinstance(token, type):
+                    token = token.lower()
+
             if type(token) == type:
                 values.append(arg)
 
@@ -460,6 +470,11 @@ class CommandProcessor:
                 arg = args[idx]
             except IndexError:
                 return False
+
+            if self.case_sensitive is False:
+                arg = arg.lower()
+                if not isinstance(token, type):
+                    token = token.lower()
 
             if arg != token and type(token) != type:
                 return False
