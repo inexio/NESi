@@ -50,6 +50,8 @@ class LoginCommandProcessor(base.CommandProcessor):
             self._write(text)
             raise exceptions.TerminalExitError()
 
+        self.case_sensitive = False
+
         subprocessor = self._create_subprocessor(
             RootCommandProcessor, 'login', 'base')
 
