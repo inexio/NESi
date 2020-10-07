@@ -28,7 +28,6 @@ class LogPortCommandProcessor(PortCommandProcessor):
         try:
             super().do_get(command, *args, context=None)
         except exceptions.CommandExecutionError:
-            #TODO: example
             if self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status':
                 text = self._render('attainable_rate', *scopes, context=context)
                 self._write(text)
