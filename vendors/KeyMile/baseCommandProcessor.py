@@ -37,14 +37,14 @@ class BaseCommandProcessor(base.CommandProcessor):
                 object.admin_state = 'Down'
         elif object.admin_state == '1':
             if type == 'port':
-                object.admin_state = 'Down'
+                object.admin_state = 'Up'
 
         if object.operational_state == '0':
             if type == 'port':
                 object.operational_state = 'Down'
         elif object.operational_state == '1':
             if type == 'port':
-                object.operational_state = 'Down'
+                object.operational_state = 'Up'
 
     def create_spacers(self, positions, args):
         spacers = []

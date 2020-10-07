@@ -1,3 +1,13 @@
 admin
 secret
+#voiceport
+/unit-$voice_card/port-$voice_port/status/StartLineTest
+get /unit-$voice_card/port-$voice_port/status/LineTestResults
+#else
+/unit-$card/port-$port/status/StartMeltMeasurement
+get /unit-$card/port-$port/status/MeltResults
+
+#SUVM6
+cd /unit-$card/port-$port/main
+set AdministrativeStatus up
 exit
