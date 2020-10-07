@@ -44,6 +44,24 @@ req='{
 
 root_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
 
+# test subscriber
+req='{
+  "name": "tester",
+  "number": 9023,
+  "type": "unit"
+}'
+
+subscriber_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subscribers)
+
+# test subscriber
+req='{
+  "name": "tester2",
+  "number": 90223,
+  "type": "unit"
+}'
+
+subscriber_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subscribers)
+
 ### Subrack 0 ###
 
 # Create a physical subrack at the network device (admin operation)
@@ -59,7 +77,7 @@ subrack_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subracks)
 # Create a physical card at the network device (admin operation)
 req='{
   "subrack_id": '$subrack_id',
-  "product": "xdsl"
+  "product": "analog"
 }'
 
 unit_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
