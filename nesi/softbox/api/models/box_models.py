@@ -28,6 +28,7 @@ from .route_models import Route
 from .emu_models import Emu
 from .user_models import User
 from .channel_models import Channel
+from .subscriber_models import Subscriber
 
 
 class Box(db.Model):
@@ -70,6 +71,7 @@ class Box(db.Model):
     vlan_interfaces = db.relationship('VlanInterface', backref='Box', lazy='dynamic')
     routes = db.relationship('Route', backref='Box', lazy='dynamic')
     emus = db.relationship('Emu', backref='Box', lazy='dynamic')
+    subscribers = db.relationship('Subscriber', backref='Box', lazy='dynamic')
     board_missing_reporting_logging = db.Column(db.Boolean(), default=False)
     board_instl_missing_reporting_logging = db.Column(db.Boolean(), default=False)
     board_init_reporting_logging = db.Column(db.Boolean(), default=False)

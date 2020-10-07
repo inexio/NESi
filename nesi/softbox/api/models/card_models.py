@@ -23,7 +23,7 @@ class Card(db.Model):
     subrack_id = db.Column(db.Integer, db.ForeignKey('subrack.id'))
     ports = db.relationship('Port', backref='Card', lazy='dynamic')
     ppc = db.Column(db.Enum('8', '16', '32', '48', '64'), default='32')
-    product = db.Column(db.Enum('xdsl', 'vdsl', 'adsl', 'sdsl', 'ftth-pon', 'ftth', 'mgnt'),
+    product = db.Column(db.Enum('xdsl', 'vdsl', 'adsl', 'sdsl', 'ftth-pon', 'ftth', 'mgnt', 'analog', 'isdn'),
                         nullable=False, default='vdsl')
 
     # Alcatel specific data
