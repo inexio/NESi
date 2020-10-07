@@ -1,3 +1,104 @@
 admin
 secret
+#adsl SUAD2
+cd /unit-{$card}/port-{$port}/status
+get AttainableRate
+cd /unit-{$card}/port-{$port}/main
+get AdministrativeStatus
+get OperationalStatus
+cd /unit-{$card}/port-{$port}/chan-1/cfgm
+get ProfileName
+get ChanProfile
+cd /unit-{$card}/port-{$port}/chan-1/status
+get status
+cd /unit-{$card}/port-{$port}/chan-1/vcc-1/cfgm
+get configuredProfiles
+cd /unit-{$card}/port-{$port}/chan-1/vcc-1/status
+get ServiceStatus
+cd /unit-11
+ls
+cd /unit-{$slotIpss}
+ls
+#vdsl SUVD2
+cd /unit-{$card}/port-{$port}/status
+get AttainableRate
+cd /unit-{$card}/port-{$port}/main
+get AdministrativeStatus
+get OperationalStatus
+cd /unit-{$card}/port-{$port}/chan-1/cfgm
+get ChanProfile
+cd /unit-{$card}/port-{$port}/chan-1/status
+get status
+cd /unit-{$card}/port-{$port}/chan-1/interface-1/cfgm
+get configuredProfiles
+get vlanProfile
+cd /unit-{$card}/port-{$port}/chan-1/interface-1/status
+get ServiceStatus
+cd /unit-11
+ls
+cd /unit-{$card}/port-{$port}
+get status/VendorId
+cd /unit-{$slotIpss}
+ls
+#xdsl
+cd /unit-{$card}/port-{$port}/status
+get AttainableRate
+get UnicastList
+cd /unit-{$card}/port-{$port}/main
+get AdministrativeStatus
+get OperationalStatus
+cd /unit-{$card}/port-{$port}
+ls
+cd /unit-{$card}/port-{$port}/chan-1/cfgm
+get ChanProfile
+cd /unit-{$card}/port-{$port}/chan-1/status
+get status
+cd /unit-{$card}/port-{$port}/chan-1/interface-1/cfgm
+get configuredProfiles
+cd /unit-{$card}/port-{$port}/chan-1/interface-1/status
+get ServiceStatus
+cd /unit-{$card}
+ls
+cd /unit-11
+ls
+cd /unit-{$card}/port-{$port}
+get status/VendorId
+#ftth
+cd /unit-{$card}/port-{$port}/main
+get AdministrativeStatus
+get OperationalStatus
+cd /unit-{$card}/port-{$port}
+ls
+cd /unit-{$card}/port-{$port}/status
+get PortMacStatus
+get PortGeneralStatus
+cd /unit-{$card}/port-{$port}/interface-1/cfgm
+get configuredProfiles
+get vlanProfile
+get IfRateLimiting
+cd /unit-{$card}/port-{$port}/interface-1/status
+get ServiceStatus
+cd /unit-{$card}/port-{$port}/status
+get DDMStatus
+#sdsl
+cd /unit-{$card}/port-{$port}/main
+ls
+cd /unit-{$card}/port-{$port}/status
+ls
+get LineActualState
+get LineOperationState
+cd /unit-{$card}/logports/logport-{$port}/status
+get ActualStatus
+get OperationalWireState
+cd /unit-{$card}/logports/logport-{$port}/main
+get AdministrativeStatus
+get OperationalStatus
+cd /unit-{$card}/logports/logport-{$port}/cfgm
+get SpanProfiles
+cd /unit-{$card}/logports/logport-{$port}/interface-1/cfgm
+get configuredProfiles
+get vlanProfile
+cd /unit-{$card}/logports/logport-{$port}/interface-1/status
+get ServiceStatus
+ls
 exit

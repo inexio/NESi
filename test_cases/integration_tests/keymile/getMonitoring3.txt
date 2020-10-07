@@ -1,3 +1,21 @@
 admin
 secret
+ls
+cd status
+get CurrTemperature
+cd ..
+cd fan
+ls
+cd ..
+cd unit-1
+ls
+cd ..
+
+
+
+
+
+
+
+
 exit

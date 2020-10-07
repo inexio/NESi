@@ -1,3 +1,9 @@
 admin
 secret
+#analog
+cd /unit-$slotIpss/portgroup-$voiceCard/port-$voicePort/cfgm
+get pstnport
+#isdn
+cd /unit-$slotIpss/portgroup-$voiceCard/port-$voicePort/cfgm
+get isdnport
 exit
