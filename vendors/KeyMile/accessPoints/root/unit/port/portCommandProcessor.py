@@ -26,6 +26,8 @@ class PortCommandProcessor(BaseCommandProcessor):
     from .portManagementFunctions import status
 
     def do_get(self, command, *args, context=None):
+        port_name = context['unit'] + '/' + context['port']
+        port = self._model.get_port('name', port_name)
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
@@ -39,6 +41,10 @@ class PortCommandProcessor(BaseCommandProcessor):
             text = self._render('administrative_status', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'OperationalStatus') and context['path'].split('/')[-1] == 'main':
+            self.map_states(port, 'port')
+            port_operational_state = port.operational_state
+            context['port_operational_state'] = port_operational_state
+            context['spacer'] = self.create_spacers((67,), (port_operational_state,))[0] * ' '
             text = self._render('operational_status', *scopes, context=context)
             self._write(text)
         else:

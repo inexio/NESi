@@ -17,7 +17,7 @@ from ..models.user_models import User
 class UserSchema(ma.ModelSchema):
     class Meta:
         model = User
-        fields = ('id', 'box', 'credentials_id', 'name', '_links')
+        fields = ('id', 'box', 'box_id', 'credentials_id', 'name', '_links')
 
     box = ma.Hyperlinks(
         {'_links': {

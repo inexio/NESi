@@ -17,7 +17,7 @@ from ..models.subscriber_models import Subscriber
 class SubscriberSchema(ma.ModelSchema):
     class Meta:
         model = Subscriber
-        fields = ('id', 'name', 'box', 'number', 'type', 'address', 'registration_state', '_links')
+        fields = ('id', 'name', 'box', 'box_id', 'number', 'type', 'address', 'registration_state', '_links')
 
     box = ma.Hyperlinks(
         {'_links': {
