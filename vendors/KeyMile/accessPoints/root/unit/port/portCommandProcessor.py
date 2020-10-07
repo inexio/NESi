@@ -61,3 +61,13 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
+
+    def set(self, command, *args, context=None):
+        scopes = ('login', 'base', 'set')
+        if self._validate(args, *()):
+            exc = exceptions.CommandSyntaxError(command=command)
+            exc.template = 'syntax_error'
+            exc.template_scopes = ('login', 'base', 'syntax_errors')
+            raise exc
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
