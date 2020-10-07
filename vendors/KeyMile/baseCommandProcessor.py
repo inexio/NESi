@@ -141,6 +141,14 @@ class BaseCommandProcessor(base.CommandProcessor):
             else:
                 return self.get_parent_and_child_relation(search=search, node=y, parent=node)
 
+    def do_set(self, command, *args, context=None):
+        self.set(command, args, context)
+        return
+
+    def set(self, command, *args, context=None):
+        #interface method
+        return
+
     def do_cd(self, command, *args, context=None):
         if len(args) == 0:
             exc = exceptions.CommandSyntaxError(command=command)
