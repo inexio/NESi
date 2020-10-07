@@ -1,3 +1,11 @@
 admin
 secret
+cd /unit-$card/port-$port/chan-1/cfgm
+#SUVM6/4
+set chanprofile $profile
+set chanprofile default
+#else
+cd /unit-$card/port-$port/chan-1/cfgm
+set ProfileName $profile
+set ProfileName default
 exit

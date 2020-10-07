@@ -1,3 +1,26 @@
 admin
 secret
+#adsl
+cd /unit-$card/port-$port/main
+set AdministrativeStatus down
+Set Labels "" "" ""
+#vdsl
+cd /unit-$card/port-$port/main
+set AdministrativeStatus down
+Set Labels "" "" ""
+#xdsl
+cd /unit-$card/port-$port/main
+set AdministrativeStatus down
+Set Labels "" "" ""
+#ftth
+cd /unit-$card/port-$port/main
+set AdministrativeStatus down
+Set Labels "" "" ""
+#sdsl
+cd /unit-$card/logports/logport-$port/main
+set AdministrativeStatus down
+Set Labels "" "" ""
+cd /unit-$card/logports/logport-$port/main
+cd /unit-$card/logports/cfgm
+Delete logport-$port
 exit
