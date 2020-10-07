@@ -1,3 +1,8 @@
 admin
 secret
+cd /unit-19/status
+get SubscriberList
+cd /unit-19/cfgm
+get SIP
+get IP
 exit

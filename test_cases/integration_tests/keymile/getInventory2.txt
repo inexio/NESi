@@ -1,3 +1,18 @@
 admin
 secret
+ls
+cd /services/packet/nto1/
+ls
+cd /services/packet/nto1/srvc-{$match}/cfgm
+get Service
+cd /unit-{$slot}
+ls
+cd /unit-{$slot}/mai
+get HardwareAndSoftware
+get CurrentStatus
+get EquipmentInventory
+cd /unit-{$slot}/port-{$port}
+ls
+cd /unit-{$slot}/port-{$port}/main
+get OperationalStatus
 exit
