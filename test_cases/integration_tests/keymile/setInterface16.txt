@@ -1,3 +1,15 @@
 admin
 secret
+#SUSE1
+cd /unit-$card/logports/logport-$port/cfgm
+#SUEN4
+cd /unit-$card/port-$port/cfgm
+#SUE16
+cd /unit-$card/port-$port/cfgm
+#ftth
+cd /unit-$card/port-$port/cfgm
+#else
+cd /unit-$card/port-$port/chan-1/cfgm
+CreateInterface default VCC_1_32_10100
+DeleteInterface all
 exit

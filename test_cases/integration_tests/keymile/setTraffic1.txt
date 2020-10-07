@@ -1,3 +1,16 @@
 admin
 secret
+#ftth
+cd /unit-$card
+ls
+#SUEN4
+cd /unit-$card/port-$port/cfgm
+Set Mode "Speed1000 Autoneg On"
+Set FlowControl false
+CreateInterface VLAN_$trafficVlan
+#else
+cd /unit-$card/port-$port/cfgm
+Set Mode "1000MbitsFullDuplex"
+Set FlowControl false
+CreateInterface VLAN_$trafficVlan
 exit

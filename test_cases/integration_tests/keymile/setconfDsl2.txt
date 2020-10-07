@@ -1,3 +1,26 @@
 admin
 secret
+#adsl
+cd /unit-$card/port-$port/main
+Set Labels "umlaut($contactName) ($contactId)" "$carrierLineId" ""
+set AdministrativeStatus up
+#vdsl
+cd /unit-$card/port-$port/main
+Set Labels "umlaut($contactName) ($contactId)" "$carrierLineId" ""
+set AdministrativeStatus up
+#xdsl
+cd /unit-$card/port-$port/main
+Set Labels "umlaut($contactName) ($contactId)" "$carrierLineId" ""
+set AdministrativeStatus up
+#ftth
+cd /unit-$card/port-$port/main
+Set Labels "umlaut($contactName) ($contactId)" "$carrierLineId" ""
+set AdministrativeStatus up
+#sdsl
+cd /unit-$card/logports/cfgm
+create $bonding_port $profile
+cd /unit-$card/logports/logport-$port/cfgm
+CreateInterface name $servicetype
+cd /unit-$card/logports/logport-$port/main
+set AdministrativeStatus up
 exit
