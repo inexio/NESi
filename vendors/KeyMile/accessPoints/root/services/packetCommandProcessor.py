@@ -17,7 +17,7 @@ from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 class PacketCommandProcessor(BaseCommandProcessor):
     __name__ = 'packet'
     management_functions = ('main',)
-    access_points = ('1to1DoubleTag', '1to1SingeTag', 'mcast', 'nto1', 'pls', 'tls')
+    access_points = ('1to1DoubleTag', '1to1SingleTag', 'mcast', 'nto1', 'pls', 'tls')
 
     from .packetManagementFunctions import main
 

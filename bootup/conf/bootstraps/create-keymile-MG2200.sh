@@ -77,7 +77,24 @@ subrack_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subracks)
 # Create a physical card at the network device (admin operation)
 req='{
   "subrack_id": '$subrack_id',
-  "product": "analog"
+  "product": "adsl",
+  "board_name": "SUAD2",
+  "supplier_build_state": "R3D",
+  "board_id": "305",
+  "hardware_key": 102,
+  "software": "suad2_r5c01.esw",
+  "software_name": "SUAD2",
+  "software_revision": "R5C01",
+  "state": "Ok",
+  "serial_number": "4363507882",
+  "manufacturer_name": "KEYMILE",
+  "model_name": "37900030",
+  "short_text": "MG SUSE1 SHDSL EFM 32-port",
+  "manufacturer_id": "100989",
+  "manufacturer_part_number": "09862706",
+  "manufacturer_build_state": "02",
+  "boot_loader": "BLSU1_R1G01/CT23337",
+  "processor": "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"
 }'
 
 unit_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
@@ -117,7 +134,24 @@ interface_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/interfaces)
 # Create a physical card at the network device (admin operation)
 req='{
   "subrack_id": '$subrack_id',
-  "product": "xdsl"
+  "product": "sdsl",
+  "board_name": "SUSE1",
+  "supplier_build_state": "R1A",
+  "board_id": "330",
+  "hardware_key": 1,
+  "software": "suse1_r4d02_t01.esw",
+  "software_name": "SUSE1",
+  "software_revision": "R4D02_T01",
+  "state": "Ok",
+  "serial_number": "6973180458",
+  "manufacturer_name": "KEYMILE",
+  "model_name": "37900196",
+  "short_text": "MG SUAD2 ADSL2+ AnnexB 32-port",
+  "manufacturer_id": "100989",
+  "manufacturer_part_number": "09860762",
+  "manufacturer_build_state": "05",
+  "boot_loader": "BLSU1_R1F01/CT18388",
+  "processor": "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"
 }'
 
 unit_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
@@ -149,7 +183,24 @@ port_2_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
 # Create a physical card at the network device (admin operation)
 req='{
   "subrack_id": '$subrack_id',
-  "product": "xdsl"
+  "product": "sdsl",
+  "board_name": "SUSE1",
+  "supplier_build_state": "R1A",
+  "board_id": "330",
+  "hardware_key": 3,
+  "software": "suse1_r4d02_t01.esw",
+  "software_name": "SUSE1",
+  "software_revision": "R4D02_T01",
+  "state": "Ok",
+  "serial_number": "3383369557",
+  "manufacturer_name": "KEYMILE",
+  "model_name": "37900196",
+  "short_text": "MG SUSE1 SHDSL EFM 32-port",
+  "manufacturer_id": "100989",
+  "manufacturer_part_number": "09862706",
+  "manufacturer_build_state": "02",
+  "boot_loader": "BLSU1_R1G01/CT23337",
+  "processor": "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"
 }'
 
 unit_3=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
@@ -179,7 +230,24 @@ interface_3_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/interfaces)
 # Create a physical card at the network device (admin operation)
 req='{
   "subrack_id": '$subrack_id',
-  "product": "xdsl"
+  "product": "adsl",
+  "board_name": "SUAD2",
+  "supplier_build_state": "R3D",
+  "board_id": "305",
+  "hardware_key": 104,
+  "software": "suad2_r5c01.esw",
+  "software_name": "SUAD2",
+  "software_revision": "R5C01",
+  "state": "Ok",
+  "serial_number": "4810312946",
+  "manufacturer_name": "KEYMILE",
+  "model_name": "37900030",
+  "short_text": "MG SUAD2 ADSL2+ AnnexB 32-port",
+  "manufacturer_id": "100989",
+  "manufacturer_part_number": "09860762",
+  "manufacturer_build_state": "05",
+  "boot_loader": "BLSU1_R1F01/CT18388",
+  "processor": "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"
 }'
 
 unit_4=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
@@ -189,7 +257,24 @@ unit_4=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 # Create a physical card at the network device (admin operation)
 req='{
   "subrack_id": '$subrack_id',
-  "product": "vdsl"
+  "product": "vdsl",
+  "board_name": "SUVM4",
+  "supplier_build_state": "R1G",
+  "board_id": "345",
+  "hardware_key": 1,
+  "software": "suvm4_r3c02_01.esw",
+  "software_name": "SUVM4",
+  "software_revision": "R3C02_01",
+  "state": "Ok",
+  "serial_number": "6702369850",
+  "manufacturer_name": "KEYMILE",
+  "model_name": "37900293",
+  "short_text": "MG SUVM4 VDSL2 ISDN 32-port",
+  "manufacturer_id": "100989",
+  "manufacturer_part_number": "09866094",
+  "manufacturer_build_state": "01",
+  "boot_loader": "BPSUVM4_R1B03/CT0",
+  "processor": "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"
 }'
 
 unit_5=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
@@ -199,7 +284,24 @@ unit_5=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 # Create a physical card at the network device (admin operation)
 req='{
   "subrack_id": '$subrack_id',
-  "product": "vdsl"
+  "product": "vdsl",
+  "board_name": "SUVM6",
+  "supplier_build_state": "R1K",
+  "board_id": "377",
+  "hardware_key": 25,
+  "software": "suvm6_r3e10_01.esw",
+  "software_name": "SUVM6",
+  "software_revision": "R3E10_01",
+  "state": "Ok",
+  "serial_number": "1283288279",
+  "manufacturer_name": "KEYMILE",
+  "model_name": "37900528",
+  "short_text": "MG SUVM6 VDSL2/17MHz ISDN 48pt",
+  "manufacturer_id": "100989",
+  "manufacturer_part_number": "09869778",
+  "manufacturer_build_state": "20",
+  "boot_loader": "BPSUVM6_R1B02/CT0",
+  "processor": "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"
 }'
 
 unit_6=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
@@ -209,7 +311,24 @@ unit_6=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 # Create a physical card at the network device (admin operation)
 req='{
   "subrack_id": '$subrack_id',
-  "product": "vdsl"
+  "product": "vdsl",
+  "board_name": "SUVM6",
+  "supplier_build_state": "R1K",
+  "board_id": "377",
+  "hardware_key": 14,
+  "software": "suvm6_r3e10_01.esw",
+  "software_name": "SUVM6",
+  "software_revision": "R3E10_01",
+  "state": "Ok",
+  "serial_number": "6135149854",
+  "manufacturer_name": "KEYMILE",
+  "model_name": "37900528",
+  "short_text": "MG SUVM6 VDSL2/17MHz ISDN 48pt",
+  "manufacturer_id": "100989",
+  "manufacturer_part_number": "09869778",
+  "manufacturer_build_state": "20",
+  "boot_loader": "BPSUVM6_R1B02/CT0",
+  "processor": "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"
 }'
 
 unit_7=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
@@ -219,7 +338,47 @@ unit_7=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 # Create a physical card at the network device (admin operation)
 req='{
   "subrack_id": '$subrack_id',
-  "product": "vdsl"
+  "product": "vdsl",
+  "board_name": "SUVM6",
+  "supplier_build_state": "R1K",
+  "board_id": "377",
+  "hardware_key": 104,
+  "software": "suvm6_r3e10_01.esw",
+  "software_name": "SUVM6",
+  "software_revision": "R3E10_01",
+  "state": "Ok",
+  "serial_number": "8781619728",
+  "manufacturer_name": "KEYMILE",
+  "model_name": "37900528",
+  "short_text": "MG SUVM6 VDSL2/17MHz ISDN 48pt",
+  "manufacturer_id": "100989",
+  "manufacturer_part_number": "09869778",
+  "manufacturer_build_state": "20",
+  "boot_loader": "BPSUVM6_R1B02/CT0",
+  "processor": "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"
 }'
 
 unit_8=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
+
+### Unit-19 ###
+
+# Create a physical card at the network device (admin operation)
+req='{
+  "subrack_id": '$subrack_id',
+  "product": "isdn",
+  "name": "19"
+}'
+
+unit_19=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
+
+### Port-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$unit_19',
+  "admin_state": "1",
+  "operational_state": "1",
+  "name": "19/1/1"
+}'
+
+port_19_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
