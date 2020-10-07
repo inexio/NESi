@@ -53,6 +53,12 @@ class KeyMileBox(Box):
             self._conn, base.get_sub_resource_path_by(
                 self, 'cards'))
 
+    @property
+    def subscribers(self):
+        """Return `SubscriberCollection` object."""
+        return keymile_subscriber.KeymileSubscriberCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'subscribers'))
+
     def get_card(self, field, value):
         """Get specific card object."""
         return keymile_card.KeyMileCardCollection(
@@ -98,6 +104,18 @@ class KeyMileBox(Box):
         """Get specific interface object."""
         return keymile_interface.KeyMileInterfaceCollection(
             self._conn, base.get_sub_resource_path_by(self, 'interfaces'),
+            params={field: value})
+
+    def get_subscriber(self, field, value):
+        """Get specific subscriber object."""
+        return keymile_subscriber.KeymileSubscriberCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'subscribers'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_subscribers(self, field, value):
+        """Get specific subscribers object."""
+        return keymile_subscriber.KeymileSubscriberCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'subscribers'),
             params={field: value})
 
 

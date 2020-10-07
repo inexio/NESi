@@ -11,19 +11,19 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi import exceptions
-from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
+from vendors.KeyMile.accessPoints.root.unit.port.portCommandProcessor import PortCommandProcessor
 
 
-class PortCommandProcessor(BaseCommandProcessor):
-    __name__ = 'port'
-    management_functions = ('main', 'cfgm', 'fm', 'pm', 'status')
+class PortgroupPortCommandProcessor(PortCommandProcessor):
+    __name__ = 'portgroupport'
+    management_functions = ('main', 'cfgm', 'status')
     access_points = ()
 
-    from .portManagementFunctions import main
-    from .portManagementFunctions import cfgm
-    from .portManagementFunctions import fm
-    from .portManagementFunctions import pm
-    from .portManagementFunctions import status
+    from .portgroupportManagementFunctions import main
+    from .portgroupportManagementFunctions import cfgm
+    from .portgroupportManagementFunctions import fm
+    from .portgroupportManagementFunctions import pm
+    from .portgroupportManagementFunctions import status
 
     def do_get(self, command, *args, context=None):
         scopes = ('login', 'base', 'get')
@@ -35,6 +35,21 @@ class PortCommandProcessor(BaseCommandProcessor):
         elif self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status':
             text = self._render('attainable_rate', *scopes, context=context)
             self._write(text)
+        elif self._validate((args[0],), 'SubscriberList') and context['path'].split('/')[-1] == 'status' and \
+                self._model.get_card('name', context['unit']).product == 'isdn':
+            text = self._render('subscriberList_top', *scopes, context=context)
+            i = 0
+            for subscriber in self._model.subscribers:
+                if subscriber.type == 'port':            # TODO: show only subscriber of this port
+
+                    context['i'] = i
+                    context['spacer1'] = self.create_spacers((63,), (subscriber.number,))[0] * ' '
+                    context['spacer2'] = self.create_spacers((63,), (subscriber.registration_state,))[0] * ' '
+                    i += 1
+                    text += self._render('subscriberList_item2', *scopes, context=dict(context, subscriber=subscriber))
+            text += self._render('subscriberList_bottom', *scopes, context=context)
+
+            self._write(text)
         elif self._validate((args[0],), 'AdministrativeStatus') and context['path'].split('/')[-1] == 'main':
             text = self._render('administrative_status', *scopes, context=context)
             self._write(text)
@@ -45,13 +60,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandExecutionError(command=command, template='invalid_property', template_scopes=('login', 'base', 'execution_errors'))
 
     def _init_access_points(self, context=None):
-        port = self._model.get_port('name', context['unit'] + '/' + context['port'])
-
-        for chan in self._model.get_chans('port_id', port.id):
-            identifier = 'chan-' + chan.name.split('/')[-1]
-            if identifier in self.access_points:
-                continue
-            self.access_points += (identifier,)
+        port = self._model.get_port('name', context['unit'] + '/' + context['portgroup'] + '/' + context['port'])
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
