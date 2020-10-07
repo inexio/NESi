@@ -1,3 +1,17 @@
 admin
 secret
+cd /services/packet/1to1SingleTag/srvc-1/cfgm
+set Service /unit-{$managementSlot}/control {$input->vlan_voice_new} CoS0 Add
+cd /services/packet/1to1SingleTag/srvc-2/cfgm
+set Service /unit-{$managementSlot}/media {$input->vlan_voice_new} CoS0 Add
+cd /unit-{$managementSlot}/cfgm
+set Ip {$input->ip_voice} 255.255.255.0 {$input->gateway_voice}
+cd /cfgm
+save
+cd /unit-{$managementSlot}/main
+restart
+set /cfgm/IP_Address {$input->ip_new} 255.255.255.0 {$input->gateway}
+/cfgm/Save
+/unit-11/main/restart
+set /cfgm/VlanId {$input->vlan_new}
 exit

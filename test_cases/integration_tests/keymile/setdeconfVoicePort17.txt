@@ -1,3 +1,26 @@
 admin
 secret
+#analog
+cd /unit-$card/port-$port/main
+set AdministrativeStatus down
+Set Labels  "" "" ""
+cd /unit-$ipsxSlot/portgroup-$card/port-$port/cfgm
+Set pstnport false {} true false none none none none none
+cd /unit-$ipsxSlot/portgroup-$card/port-$port/main
+Set Labels  "" "" ""
+#isdn
+cd /unit-$card/port-$port/main
+set AdministrativeStatus down
+Set Labels  "" "" ""
+cd /unit-$ipsxSlot/portgroup-$card/port-$port/cfgm
+Set isdnport false {} true false false none none none none
+cd /unit-$ipsxSlot/portgroup-$card/port-$port/main
+Set Labels  "" "" ""
+
+
+
+
+
+
+
 exit

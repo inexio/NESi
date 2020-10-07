@@ -1,3 +1,19 @@
 admin
 secret
+#analog
+cd /unit-$slotIpss/portgroup-$voiceCard/port-$voicePort/cfgm
+set pstnport true {$numbers} true false none none none none none
+cd /unit-$slotIpss/portgroup-$voiceCard/port-$voicePort/main
+Set Labels umlaut($contactName) ($contactID) "$carrierLineId" ""
+cd /unit-$voiceCard/port-$voicePort/main
+set AdministrativeStatus up
+Set Labels umlaut($contactName) ($contactID) "$carrierLineId" ""
+#isdn
+cd /unit-$slotIpss/portgroup-$voiceCard/port-$voicePort/cfgm
+set isdnport true {$numbers} true false none none none none none
+cd /unit-$slotIpss/portgroup-$voiceCard/port-$voicePort/main
+Set Labels umlaut($contactName) ($contactID) "$carrierLineId" ""
+cd /unit-$voiceCard/port-$voicePort/main
+set AdministrativeStatus up
+Set Labels umlaut($contactName) ($contactID) "$carrierLineId" ""
 exit
