@@ -35,4 +35,3 @@ class HuaweiCardCollection(CardCollection):
     @property
     def _resource_type(self):
         return HuaweiCard
-

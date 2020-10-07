@@ -121,7 +121,7 @@ class BaseCommandProcessor(base.CommandProcessor):
         components = [x for x in args[0].split('/') if x]
 
         if not re.search(
-                '^(unit-[0-9]+|port-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|alarm-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|tdmConnection|\.|\.\.)$',
+                '^(unit-[0-9]+|port-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|alarm-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|tdmConnection|packet|macAccessCtrl|\.|\.\.)$',
                 components[0]):
             raise exceptions.CommandExecutionError(command=None, template=None,
                                                    template_scopes=())  # TODO: fix exception to not require all fields as empty
@@ -234,6 +234,8 @@ class BaseCommandProcessor(base.CommandProcessor):
             from vendors.KeyMile.accessPoints.root.multicastCommandProcessor import MulticastCommandProcessor
             from vendors.KeyMile.accessPoints.root.tdmConnectionsCommandProcessor import TdmConnectionsCommandProcessor
             from vendors.KeyMile.accessPoints.root.services.servicesCommandProcessor import ServicesCommandProcessor
+            from vendors.KeyMile.accessPoints.root.services.packetCommandProcessor import PacketCommandProcessor
+            from vendors.KeyMile.accessPoints.root.services.macAccessCtrlCommandProcessor import MacAccessCtrlCommandProcessor as MacaccessctrlCommandProcessor
             subprocessor = self._create_subprocessor(eval(command_processor), 'login', 'base')
 
             if len(remaining_args) > 0:
