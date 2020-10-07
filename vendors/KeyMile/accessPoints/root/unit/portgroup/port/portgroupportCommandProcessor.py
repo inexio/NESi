@@ -28,7 +28,6 @@ class PortgroupPortCommandProcessor(PortCommandProcessor):
         try:
             super().do_get(command, *args, context=None)
         except exceptions.CommandExecutionError:
-            # TODO: example
             if self._validate((args[0],), 'SubscriberList') and context['path'].split('/')[-1] == 'status' and \
                     self._model.get_card('name', context['unit']).product == 'isdn':
                 text = self._render('subscriberList_top', *scopes, context=context)
