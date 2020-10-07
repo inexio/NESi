@@ -103,6 +103,44 @@ class BaseCommandProcessor(base.CommandProcessor):
     def exec_in_path(self, path, command, *args, context=None):
         pass
 
+    '''
+    search := string keyword like "unit" or "port"
+    node := contains the dict tree or
+            None for default tree structure
+    parent := None or contains parent dict (should be None / important for rekursive call)
+    return := Tuple of ParentList, ChildList
+    '''
+    def get_parent_and_child_relation(self, search, node=None, parent=None):
+        if node is None:
+            node = {
+            "root": {
+                "unit": {
+                    "control": {},
+                    "media": {},
+                    "port": {
+                        "chanel": {
+                            "interfaces": {}
+                        },
+                        "interfaces": {}
+                    },
+                    "portgroups": {"portgroupports": {}},
+                    "logports": {"logport": {}},
+                    "vectoringports": {"vectorport": {}},
+                    "internalports": {"internalport": {}}
+                },
+                "eoam": {},
+                "tdmConnections": {},
+                "services": {},
+                "multicast": {}
+            }}
+        for x, y in node.items():
+            if y.get(search) is not None:
+                pp = list(parent.keys())
+                pc = list(y[search].keys())
+                return (pp, pc)
+            else:
+                return self.get_parent_and_child_relation(search=search, node=y, parent=node)
+
     def do_cd(self, command, *args, context=None):
         if len(args) == 0:
             exc = exceptions.CommandSyntaxError(command=command)
