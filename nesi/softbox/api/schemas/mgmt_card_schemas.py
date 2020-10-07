@@ -19,7 +19,8 @@ from ..schemas.mgmt_port_schemas import MgmtPortsSchema
 class MgmtCardSchema(ma.ModelSchema):
     class Meta:
         model = MgmtCard
-        fields = ('id', 'box_id', 'box', 'name', 'subrack_id', 'admin_state', 'operational_state', 'description', 'mgmt_ports')
+        fields = ('id', 'box_id', 'box', 'name', 'subrack_id', 'admin_state', 'operational_state', 'description',
+                  'mgmt_ports')
 
     mgmt_ports = ma.Nested(MgmtPortsSchema.MgmtPortSchema, many=True)
 

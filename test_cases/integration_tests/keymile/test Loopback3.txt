@@ -1,3 +1,9 @@
 admin
 secret
+#isdn
+cd /unit-$voiceCard/port-$voicePort/status
+Lock
+StartQuickLoopbackTest
+get QuickLoopbackTest
+Unlock
 exit

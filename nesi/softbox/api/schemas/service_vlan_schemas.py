@@ -17,7 +17,7 @@ from ..models.service_vlan_models import ServiceVlan
 class ServiceVlanSchema(ma.ModelSchema):
     class Meta:
         model = ServiceVlan
-        fields = ('id', 'name', 'service_port_id', 'vlan_id', 'box', 'card_id', '_links')
+        fields = ('id', 'name', 'service_port_id', 'vlan_id', 'box', 'box_id', 'card_id', '_links')
 
     box = ma.Hyperlinks(
         {'_links': {

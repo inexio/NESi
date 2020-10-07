@@ -17,7 +17,7 @@ from ..models.vlan_models import Vlan
 class VlanSchema(ma.ModelSchema):
     class Meta:
         model = Vlan
-        fields = ('id', 'box_id', 'number', 'mtu',
+        fields = ('id', 'box_id', 'number', 'mtu', 'box'
                   '_links')
 
     box = ma.Hyperlinks(
