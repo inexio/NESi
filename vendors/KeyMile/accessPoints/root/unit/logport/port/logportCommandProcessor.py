@@ -14,36 +14,23 @@ from nesi import exceptions
 from vendors.KeyMile.accessPoints.root.unit.port.portCommandProcessor import PortCommandProcessor
 
 
-class PortgroupPortCommandProcessor(PortCommandProcessor):
-    __name__ = 'portgroupport'
+class LogPortCommandProcessor(PortCommandProcessor):
+    __name__ = 'logport'
     management_functions = ('main', 'cfgm', 'status')
     access_points = ()
 
-    from .portgroupportManagementFunctions import main
-    from .portgroupportManagementFunctions import cfgm
-    from .portgroupportManagementFunctions import status
+    from .logportManagementFunctions import main
+    from .logportManagementFunctions import cfgm
+    from .logportManagementFunctions import status
 
     def do_get(self, command, *args, context=None):
         scopes = ('login', 'base', 'get')
         try:
             super().do_get(command, *args, context=None)
         except exceptions.CommandExecutionError:
-            # TODO: example
-            if self._validate((args[0],), 'SubscriberList') and context['path'].split('/')[-1] == 'status' and \
-                    self._model.get_card('name', context['unit']).product == 'isdn':
-                text = self._render('subscriberList_top', *scopes, context=context)
-                i = 0
-                for subscriber in self._model.subscribers:
-                    if subscriber.type == 'port':  # TODO: show only subscriber of this port
-
-                        context['i'] = i
-                        context['spacer1'] = self.create_spacers((63,), (subscriber.number,))[0] * ' '
-                        context['spacer2'] = self.create_spacers((63,), (subscriber.registration_state,))[0] * ' '
-                        i += 1
-                        text += self._render('subscriberList_item2', *scopes,
-                                             context=dict(context, subscriber=subscriber))
-                text += self._render('subscriberList_bottom', *scopes, context=context)
-
+            #TODO: example
+            if self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status':
+                text = self._render('attainable_rate', *scopes, context=context)
                 self._write(text)
             else:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
