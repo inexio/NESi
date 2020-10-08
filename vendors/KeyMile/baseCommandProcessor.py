@@ -183,6 +183,7 @@ class BaseCommandProcessor(base.CommandProcessor):
                 tmp_cmdproc = self.change_directory(path, context=context)
                 tmp_cmdproc.ls(context=context, path_type='component_path')
             except exceptions.CommandExecutionError:
+                context['component_path'] = context['path']
                 raise exceptions.CommandExecutionError(template='invalid_management_function_error', template_scopes=('login', 'base', 'execution_errors'), command=None)
             context['component_path'] = context['path']
         else:
@@ -271,6 +272,12 @@ class BaseCommandProcessor(base.CommandProcessor):
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'port':
+                try:
+                    self._model.get_port('name', self.component_id + '/' + component_id)
+                except exceptions.InvalidInputError:
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+
                 if self.__name__ != 'unit' and self.__name__ != 'portgroup':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
