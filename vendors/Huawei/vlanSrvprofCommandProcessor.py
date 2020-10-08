@@ -100,7 +100,6 @@ class VlanSrvprofCommandProcessor(BaseCommandProcessor):
     def do_pitp(self, command, *args, context=None):
         if self._validate(args, 'enable'):
             self._model.set_pitp('enable')
-            print(context['srvprof'].vlan_mac)
             text = self._render('please_wait_commit', context=context)
             self._write(text)
 
