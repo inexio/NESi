@@ -20,4 +20,4 @@ class KeyMileCardSchema(CardSchema):
                                            'software_name', 'software_revision', 'state', 'serial_number',
                                            'manufacturer_name', 'model_name', 'short_text', 'manufacturer_id',
                                            'manufacturer_part_number', 'manufacturer_build_state', 'customer_id',
-                                           'customer_product_id', 'boot_loader', 'processor')
+                                           'customer_product_id', 'boot_loader', 'processor', 'label1', 'label2')

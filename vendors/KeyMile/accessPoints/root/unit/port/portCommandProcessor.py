@@ -34,18 +34,21 @@ class PortCommandProcessor(BaseCommandProcessor):
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate(args, 'AttainableRate') and (context['path'].split('/')[-1] == 'status'
-                                                         or context['component_path'].split('/')[-1] == 'status'):
+        elif self._validate((args[0],), 'AttainableRate') and context['component_path'].split('/')[-1] == 'status':
             text = self._render('attainable_rate', *scopes, context=context)
             self._write(text)
-        elif self._validate(args, 'AdministrativeStatus') and (context['path'].split('/')[-1] == 'main'
-                                                               or context['component_path'].split('/')[-1] == 'main'):
+        elif self._validate((args[0],), 'AdministrativeStatus') and context['component_path'].split('/')[-1] == 'main':
             self.map_states(port, 'port')
             context['spacer'] = self.create_spacers((67,), (port.admin_state,))[0] * ' '
             text = self._render('administrative_status', *scopes, context=dict(context, port=port))
             self._write(text)
-        elif self._validate(args, 'OperationalStatus') and (context['path'].split('/')[-1] == 'main'
-                                                            or context['component_path'].split('/')[-1] == 'main'):
+        elif self._validate(args, 'Labels') and context['component_path'].split('/')[-1] == 'main':
+            context['spacer1'] = self.create_spacers((67,), (port.label1,))[0] * ' '
+            context['spacer2'] = self.create_spacers((67,), (port.label2,))[0] * ' '
+            context['spacer3'] = self.create_spacers((67,), (port.description,))[0] * ' '
+            text = self._render('labels', *scopes, context=dict(context, port=port))
+            self._write(text)
+        elif self._validate((args[0],), 'OperationalStatus') and context['component_path'].split('/')[-1] == 'main':
             self.map_states(port, 'port')
             port_operational_state = port.operational_state
             context['port_operational_state'] = port_operational_state
@@ -73,13 +76,12 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def set(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
-        print(context['path'])
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate(args, 'AdministrativeStatus', str) and context['path'].split('/')[-1] == 'main':
+        elif self._validate(args, 'AdministrativeStatus', str) and context['component_path'].split('/')[-1] == 'main':
             state, = self._dissect(args, 'AdministrativeStatus', str)
             try:
                 port = self.get_port_component()
@@ -89,6 +91,14 @@ class PortCommandProcessor(BaseCommandProcessor):
                     port.admin_down()
                 else:
                     raise exceptions.SoftboxenError()
+            except exceptions.SoftboxenError():
+                raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                       template_scopes=('login', 'base', 'execution_errors'))
+        elif self._validate(args, 'Labels', str, str, str) and context['component_path'].split('/')[-1] == 'main':
+            label1, label2, description = self._dissect(args, 'Labels', str, str, str)
+            try:
+                port = self.get_port_component()
+                port.set_label(label1, label2, description)
             except exceptions.SoftboxenError():
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))

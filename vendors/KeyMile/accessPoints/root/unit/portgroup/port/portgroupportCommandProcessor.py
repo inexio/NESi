@@ -28,8 +28,8 @@ class PortgroupPortCommandProcessor(PortCommandProcessor):
         try:
             super().do_get(command, *args, context=None)
         except exceptions.CommandExecutionError:
-            if self._validate((args[0],), 'SubscriberList') and context['path'].split('/')[-1] == 'status' and \
-                    self._model.get_card('name', context['unit']).product == 'isdn':
+            if self._validate((args[0],), 'SubscriberList') and context['component_path'].split('/')[-1] == 'status' and \
+                    self._model.get_card('name', self._parent._parent.component_id).product == 'isdn':
                 text = self._render('subscriberList_top', *scopes, context=context)
                 i = 0
                 for subscriber in self._model.subscribers:
@@ -49,7 +49,7 @@ class PortgroupPortCommandProcessor(PortCommandProcessor):
                                                        template_scopes=('login', 'base', 'execution_errors'))
 
     def _init_access_points(self, context=None):
-        port = self._model.get_port('name', context['unit'] + '/' + context['portgroup'] + '/' + context['port'])
+        port = self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)

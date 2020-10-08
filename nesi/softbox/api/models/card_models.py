@@ -27,7 +27,7 @@ class Card(db.Model):
                         nullable=False, default='vdsl')
 
     # Alcatel specific data
-    description = db.Column(db.String(), default='None')
+    description = db.Column(db.String(), default='""')
     position = db.Column(db.String())
     entry_vlan_number = db.Column(db.Integer())
     planned_type = db.Column(db.Enum('rdlt-c', 'rant-a', 'nant-a', 'nrnt-a', 'fant-f', 'relt-a', 'nelt-b', 'fglt-b',
@@ -101,3 +101,5 @@ class Card(db.Model):
     customer_product_id = db.Column(db.String(), default='')
     boot_loader = db.Column(db.String(), default='')
     processor = db.Column(db.String(), default='')
+    label1 = db.Column(db.String(), default='""')
+    label2 = db.Column(db.String(), default='""')

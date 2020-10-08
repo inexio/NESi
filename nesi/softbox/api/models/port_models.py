@@ -27,7 +27,7 @@ class Port(db.Model):
     cpes = db.relationship('Cpe', backref='Port', lazy='dynamic')
 
     # Alcatel data
-    description = db.Column(db.String())
+    description = db.Column(db.String(), default='')
     type = db.Column(db.Enum('pon', 'ethernet-line'), default='pon')
     shutdown = db.Column(db.Boolean(), default=False)
     speed = db.Column(db.Enum('10M', '1G', '10G'), default='1G')
@@ -311,3 +311,5 @@ class Port(db.Model):
     # KeyMile
     channels = db.relationship('Channel', backref='Port', lazy='dynamic')
     interfaces = db.relationship('Interface', backref='Port', lazy='dynamic')
+    label1 = db.Column(db.String(), default='""')
+    label2 = db.Column(db.String(), default='""')

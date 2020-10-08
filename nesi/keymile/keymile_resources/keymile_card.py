@@ -38,6 +38,13 @@ class KeyMileCard(Card):
     customer_product_id = base.Field('customer_product_id')
     boot_loader = base.Field('boot_loader')
     processor = base.Field('processor')
+    label1 = base.Field('label1')
+    label2 = base.Field('label2')
+
+    def set_label(self, l1, l2, desc):
+        self.update(label1=l1)
+        self.update(label2=l2)
+        self.update(description=desc)
 
 
 class KeyMileCardCollection(CardCollection):

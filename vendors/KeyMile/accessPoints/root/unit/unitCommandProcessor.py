@@ -49,9 +49,8 @@ class UnitCommandProcessor(BaseCommandProcessor):
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
 
-        elif self._validate(args, 'SubscriberList') and (context['path'].split('/')[-1] == 'status'
-                                                         or context['component_path'].split('/')[-1] == 'status') \
-                and (card.product == 'isdn' or card.product == 'analog'):
+        elif self._validate(args, 'SubscriberList') and context['component_path'].split('/')[-1] == 'status' and \
+                (card.product == 'isdn' or card.product == 'analog'):
             text = self._render('subscriberList_top', *scopes, context=context)
             i = 0
             for subscriber in self._model.subscribers:
@@ -65,17 +64,22 @@ class UnitCommandProcessor(BaseCommandProcessor):
                     text += self._render('subscriberList_item', *scopes, context=dict(context, subscriber=subscriber))
             text += self._render('subscriberList_bottom', *scopes, context=context)
             self._write(text)
-        elif self._validate(args, 'SIP') and (context['path'].split('/')[-1] == 'cfgm'
-                                              or context['component_path'].split('/')[-1] == 'cfgm') \
-                and (card.product == 'isdn' or card.product == 'analog'):
+        elif self._validate(args, 'SIP') and context['component_path'].split('/')[-1] == 'cfgm' and \
+                (card.product == 'isdn' or card.product == 'analog'):
             # TODO: dynamic fields
             text = self._render('sip', *scopes, context=context)
             self._write(text)
-        elif self._validate(args, 'IP') and (context['path'].split('/')[-1] == 'cfgm'
-                                             or context['component_path'].split('/')[-1] == 'cfgm') \
-                and (card.product == 'isdn' or card.product == 'analog'):
+        elif self._validate(args, 'IP') and context['component_path'].split('/')[-1] == 'cfgm' and \
+                (card.product == 'isdn' or card.product == 'analog'):
             # TODO: dynamic fields
             text = self._render('ip', *scopes, context=context)
+            self._write(text)
+
+        elif self._validate(args, 'Labels') and context['component_path'].split('/')[-1] == 'main':
+            context['spacer1'] = self.create_spacers((67,), (card.label1,))[0] * ' '
+            context['spacer2'] = self.create_spacers((67,), (card.label2,))[0] * ' '
+            context['spacer3'] = self.create_spacers((67,), (card.description,))[0] * ' '
+            text = self._render('labels', *scopes, context=dict(context, port=card))
             self._write(text)
 
         elif self._validate(args, 'HardwareAndSoftware') and (context['path'].split('/')[-1] == 'main'
@@ -181,15 +185,22 @@ class UnitCommandProcessor(BaseCommandProcessor):
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 
+    def get_component(self):
+        return self._model.get_card('name', self.component_id)
+
     def set(self, command, *args, context=None):
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate(args, 'CurrentStatus', 'test', str):
-            ip, = self._dissect(args, 'CurrentStatus', 'test', str)
-            #TODO test case
-            return
+        elif self._validate(args, 'Labels', str, str, str) and context['component_path'].split('/')[-1] == 'main':
+            label1, label2, description = self._dissect(args, 'Labels', str, str, str)
+            try:
+                component = self.get_component()
+                component.set_label(label1, label2, description)
+            except exceptions.SoftboxenError():
+                raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                       template_scopes=('login', 'base', 'execution_errors'))
         else:
             raise exceptions.CommandSyntaxError(command=command)
