@@ -384,6 +384,16 @@ class BaseCommandProcessor(base.CommandProcessor):
             return ([], [])
 
     def do_set(self, command, *args, context=None):
+        if len(args) == 0:
+            raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                   template_scopes=('login', 'base', 'execution_errors'))
+        elif args[0].count('/') > 0 or args[0].count('.') > 0:
+            proc = self.change_directory(args[0], context=context)
+            # ToDO: is set ../properties true possible??
+            proc.set(command, *args[1:], context=context)
+        elif args[0].count('/') == 0:
+            self.set(command, *args, context=context)
+
         return
 
     def set(self, command, *args, context=None):
