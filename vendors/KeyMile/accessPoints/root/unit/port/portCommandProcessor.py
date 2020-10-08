@@ -25,23 +25,27 @@ class PortCommandProcessor(BaseCommandProcessor):
     from .portManagementFunctions import pm
     from .portManagementFunctions import status
 
-    def do_get(self, command, *args, context=None):
-        port = self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
+    def get_property(self, command, *args, context=None):
+        port_name = self._parent.component_id + '/' + self.component_id
+        port = self._model.get_port('name', port_name)
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status':
+        elif self._validate(args, 'AttainableRate') and (context['path'].split('/')[-1] == 'status'
+                                                         or context['component_path'].split('/')[-1] == 'status'):
             text = self._render('attainable_rate', *scopes, context=context)
             self._write(text)
-        elif self._validate((args[0],), 'AdministrativeStatus') and context['path'].split('/')[-1] == 'main':
+        elif self._validate(args, 'AdministrativeStatus') and (context['path'].split('/')[-1] == 'main'
+                                                               or context['component_path'].split('/')[-1] == 'main'):
             self.map_states(port, 'port')
             context['spacer'] = self.create_spacers((67,), (port.admin_state,))[0] * ' '
             text = self._render('administrative_status', *scopes, context=dict(context, port=port))
             self._write(text)
-        elif self._validate((args[0],), 'OperationalStatus') and context['path'].split('/')[-1] == 'main':
+        elif self._validate(args, 'OperationalStatus') and (context['path'].split('/')[-1] == 'main'
+                                                            or context['component_path'].split('/')[-1] == 'main'):
             self.map_states(port, 'port')
             port_operational_state = port.operational_state
             context['port_operational_state'] = port_operational_state
@@ -49,7 +53,8 @@ class PortCommandProcessor(BaseCommandProcessor):
             text = self._render('operational_status', *scopes, context=context)
             self._write(text)
         else:
-            raise exceptions.CommandExecutionError(command=command, template='invalid_property', template_scopes=('login', 'base', 'execution_errors'))
+            raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                   template_scopes=('login', 'base', 'execution_errors'))
 
     def _init_access_points(self, context=None):
         port = self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
