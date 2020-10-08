@@ -17,6 +17,13 @@ LOG = logging.getLogger(__name__)
 
 class KeyMilePort(Port):
     """Represent physical port resource."""
+    label1 = base.Field('label1')
+    label2 = base.Field('label2')
+
+    def set_label(self, l1, l2, desc):
+        self.update(label1=l1)
+        self.update(label2=l2)
+        self.update(description=desc)
 
 
 class KeyMilePortCollection(PortCollection):
