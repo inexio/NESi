@@ -23,11 +23,10 @@ class PortgroupCommandProcessor(BaseCommandProcessor):
     from .portgroupManagementFunctions import cfgm
 
     def _init_access_points(self, context=None):    # work in progress
-        card = self._model.get_card('name', context['unit'])
-        portgroup = context['portgroup']
+        card = self._model.get_card('name', self._parent.component_id)
 
         for port in self._model.get_ports('card_id', card.id):
-            if port.name.count('/') == 2 and port.name.strip('/')[1] == 'portgroup-' + portgroup:
+            if port.name.count('/') == 2 and port.name.strip('/')[1] == 'portgroup-' + self.component_id:
                 identifier = 'port-' + port.name.split('/')[-1]
                 if identifier in self.access_points:
                     continue

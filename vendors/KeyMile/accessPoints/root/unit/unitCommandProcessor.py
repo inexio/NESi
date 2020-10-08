@@ -25,7 +25,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
     from .unitManagementFunctions import status
 
     def _init_access_points(self, context=None):
-        card = self._model.get_card('name', context['unit'])
+        card = self._model.get_card('name', self.component_id)
 
         # if card.type == ?:
         #   self.access_points += ('internalPorts',)

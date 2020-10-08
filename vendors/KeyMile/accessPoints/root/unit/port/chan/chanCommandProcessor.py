@@ -26,8 +26,8 @@ class ChanCommandProcessor(BaseCommandProcessor):
     from .chanManagementFunctions import status
 
     def _init_access_points(self, context=None):
-        chan = self._model.get_chan('name', context['unit'] + '/' + context['port'] + '/' + context['chan'])
-        card = self._model.get_card('name', context['unit'])
+        chan = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+        card = self._model.get_card('name', self._parent._parent.component_id)
 
         for interface in self._model.get_interfaces('chan_id', chan.id):
             if card.product != 'adsl':
