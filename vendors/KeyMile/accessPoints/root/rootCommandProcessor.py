@@ -30,6 +30,27 @@ class RootCommandProcessor(BaseCommandProcessor):
                 continue
             self.access_points += ('unit-' + card.name,)
 
+        first_unit = 0
+        unit_count = 0
+        if self._model.version == '2500':
+            first_unit = 1
+            unit_count = 21
+        elif self._model.version == '2300':
+            first_unit = 7
+            unit_count = 8
+        elif self._model.version == '2200':
+            first_unit = 9
+            unit_count = 4
+
+        for i in range(first_unit, first_unit + unit_count):
+            if 'unit-' + str(i) in self.access_points:
+                continue
+
+            if 'unit-' + str(i - 1) not in self.access_points:
+                self.access_points += (i,)
+            else:
+                self.access_points = self.access_points[:self.access_points.index('unit-' + str(i - 1)) + 1] + ('unit-' + str(i),) + self.access_points[self.access_points.index('unit-' + str(i - 1)) + 1:]
+
     def set(self, command, *args, context=None):
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
