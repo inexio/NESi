@@ -22,8 +22,8 @@ path="`dirname \"$0\"`"
 # Create a network device (admin operation)
 req='{
   "vendor": "KeyMile",
-  "model": "MG2500",
-  "version": "1",
+  "model": "MileGate",
+  "version": "2500",
   "description": "Example Switch",
   "hostname": "KeyMileMG2500",
   "mgmt_address": "10.0.0.12",

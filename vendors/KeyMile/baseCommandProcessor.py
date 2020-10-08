@@ -156,14 +156,14 @@ class BaseCommandProcessor(base.CommandProcessor):
         else:
             text = self._render('ls_header', *scopes, context=context)
 
+            self._init_access_points(context=context)
+
             text += self._render('ls_mf_list', *scopes, context=context)
             for management_function in self.management_functions:
                 context['list_entry'] = management_function
                 text += self._render('ls_list_body', *scopes, context=context)
 
             text += self._render('ls_ap_list', *scopes, context=context)
-
-            self._init_access_points(context=context)
 
             for access_point in self.access_points:
                 context['list_entry'] = access_point
@@ -194,7 +194,7 @@ class BaseCommandProcessor(base.CommandProcessor):
         path = path.lower()
         if path == '/':
             if self.__name__ != 'root':
-                self._parent.change_directory(path, context=context)
+                return self._parent.change_directory(path, context=context)
             else:
                 context['component_path'] = '/'
                 return self
@@ -260,6 +260,9 @@ class BaseCommandProcessor(base.CommandProcessor):
                 command_processor = components[0].capitalize() + 'CommandProcessor'
 
             if component_type == 'unit':
+                if (self._model.version == '2200' and not 9 <= int(component_id) <= 12) or (self._model.version == '2300' and not 7 <= int(component_id) <= 14) or (self._model.version == '2500' and not 1 <= int(component_id) <= 21):
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty#
                 if self.__name__ != 'root':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
