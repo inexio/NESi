@@ -16,7 +16,7 @@ from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 
 class UnitCommandProcessor(BaseCommandProcessor):
     __name__ = 'unit'
-    management_functions = ('main', 'cfgm', 'fm', 'status')
+    management_functions = ('main', 'fm')
     access_points = ()  # 'internalPorts', only on certain cards
 
     from .unitManagementFunctions import main
@@ -25,17 +25,18 @@ class UnitCommandProcessor(BaseCommandProcessor):
     from .unitManagementFunctions import status
 
     def _init_access_points(self, context=None):
-        card = self._model.get_card('name', self.component_id)
+        try:
+            card = self._model.get_card('name', self.component_id)
 
-        # if card.type == ?:
-        #   self.access_points += ('internalPorts',)
-        #
+            self.management_functions = ('main', 'cfgm', 'fm', 'status')
 
-        for port in self._model.get_ports('card_id', card.id):
-            identifier = 'port-' + port.name.split('/')[-1]
-            if identifier in self.access_points:
-                continue
-            self.access_points += (identifier,)
+            for port in self._model.get_ports('card_id', card.id):
+                identifier = 'port-' + port.name.split('/')[-1]
+                if identifier in self.access_points:
+                    continue
+                self.access_points += (identifier,)
+        except exceptions.InvalidInputError:
+            pass
 
         # todo: add portgroup to access_points
 

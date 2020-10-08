@@ -58,11 +58,16 @@ def new_card(box_id):
             else:
                 p = re.compile('^([0-9]+)?/?([0-9]+)?/?([0-9]+)?$')
                 match_groups = p.match(last_card['name']).groups()
-                filtered_match_groups = [x for x in match_groups if x is not None] # filter out None values
+                filtered_match_groups = [x for x in match_groups if x is not None]  # filter out None values
                 last_card_index = filtered_match_groups[len(filtered_match_groups) - 1]
                 if subrack['name'] != "":
                     req['name'] = subrack['name'] + "/" + str(int(last_card_index) + 1)
                 else:
+                    if vendor == 'KeyMile':
+                        if int(last_card_index) + 1 in (11, 13):
+                            return flask.Response(status=500)  # MgmtCard slots are reserved
+                        if (box['version'] == '2500' and int(last_card_index) + 1 > 21) or (box['version'] == '2300' and int(last_card_index) + 1 > 14) or (box['version'] == '2200' and int(last_card_index) + 1 > 12):
+                            return flask.Response(status=500)
                     req['name'] = str(int(last_card_index) + 1)
         else:
             if subrack['name'] != "":
@@ -73,6 +78,13 @@ def new_card(box_id):
             else:
                 if vendor == 'Huawei':
                     req['name'] = "0"
+                if vendor == 'KeyMile':
+                    if box['version'] == '2500':
+                        req['name'] = "1"
+                    elif box['version'] == '2300':
+                        req['name'] = "7"
+                    elif box['version'] == '2200':
+                        req['name'] = "9"
                 else:
                     req['name'] = "1"
 
