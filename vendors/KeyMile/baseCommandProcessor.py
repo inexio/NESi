@@ -319,6 +319,9 @@ class BaseCommandProcessor(base.CommandProcessor):
             from vendors.KeyMile.accessPoints.root.unit.portgroup.port.portgroupportCommandProcessor import PortgroupPortCommandProcessor
             subprocessor = self._create_subprocessor(eval(command_processor), 'login', 'base')
 
+            if component_id is not None and self.component_id is not None:
+                subprocessor.set_component_id(self.component_id + '/' + component_id)
+
             if component_id is not None:
                 subprocessor.set_component_id(component_id)
 
@@ -394,10 +397,13 @@ class BaseCommandProcessor(base.CommandProcessor):
         if len(args) == 0:
             raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                    template_scopes=('login', 'base', 'execution_errors'))
-        elif args[0].count('/') > 0 or args[0].count('.') > 0:
-            proc = self.change_directory(args[0], context=context)
-            # ToDO: is set ../properties true possible??
-            proc.set(command, *args[1:], context=context)
+        elif args[0].count('/') > 0:
+            path = ''
+            for el in args[0].split('/')[:-1]:
+                path += el + '/'
+            proc = self.change_directory(str(path[:-1]), context=context)
+            res =(args[0].split('/')[-1],) + args[1:]
+            proc.set(command, *res, context=context)
         elif args[0].count('/') == 0:
             self.set(command, *args, context=context)
 
