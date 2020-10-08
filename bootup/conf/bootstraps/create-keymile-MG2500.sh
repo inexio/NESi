@@ -22,12 +22,12 @@ path="`dirname \"$0\"`"
 # Create a network device (admin operation)
 req='{
   "vendor": "KeyMile",
-  "model": "MG2200",
+  "model": "MG2500",
   "version": "1",
   "description": "Example Switch",
-  "hostname": "KeyMileMG2200",
+  "hostname": "KeyMileMG2500",
   "mgmt_address": "10.0.0.12",
-  "software_version": "MG2200V800R016C00",
+  "software_version": "MG2500V800R016C00",
   "network_protocol": "telnet",
   "network_address": "127.0.0.1",
   "network_port": 9023,
@@ -36,13 +36,85 @@ req='{
 
 box_id=$(create_resource "$req" $ENDPOINT/boxen) || exit 1
 
-# Admin credentials
+# Sessionmanager credentials
 req='{
-  "username": "admin",
+  "username": "sessionmanager",
   "password": "secret"
 }'
 
-root_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
+sessionmanager_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
+
+# Sessionmanager user
+req='{
+  "name": "sessionmanager",
+  "credentials_id": '$sessionmanager_credential_id',
+  "level": "Super",
+  "profile": "root",
+  "append_info": "Sessionmanager",
+  "lock_status": "Unlocked"
+}'
+
+sessionmanager_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
+
+# Manager credentials
+req='{
+  "username": "manager",
+  "password": "secret"
+}'
+
+manager_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
+
+# Manager user
+req='{
+  "name": "manager",
+  "credentials_id": '$manager_credential_id',
+  "level": "Admin",
+  "profile": "admin",
+  "append_info": "Manager",
+  "lock_status": "Unlocked"
+}'
+
+manager_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
+
+# Maintenance credentials
+req='{
+  "username": "maintenance",
+  "password": "secret"
+}'
+
+maintenance_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
+
+# Manager user
+req='{
+  "name": "maintenance",
+  "credentials_id": '$maintenance_credential_id',
+  "level": "Operator",
+  "profile": "operator",
+  "append_info": "Maintenance",
+  "lock_status": "Unlocked"
+}'
+
+maintenance_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
+
+# Information credentials
+req='{
+  "username": "information",
+  "password": "secret"
+}'
+
+information_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
+
+# Manager user
+req='{
+  "name": "information",
+  "credentials_id": '$information_credential_id',
+  "level": "User",
+  "profile": "commonuser",
+  "append_info": "Information",
+  "lock_status": "Unlocked"
+}'
+
+information_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
 
 # test subscriber
 req='{
