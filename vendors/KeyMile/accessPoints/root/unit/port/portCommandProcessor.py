@@ -26,8 +26,7 @@ class PortCommandProcessor(BaseCommandProcessor):
     from .portManagementFunctions import status
 
     def do_get(self, command, *args, context=None):
-        port_name = context['unit'] + '/' + context['port']
-        port = self._model.get_port('name', port_name)
+        port = self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
@@ -38,7 +37,9 @@ class PortCommandProcessor(BaseCommandProcessor):
             text = self._render('attainable_rate', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'AdministrativeStatus') and context['path'].split('/')[-1] == 'main':
-            text = self._render('administrative_status', *scopes, context=context)
+            self.map_states(port, 'port')
+            context['spacer'] = self.create_spacers((67,), (port.admin_state,))[0] * ' '
+            text = self._render('administrative_status', *scopes, context=dict(context, port=port))
             self._write(text)
         elif self._validate((args[0],), 'OperationalStatus') and context['path'].split('/')[-1] == 'main':
             self.map_states(port, 'port')
@@ -62,16 +63,29 @@ class PortCommandProcessor(BaseCommandProcessor):
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 
+    def get_port_component(self):
+        return self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
+
     def set(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
+        print(context['path'])
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate(args, 'test', str):
-            ip, = self._dissect(args, 'test', str)
-            #TODO test case
-            return
+        elif self._validate(args, 'AdministrativeStatus', str) and context['path'].split('/')[-1] == 'main':
+            state, = self._dissect(args, 'AdministrativeStatus', str)
+            try:
+                port = self.get_port_component()
+                if state == 'up':
+                    port.admin_up()
+                elif state == 'down':
+                    port.admin_down()
+                else:
+                    raise exceptions.SoftboxenError()
+            except exceptions.SoftboxenError():
+                raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                       template_scopes=('login', 'base', 'execution_errors'))
         else:
             raise exceptions.CommandSyntaxError(command=command)

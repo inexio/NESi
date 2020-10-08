@@ -41,7 +41,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
         # todo: add portgroup to access_points
 
     def do_get(self, command, *args, context=None):
-        card = self._model.get_card('name', context['unit'])
+        card = self._model.get_card('name', self.component_id)
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
@@ -50,9 +50,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             raise exc
 
         elif self._validate((args[0],), 'SubscriberList') and context['path'].split('/')[-1] == 'status' and \
-                (self._model.get_card('name', context['unit']).product == 'isdn' or self._model.get_card('name',
-                                                                                                         context[
-                                                                                                             'unit']).product == 'analog'):
+                (card.product == 'isdn' or card.product == 'analog'):
             text = self._render('subscriberList_top', *scopes, context=context)
             i = 0
             for subscriber in self._model.subscribers:
@@ -67,16 +65,12 @@ class UnitCommandProcessor(BaseCommandProcessor):
             text += self._render('subscriberList_bottom', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'SIP') and context['path'].split('/')[-1] == 'cfgm' and \
-                (self._model.get_card('name', context['unit']).product == 'isdn' or self._model.get_card('name',
-                                                                                                         context[
-                                                                                                             'unit']).product == 'analog'):
+                (card.product == 'isdn' or card.product == 'analog'):
             # TODO: dynamic fields
             text = self._render('sip', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'IP') and context['path'].split('/')[-1] == 'cfgm' and \
-                (self._model.get_card('name', context['unit']).product == 'isdn' or self._model.get_card('name',
-                                                                                                         context[
-                                                                                                             'unit']).product == 'analog'):
+                (card.product == 'isdn' or card.product == 'analog'):
             # TODO: dynamic fields
             text = self._render('ip', *scopes, context=context)
             self._write(text)
@@ -187,8 +181,8 @@ class UnitCommandProcessor(BaseCommandProcessor):
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate(args, 'test', str):
-            ip, = self._dissect(args, 'test', str)
+        elif self._validate(args, 'CurrentStatus', 'test', str):
+            ip, = self._dissect(args, 'CurrentStatus', 'test', str)
             #TODO test case
             return
         else:
