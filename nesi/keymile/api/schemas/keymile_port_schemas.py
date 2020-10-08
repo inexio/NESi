@@ -16,6 +16,6 @@ from nesi.softbox.api.schemas.port_schemas import *
 class KeyMilePortSchema(PortSchema):
     class Meta:
         model = Port
-        fields = PortSchema.Meta.fields + ('channels',)
+        fields = PortSchema.Meta.fields + ('channels', 'label1', 'label2')
 
     channels = ma.Nested(CpesSchema.CpeSchema, many=True)
