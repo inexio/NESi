@@ -1029,7 +1029,6 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
     def do_xdsl(self, command, *args, context=None):
         if self._validate(args, 'vectoring-group', 'link', 'add', str, str):
             profile_idx, port_idx = self._dissect(args, 'vectoring-group', 'link', 'add', str, str)
-            print(port_idx)
             portname = port_idx[0:3] + '/' + port_idx[4]
 
             try:
