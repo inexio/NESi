@@ -96,7 +96,7 @@ class BaseCommandProcessor(base.CommandProcessor):
                 self._write(self._render('help_exit', *help_scopes, context=context))
             else:
                 raise exceptions.CommandSyntaxError(command=command)
-        elif self._validate(args,):
+        elif self._validate(args, ):
             self._write(self._render('help', *help_scopes, context=context))
         else:
             raise exceptions.CommandSyntaxError(command=command)
@@ -142,7 +142,6 @@ class BaseCommandProcessor(base.CommandProcessor):
 
                         for property in layers[layer]:
                             context['prop_name'] = property
-
                             if prop_type in ('File', 'Prop'):
                                 context['prop_rw_rights'] = layers[layer].get(property, '')
                             else:
@@ -184,7 +183,10 @@ class BaseCommandProcessor(base.CommandProcessor):
                 tmp_cmdproc.ls(context=context, path_type='component_path')
             except exceptions.CommandExecutionError:
                 context['component_path'] = context['path']
-                raise exceptions.CommandExecutionError(template='invalid_management_function_error', template_scopes=('login', 'base', 'execution_errors'), command=None)
+                raise exceptions.CommandExecutionError(template='invalid_management_function_error',
+                                                       template_scopes=('login', 'base', 'execution_errors'),
+                                                       command=None)
+
             context['component_path'] = context['path']
         else:
             raise exceptions.CommandExecutionError(template='invalid_management_function_error',
@@ -218,9 +220,13 @@ class BaseCommandProcessor(base.CommandProcessor):
 
         if re.search('\.\./(?:[^.]+/)+\.\.', path):
             if path.endswith('..'):
-                raise exceptions.CommandExecutionError(template='invalid_management_function_error', template_scopes=('login', 'base', 'execution_errors'), command=None)
+                raise exceptions.CommandExecutionError(template='invalid_management_function_error',
+                                                       template_scopes=('login', 'base', 'execution_errors'),
+                                                       command=None)
             else:
-                raise exceptions.CommandExecutionError(template='invalid_address_error', template_scopes=('login', 'base', 'execution_errors'), command=None)
+                raise exceptions.CommandExecutionError(template='invalid_address_error',
+                                                       template_scopes=('login', 'base', 'execution_errors'),
+                                                       command=None)
 
         if path.startswith('..'):
             splitted_path = [x for x in context['component_path'].split('/') if x]
@@ -240,8 +246,10 @@ class BaseCommandProcessor(base.CommandProcessor):
 
             return self._parent.change_directory(path[3:], context=context)
         if path.startswith('/'):
-            if 'unit-' not in components[0] and components[0] not in ('eoam', 'fan', 'multicast', 'services', 'tdmConnection', 'main', 'cfgm', 'fm', 'pm', 'status'):
-                raise exceptions.CommandExecutionError(command=None, template=None, template_scopes=())  # TODO: fix exception to not require all fields as empty
+            if 'unit-' not in components[0] and components[0] not in (
+                    'eoam', 'fan', 'multicast', 'services', 'tdmConnection', 'main', 'cfgm', 'fm', 'pm', 'status'):
+                raise exceptions.CommandExecutionError(command=None, template=None,
+                                                       template_scopes=())  # TODO: fix exception to not require all fields as empty
 
             if self.__name__ != 'root':
                 subprocessor = self._parent.change_directory(path, context=context)
@@ -315,8 +323,10 @@ class BaseCommandProcessor(base.CommandProcessor):
             from vendors.KeyMile.accessPoints.root.multicastCommandProcessor import MulticastCommandProcessor
             from vendors.KeyMile.accessPoints.root.tdmConnectionsCommandProcessor import TdmConnectionsCommandProcessor
             from vendors.KeyMile.accessPoints.root.services.servicesCommandProcessor import ServicesCommandProcessor
-            from vendors.KeyMile.accessPoints.root.unit.portgroup.portgroupCommandProcessor import PortgroupCommandProcessor
-            from vendors.KeyMile.accessPoints.root.unit.portgroup.port.portgroupportCommandProcessor import PortgroupPortCommandProcessor
+            from vendors.KeyMile.accessPoints.root.unit.portgroup.portgroupCommandProcessor import \
+                PortgroupCommandProcessor
+            from vendors.KeyMile.accessPoints.root.unit.portgroup.port.portgroupportCommandProcessor import \
+                PortgroupPortCommandProcessor
             subprocessor = self._create_subprocessor(eval(command_processor), 'login', 'base')
 
             if component_id is not None and self.component_id is not None:
@@ -393,6 +403,31 @@ class BaseCommandProcessor(base.CommandProcessor):
         else:
             return ([], [])
 
+    def do_get(self, command, *args, context=None):
+        if len(args) >= 1:
+            if '/' in args[0]:
+                path = ''
+                for component in args[0].split('/')[:-1]:
+                    path += component + '/'
+                prop = args[0].split('/')[-1]
+                try:
+                    tmp_cmdproc = self.change_directory(path, context=context)
+                    tmp_cmdproc.get_property(command, prop, context=context)
+                except exceptions.CommandExecutionError:
+                    raise exceptions.CommandExecutionError(template='syntax_error',
+                                                           template_scopes=('login', 'base', 'syntax_errors'),
+                                                           command=None)
+            else:
+                self.get_property(command, args[0], context=context)
+        else:
+            raise exceptions.CommandExecutionError(template='invalid_management_function_error',
+                                                   template_scopes=('login', 'base', 'execution_errors'),
+                                                   command=None)
+
+    def get_property(self, command, *args, context=None):
+        raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                               template_scopes=('login', 'base', 'execution_errors'))
+
     def do_set(self, command, *args, context=None):
         if len(args) == 0:
             raise exceptions.CommandExecutionError(command=command, template='invalid_property',
@@ -402,7 +437,7 @@ class BaseCommandProcessor(base.CommandProcessor):
             for el in args[0].split('/')[:-1]:
                 path += el + '/'
             proc = self.change_directory(str(path[:-1]), context=context)
-            res =(args[0].split('/')[-1],) + args[1:]
+            res = (args[0].split('/')[-1],) + args[1:]
             proc.set(command, *res, context=context)
         elif args[0].count('/') == 0:
             self.set(command, *args, context=context)
@@ -410,7 +445,7 @@ class BaseCommandProcessor(base.CommandProcessor):
         return
 
     def set(self, command, *args, context=None):
-        #interface method
+        # interface method
         return
 
     def do_cd(self, command, *args, context=None):
@@ -424,7 +459,9 @@ class BaseCommandProcessor(base.CommandProcessor):
                 return_to = self.get_command_processor(subprocessor)
             except:
                 context['component_path'] = context['path']
-                raise exceptions.CommandExecutionError(template='invalid_management_function_error', template_scopes=('login', 'base', 'execution_errors'), command=None)
+                raise exceptions.CommandExecutionError(template='invalid_management_function_error',
+                                                       template_scopes=('login', 'base', 'execution_errors'),
+                                                       command=None)
             context['path'] = context['component_path']
             subprocessor.loop(context=context, return_to=return_to)
         else:
@@ -447,7 +484,8 @@ class BaseCommandProcessor(base.CommandProcessor):
         from vendors.KeyMile.accessPoints.root.services.servicesCommandProcessor import ServicesCommandProcessor
         if current_processor.__class__ == RootCommandProcessor:
             return_to = RootCommandProcessor
-            if component_type not in ('fan', 'eoam', 'tdmConnections', 'multicast', 'services', 'unit') and component_type is not None:
+            if component_type not in ('fan', 'eoam', 'tdmConnections', 'multicast', 'services', 'unit') \
+                    and component_type is not None:
                 raise exceptions.CommandExecutionError(command=None, template=None,
                                                        template_scopes=())  # TODO: fix exception to not require all fields as empty
         elif current_processor.__class__ == UnitCommandProcessor:
@@ -489,4 +527,4 @@ class BaseCommandProcessor(base.CommandProcessor):
         raise exc
 
     def _init_access_points(self, context=None):
-        pass # Abstract method not implemented
+        pass  # Abstract method not implemented
