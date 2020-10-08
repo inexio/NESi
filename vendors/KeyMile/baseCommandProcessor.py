@@ -325,44 +325,62 @@ class BaseCommandProcessor(base.CommandProcessor):
 
     '''
     search := string keyword like "unit" or "port"
+    parent := string keyword to describe the parent of search like "root"
     node := contains the dict tree or
             None for default tree structure
-    parent := None or contains parent dict (should be None / important for rekursive call)
-    return := Tuple of ParentList, ChildList
+    parent_keys := should be None / important for rekursive call
+    return := Tuple of (ParentList, ChildList) or ([],[])
     '''
-    def get_parent_and_child_relation(self, search, node=None, parent=None):
+
+    def get_parent_and_child_relation(self, search, parent=None, node=None, parent_keys=None):
+        if parent == "":
+            return ([], [])
         if node is None:
             node = {
-            "root": {
-                "unit": {
-                    "control": {},
-                    "media": {},
-                    "port": {
-                        "chanel": {
-                            "interfaces": {}
+                "root": {
+                    "unit": {
+                        "control": {},
+                        "media": {},
+                        "port": {
+                            "chanel": {
+                                "interfaces": {
+                                    "hell": {}
+                                }
+                            },
+                            "interfaces": {
+                                "hell2": {}
+                            }
                         },
-                        "interfaces": {}
+                        "portgroups": {"portgroupports": {}},
+                        "logports": {"logport": {}},
+                        "vectoringports": {"vectorport": {}},
+                        "internalports": {"internalport": {}}
                     },
-                    "portgroups": {"portgroupports": {}},
-                    "logports": {"logport": {}},
-                    "vectoringports": {"vectorport": {}},
-                    "internalports": {"internalport": {}}
-                },
-                "eoam": {},
-                "tdmConnections": {},
-                "services": {},
-                "multicast": {}
-            }}
+                    "eoam": {},
+                    "tdmConnections": {},
+                    "services": {},
+                    "multicast": {}
+                }}
         for x, y in node.items():
-            if y.get(search) is not None:
-                pp = list(parent.keys())
-                pc = list(y[search].keys())
+            if x == search and (parent is None or parent_keys.__contains__(parent)):
+                if parent is not None:
+                    pp = [parent]
+                elif parent_keys is None:
+                    pp = []
+                else:
+                    pp = [parent_keys]
+                pc = list(y.keys())
                 return (pp, pc)
             else:
-                return self.get_parent_and_child_relation(search=search, node=y, parent=node)
+                (pp, pc) = self.get_parent_and_child_relation(search=search, parent=parent, node=y, parent_keys=x)
+                if pp == [] and pc == []:
+                    pass
+                else:
+                    return (pp, pc)
+        else:
+            return ([], [])
 
     def do_set(self, command, *args, context=None):
-        self.set(command, args, context)
         return
 
     def set(self, command, *args, context=None):
