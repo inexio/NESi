@@ -82,8 +82,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             text = self._render('labels', *scopes, context=dict(context, port=card))
             self._write(text)
 
-        elif self._validate(args, 'HardwareAndSoftware') and (context['path'].split('/')[-1] == 'main'
-                                                              or context['component_path'].split('/')[-1] == 'main'):
+        elif self._validate(args, 'HardwareAndSoftware') and context['component_path'].split('/')[-1] == 'main':
             unit_hardware = '"' + card.board_name + '"'
             context['unit_hardware'] = unit_hardware
             context['spacer_1'] = self.create_spacers((67,), (unit_hardware,))[0] * ' '
@@ -108,8 +107,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             text = self._render('hardware_and_software', *scopes, context=context)
             self._write(text)
 
-        elif self._validate(args, 'CurrentStatus') and (context['path'].split('/')[-1] == 'main'
-                                                        or context['component_path'].split('/')[-1] == 'main'):
+        elif self._validate(args, 'CurrentStatus') and context['component_path'].split('/')[-1] == 'main':
             unit_state = card.state
             context['unit_state'] = unit_state
             context['spacer_1'] = self.create_spacers((67,), (unit_state,))[0] * ' '
@@ -131,8 +129,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             text = self._render('current_status', *scopes, context=context)
             self._write(text)
 
-        elif self._validate(args, 'EquipmentInventory') and (context['path'].split('/')[-1] == 'main'
-                                                             or context['component_path'].split('/')[-1] == 'main'):
+        elif self._validate(args, 'EquipmentInventory') and context['component_path'].split('/')[-1] == 'main':
             unit_symbol = '"' + card.board_name + '"'
             context['unit_symbol'] = unit_symbol
             context['spacer_1'] = self.create_spacers((67,), (unit_symbol,))[0] * ' '
