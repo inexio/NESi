@@ -351,7 +351,7 @@ class BaseCommandProcessor(base.CommandProcessor):
     parent := string keyword to describe the parent of search like "root"
     node := contains the dict tree or
             None for default tree structure
-    parent_keys := should be None / important for rekursive call
+    parent_keys := should be None / important for recursive call
     return := Tuple of (ParentList, ChildList) or ([],[])
     '''
 
