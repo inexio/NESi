@@ -59,6 +59,12 @@ class KeyMileBox(Box):
         return keymile_subscriber.KeymileSubscriberCollection(
             self._conn, base.get_sub_resource_path_by(self, 'subscribers'))
 
+    @property
+    def portgroupsports(self):
+        """Return `PortgrouportCollection` object."""
+        return keymile_portgroupport.KeymilePortGroupPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'portgrouports'))
+
     def get_card(self, field, value):
         """Get specific card object."""
         return keymile_card.KeyMileCardCollection(
@@ -116,6 +122,18 @@ class KeyMileBox(Box):
         """Get specific subscribers object."""
         return keymile_subscriber.KeymileSubscriberCollection(
             self._conn, base.get_sub_resource_path_by(self, 'subscribers'),
+            params={field: value})
+
+    def get_portgroupport(self, field, value):
+        """Get specific portgroupport object."""
+        return keymile_portgroupport.KeymilePortGroupPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'portgroupports'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_portgroupports(self, field, value):
+        """Get specific portgroupports object."""
+        return keymile_portgroupport.KeymilePortGroupPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'portgroupports'),
             params={field: value})
 
 

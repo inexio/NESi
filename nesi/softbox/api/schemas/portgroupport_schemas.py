@@ -11,37 +11,38 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi.softbox.api import ma
-from ..models.subscriber_models import Subscriber
+from ..models.portgroupport_models import PortGroupPort
 
 
-class SubscriberSchema(ma.ModelSchema):
+class PortGroupPortSchema(ma.ModelSchema):
     class Meta:
-        model = Subscriber
-        fields = ('id', 'name', 'box', 'box_id', 'number', 'type', 'address', 'registration_state', '_links')
+        model = PortGroupPort
+        fields = ('id', 'name', 'box_id', 'card_id', 'operational_state', 'admin_state', 'description', 'label1',
+                  'label2', '_links')
 
     box = ma.Hyperlinks(
         {'_links': {
             'self': ma.URLFor('show_box', id='<box_id>')}})
 
     _links = ma.Hyperlinks(
-        {'self': ma.URLFor('show_subscriber', box_id='<box_id>', id='<id>'),
-         'collection': ma.URLFor('show_subscribers', box_id='<box_id>')})
+        {'self': ma.URLFor('show_portgroupport', box_id='<box_id>', id='<id>'),
+         'collection': ma.URLFor('show_portgroupports', box_id='<box_id>')})
 
 
-class SubscribersSchema(ma.ModelSchema):
+class PortGroupPortsSchema(ma.ModelSchema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class SubscriberSchema(ma.ModelSchema):
+    class PortGroupPortSchema(ma.ModelSchema):
         class Meta:
-            model = Subscriber
+            model = PortGroupPort
             fields = ('id', '_links')
 
         _links = ma.Hyperlinks(
             {'self': ma.URLFor(
-                'show_subscriber', box_id='<box_id>', id='<id>')})
+                'show_portgroupport', box_id='<box_id>', id='<id>')})
 
-    members = ma.Nested(SubscriberSchema, many=True)
+    members = ma.Nested(PortGroupPortSchema, many=True)
 
     _links = ma.Hyperlinks(
-        {'self': ma.URLFor('show_subscribers', box_id='<box_id>')})
+        {'self': ma.URLFor('show_portgroupports', box_id='<box_id>')})
