@@ -26,8 +26,7 @@ class PortCommandProcessor(BaseCommandProcessor):
     from .portManagementFunctions import status
 
     def get_property(self, command, *args, context=None):
-        port_name = self._parent.component_id + '/' + self.component_id
-        port = self._model.get_port('name', port_name)
+        port = self.get_port_component()
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
