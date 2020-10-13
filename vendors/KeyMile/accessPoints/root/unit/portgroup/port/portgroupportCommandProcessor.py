@@ -14,7 +14,7 @@ from nesi import exceptions
 from vendors.KeyMile.accessPoints.root.unit.port.portCommandProcessor import PortCommandProcessor
 
 
-class PortgroupPortCommandProcessor(PortCommandProcessor):
+class PortgroupportCommandProcessor(PortCommandProcessor):
     __name__ = 'portgroupport'
     management_functions = ('main', 'cfgm', 'status')
     access_points = ()
@@ -49,7 +49,7 @@ class PortgroupPortCommandProcessor(PortCommandProcessor):
                                                        template_scopes=('login', 'base', 'execution_errors'))
 
     def _init_access_points(self, context=None):
-        port = self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
+        pass
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
