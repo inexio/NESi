@@ -125,15 +125,6 @@ req='{
 
 subscriber_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subscribers)
 
-# test subscriber
-req='{
-  "name": "tester2",
-  "number": 90223,
-  "type": "unit"
-}'
-
-subscriber_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subscribers)
-
 ### Subrack 0 ###
 
 # Create a physical subrack at the network device (admin operation)
@@ -443,14 +434,14 @@ req='{
 
 unit_19=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 
-### Port-1 ###
+### PortGroupPort-1 ###
 
 # Create a physical port at the network device (admin operation)
 req='{
   "card_id": '$unit_19',
   "admin_state": "1",
   "operational_state": "1",
-  "name": "19/1/1"
+  "name": "19/G1/1"
 }'
 
-port_19_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+port_19_G1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/portgroupports)
