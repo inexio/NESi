@@ -25,9 +25,9 @@ class PortgroupCommandProcessor(BaseCommandProcessor):
     def _init_access_points(self, context=None):    # work in progress
         card = self._model.get_card('name', self._parent.component_id)
 
-        for port in self._model.get_ports('card_id', card.id):
-            if port.name.count('/') == 2 and port.name.strip('/')[1] == 'portgroup-' + self.component_id:
-                identifier = 'port-' + port.name.split('/')[-1]
+        for gport in self._model.get_portgroupports('card_id', card.id):
+            if gport.name.split('/')[1] == 'G' + self.component_id:
+                identifier = 'port-' + gport.name.split('/')[-1]
                 if identifier in self.access_points:
                     continue
                 self.access_points += (identifier,)
