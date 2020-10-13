@@ -34,7 +34,7 @@ class BoxSchema(ma.ModelSchema):
                   'hostname', 'mgmt_address', 'credentials', 'credential_details', 'port_profiles',
                   'port_profile_details', 'vlans', 'service_vlans', 'vlan_details', 'subscribers',
                   'subracks', 'subrack_details', 'cards', 'ports', 'channels', 'service_ports', 'emus', 'onts', 'ont_ports', 'cpes',
-                  'cpe_ports', 'routes', 'login_banner', 'vlan_interfaces', 'users',
+                  'cpe_ports', 'routes', 'login_banner', 'vlan_interfaces', 'users', 'portgroupports',
                   'welcome_banner', 'last_login', 'last_logout', 'sntp_server_ip_address', 'timezone_offset', '_links')
 
     credentials = ma.Hyperlinks(
@@ -80,6 +80,10 @@ class BoxSchema(ma.ModelSchema):
     subscribers = ma.Hyperlinks(
         {'_links': {
             'self': ma.URLFor('show_subscribers', box_id='<id>')}})
+
+    portgroupports = ma.Hyperlinks(
+        {'_links': {
+            'self': ma.URLFor('show_portgroupports', box_id='<id>')}})
 
     onts = ma.Hyperlinks({'_links': {
             'self': ma.URLFor('show_onts', box_id='<id>')}})

@@ -35,6 +35,12 @@ class UnitCommandProcessor(BaseCommandProcessor):
                 if identifier in self.access_points:
                     continue
                 self.access_points += (identifier,)
+
+            for gport in self._model.get_portgroupports('card_id', card.id):
+                identifier = 'portgroup-' + gport.name.split('/')[1][1]
+                if identifier in self.access_points:
+                    continue
+                self.access_points += (identifier,)
         except exceptions.InvalidInputError:
             pass
 
