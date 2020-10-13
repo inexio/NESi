@@ -23,10 +23,13 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
     from .portgroupportManagementFunctions import cfgm
     from .portgroupportManagementFunctions import status
 
-    def do_get(self, command, *args, context=None):
+    def get_port_component(self):
+        return self._model.get_portgroupport('name', self._parent._parent.component_id + '/G' + self._parent.component_id + '/' + self.component_id)
+
+    def get_property(self, command, *args, context=None):
         scopes = ('login', 'base', 'get')
         try:
-            super().do_get(command, *args, context=None)
+            super().get_property(command, *args, context=context)
         except exceptions.CommandExecutionError:
             if self._validate((args[0],), 'SubscriberList') and context['component_path'].split('/')[-1] == 'status' and \
                     self._model.get_card('name', self._parent._parent.component_id).product == 'isdn':
