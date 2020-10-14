@@ -205,7 +205,7 @@ class BaseCommandProcessor(base.CommandProcessor):
         components = [x for x in path.split('/') if x]
 
         if not re.search(
-                '^(unit-[0-9]+|port-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|alarm-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|tdmConnection|\.|\.\.)$',
+                '^(unit-[0-9]+|port-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|alarm-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|tdmConnection|logports|logport-[0-9]|\.|\.\.)$',
                 components[0]):
             raise exceptions.SoftboxenError()
 
@@ -297,6 +297,11 @@ class BaseCommandProcessor(base.CommandProcessor):
                 if self.__name__ != 'port' and self.__name__ != 'chan':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
+            elif component_type == 'logport':
+                if self.__name__ != 'logports':
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+
             if components[0] in ('fan', 'eoam', 'tdmConnections', 'multicast', 'services'):
                 if self.__name__ != 'root':
                     raise exceptions.CommandExecutionError(command=None, template=None,
@@ -327,6 +332,9 @@ class BaseCommandProcessor(base.CommandProcessor):
                 PortgroupCommandProcessor
             from vendors.KeyMile.accessPoints.root.unit.portgroup.port.portgroupportCommandProcessor import \
                 PortgroupPortCommandProcessor
+            from vendors.KeyMile.accessPoints.root.unit.logport.logportsCommandProcessor import LogportsCommandProcessor
+            from vendors.KeyMile.accessPoints.root.unit.logport.port.logportCommandProcessor import \
+                LogportCommandProcessor
             subprocessor = self._create_subprocessor(eval(command_processor), 'login', 'base')
 
             if component_id is not None and self.component_id is not None:
@@ -375,7 +383,9 @@ class BaseCommandProcessor(base.CommandProcessor):
                             }
                         },
                         "portgroups": {"portgroupports": {}},
-                        "logports": {"logport": {}},
+                        "logports": {
+                            "logport": {
+                                "interface": {}}},
                         "vectoringports": {"vectorport": {}},
                         "internalports": {"internalport": {}}
                     },
@@ -482,6 +492,9 @@ class BaseCommandProcessor(base.CommandProcessor):
         from vendors.KeyMile.accessPoints.root.multicastCommandProcessor import MulticastCommandProcessor
         from vendors.KeyMile.accessPoints.root.tdmConnectionsCommandProcessor import TdmConnectionsCommandProcessor
         from vendors.KeyMile.accessPoints.root.services.servicesCommandProcessor import ServicesCommandProcessor
+        from vendors.KeyMile.accessPoints.root.unit.logport.logportsCommandProcessor import LogportsCommandProcessor
+        from vendors.KeyMile.accessPoints.root.unit.logport.port.logportCommandProcessor import \
+            LogportCommandProcessor
         if current_processor.__class__ == RootCommandProcessor:
             return_to = RootCommandProcessor
             if component_type not in ('fan', 'eoam', 'tdmConnections', 'multicast', 'services', 'unit') \
@@ -490,7 +503,7 @@ class BaseCommandProcessor(base.CommandProcessor):
                                                        template_scopes=())  # TODO: fix exception to not require all fields as empty
         elif current_processor.__class__ == UnitCommandProcessor:
             return_to = RootCommandProcessor
-            if component_type != 'port' and component_type is not None:
+            if (component_type != 'port' or component_type != 'logports') and component_type is not None:
                 raise exceptions.CommandExecutionError(command=None, template=None,
                                                        template_scopes=())  # TODO: fix exception to not require all fields as empty
         elif current_processor.__class__ == PortCommandProcessor:
@@ -504,6 +517,7 @@ class BaseCommandProcessor(base.CommandProcessor):
                 raise exceptions.CommandExecutionError(command=None, template=None,
                                                        template_scopes=())  # TODO: fix exception to not require all fields as empty
         elif current_processor.__class__ == InterfaceCommandProcessor:
+            return_to = LogportCommandProcessor
             return_to = ChanCommandProcessor
             return_to = PortCommandProcessor
         elif current_processor.__class__ == FanCommandProcessor:
@@ -518,6 +532,10 @@ class BaseCommandProcessor(base.CommandProcessor):
             return_to = RootCommandProcessor
         elif current_processor.__class__ == ServicesCommandProcessor:
             return_to = RootCommandProcessor
+        elif current_processor.__class__ == LogportsCommandProcessor:
+            return_to = UnitCommandProcessor
+        elif current_processor.__class__ == LogportCommandProcessor:
+            return_to = LogportsCommandProcessor
 
         return return_to
 

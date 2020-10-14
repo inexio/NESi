@@ -30,11 +30,19 @@ class UnitCommandProcessor(BaseCommandProcessor):
 
             self.management_functions = ('main', 'cfgm', 'fm', 'status')
 
+            try:
+                _ = self._model.get_logport('card_id', card.id)
+            except exceptions.SoftboxenError:
+                pass
+            else:
+                self.access_points += ('logports',)
+
             for port in self._model.get_ports('card_id', card.id):
                 identifier = 'port-' + port.name.split('/')[-1]
                 if identifier in self.access_points:
                     continue
                 self.access_points += (identifier,)
+
         except exceptions.InvalidInputError:
             pass
 

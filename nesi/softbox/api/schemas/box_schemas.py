@@ -31,7 +31,7 @@ class BoxSchema(ma.ModelSchema):
     class Meta:
         model = Box
         fields = ('id', 'vendor', 'model', 'version', 'software_version', 'network_protocol', 'network_address',
-                  'network_port', 'uuid', 'description', 'interfaces',
+                  'network_port', 'uuid', 'description', 'interfaces', 'logports',
                   'hostname', 'mgmt_address', 'credentials', 'credential_details', 'port_profiles',
                   'port_profile_details', 'vlans', 'service_vlans', 'vlan_details', 'subscribers',
                   'subracks', 'subrack_details', 'cards', 'ports', 'channels', 'service_ports', 'emus', 'onts', 'ont_ports', 'cpes',
@@ -89,6 +89,10 @@ class BoxSchema(ma.ModelSchema):
     subscribers = ma.Hyperlinks(
         {'_links': {
             'self': ma.URLFor('show_subscribers', box_id='<id>')}})
+
+    logports = ma.Hyperlinks(
+        {'_links': {
+            'self': ma.URLFor('show_logports', box_id='<id>')}})
 
     onts = ma.Hyperlinks({'_links': {
             'self': ma.URLFor('show_onts', box_id='<id>')}})

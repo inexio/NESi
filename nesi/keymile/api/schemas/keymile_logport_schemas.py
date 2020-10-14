@@ -10,10 +10,10 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from nesi.softbox.api.schemas.channel_schemas import *
+from nesi.softbox.api.schemas.logport_schemas import *
 
 
-class KeyMileChannelSchema(ChannelSchema):
+class KeyMileLogPortSchema(LogPortSchema):
     class Meta:
-        model = Channel
-        fields = ChannelSchema.Meta.fields + ('vccs', 'interfaces')
+        model = LogPort
+        fields = LogPortSchema.Meta.fields + ('interfaces',)

@@ -8,10 +8,10 @@ main = {
 }
 
 cfgm = {
-    'General': {
-        'Cmd': {
-            'CreatePort',
-            'DeletePort'
-        }
+    'Logicalport': {
+        'Cmd': (
+            'Create',
+            'Delete'
+        )
     }
 }

@@ -32,7 +32,7 @@ req='{
   "network_protocol": "telnet",
   "network_address": "127.0.0.1",
   "network_port": 9023,
-  "uuid": "2200",
+  "uuid": "2500",
   "currTemperature": 15
 }'
 
@@ -251,6 +251,17 @@ req='{
 }'
 
 port_2_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### LogPort 1 ###
+
+# Create a logical logport object at the network device (admin operation)
+req='{
+  "card_id": '$unit_2',
+  "name": "2/L/2",
+  "ports": "ports:2"
+}'
+
+logport_2_l_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/logports)
 
 ### Unit-3 ###
 

@@ -10,6 +10,7 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
+# TODO: When no more new components are being created, update new_box, clone_box, and del_box
 
 from .base_views import *
 from ..models.box_models import Box
