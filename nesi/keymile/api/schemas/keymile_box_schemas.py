@@ -7,16 +7,17 @@
 # - Janis Groß <https://github.com/unkn0wn-user>
 # - Philip Konrath <https://github.com/Connyko65>
 # - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi.softbox.api.schemas.box_schemas import *
 
 
-class HuaweiBoxSchema(BoxSchema):
+class KeymileBoxSchema(BoxSchema):
     class Meta:
         model = Box
-        fields = BoxSchema.Meta.fields + ('channels', 'interfaces')
+        fields = BoxSchema.Meta.fields + ('channels', 'interfaces', 'currTemperature', 'logports')
 
     interfaces = ma.Hyperlinks(
         {'_links': {
@@ -25,3 +26,7 @@ class HuaweiBoxSchema(BoxSchema):
     channels = ma.Hyperlinks(
         {'_links': {
             'self': ma.URLFor('show_channels', box_id='<id>')}})
+
+    logports = ma.Hyperlinks(
+        {'_links': {
+            'self': ma.URLFor('show_logports', box_id='<id>')}})

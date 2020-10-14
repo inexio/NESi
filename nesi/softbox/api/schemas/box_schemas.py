@@ -7,6 +7,7 @@
 # - Janis Groß <https://github.com/unkn0wn-user>
 # - Philip Konrath <https://github.com/Connyko65>
 # - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
@@ -30,11 +31,11 @@ class BoxSchema(ma.ModelSchema):
     class Meta:
         model = Box
         fields = ('id', 'vendor', 'model', 'version', 'software_version', 'network_protocol', 'network_address',
-                  'network_port', 'uuid', 'description', 'interfaces',
+                  'network_port', 'uuid', 'description', 'interfaces', 'logports',
                   'hostname', 'mgmt_address', 'credentials', 'credential_details', 'port_profiles',
-                  'port_profile_details', 'vlans', 'service_vlans', 'vlan_details', 'subscribers',
+                  'port_profile_details', 'vlans', 'service_vlans', 'vlan_details', 'subscribers', 'currTemperature',
                   'subracks', 'subrack_details', 'cards', 'ports', 'channels', 'service_ports', 'emus', 'onts', 'ont_ports', 'cpes',
-                  'cpe_ports', 'routes', 'login_banner', 'vlan_interfaces', 'users', 'portgroupports',
+                  'cpe_ports', 'routes', 'login_banner', 'vlan_interfaces', 'users', 'portgroupports', 'mgmt_cards', 'mgmt_ports',
                   'welcome_banner', 'last_login', 'last_logout', 'sntp_server_ip_address', 'timezone_offset', '_links')
 
     credentials = ma.Hyperlinks(
@@ -57,9 +58,17 @@ class BoxSchema(ma.ModelSchema):
         {'_links': {
             'self': ma.URLFor('show_cards', box_id='<id>')}})
 
+    mgmt_cards = ma.Hyperlinks(
+        {'_links': {
+            'self': ma.URLFor('show_mgmt_cards', box_id='<id>')}})
+
     ports = ma.Hyperlinks(
         {'_links': {
             'self': ma.URLFor('show_ports', box_id='<id>')}})
+
+    mgmt_ports = ma.Hyperlinks(
+        {'_links': {
+            'self': ma.URLFor('show_mgmt_ports', box_id='<id>')}})
 
     channels = ma.Hyperlinks(
         {'_links': {
@@ -84,6 +93,10 @@ class BoxSchema(ma.ModelSchema):
     portgroupports = ma.Hyperlinks(
         {'_links': {
             'self': ma.URLFor('show_portgroupports', box_id='<id>')}})
+
+    logports = ma.Hyperlinks(
+        {'_links': {
+            'self': ma.URLFor('show_logports', box_id='<id>')}})
 
     onts = ma.Hyperlinks({'_links': {
             'self': ma.URLFor('show_onts', box_id='<id>')}})

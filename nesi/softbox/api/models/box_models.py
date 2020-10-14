@@ -7,6 +7,7 @@
 # - Janis Groß <https://github.com/unkn0wn-user>
 # - Philip Konrath <https://github.com/Connyko65>
 # - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 import uuid
@@ -30,6 +31,8 @@ from .user_models import User
 from .channel_models import Channel
 from .subscriber_models import Subscriber
 from .portgroupport_models import PortGroupPort
+from .logport_models import LogPort
+from .interface_models import Interface
 
 
 class Box(db.Model):
@@ -55,10 +58,13 @@ class Box(db.Model):
     credentials = db.relationship('Credential', backref='Box', lazy='dynamic')
     credential_details = db.relationship('Credential', backref='credentials', lazy='dynamic')
     users = db.relationship('User', backref='Box', lazy='dynamic')
+
     subracks = db.relationship('Subrack', backref='Box', lazy='dynamic')
     subrack_details = db.relationship('Subrack', backref='subracks', lazy='dynamic')
     cards = db.relationship('Card', backref='Box', lazy='dynamic')
+    mgmt_cards = db.relationship('MgmtCard', backref='Box', lazy='dynamic')
     ports = db.relationship('Port', backref='Box', lazy='dynamic')
+    mgmt_ports = db.relationship('MgmtPort', backref='Box', lazy='dynamic')
     channels = db.relationship('Channel', backref='Box', lazy='dynamic')
     interfaces = db.relationship('Interface', backref='Box', lazy='dynamic')
     cpes = db.relationship('Cpe', backref='Box', lazy='dynamic')
@@ -74,6 +80,7 @@ class Box(db.Model):
     emus = db.relationship('Emu', backref='Box', lazy='dynamic')
     subscribers = db.relationship('Subscriber', backref='Box', lazy='dynamic')
     portgroupports = db.relationship('PortGroupPort', backref='Box', lazy='dynamic')
+    logports = db.relationship('LogPort', backref='Box', lazy='dynamic')
     board_missing_reporting_logging = db.Column(db.Boolean(), default=False)
     board_instl_missing_reporting_logging = db.Column(db.Boolean(), default=False)
     board_init_reporting_logging = db.Column(db.Boolean(), default=False)
@@ -116,3 +123,4 @@ class Box(db.Model):
     pitp_mode = db.Column(db.String(), default='')
     dsl_mode = db.Column(db.Enum('tr165', 'tr129'), default='tr165')
 
+    currTemperature = db.Column(db.Integer(), default=15)
