@@ -38,7 +38,6 @@ class BoxSchema(ma.ModelSchema):
                   'cpe_ports', 'routes', 'login_banner', 'vlan_interfaces', 'users', 'portgroupports', 'mgmt_cards', 'mgmt_ports',
                   'welcome_banner', 'last_login', 'last_logout', 'sntp_server_ip_address', 'timezone_offset', '_links')
 
-
     credentials = ma.Hyperlinks(
         {'_links': {
             'self': ma.URLFor('show_credentials', box_id='<id>')}})

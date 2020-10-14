@@ -32,12 +32,6 @@ class RootCommandProcessor(BaseCommandProcessor):
             self._write(self._render('currTemperature', 'login', 'base', 'get', context=context))
 
 
-    def do_get(self, command, *args, context=None):
-        if self._validate(args, "CurrTemperature"):
-            context['currTemperature'] = self._model.currTemperature
-            context['spacer'] = self.create_spacers((67,), (context['currTemperature'],))[0] * ' '
-            self._write(self._render('currTemperature', 'login', 'base', 'get', context=context))
-
 
     def _init_access_points(self, context=None):
         for card in self._model.cards:
@@ -84,5 +78,11 @@ class RootCommandProcessor(BaseCommandProcessor):
         raise exceptions.CommandSyntaxError(command=command)
 
     def get_property(self, command, *args, context=None):
-        raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+        scopes = ('login', 'base', 'set')
+        if self._validate(args, "CurrTemperature"):
+            context['currTemperature'] = self._model.currTemperature
+            context['spacer'] = self.create_spacers((67,), (context['currTemperature'],))[0] * ' '
+            self._write(self._render('currTemperature', *scopes, context=context))
+        else:
+            raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                template_scopes=('login', 'base', 'execution_errors'))

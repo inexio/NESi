@@ -30,8 +30,6 @@ class KeyMileBox(Box):
 
     currTemperature = base.Field("currTemperature")
 
-    currTemperature = base.Field("currTemperature")
-
     @property
     def channels(self):
         """Return `ChannelCollection` object."""
