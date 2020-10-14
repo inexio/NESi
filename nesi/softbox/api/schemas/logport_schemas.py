@@ -11,39 +11,40 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi.softbox.api import ma
-from ..models.interface_models import Interface
+from .interface_schemas import InterfacesSchema
+from ..models.logport_models import LogPort
 
 
-class InterfaceSchema(ma.ModelSchema):
+class LogPortSchema(ma.ModelSchema):
     class Meta:
-        model = Interface
-        fields = ('id', 'box_id', 'box', 'chan_id', 'port_id', 'logport_id',
-                  'name', 'description', '_links')
+        model = LogPort
+        fields = ('id', 'box_id', 'box', 'card_id', 'name', 'ports', 'interfaces', '_links')
+
+    interfaces = ma.Nested(InterfacesSchema.InterfaceSchema, many=True)
 
     box = ma.Hyperlinks(
         {'_links': {
             'self': ma.URLFor('show_box', id='<box_id>')}})
 
     _links = ma.Hyperlinks(
-        {'self': ma.URLFor('show_interface', box_id='<box_id>', id='<id>')})
+        {'self': ma.URLFor('show_logport', box_id='<box_id>', id='<id>'),
+         'collection': ma.URLFor('show_logports', box_id='<box_id>')})
 
 
-class InterfacesSchema(ma.ModelSchema):
+class LogPortsSchema(ma.ModelSchema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class InterfaceSchema(ma.ModelSchema):
+    class LogPortSchema(ma.ModelSchema):
         class Meta:
-            model = Interface
+            model = LogPort
             fields = ('id', 'name', '_links')
 
         _links = ma.Hyperlinks(
             {'self': ma.URLFor(
-                'show_interface', box_id='<box_id>', id='<id>')})
+                'show_logport', box_id='<box_id>', id='<id>')})
 
-    members = ma.Nested(InterfaceSchema, many=True)
+    members = ma.Nested(LogPortSchema, many=True)
 
     _links = ma.Hyperlinks(
-        {'self': ma.URLFor('show_interfaces', box_id='<box_id>')})
-
-
+        {'self': ma.URLFor('show_logports', box_id='<box_id>')})

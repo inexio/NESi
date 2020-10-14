@@ -10,14 +10,14 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
+from ..models.interface_models import Interface
 from nesi.softbox.api import db
 
 
-class Interface(db.Model):
+class LogPort(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64))
-    description = db.Column(db.String())
+    ports = db.Column(db.String(), default='')
     box_id = db.Column(db.Integer, db.ForeignKey('box.id'))
-    chan_id = db.Column(db.Integer, db.ForeignKey('channel.id'))
-    port_id = db.Column(db.Integer, db.ForeignKey('port.id'))
-    logport_id = db.Column(db.Integer, db.ForeignKey('log_port.id'))
+    card_id = db.Column(db.Integer, db.ForeignKey('card.id'))
+    interfaces = db.relationship('Interface', backref='LogPort', lazy='dynamic')

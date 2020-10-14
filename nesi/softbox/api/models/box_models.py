@@ -31,6 +31,8 @@ from .user_models import User
 from .channel_models import Channel
 from .subscriber_models import Subscriber
 from .portgroupport_models import PortGroupPort
+from .logport_models import LogPort
+from .interface_models import Interface
 
 
 class Box(db.Model):
@@ -78,6 +80,7 @@ class Box(db.Model):
     emus = db.relationship('Emu', backref='Box', lazy='dynamic')
     subscribers = db.relationship('Subscriber', backref='Box', lazy='dynamic')
     portgroupports = db.relationship('PortGroupPort', backref='Box', lazy='dynamic')
+    logports = db.relationship('LogPort', backref='Box', lazy='dynamic')
     board_missing_reporting_logging = db.Column(db.Boolean(), default=False)
     board_instl_missing_reporting_logging = db.Column(db.Boolean(), default=False)
     board_init_reporting_logging = db.Column(db.Boolean(), default=False)

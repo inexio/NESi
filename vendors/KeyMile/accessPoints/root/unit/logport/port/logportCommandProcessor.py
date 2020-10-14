@@ -14,21 +14,24 @@ from nesi import exceptions
 from vendors.KeyMile.accessPoints.root.unit.port.portCommandProcessor import PortCommandProcessor
 
 
-class LogPortCommandProcessor(PortCommandProcessor):
+class LogportCommandProcessor(PortCommandProcessor):
     __name__ = 'logport'
-    management_functions = ('main', 'cfgm', 'status')
+    management_functions = ('main', 'cfgm', 'fm', 'pm', 'status', 'ifMIB')
     access_points = ()
 
     from .logportManagementFunctions import main
     from .logportManagementFunctions import cfgm
+    from .logportManagementFunctions import fm
+    from .logportManagementFunctions import pm
     from .logportManagementFunctions import status
+    from .logportManagementFunctions import ifMIB
 
-    def do_get(self, command, *args, context=None):
+    def get_property(self, command, *args, context=None):
         scopes = ('login', 'base', 'get')
         try:
-            super().do_get(command, *args, context=None)
+            super().get_property(command, *args, context=context)
         except exceptions.CommandExecutionError:
-            if self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status':
+            if self._validate((args[0],), 'AttainableRate') and context['component_path'].split('/')[-1] == 'status':
                 text = self._render('attainable_rate', *scopes, context=context)
                 self._write(text)
             else:
@@ -36,7 +39,18 @@ class LogPortCommandProcessor(PortCommandProcessor):
                                                        template_scopes=('login', 'base', 'execution_errors'))
 
     def _init_access_points(self, context=None):
-        port = self._model.get_port('name', context['unit'] + '/' + context['portgroup'] + '/' + context['port'])
+        logport_name = self._parent._parent.component_id + '/L/' + self.component_id
+        logport = self._model.get_logport('name', logport_name)
+        try:
+            _ = self._model.get_interface('logport_id', logport.id)
+        except exceptions.SoftboxenError:
+            pass
+        else:
+            for interface in self._model.get_interfaces('logport_id', logport.id):
+                identifier = 'interface-' + interface.name.split('/')[-1]
+                if identifier in self.access_points:
+                    continue
+                self.access_points += (identifier,)
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
@@ -44,7 +58,7 @@ class LogPortCommandProcessor(PortCommandProcessor):
     def set(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
         try:
-            super().set(command, *args, context=None)
+            super().set(command, *args, context=context)
         except exceptions.CommandExecutionError:
             if self._validate(args, *()):
                 exc = exceptions.CommandSyntaxError(command=command)
