@@ -9,6 +9,7 @@
 # - Alexander Dincher <https://github.com/Dinker1996>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
+import os
 
 from nesi.keymile.keymile_resources import *
 
@@ -123,6 +124,13 @@ class KeyMileBox(Box):
         return keymile_subscriber.KeymileSubscriberCollection(
             self._conn, base.get_sub_resource_path_by(self, 'subscribers'),
             params={field: value})
+
+    def add_subscriber(self, **fields):
+        """Add new ont."""
+        return keymile_subscriber.KeymileSubscriber.create(
+                self._conn,
+                os.path.join(self.path, 'subscribers'),
+                **fields)
 
     def get_portgroupport(self, field, value):
         """Get specific portgroupport object."""
