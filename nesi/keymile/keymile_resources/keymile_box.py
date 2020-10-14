@@ -27,19 +27,18 @@ class KeyMileBox(Box):
     :param connection: A RestClient instance
     :param identity: The identity of the System resource
     """
-    # Define Keymile Properties
 
     currTemperature = base.Field("currTemperature")
 
     @property
     def channels(self):
-        """Return `CpePortCollection` object."""
+        """Return `ChannelCollection` object."""
         return keymile_channel.KeyMileChannelCollection(
             self._conn, base.get_sub_resource_path_by(self, 'channels'))
 
     @property
     def interfaces(self):
-        """Return `CpePortCollection` object."""
+        """Return `InterfaceCollection` object."""
         return keymile_interface.KeyMileInterfaceCollection(
             self._conn, base.get_sub_resource_path_by(self, 'interfaces'))
 
@@ -64,10 +63,10 @@ class KeyMileBox(Box):
             self._conn, base.get_sub_resource_path_by(self, 'subscribers'))
 
     @property
-    def portgroupsports(self):
-        """Return `PortgrouportCollection` object."""
-        return keymile_portgroupport.KeymilePortGroupPortCollection(
-            self._conn, base.get_sub_resource_path_by(self, 'portgrouports'))
+    def logports(self):
+        """Return `LogPortCollection` object."""
+        return keymile_logport.KeyMileLogPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'logports'))
 
     def get_card(self, field, value):
         """Get specific card object."""
@@ -91,6 +90,18 @@ class KeyMileBox(Box):
         """Get specific port object."""
         return keymile_port.KeyMilePortCollection(
             self._conn, base.get_sub_resource_path_by(self, 'ports'),
+            params={field: value})
+
+    def get_logport(self, field, value):
+        """Get specific logport object."""
+        return keymile_logport.KeyMileLogPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'logports'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_logports(self, field, value):
+        """Get al logport objects with a specific trait."""
+        return keymile_logport.KeyMileLogPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'logports'),
             params={field: value})
 
     def get_chan(self, field, value):

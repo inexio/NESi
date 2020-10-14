@@ -114,10 +114,6 @@ class Box(base.Resource):
         raise PropertyNotFoundError("abstract service_vlans properties")
 
     @property
-    def vlans_connections(self):
-        raise PropertyNotFoundError("abstract vlans properties")
-
-    @property
     def port_profiles(self):
         raise PropertyNotFoundError("abstract port_profiles properties")
 

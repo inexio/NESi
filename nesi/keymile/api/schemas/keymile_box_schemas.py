@@ -17,7 +17,7 @@ from nesi.softbox.api.schemas.box_schemas import *
 class KeymileBoxSchema(BoxSchema):
     class Meta:
         model = Box
-        fields = BoxSchema.Meta.fields + ('channels', 'interfaces', 'currTemperature')
+        fields = BoxSchema.Meta.fields + ('channels', 'interfaces', 'currTemperature', 'logports')
 
     interfaces = ma.Hyperlinks(
         {'_links': {
@@ -26,3 +26,7 @@ class KeymileBoxSchema(BoxSchema):
     channels = ma.Hyperlinks(
         {'_links': {
             'self': ma.URLFor('show_channels', box_id='<id>')}})
+
+    logports = ma.Hyperlinks(
+        {'_links': {
+            'self': ma.URLFor('show_logports', box_id='<id>')}})

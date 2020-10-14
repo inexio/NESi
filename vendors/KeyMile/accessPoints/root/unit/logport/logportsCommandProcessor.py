@@ -14,7 +14,7 @@ from nesi import exceptions
 from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 
 
-class LogPortsCommandProcessor(BaseCommandProcessor):
+class LogportsCommandProcessor(BaseCommandProcessor):
     __name__ = 'logports'
     management_functions = ('main', 'cfgm')
     access_points = ()
@@ -23,12 +23,11 @@ class LogPortsCommandProcessor(BaseCommandProcessor):
     from .logportsManagementFunctions import cfgm
 
     def _init_access_points(self, context=None):    # work in progress
-        card = self._model.get_card('name', context['unit'])
-        logports = context['logports']
+        card = self._model.get_card('name', self._parent.component_id)
 
-        for port in self._model.get_ports('card_id', card.id):
-            if port.name.count('/') == 2 and port.name.strip('/')[1] == 'logports-' + logports:
-                identifier = 'port-' + port.name.split('/')[-1]
+        for logport in self._model.get_logports('card_id', card.id):
+            if logport.name.count('/') == 2:
+                identifier = 'logport-' + logport.name.split('/')[-1]
                 if identifier in self.access_points:
                     continue
                 self.access_points += (identifier,)
