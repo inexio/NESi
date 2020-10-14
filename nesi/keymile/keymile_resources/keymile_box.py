@@ -7,6 +7,7 @@
 # - Janis Groß <https://github.com/unkn0wn-user>
 # - Philip Konrath <https://github.com/Connyko65>
 # - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 import os
@@ -27,6 +28,8 @@ class KeyMileBox(Box):
     :param identity: The identity of the System resource
     """
     # Define Keymile Properties
+
+    currTemperature = base.Field("currTemperature")
 
     @property
     def channels(self):
