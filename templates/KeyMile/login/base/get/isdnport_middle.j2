@@ -1,9 +1,9 @@
-  \ # [0] #
+  \ # [{{ context.i }}] #
                                                                    \ # SubscriberId
-  "9108007"                                                        \ # SubscriberNumber
-  "4962329108007"                                                  \ # AuthorisationUserName
-  "5yhnxz7x"                                                       \ # AuthorisationPassword
-  ""                                                               \ # DisplayName
-  None                                                             \ # privacy
+  "{{ context.subscriber.number }}"{{ context.spacer10 }}\ # SubscriberNumber
+  "{{ context.subscriber.autorisation_user_name }}"{{ context.spacer11 }}\ # AuthorisationUserName
+  "{{ context.subscriber.autorisation_password }}"{{ context.spacer12 }}\ # AuthorisationPassword
+  "{{ context.subscriber.display_name }}"{{ context.spacer13 }}\ # DisplayName
+  {{ context.subscriber.privacy }}{{ context.spacer14 }}\ # privacy
 ;                                                                  \
 
