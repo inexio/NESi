@@ -30,12 +30,8 @@ from .emu_models import Emu
 from .user_models import User
 from .channel_models import Channel
 from .subscriber_models import Subscriber
-<<<<<<< HEAD
-from .portgroupport_models import PortGroupPort
-=======
 from .logport_models import LogPort
 from .interface_models import Interface
->>>>>>> Added the concept of logports (still WIP)
 
 
 class Box(db.Model):
