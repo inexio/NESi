@@ -18,7 +18,7 @@ class PortGroupPortSchema(ma.ModelSchema):
     class Meta:
         model = PortGroupPort
         fields = ('id', 'name', 'box_id', 'card_id', 'operational_state', 'admin_state', 'description', 'label1',
-                  'label2', 'type', 'enable', 'subsriber_identification', 'register_as_global',
+                  'label2', 'type', 'enable', 'register_as_global',
                   'register_default_number_only', 'layer_1_permanently_activated', 'sip_profile', 'isdnba_profile',
                   'proxy_registrar_profile', 'codec_sdp_profile', 'pay_phone', 'pstn_profile', 'enterprise_profile',
                   '_links')

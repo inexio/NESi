@@ -26,6 +26,14 @@ class KeymileSubscriber(base.Resource):
     type = base.Field('type')
     address = base.Field('address')
     registration_state = base.Field('registration_state')
+    autorisation_user_name = base.Field('autorisation_user_name')
+    autorisation_password = base.Field('autorisation_password')
+    display_name = base.Field('display_name')
+    privacy = base.Field('privacy')
+
+    def set(self, field, value):
+        mapping = {field: value}
+        self.update(**mapping)
 
 
 class KeymileSubscriberCollection(base.ResourceCollection):

@@ -15,7 +15,6 @@ class PortGroupPort(db.Model):
 
     #isdn
     enable = db.Column(db.Boolean(), default=False)
-    subsriber_identification = db.Column(db.String(), default=None)
     register_as_global = db.Column(db.Boolean, default=None)
     register_default_number_only = db.Column(db.Boolean, default=None)
     layer_1_permanently_activated = db.Column(db.Boolean, default=None)

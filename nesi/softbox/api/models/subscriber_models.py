@@ -10,4 +10,8 @@ class Subscriber(db.Model):
     type = db.Column(db.Enum('unit', 'port'), default='port')
     address = db.Column(db.String(), default='')
     registration_state = db.Column(db.Enum('registered'), default='registered')
+    autorisation_user_name = db.Column(db.String(), default='')
+    autorisation_password = db.Column(db.String(), default='""')
+    display_name = db.Column(db.String(), default='')
+    privacy = db.Column(db.String(), default=None)
 

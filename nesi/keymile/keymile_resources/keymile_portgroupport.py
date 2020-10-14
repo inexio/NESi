@@ -29,7 +29,6 @@ class KeymilePortGroupPort(base.Resource):
     label2 = base.Field('label2')
     type = base.Field('type')
     enable = base.Field('enable')
-    subsriber_identification = base.Field('subsriber_identification')
     register_as_global = base.Field('register_as_global')
     register_default_number_only = base.Field('register_default_number_only')
     layer_1_permanently_activated = base.Field('layer_1_permanently_activated')
@@ -62,10 +61,9 @@ class KeymilePortGroupPort(base.Resource):
         """Set the port state to down"""
         self.update(operational_state='1')
 
-    def set_pstnport(self, enable, subscriberident, registerglobal, phone, sip, proxy, codec, pstn, enterprise):
+    def set_pstnport(self, enable, registerglobal, phone, sip, proxy, codec, pstn, enterprise):
         """Set the pstnport"""
         self.update(enable=enable)
-        self.update(subsriber_identification=subscriberident)
         self.update(register_as_global=registerglobal)
         self.update(pay_phone=phone)
         self.update(sip_profile=sip)
@@ -74,10 +72,9 @@ class KeymilePortGroupPort(base.Resource):
         self.update(pstn_profile=pstn)
         self.update(enterprise_profile=enterprise)
 
-    def set_isdnport(self, enable, subscriberident, registerglobal, regdefault, layer1, sip, proxy, codec, isdn):
+    def set_isdnport(self, enable, registerglobal, regdefault, layer1, sip, proxy, codec, isdn):
         """Set the pstnport"""
         self.update(enable=enable)
-        self.update(subsriber_identification=subscriberident)
         self.update(register_as_global=registerglobal)
         self.update(register_default_number_only=regdefault)
         self.update(sip_profile=sip)
