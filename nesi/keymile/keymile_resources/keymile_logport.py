@@ -23,6 +23,32 @@ class KeyMileLogPort(base.Resource):
     name = base.Field('name')
     card_id = base.Field('card_id')
     ports = base.Field('ports')
+    label1 = base.Field('label1')
+    label2 = base.Field('label2')
+    description = base.Field('description')
+    admin_state = base.Field('admin_state')
+    operational_state = base.Field('operational_state')
+
+    def admin_up(self):
+        """Set the admin port state to up"""
+        self.update(admin_state='1')
+
+    def admin_down(self):
+        """Set the admin port state to down"""
+        self.update(admin_state='0')
+
+    def down(self):
+        """Set the port state to down"""
+        self.update(operational_state='0')
+
+    def up(self):
+        """Set the port state to down"""
+        self.update(operational_state='1')
+
+    def set_label(self, l1, l2, desc):
+        self.update(label1=l1)
+        self.update(label2=l2)
+        self.update(description=desc)
 
 
 class KeyMileLogPortCollection(base.ResourceCollection):

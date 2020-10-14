@@ -21,3 +21,8 @@ class LogPort(db.Model):
     box_id = db.Column(db.Integer, db.ForeignKey('box.id'))
     card_id = db.Column(db.Integer, db.ForeignKey('card.id'))
     interfaces = db.relationship('Interface', backref='LogPort', lazy='dynamic')
+    label1 = db.Column(db.String(), default='""')
+    label2 = db.Column(db.String(), default='""')
+    description = db.Column(db.String(), default='""')
+    operational_state = db.Column(db.Enum('0', '1'), default='0')
+    admin_state = db.Column(db.Enum('0', '1'), default='0')
