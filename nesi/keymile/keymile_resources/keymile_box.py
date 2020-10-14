@@ -104,6 +104,13 @@ class KeyMileBox(Box):
             self._conn, base.get_sub_resource_path_by(self, 'logports'),
             params={field: value})
 
+    def add_logport(self, **fields):
+        """Add new logport."""
+        return keymile_logport.KeyMileLogPort.create(
+                self._conn,
+                os.path.join(self.path, 'logports'),
+                **fields)
+
     def get_chan(self, field, value):
         """Get specific channel object."""
         return keymile_channel.KeyMileChannelCollection(
@@ -140,7 +147,7 @@ class KeyMileBox(Box):
             params={field: value})
 
     def add_subscriber(self, **fields):
-        """Add new ont."""
+        """Add new subscriber."""
         return keymile_subscriber.KeymileSubscriber.create(
                 self._conn,
                 os.path.join(self.path, 'subscribers'),
