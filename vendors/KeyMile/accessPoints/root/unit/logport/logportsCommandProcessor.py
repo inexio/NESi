@@ -31,6 +31,9 @@ class LogportsCommandProcessor(BaseCommandProcessor):
                 if identifier in self.access_points:
                     continue
                 self.access_points += (identifier,)
+        accpoint = list(self.access_points)
+        accpoint.sort(key=lambda x: int(x.split('-')[1]))
+        self.access_points = tuple(accpoint)
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
@@ -45,6 +48,31 @@ class LogportsCommandProcessor(BaseCommandProcessor):
                     port.delete()
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
+            else:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_create(self, command, *args, context=None):
+        if self._validate(args, str, str, str, str) and context['component_path'].split('/')[-1] == 'cfgm':
+            p1, p2, p3, p4, = self._dissect(args, str, str, str, str)
+            ids = []
+            ids.append(int(p1.split('-')[1])) if p1.startswith('port-') else ids
+            ids.append(int(p2.split('-')[1])) if p2.startswith('port-') else ids
+            ids.append(int(p3.split('-')[1])) if p3.startswith('port-') else ids
+            ids.append(int(p4.split('-')[1])) if p4.startswith('port-') else ids
+            if len(ids) >= 0:
+                ids.sort()
+                try:
+                    for x in ids:
+                        _ = self._model.get_logport('name', self._parent.component_id + '/L/' + str(x))
+                        break
+                except exceptions.SoftboxenError:
+                    name =  self._parent.component_id + '/L/' + str(ids[0])
+                    ports = 'ports: '
+                    for x in ids:
+                        ports += str(x) + ', '
+                    logport = self._model.add_logport(card_id=self._parent.component_id, name=name, ports=ports[:-2])
             else:
                 raise exceptions.CommandSyntaxError(command=command)
         else:
