@@ -32,6 +32,13 @@ class RootCommandProcessor(BaseCommandProcessor):
             self._write(self._render('currTemperature', 'login', 'base', 'get', context=context))
 
 
+    def do_get(self, command, *args, context=None):
+        if self._validate(args, "CurrTemperature"):
+            context['currTemperature'] = self._model.currTemperature
+            context['spacer'] = self.create_spacers((67,), (context['currTemperature'],))[0] * ' '
+            self._write(self._render('currTemperature', 'login', 'base', 'get', context=context))
+
+
     def _init_access_points(self, context=None):
         for card in self._model.cards:
             if 'unit-' + card.name in self.access_points:
