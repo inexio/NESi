@@ -35,6 +35,21 @@ class LogportsCommandProcessor(BaseCommandProcessor):
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 
+    def do_delete(self, command, *args, context=None):
+        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm':
+            name, = self._dissect(args, str)
+            if name.startswith('logport-'):
+                id = name.split('-')[1]
+                try:
+                    port = self._model.get_logport('name', self._parent.component_id + '/L/' + id)
+                    port.delete()
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+            else:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def set(self, command, *args, context=None):
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
@@ -42,8 +57,8 @@ class LogportsCommandProcessor(BaseCommandProcessor):
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
         elif self._validate(args, 'test', str):
-            ip, = self._dissect(args, 'test', str)
-            #TODO test case
+            name, = self._dissect(args, 'test', str)
+            #todo testcase
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)

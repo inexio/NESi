@@ -27,6 +27,7 @@ class LogportCommandProcessor(PortCommandProcessor):
     from .logportManagementFunctions import ifMIB
 
     def get_property(self, command, *args, context=None):
+        port = self.get_port_component()
         scopes = ('login', 'base', 'get')
         try:
             super().get_property(command, *args, context=context)
@@ -37,6 +38,9 @@ class LogportCommandProcessor(PortCommandProcessor):
             else:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
+
+    def get_port_component(self):
+        return self._model.get_logport('name', self._parent._parent.component_id + '/L/' + self.component_id)
 
     def _init_access_points(self, context=None):
         logport_name = self._parent._parent.component_id + '/L/' + self.component_id

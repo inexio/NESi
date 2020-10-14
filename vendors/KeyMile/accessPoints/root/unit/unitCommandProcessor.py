@@ -51,7 +51,6 @@ class UnitCommandProcessor(BaseCommandProcessor):
         except exceptions.InvalidInputError:
             pass
 
-        # todo: add portgroup to access_points
 
     def get_property(self, command, *args, context=None):
         card = self._model.get_card('name', self.component_id)
