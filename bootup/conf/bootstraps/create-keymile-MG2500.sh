@@ -8,6 +8,7 @@
 # - Janis Groß <https://github.com/unkn0wn-user>
 # - Philip Konrath <https://github.com/Connyko65>
 # - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 #
@@ -31,7 +32,8 @@ req='{
   "network_protocol": "telnet",
   "network_address": "127.0.0.1",
   "network_port": 9023,
-  "uuid": "2200"
+  "uuid": "2200",
+  "currTemperature": 15
 }'
 
 box_id=$(create_resource "$req" $ENDPOINT/boxen) || exit 1

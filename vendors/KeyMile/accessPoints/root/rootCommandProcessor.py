@@ -7,6 +7,7 @@
 # - Janis Groß <https://github.com/unkn0wn-user>
 # - Philip Konrath <https://github.com/Connyko65>
 # - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
@@ -23,6 +24,13 @@ class RootCommandProcessor(BaseCommandProcessor):
     from .rootManagementFunctions import cfgm
     from .rootManagementFunctions import fm
     from .rootManagementFunctions import status
+
+    def do_get(self, command, *args, context=None):
+        if self._validate(args, "CurrTemperature"):
+            context['currTemperature'] = self._model.currTemperature
+            context['spacer'] = self.create_spacers((67,), (context['currTemperature'],))[0] * ' '
+            self._write(self._render('currTemperature', 'login', 'base', 'get', context=context))
+
 
     def _init_access_points(self, context=None):
         for card in self._model.cards:
