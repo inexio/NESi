@@ -27,6 +27,19 @@ class KeymilePortGroupPort(base.Resource):
     description = base.Field('description')
     label1 = base.Field('label1')
     label2 = base.Field('label2')
+    type = base.Field('type')
+    enable = base.Field('enable')
+    subsriber_identification = base.Field('subsriber_identification')
+    register_as_global = base.Field('register_as_global')
+    register_default_number_only = base.Field('register_default_number_only')
+    layer_1_permanently_activated = base.Field('layer_1_permanently_activated')
+    sip_profile = base.Field('sip_profile')
+    proxy_registrar_profile = base.Field('proxy_registrar_profile')
+    codec_sdp_profile = base.Field('codec_sdp_profile')
+    isdnba_profile = base.Field('isdnba_profile')
+    pay_phone = base.Field('pay_phone')
+    pstn_profile = base.Field('pstn_profile')
+    enterprise_profile = base.Field('enterprise_profile')
 
     def set_label(self, l1, l2, desc):
         self.update(label1=l1)
@@ -48,6 +61,30 @@ class KeymilePortGroupPort(base.Resource):
     def up(self):
         """Set the port state to down"""
         self.update(operational_state='1')
+
+    def set_pstnport(self, enable, subscriberident, registerglobal, phone, sip, proxy, codec, pstn, enterprise):
+        """Set the pstnport"""
+        self.update(enable=enable)
+        self.update(subsriber_identification=subscriberident)
+        self.update(register_as_global=registerglobal)
+        self.update(pay_phone=phone)
+        self.update(sip_profile=sip)
+        self.update(proxy_registrar_profile=proxy)
+        self.update(codec_sdp_profile=codec)
+        self.update(pstn_profile=pstn)
+        self.update(enterprise_profile=enterprise)
+
+    def set_isdnport(self, enable, subscriberident, registerglobal, regdefault, layer1, sip, proxy, codec, isdn):
+        """Set the pstnport"""
+        self.update(enable=enable)
+        self.update(subsriber_identification=subscriberident)
+        self.update(register_as_global=registerglobal)
+        self.update(register_default_number_only=regdefault)
+        self.update(sip_profile=sip)
+        self.update(proxy_registrar_profile=proxy)
+        self.update(codec_sdp_profile=codec)
+        self.update(layer_1_permanently_activated=layer1)
+        self.update(isdnba_profile=isdn)
 
 
 class KeymilePortGroupPortCollection(base.ResourceCollection):
