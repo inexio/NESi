@@ -1,17 +1,17 @@
                                                                    \ # sip
-"Name"                                                     \ # GatewayName
-"hab.dich.loieb.net"                                             \ # HomeDomain
-500                                                               \ # SipPortNumber
-"+49"                                                              \ # CountryCode
-"6567"                                                             \ # AreaCode
-500                                                                \ # RetransmissionTimerT1
-4                                                                  \ # MaxRetransmissionIntervalT2
-false                                                              \ # SipExtension100relRequired
-None                                                               \ # assertedIdentityMode
-true                                                               \ # OverlapSignalling
-30                                                                 \ # OverlapT10timer
+{{ context.card.gateway_name | safe }}{{ context.spacer1 }}\ # GatewayName
+{{ context.card.home_domain | safe }}{{ context.spacer2 }}\ # HomeDomain
+{{ context.card.sip_port_number }}{{ context.spacer3 }}\ # SipPortNumber
+"{{ context.card.country_code | safe }}"{{ context.spacer4 }}\ # CountryCode
+"{{ context.card.area_code | safe }}"{{ context.spacer5 }}\ # AreaCode
+{{ context.card.retransmission_timer }}{{ context.spacer6 }}\ # RetransmissionTimerT1
+{{ context.card.max_retransmission_interval }}{{ context.spacer7 }}\ # MaxRetransmissionIntervalT2
+{{ context.card.sip_extension }}{{ context.spacer8 }}\ # SipExtension100relRequired
+{{ context.card.asserted_id_mode }}{{ context.spacer9 }}\ # assertedIdentityMode
+{{ context.card.overlap_signalling }}{{ context.spacer10 }}\ # OverlapSignalling
+{{ context.card.overlap_timer }}{{ context.spacer11 }}\ # OverlapT10timer
                                                                    \ # SessionTimer
-false                                                              \ # UacRequestSessionTimer
-false                                                              \ # UasRequestSessionTimer
-1800                                                               \ # SessionExpiration
+{{ context.card.uac_request_timer }}{{ context.spacer12 }}\ # UacRequestSessionTimer
+{{ context.card.uas_request_timer }}{{ context.spacer13 }}\ # UasRequestSessionTimer
+{{ context.card.session_expiration }}{{ context.spacer14 }}\ # SessionExpiration
 

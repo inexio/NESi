@@ -74,6 +74,12 @@ class RootCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                    template_scopes=('login', 'base', 'execution_errors'))
 
+    def do_save(self, command, *args, context=None):
+        if len(args) == 0 and context['component_path'].split('/')[-1] == 'cfgm':
+            pass
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 
