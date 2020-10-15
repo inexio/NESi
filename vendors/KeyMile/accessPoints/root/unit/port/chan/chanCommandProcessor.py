@@ -83,6 +83,67 @@ class ChanCommandProcessor(BaseCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
+    def do_createinterface(self, command, *args, context=None):
+        scopes = ('login', 'base', 'set')
+        card = self._model.get_card('name', self._parent._parent.component_id)
+        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.board_name.contains('SUV'):
+            # vcc profile and vlan profile
+            vlan_prof, = self._dissect(args, str)
+            # TODO: Check if profiles := default or profile names
+            try:
+                chan = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+                id = 1
+                for interface in self._model.get_interfaces('chan_id', chan.id):
+                    if interface.chan_id is not None:
+                        new_id = int(interface.name[-1]) + 1
+                        id = new_id if new_id > id else id
+                try:
+                    name = self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id + '/' + str(id)
+                    _ = self._model.get_interface('name',  name)
+                    assert False
+                except exceptions.SoftboxenError as exe:
+                    interf = self._model.add_interface(name=name, chan_id=chan.id, vlan_profile=vlan_prof)
+                    context['spacer1'] = self.create_spacers((57,), (str(id),))[0] * ' '
+                    context['id'] = str(id)
+                    # TODO: Template is unknown
+                    text = self._render('interface_success', *scopes, context=context)
+                    self._write(text)
+                except AssertionError:
+                    raise exceptions.CommandSyntaxError(command=command)
+
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        elif self._validate(args, str, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.board_name.contains('SUV'):
+            # vcc profile and vlan profile
+            vlan_prof, vcc_prof = self._dissect(args, str, str)
+            # TODO: Check if profiles := default or profile names
+            try:
+                chan = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+                id = 1
+                for interface in self._model.get_interfaces('chan_id', chan.id):
+                    if interface.chan_id is not None:
+                        new_id = int(interface.name[-1]) + 1
+                        id = new_id if new_id > id else id
+                try:
+                    name = self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id + '/' + str(id)
+                    _ = self._model.get_interface('name',  name)
+                    assert False
+                except exceptions.SoftboxenError as exe:
+                    interf = self._model.add_interface(name=name, chan_id=chan.id, vlan_profile=vlan_prof,
+                                                       vcc_profile=vcc_prof)
+                    context['spacer1'] = self.create_spacers((57,), (str(id),))[0] * ' '
+                    context['id'] = str(id)
+                    # TODO: Template is unknown
+                    text = self._render('interface_success', *scopes, context=context)
+                    self._write(text)
+                except AssertionError:
+                    raise exceptions.CommandSyntaxError(command=command)
+
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def do_createvcc(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
         card = self._model.get_card('name', self._parent._parent.component_id)
