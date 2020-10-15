@@ -34,6 +34,7 @@ class RootCommandProcessor(BaseCommandProcessor):
 
 
     def _init_access_points(self, context=None):
+        self.access_points = ()
         for card in self._model.cards:
             if 'unit-' + card.name in self.access_points:
                 continue

@@ -35,3 +35,15 @@ class VccCommandProcessor(BaseCommandProcessor):
             raise exc
         else:
             raise exceptions.CommandSyntaxError(command=command)
+
+    def get_property(self, command, *args, context=None):
+        #card = self._model.get_card('name', self.component_id)
+        scopes = ('login', 'base', 'get')
+        if self._validate(args, *()):
+            exc = exceptions.CommandSyntaxError(command=command)
+            exc.template = 'syntax_error'
+            exc.template_scopes = ('login', 'base', 'syntax_errors')
+            raise exc
+        else:
+            raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                   template_scopes=('login', 'base', 'execution_errors'))

@@ -43,6 +43,7 @@ class LogportCommandProcessor(PortCommandProcessor):
         return self._model.get_logport('name', self._parent._parent.component_id + '/L/' + self.component_id)
 
     def _init_access_points(self, context=None):
+        self.access_points = ()
         logport_name = self._parent._parent.component_id + '/L/' + self.component_id
         logport = self._model.get_logport('name', logport_name)
         try:

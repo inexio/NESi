@@ -21,3 +21,7 @@ class Interface(db.Model):
     chan_id = db.Column(db.Integer, db.ForeignKey('channel.id'))
     port_id = db.Column(db.Integer, db.ForeignKey('port.id'))
     logport_id = db.Column(db.Integer, db.ForeignKey('log_port.id'))
+
+    #vcc
+    vcc_profile = db.Column(db.String(), default=None)  # default or profile_name, default:= vpi=0 and vci=33
+    vlan_profile = db.Column(db.String(), default=None)  # default or profile_name, must be untagged

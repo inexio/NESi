@@ -140,6 +140,13 @@ class KeyMileBox(Box):
             self._conn, base.get_sub_resource_path_by(self, 'interfaces'),
             params={field: value})
 
+    def add_interface(self, **fields):
+        """Add new interface/vcc."""
+        return keymile_interface.KeyMileInterface.create(
+                self._conn,
+                os.path.join(self.path, 'interfaces'),
+                **fields)
+
     def get_subscriber(self, field, value):
         """Get specific subscriber object."""
         return keymile_subscriber.KeymileSubscriberCollection(

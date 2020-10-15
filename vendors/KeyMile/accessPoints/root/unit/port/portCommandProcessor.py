@@ -59,6 +59,7 @@ class PortCommandProcessor(BaseCommandProcessor):
                                                    template_scopes=('login', 'base', 'execution_errors'))
 
     def _init_access_points(self, context=None):
+        self.access_points = ()
         port = self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
 
         for chan in self._model.get_chans('port_id', port.id):

@@ -23,6 +23,7 @@ class LogportsCommandProcessor(BaseCommandProcessor):
     from .logportsManagementFunctions import cfgm
 
     def _init_access_points(self, context=None):    # work in progress
+        self.access_points = ()
         card = self._model.get_card('name', self._parent.component_id)
 
         for logport in self._model.get_logports('card_id', card.id):
