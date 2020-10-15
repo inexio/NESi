@@ -107,6 +107,9 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
     def _init_access_points(self, context=None):
         pass
 
+    def do_deleteinterface(self, command, *args, context=None):
+        raise exceptions.CommandSyntaxError(command=command)
+
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 
