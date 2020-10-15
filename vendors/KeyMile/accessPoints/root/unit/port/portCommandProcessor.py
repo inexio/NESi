@@ -93,6 +93,39 @@ class PortCommandProcessor(BaseCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
+    def do_createinterface(self, command, *args, context=None):
+        scopes = ('login', 'base', 'set')
+        card = self._model.get_card('name',  self._parent.component_id)
+        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.board_name.contains('SUE'):
+            # vcc profile and vlan profile
+            vlan_prof, = self._dissect(args, str)
+            # TODO: Check if profiles := default or profile names
+            try:
+                port = self.get_port_component()
+                id = 1
+                for interface in self._model.get_interfaces('port_id', port.id):
+                    if interface.port_id is not None:
+                        new_id = int(interface.name[-1]) + 1
+                        id = new_id if new_id > id else id
+                try:
+                    name = self._parent.component_id + '/' + self.component_id + '/' + str(id)
+                    _ = self._model.get_interface('name',  name)
+                    assert False
+                except exceptions.SoftboxenError as exe:
+                    interf = self._model.add_interface(name=name, port_id=port.id, vlan_profile=vlan_prof)
+                    context['spacer1'] = self.create_spacers((57,), (str(id),))[0] * ' '
+                    context['id'] = str(id)
+                    # TODO: Template is unknown
+                    text = self._render('interface_success', *scopes, context=context)
+                    self._write(text)
+                except AssertionError:
+                    raise exceptions.CommandSyntaxError(command=command)
+
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def get_port_component(self):
         return self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
 

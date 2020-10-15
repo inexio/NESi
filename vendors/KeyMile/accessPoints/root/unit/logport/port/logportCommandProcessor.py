@@ -79,6 +79,40 @@ class LogportCommandProcessor(PortCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
+    def do_createinterface(self, command, *args, context=None):
+        scopes = ('login', 'base', 'set')
+        card = self._model.get_card('name', self._parent._parent.component_id)
+        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.product == 'sdsl':
+            # vcc profile and vlan profile
+            vlan_prof, = self._dissect(args, str)
+            # TODO: Check if profiles := default or profile names
+            try:
+                logport_name = self._parent._parent.component_id + '/L/' + self.component_id
+                logport = self._model.get_logport('name', logport_name)
+                id = 1
+                for interface in self._model.get_interfaces('logport_id', logport.id):
+                    if interface.logport_id is not None:
+                        new_id = int(interface.name[-1]) + 1
+                        id = new_id if new_id > id else id
+                try:
+                    name = self._parent._parent.component_id + '/L/' + self.component_id + '/' + str(id)
+                    _ = self._model.get_interface('name',  name)
+                    assert False
+                except exceptions.SoftboxenError as exe:
+                    vcc = self._model.add_interface(name=name, logport_id=logport.id, vlan_profile=vlan_prof)
+                    context['spacer1'] = self.create_spacers((57,), (str(id),))[0] * ' '
+                    context['id'] = str(id)
+                    # TODO: Template is unknown
+                    text = self._render('interface_success', *scopes, context=context)
+                    self._write(text)
+                except AssertionError:
+                    raise exceptions.CommandSyntaxError(command=command)
+
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 
