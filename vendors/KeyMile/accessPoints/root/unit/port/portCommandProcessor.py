@@ -62,6 +62,7 @@ class PortCommandProcessor(BaseCommandProcessor):
         self.access_points = ()
         port = self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
 
+        #TODO: add interfaces for ftth and special cards
         for chan in self._model.get_chans('port_id', port.id):
             identifier = 'chan-' + chan.name.split('/')[-1]
             if identifier in self.access_points:
@@ -70,6 +71,27 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
+
+    def do_deleteinterface(self, command, *args, context=None):
+        card = self._model.get_card('name', self._parent.component_id)
+        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.product == 'ftth':
+            # all or interface_id
+            name, = self._dissect(args, str)
+            if name == 'all':
+                port = self.get_port_component()
+                for interface in self._model.get_interfaces('port_id', port.id):
+                    interface.delete()
+            elif name.startswith('interface-'):
+                id = name.split('-')[1]
+                try:
+                    interface = self._model.get_interface('name', self._parent.component_id + '/' + self.component_id + '/' + id)
+                    interface.delete()
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+            else:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
 
     def get_port_component(self):
         return self._model.get_port('name', self._parent.component_id + '/' + self.component_id)

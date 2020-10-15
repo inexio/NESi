@@ -57,6 +57,28 @@ class LogportCommandProcessor(PortCommandProcessor):
                     continue
                 self.access_points += (identifier,)
 
+    def do_deleteinterface(self, command, *args, context=None):
+        card = self._model.get_card('name', self._parent._parent.component_id)
+        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.product == 'sdsl':
+            # all or interface_id
+            name, = self._dissect(args, str)
+            if name == 'all':
+                logport_name = self._parent._parent.component_id + '/L/' + self.component_id
+                logport = self._model.get_logport('name', logport_name)
+                for interface in self._model.get_interfaces('logport_id', logport.id):
+                    interface.delete()
+            elif name.startswith('interface-'):
+                id = name.split('-')[1]
+                try:
+                    interface = self._model.get_interface('name', self._parent._parent.component_id + '/L/' + self.component_id + '/' + id)
+                    interface.delete()
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+            else:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 
