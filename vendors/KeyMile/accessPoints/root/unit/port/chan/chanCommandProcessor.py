@@ -62,6 +62,27 @@ class ChanCommandProcessor(BaseCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
+    def do_deleteinterface(self, command, *args, context=None):
+        card = self._model.get_card('name', self._parent._parent.component_id)
+        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.product != 'adsl' and card.product != 'sdsl':
+            # all or interface_id
+            name, = self._dissect(args, str)
+            if name == 'all':
+                chan = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+                for interface in self._model.get_interfaces('chan_id', chan.id):
+                    interface.delete()
+            elif name.startswith('interface-'):
+                id = name.split('-')[1]
+                try:
+                    interface = self._model.get_interface('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id + '/' + id)
+                    interface.delete()
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandSyntaxError(command=command)
+            else:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def do_createvcc(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
         card = self._model.get_card('name', self._parent._parent.component_id)
