@@ -25,6 +25,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
     from .unitManagementFunctions import status
 
     def _init_access_points(self, context=None):
+        self.access_points = ()
         try:
             card = self._model.get_card('name', self.component_id)
 
@@ -45,7 +46,6 @@ class UnitCommandProcessor(BaseCommandProcessor):
 
         except exceptions.InvalidInputError:
             pass
-
 
     def get_property(self, command, *args, context=None):
         card = self._model.get_card('name', self.component_id)

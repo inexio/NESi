@@ -27,6 +27,10 @@ class KeyMileInterface(base.Resource):
     chan_id = base.Field('chan_id')
     logport_id = base.Field('logport_id')
 
+    #vcc
+    vcc_profile = base.Field('vcc_profile')
+    vlan_profile = base.Field('vlan_profile')
+
 
 class KeyMileInterfaceCollection(base.ResourceCollection):
     """Represent a collection of interfaces."""
