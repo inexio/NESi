@@ -20,4 +20,11 @@ class KeyMileCardSchema(CardSchema):
                                            'software_name', 'software_revision', 'state', 'serial_number',
                                            'manufacturer_name', 'model_name', 'short_text', 'manufacturer_id',
                                            'manufacturer_part_number', 'manufacturer_build_state', 'customer_id',
-                                           'customer_product_id', 'boot_loader', 'processor', 'label1', 'label2')
+                                           'customer_product_id', 'boot_loader', 'processor', 'label1', 'label2',
+                                           'gateway_name', 'home_domain', 'sip_port_number', 'country_code', 'area_code',
+                                           'retransmission_timer', 'max_retransmission_interval', 'sip_extension',
+                                           'asserted_id_mode', 'overlap_signalling', 'overlap_timer',
+                                           'uac_request_timer', 'uas_request_timer', 'session_expiration', 'proxy_mode',
+                                           'proxy_address', 'proxy_port', 'proxy_address_sec', 'proxy_port_sec',
+                                           'proxy_enable', 'proxy_method', 'proxy_interval', 'registrar_adress',
+                                           'registrar_port', 'registration_mode', 'registration_expiration_time')

@@ -449,8 +449,8 @@ class CommandProcessor:
                 raise exceptions.CommandSyntaxError(command=' '.join(args))
 
             if self.case_sensitive is False:
-                arg = arg.lower()
                 if not isinstance(token, type):
+                    arg = arg.lower()
                     token = token.lower()
 
             if type(token) == type:
@@ -472,8 +472,8 @@ class CommandProcessor:
                 return False
 
             if self.case_sensitive is False:
-                arg = arg.lower()
                 if not isinstance(token, type):
+                    arg = arg.lower()
                     token = token.lower()
 
             if arg != token and type(token) != type:
