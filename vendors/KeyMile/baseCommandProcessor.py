@@ -305,7 +305,10 @@ class BaseCommandProcessor(base.CommandProcessor):
                 if self.__name__ != 'logports':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
-
+            elif component_type == 'vcc':
+                if self.__name__ != 'chan':
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
             if components[0] in ('fan', 'eoam', 'tdmConnections', 'multicast', 'services'):
                 if self.__name__ != 'root':
                     raise exceptions.CommandExecutionError(command=None, template=None,
@@ -339,6 +342,7 @@ class BaseCommandProcessor(base.CommandProcessor):
             from vendors.KeyMile.accessPoints.root.unit.logport.logportsCommandProcessor import LogportsCommandProcessor
             from vendors.KeyMile.accessPoints.root.unit.logport.port.logportCommandProcessor import \
                 LogportCommandProcessor
+            from vendors.KeyMile.accessPoints.root.unit.port.chan.vcc.vccCommandProcessor import VccCommandProcessor
             subprocessor = self._create_subprocessor(eval(command_processor), 'login', 'base')
 
             if component_id is not None and self.component_id is not None:
@@ -503,6 +507,7 @@ class BaseCommandProcessor(base.CommandProcessor):
         from vendors.KeyMile.accessPoints.root.unit.logport.logportsCommandProcessor import LogportsCommandProcessor
         from vendors.KeyMile.accessPoints.root.unit.logport.port.logportCommandProcessor import \
             LogportCommandProcessor
+        from vendors.KeyMile.accessPoints.root.unit.port.chan.vcc.vccCommandProcessor import VccCommandProcessor
         if current_processor.__class__ == RootCommandProcessor:
             return_to = RootCommandProcessor
             if component_type not in ('fan', 'eoam', 'tdmConnections', 'multicast', 'services', 'unit') \
@@ -548,6 +553,8 @@ class BaseCommandProcessor(base.CommandProcessor):
             return_to = UnitCommandProcessor
         elif current_processor.__class__ == LogportCommandProcessor:
             return_to = LogportsCommandProcessor
+        elif current_processor.__class__ == VccCommandProcessor:
+            return_to = ChanCommandProcessor
 
         return return_to
 
