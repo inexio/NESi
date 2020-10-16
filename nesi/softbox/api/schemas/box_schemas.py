@@ -31,11 +31,11 @@ class BoxSchema(ma.ModelSchema):
     class Meta:
         model = Box
         fields = ('id', 'vendor', 'model', 'version', 'software_version', 'network_protocol', 'network_address',
-                  'network_port', 'uuid', 'description', 'interfaces', 'logports',
-                  'hostname', 'mgmt_address', 'credentials', 'credential_details', 'port_profiles',
-                  'port_profile_details', 'vlans', 'service_vlans', 'vlan_details', 'subscribers',
-                  'subracks', 'subrack_details', 'cards', 'ports', 'channels', 'service_ports', 'emus', 'onts', 'ont_ports', 'cpes',
-                  'cpe_ports', 'routes', 'login_banner', 'vlan_interfaces', 'users', 'portgroupports', 'mgmt_cards', 'mgmt_ports',
+                  'network_port', 'uuid', 'description', 'interfaces', 'logports', 'ont_ports', 'cpes',
+                  'hostname', 'mgmt_address', 'credentials', 'credential_details', 'port_profiles', 'mgmt_ports',
+                  'port_profile_details', 'vlans', 'service_vlans', 'vlan_details', 'subscribers', 'currTemperature',
+                  'subracks', 'subrack_details', 'cards', 'ports', 'channels', 'service_ports', 'emus', 'onts',
+                  'cpe_ports', 'routes', 'login_banner', 'vlan_interfaces', 'users', 'portgroupports', 'mgmt_cards',
                   'welcome_banner', 'last_login', 'last_logout', 'sntp_server_ip_address', 'timezone_offset', '_links')
 
     credentials = ma.Hyperlinks(
