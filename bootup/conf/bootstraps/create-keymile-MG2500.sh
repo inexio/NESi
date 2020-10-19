@@ -328,6 +328,17 @@ req='{
 
 unit_4=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 
+### Port-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$unit_4',
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_4_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
 ### Unit-5 ###
 
 # Create a physical card at the network device (admin operation)
@@ -354,6 +365,27 @@ req='{
 }'
 
 unit_5=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
+
+### Port-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$unit_5',
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_5_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### Chan-1 ###
+
+# Create a logical channel at the network device (admin operation)
+req='{
+  "port_id": '$port_5_1',
+  "description": "Channel #1"
+}'
+
+chan_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/channels)
 
 ### Unit-6 ###
 
@@ -387,19 +419,19 @@ unit_6=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 # Create a physical card at the network device (admin operation)
 req='{
   "subrack_id": '$subrack_id',
-  "product": "vdsl",
-  "board_name": "SUVM6",
+  "product": "ftth",
+  "board_name": "SUEN3",
   "supplier_build_state": "R1K",
   "board_id": "377",
   "hardware_key": 14,
   "software": "suvm6_r3e10_01.esw",
-  "software_name": "SUVM6",
+  "software_name": "SUEN3",
   "software_revision": "R3E10_01",
   "state": "Ok",
   "serial_number": "6135149854",
   "manufacturer_name": "KEYMILE",
   "model_name": "37900528",
-  "short_text": "MG SUVM6 VDSL2/17MHz ISDN 48pt",
+  "short_text": "MG SUEN3 VDSL2/17MHz ISDN 48pt",
   "manufacturer_id": "100989",
   "manufacturer_part_number": "09869778",
   "manufacturer_build_state": "20",
@@ -408,6 +440,17 @@ req='{
 }'
 
 unit_7=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
+
+### Port-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$unit_7',
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_2_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
 
 ### Unit-8 ###
 
