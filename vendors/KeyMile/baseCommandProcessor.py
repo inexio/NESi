@@ -214,7 +214,7 @@ class BaseCommandProcessor(base.CommandProcessor):
         components = [x for x in path.split('/') if x]
 
         if not re.search(
-                '^(unit-[0-9]+|port-[0-9]+|portgroup-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|alarm-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|packet|subpacket|macaccessctrl|tdmconnection|logports|logport-[0-9]|\.|\.\.)$',
+                '^(unit-[0-9]+|port-[0-9]+|portgroup-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|alarm-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|packet|subpacket|srvc-[0-9]|macaccessctrl|tdmconnection|logports|logport-[0-9]|\.|\.\.)$',
                 components[0]):
             raise exceptions.SoftboxenError()
 
@@ -307,7 +307,7 @@ class BaseCommandProcessor(base.CommandProcessor):
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'interface':
-                if self.__name__ != 'port' and self.__name__ != 'chan':
+                if self.__name__ != 'port' and self.__name__ != 'chan' and self.__name__ != 'logport':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'logport':
@@ -320,6 +320,14 @@ class BaseCommandProcessor(base.CommandProcessor):
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'packet' or component_type == 'macAccessCtrl':
                 if self.__name__ != 'services':
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+            elif component_type == 'subpacket':
+                if self.__name__ != 'packet':
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+            elif component_type == 'srvc':
+                if self.__name__ != 'subpacket':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             if components[0] in ('fan', 'eoam', 'tdmConnections', 'multicast', 'services'):
@@ -360,6 +368,7 @@ class BaseCommandProcessor(base.CommandProcessor):
             from vendors.KeyMile.accessPoints.root.services.macaccessctrlCommandProcessor import \
                 MacaccessctrlCommandProcessor
             from vendors.KeyMile.accessPoints.root.services.subpacketCommandProcessor import SubpacketCommandProcessor
+            from vendors.KeyMile.accessPoints.root.services.srvcCommandProcessor import SrvcCommandProcessor
             subprocessor = self._create_subprocessor(eval(command_processor), 'login', 'base')
 
             if component_id is not None and self.component_id is not None:
@@ -401,7 +410,7 @@ class BaseCommandProcessor(base.CommandProcessor):
                         "control": {},
                         "media": {},
                         "port": {
-                            "chanel": {
+                            "channel": {
                                 "interfaces": {
                                     "hell": {}
                                 }
@@ -421,7 +430,9 @@ class BaseCommandProcessor(base.CommandProcessor):
                     "tdmconnections": {},
                     "services": {
                         "packet": {
-                            "subpacket": {}
+                            "subpacket": {
+                                "srvc": {}
+                            }
                         },
                         "macaccessctrl": {}
                     },
@@ -536,6 +547,7 @@ class BaseCommandProcessor(base.CommandProcessor):
         from vendors.KeyMile.accessPoints.root.services.macaccessctrlCommandProcessor import\
             MacaccessctrlCommandProcessor
         from vendors.KeyMile.accessPoints.root.services.subpacketCommandProcessor import SubpacketCommandProcessor
+        from vendors.KeyMile.accessPoints.root.services.srvcCommandProcessor import SrvcCommandProcessor
         if current_processor.__class__ == RootCommandProcessor:
             return_to = RootCommandProcessor
             if component_type not in ('fan', 'eoam', 'tdmconnections', 'multicast', 'services', 'unit') \
@@ -585,6 +597,8 @@ class BaseCommandProcessor(base.CommandProcessor):
             return_to = ServicesCommandProcessor
         elif current_processor.__class__ == SubpacketCommandProcessor:
             return_to = PacketCommandProcessor
+        elif current_processor.__class__ == SrvcCommandProcessor:
+            return_to = SubpacketCommandProcessor
 
         return return_to
 

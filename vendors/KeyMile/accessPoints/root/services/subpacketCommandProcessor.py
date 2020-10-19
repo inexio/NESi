@@ -23,5 +23,20 @@ class SubpacketCommandProcessor(BaseCommandProcessor):
     from .subpacketManagementFunctions import main
     from .subpacketManagementFunctions import cfgm
 
+    def _init_access_points(self, context=None):
+        self.access_points = ()
+        try:
+            self.management_functions = ('main', 'cfgm')
+            s_type = context['ServiceType']
+
+            srvcs = self._model.get_srvcs('service_type', s_type)
+            for srvc in srvcs:
+                identifier = srvc.name
+                if identifier in self.access_points:
+                    continue
+                self.access_points += (identifier,)
+        except exceptions.InvalidInputError:
+            pass
+
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)

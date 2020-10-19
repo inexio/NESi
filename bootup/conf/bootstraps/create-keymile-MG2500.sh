@@ -526,3 +526,15 @@ req='{
 }'
 
 port_19_G1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/portgroupports)
+
+### Nto1-Service-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "name": "srvc-1",
+  "service_type": "nto1",
+  "svid": 123,
+  "address": "/unit-1/port-1/chan-1/interface-1"
+}'
+
+srvc_nto1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/srvcs)
