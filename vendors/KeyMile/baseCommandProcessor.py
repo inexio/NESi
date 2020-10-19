@@ -247,7 +247,8 @@ class BaseCommandProcessor(base.CommandProcessor):
             if exit_component in ('main', 'cfgm', 'fm', 'pm', 'status'):
                 self.set_prompt_end_pos(context=context)
                 if path != '..':
-                    return self._parent.change_directory(path[3:], context=context)
+                    context['path'] = context['component_path']
+                    return self.change_directory(path[3:], context=context)
                 return self
 
             if path == '..':
