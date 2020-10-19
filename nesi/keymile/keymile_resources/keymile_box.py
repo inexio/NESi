@@ -29,6 +29,18 @@ class KeyMileBox(Box):
     """
 
     currTemperature = base.Field("currTemperature")
+    backup_ip = base.Field("backup_ip")
+    login = base.Field("login")
+    password = base.Field("password")
+    backup_path = base.Field("backup_path")
+
+    def set_backup(self, backup_ip, login, password):
+        self.update(backup_ip=backup_ip)
+        self.update(login=login)
+        self.update(password=password)
+
+    def set_path(self, path):
+        self.update(backup_path=path)
 
     @property
     def channels(self):
