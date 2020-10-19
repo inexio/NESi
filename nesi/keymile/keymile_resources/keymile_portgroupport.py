@@ -16,7 +16,7 @@ from nesi.softbox.base_resources import base
 LOG = logging.getLogger(__name__)
 
 
-class KeymilePortGroupPort(base.Resource):
+class KeyMilePortGroupPort(base.Resource):
     """Represent logical subscriber resource."""
 
     # fields
@@ -84,9 +84,9 @@ class KeymilePortGroupPort(base.Resource):
         self.update(isdnba_profile=isdn)
 
 
-class KeymilePortGroupPortCollection(base.ResourceCollection):
+class KeyMilePortGroupPortCollection(base.ResourceCollection):
     """Represent a collection of logical subscribers."""
 
     @property
     def _resource_type(self):
-        return KeymilePortGroupPort
+        return KeyMilePortGroupPort

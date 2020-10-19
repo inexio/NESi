@@ -10,21 +10,14 @@
 # - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
-
+import uuid
 from nesi.softbox.api import db
 
 
-class Subscriber(db.Model):
+class Srvc(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64))
     box_id = db.Column(db.Integer, db.ForeignKey('box.id'))
-
-    number = db.Column(db.Integer(), nullable=False, unique=True)
-    type = db.Column(db.Enum('unit', 'port'), default='port')
+    service_type = db.Column(db.Enum('1to1DoubleTag', '1to1SingleTag', 'mcast', 'nto1', 'pls', 'tls', ''), default='')
     address = db.Column(db.String(), default='')
-    registration_state = db.Column(db.Enum('registered'), default='registered')
-    autorisation_user_name = db.Column(db.String(), default='')
-    autorisation_password = db.Column(db.String(), default='""')
-    display_name = db.Column(db.String(), default='')
-    privacy = db.Column(db.String(), default=None)
-
+    svid = db.Column(db.Integer(), default=None)
