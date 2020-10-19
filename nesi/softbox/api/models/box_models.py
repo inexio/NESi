@@ -124,3 +124,7 @@ class Box(db.Model):
     dsl_mode = db.Column(db.Enum('tr165', 'tr129'), default='tr165')
 
     currTemperature = db.Column(db.Integer(), default=15)
+    backup_ip = db.Column(db.String(), default='')
+    login = db.Column(db.String(), default='')
+    password = db.Column(db.String(), default='')
+    backup_path = db.Column(db.String(), default='')
