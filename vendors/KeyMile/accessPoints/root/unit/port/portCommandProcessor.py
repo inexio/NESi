@@ -12,6 +12,7 @@
 
 from nesi import exceptions
 from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
+import time
 
 
 class PortCommandProcessor(BaseCommandProcessor):
@@ -27,6 +28,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def get_property(self, command, *args, context=None):
         port = self.get_port_component()
+        card = self._model.get_card('name', self._parent.component_id)
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
@@ -35,6 +37,12 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exc
         elif self._validate((args[0],), 'AttainableRate') and context['component_path'].split('/')[-1] == 'status':
             text = self._render('attainable_rate', *scopes, context=context)
+            self._write(text)
+        elif self._validate((args[0],), 'QuickLoopbackTest') and context['component_path'].split('/')[-1] == 'status'\
+                and (card.product == 'isdn' or 'SUI' in card.board_name):
+            context['spacer1'] = self.create_spacers((67,), (port.loopbacktest_state,))[0] * ' '
+            context['loopbacktest_state'] = port.loopbacktest_state
+            text = self._render('quickloopbacktest', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'AdministrativeStatus') and context['component_path'].split('/')[-1] == 'main':
             self.map_states(port, 'port')
@@ -73,6 +81,40 @@ class PortCommandProcessor(BaseCommandProcessor):
             if identifier in self.access_points:
                 continue
             self.access_points += (identifier,)
+
+    def do_lock(self, command, *args, context=None):
+        card = self._model.get_card('name', self._parent.component_id)
+        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product == 'isdn':
+            try:
+                port = self.get_port_component()
+                port.lock_admin()
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_startquickloopbacktest(self, command, *args, context=None):
+        card = self._model.get_card('name', self._parent.component_id)
+        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product == 'isdn':
+            try:
+                port = self.get_port_component()
+                time.sleep(5)
+                port.set_test_state('Passed')
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_unlock(self, command, *args, context=None):
+        card = self._model.get_card('name', self._parent.component_id)
+        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product == 'isdn':
+            try:
+                port = self.get_port_component()
+                port.unlock_admin()
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
