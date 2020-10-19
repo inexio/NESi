@@ -39,10 +39,22 @@ class PortCommandProcessor(BaseCommandProcessor):
             text = self._render('attainable_rate', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'QuickLoopbackTest') and context['component_path'].split('/')[-1] == 'status'\
-                and (card.product == 'isdn' or 'SUI' in card.board_name):
+                and (card.product == 'isdn' or 'SUI' in card.board_name) and self.__name__ == 'port':
             context['spacer1'] = self.create_spacers((67,), (port.loopbacktest_state,))[0] * ' '
             context['loopbacktest_state'] = port.loopbacktest_state
             text = self._render('quickloopbacktest', *scopes, context=context)
+            self._write(text)
+        elif self._validate((args[0],), 'LineTestResults') and context['component_path'].split('/')[-1] == 'status'\
+                and 'SUP' in card.board_name and self.__name__ == 'port':
+            context['spacer1'] = self.create_spacers((67,), (port.linetest_state,))[0] * ' '
+            context['test_state'] = port.linetest_state
+            text = self._render('line_results', *scopes, context=context)
+            self._write(text)
+        elif self._validate((args[0],), 'MeltResults') and context['component_path'].split('/')[-1] == 'status'\
+                and card.product != 'isdn' and self.__name__ == 'port':
+            context['spacer1'] = self.create_spacers((67,), (port.melttest_state,))[0] * ' '
+            context['test_state'] = port.melttest_state
+            text = self._render('melt_results', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'AdministrativeStatus') and context['component_path'].split('/')[-1] == 'main':
             self.map_states(port, 'port')
@@ -84,7 +96,8 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_lock(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent.component_id)
-        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product == 'isdn':
+        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product == 'isdn' \
+                and self.__name__ == 'port':
             try:
                 port = self.get_port_component()
                 port.lock_admin()
@@ -95,9 +108,11 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_startquickloopbacktest(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent.component_id)
-        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product == 'isdn':
+        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product == 'isdn' \
+                and self.__name__ == 'port':
             try:
                 port = self.get_port_component()
+                port.set_test_state('Running')
                 time.sleep(5)
                 port.set_test_state('Passed')
             except exceptions.SoftboxenError:
@@ -105,9 +120,38 @@ class PortCommandProcessor(BaseCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
+    def do_startlinetest(self, command, *args, context=None):
+        card = self._model.get_card('name', self._parent.component_id)
+        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and 'SUP' in card.board_name \
+                and self.__name__ == 'port':
+            try:
+                port = self.get_port_component()
+                port.set_test_state('Running')
+                time.sleep(5)
+                port.set_linetest_state('Passed')
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_startmeltmeasurement(self, command, *args, context=None):
+        card = self._model.get_card('name', self._parent.component_id)
+        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product != 'isdn' \
+                and self.__name__ == 'port':
+            try:
+                port = self.get_port_component()
+                port.set_melttest_state('Running')
+                time.sleep(5)
+                port.set_melttest_state('Passed')
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def do_unlock(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent.component_id)
-        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product == 'isdn':
+        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product == 'isdn' \
+                and self.__name__ == 'port':
             try:
                 port = self.get_port_component()
                 port.unlock_admin()
