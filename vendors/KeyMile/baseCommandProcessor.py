@@ -214,7 +214,7 @@ class BaseCommandProcessor(base.CommandProcessor):
         components = [x for x in path.split('/') if x]
 
         if not re.search(
-                '^(unit-[0-9]+|port-[0-9]+|portgroup-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|alarm-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|packet|subpacket|srvc-[0-9]|macaccessctrl|tdmconnection|logports|logport-[0-9]|\.|\.\.)$',
+                '^(unit-[0-9]+|port-[0-9]+|portgroup-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|alarm-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|packet|subpacket|srvc-[0-9]|macaccessctrl|tdmconnections|logports|logport-[0-9]|\.|\.\.)$',
                 components[0]):
             raise exceptions.SoftboxenError()
 
@@ -355,7 +355,7 @@ class BaseCommandProcessor(base.CommandProcessor):
             from vendors.KeyMile.accessPoints.root.fan.alarmCommandProcessor import AlarmCommandProcessor
             from vendors.KeyMile.accessPoints.root.eoamCommandProcessor import EoamCommandProcessor
             from vendors.KeyMile.accessPoints.root.multicastCommandProcessor import MulticastCommandProcessor
-            from vendors.KeyMile.accessPoints.root.tdmConnectionsCommandProcessor import TdmConnectionsCommandProcessor
+            from vendors.KeyMile.accessPoints.root.tdmconnectionsCommandProcessor import TdmconnectionsCommandProcessor
             from vendors.KeyMile.accessPoints.root.services.servicesCommandProcessor import ServicesCommandProcessor
             from vendors.KeyMile.accessPoints.root.unit.portgroup.portgroupCommandProcessor import \
                 PortgroupCommandProcessor
@@ -538,7 +538,7 @@ class BaseCommandProcessor(base.CommandProcessor):
         from vendors.KeyMile.accessPoints.root.fan.alarmCommandProcessor import AlarmCommandProcessor
         from vendors.KeyMile.accessPoints.root.eoamCommandProcessor import EoamCommandProcessor
         from vendors.KeyMile.accessPoints.root.multicastCommandProcessor import MulticastCommandProcessor
-        from vendors.KeyMile.accessPoints.root.tdmConnectionsCommandProcessor import TdmConnectionsCommandProcessor
+        from vendors.KeyMile.accessPoints.root.tdmconnectionsCommandProcessor import TdmconnectionsCommandProcessor
         from vendors.KeyMile.accessPoints.root.services.servicesCommandProcessor import ServicesCommandProcessor
         from vendors.KeyMile.accessPoints.root.unit.logport.logportsCommandProcessor import LogportsCommandProcessor
         from vendors.KeyMile.accessPoints.root.unit.logport.port.logportCommandProcessor import \
@@ -582,7 +582,7 @@ class BaseCommandProcessor(base.CommandProcessor):
             return_to = RootCommandProcessor
         elif current_processor.__class__ == MulticastCommandProcessor:
             return_to = RootCommandProcessor
-        elif current_processor.__class__ == TdmConnectionsCommandProcessor:
+        elif current_processor.__class__ == TdmconnectionsCommandProcessor:
             return_to = RootCommandProcessor
         elif current_processor.__class__ == ServicesCommandProcessor:
             return_to = RootCommandProcessor
