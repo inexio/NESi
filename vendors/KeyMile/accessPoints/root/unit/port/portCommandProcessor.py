@@ -62,9 +62,14 @@ class PortCommandProcessor(BaseCommandProcessor):
         self.access_points = ()
         port = self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
 
-        #TODO: add interfaces for ftth and special cards
         for chan in self._model.get_chans('port_id', port.id):
             identifier = 'chan-' + chan.name.split('/')[-1]
+            if identifier in self.access_points:
+                continue
+            self.access_points += (identifier,)
+
+        for interface in self._model.get_interfaces('port_id', port.id):
+            identifier = 'interface-' + interface.name.split('/')[-1]
             if identifier in self.access_points:
                 continue
             self.access_points += (identifier,)
@@ -96,7 +101,7 @@ class PortCommandProcessor(BaseCommandProcessor):
     def do_createinterface(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
         card = self._model.get_card('name',  self._parent.component_id)
-        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.board_name.contains('SUE'):
+        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and 'SUE' in card.board_name:
             # vcc profile and vlan profile
             vlan_prof, = self._dissect(args, str)
             # TODO: Check if profiles := default or profile names
