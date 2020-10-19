@@ -81,6 +81,26 @@ class RootCommandProcessor(BaseCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
+    def do_ftpserver(self, command, *args, context=None):
+        if self._validate(args, str, str, str) and context['component_path'].split('/')[-1] != 'cfgm':
+            ip, login, pw = self._dissect(args, str, str, str)
+            try:
+                self._model.set_backup(ip, login, pw)
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_upload(self, command, *args, context=None):
+        if self._validate(args, '/cfgm/configuration', str) and context['component_path'].split('/')[-1] != 'cfgm':
+            path,  = self._dissect(args, '/cfgm/configuration', str)
+            try:
+                self._model.set_path(path)
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 
