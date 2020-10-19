@@ -24,6 +24,10 @@ class KeyMileChannel(base.Resource):
     port_id = base.Field('port_id')
     name = base.Field('name')
     description = base.Field('description')
+    chan_profile_name = base.Field('chan_profile_name')
+
+    def set_profile_name(self, name):
+        self.update(chan_profile_name=name)
 
 
 class KeyMileChannelCollection(base.ResourceCollection):

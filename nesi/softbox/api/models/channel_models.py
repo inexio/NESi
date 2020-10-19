@@ -18,6 +18,7 @@ class Channel(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64))
     description = db.Column(db.String())
+    chan_profile_name = db.Column(db.String(), default='')
     box_id = db.Column(db.Integer, db.ForeignKey('box.id'))
     port_id = db.Column(db.Integer, db.ForeignKey('port.id'))
     interfaces = db.relationship('Interface', backref='Channel', lazy='dynamic')

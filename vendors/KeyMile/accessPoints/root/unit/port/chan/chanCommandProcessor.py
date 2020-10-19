@@ -167,7 +167,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
                                                     vlan_profile=vlan_prof)
                     context['spacer1'] = self.create_spacers((63,), (str(id),))[0] * ' '
                     context['id'] = str(id)
-                    # TODO: Template is unknown
+                    # TODO: unknown Template
                     text = self._render('vcc_success', *scopes, context=context)
                     self._write(text)
                 except AssertionError:
@@ -182,26 +182,51 @@ class ChanCommandProcessor(BaseCommandProcessor):
         raise exceptions.CommandSyntaxError(command=command)
 
     def set(self, command, *args, context=None):
+        card = self._model.get_card('name', self._parent._parent.component_id)
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate(args, 'test', str):
-            ip, = self._dissect(args, 'test', str)
-            #TODO test case
-            return
+        elif self._validate(args, 'chanprofile', str) and 'SUV' in card.board_name:
+            name, = self._dissect(args, 'chanprofile', str)
+            try:
+                #TODO: Check if profile with this name exists or default
+                channel = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+                channel.set_profile_name(name)
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        elif self._validate(args, 'ProfileName', str) and 'SUV' not in card.board_name:
+            name, = self._dissect(args, 'ProfileName', str)
+            try:
+                # TODO: Check if profile with this name exists or default
+                channel = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+                channel.set_profile_name(name)
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
     def get_property(self, command, *args, context=None):
-        #card = self._model.get_card('name', self.component_id)
+        card = self._model.get_card('name', self._parent._parent.component_id)
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
+        elif self._validate(args, 'Chanprofile') and 'SUV' in card.board_name:
+            channel = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+            context['spacer1'] = self.create_spacers((67,), (channel.chan_profile_name,))[0] * ' '
+            context['profile_name'] = channel.chan_profile_name
+            text = self._render('chan_profile', *scopes, context=context)
+            self._write(text)
+        elif self._validate(args, 'ProfileName') and 'SUV' not in card.board_name:
+            channel = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+            context['spacer1'] = self.create_spacers((67,), (channel.chan_profile_name,))[0] * ' '
+            context['profile_name'] = channel.chan_profile_name
+            text = self._render('chan_profile', *scopes, context=context)
+            self._write(text)
         else:
             raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                    template_scopes=('login', 'base', 'execution_errors'))
