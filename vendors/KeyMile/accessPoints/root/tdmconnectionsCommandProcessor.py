@@ -14,13 +14,13 @@ from nesi import exceptions
 from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 
 
-class TdmConnectionsCommandProcessor(BaseCommandProcessor):
+class TdmconnectionsCommandProcessor(BaseCommandProcessor):
     __name__ = 'tdmConnections'
     management_functions = ('main', 'cfgm')
     access_points = ()
 
-    from .tdmConnectionsManagementFunctions import main
-    from .tdmConnectionsManagementFunctions import cfgm
+    from .tdmconnectionsManagementFunctions import main
+    from .tdmconnectionsManagementFunctions import cfgm
 
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
