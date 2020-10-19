@@ -43,6 +43,12 @@ class BaseCommandProcessor(base.CommandProcessor):
         elif object.admin_state == '1':
             if type == 'port':
                 object.admin_state = 'Up'
+        elif object.admin_state == '2':
+            if type == 'port':
+                object.admin_state = 'Locked'
+        elif object.admin_state == '3':
+            if type == 'port':
+                object.admin_state = 'Unlocked'
 
         if object.operational_state == '0':
             if type == 'port':

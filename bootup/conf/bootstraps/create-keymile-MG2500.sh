@@ -490,6 +490,17 @@ req='{
 
 unit_19=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 
+### Port-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$unit_19',
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_2_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
 ### PortGroupPort-1 ###
 
 # Create a physical port at the network device (admin operation)
