@@ -32,7 +32,7 @@ class Port(db.Model):
     shutdown = db.Column(db.Boolean(), default=False)
     speed = db.Column(db.Enum('10M', '1G', '10G'), default='1G')
     operational_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating
-    admin_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating
+    admin_state = db.Column(db.Enum('0', '1', '2', '3'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating; KeyMile:  0 => down, 1 => up, 2 => locked, 3 => unlocked
     upstream = db.Column(db.Integer(), default=0)
     downstream = db.Column(db.Integer(), default=0)
     upstream_max = db.Column(db.String(), default="100000")
@@ -313,3 +313,4 @@ class Port(db.Model):
     interfaces = db.relationship('Interface', backref='Port', lazy='dynamic')
     label1 = db.Column(db.String(), default='""')
     label2 = db.Column(db.String(), default='""')
+    loopbacktest_state = db.Column(db.Enum('Failed', 'Passed', 'Running', 'NoTestResult', 'Stopped', 'Interrupted'), default='NoTestResult')

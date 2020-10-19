@@ -19,11 +19,23 @@ class KeyMilePort(Port):
     """Represent physical port resource."""
     label1 = base.Field('label1')
     label2 = base.Field('label2')
+    loopbacktest_state = base.Field('loopbacktest_state')
 
     def set_label(self, l1, l2, desc):
         self.update(label1=l1)
         self.update(label2=l2)
         self.update(description=desc)
+
+    def set_test_state(self, state):
+        self.update(loopbacktest_state=state)
+
+    def lock_admin(self):
+        """Set the admin port state to up"""
+        self.update(admin_state='2')
+
+    def unlock_admin(self):
+        """Set the admin port state to down"""
+        self.update(admin_state='3')
 
 
 class KeyMilePortCollection(PortCollection):

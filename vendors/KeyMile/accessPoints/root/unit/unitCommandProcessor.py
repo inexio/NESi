@@ -55,7 +55,6 @@ class UnitCommandProcessor(BaseCommandProcessor):
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-
         elif self._validate(args, 'SubscriberList') and context['component_path'].split('/')[-1] == 'status' and \
                 (card.product == 'isdn' or card.product == 'analog'):
             text = self._render('subscriberList_top', *scopes, context=context)
