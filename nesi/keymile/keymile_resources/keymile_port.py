@@ -20,6 +20,8 @@ class KeyMilePort(Port):
     label1 = base.Field('label1')
     label2 = base.Field('label2')
     loopbacktest_state = base.Field('loopbacktest_state')
+    melttest_state = base.Field('melttest_state')
+    linetest_state = base.Field('linetest_state')
 
     def set_label(self, l1, l2, desc):
         self.update(label1=l1)
@@ -36,6 +38,12 @@ class KeyMilePort(Port):
     def unlock_admin(self):
         """Set the admin port state to down"""
         self.update(admin_state='3')
+
+    def set_melttest_state(self, state):
+        self.update(melttest_state=state)
+
+    def set_linetest_state(self, state):
+        self.update(linetest_state=state)
 
 
 class KeyMilePortCollection(PortCollection):

@@ -314,3 +314,5 @@ class Port(db.Model):
     label1 = db.Column(db.String(), default='""')
     label2 = db.Column(db.String(), default='""')
     loopbacktest_state = db.Column(db.Enum('Failed', 'Passed', 'Running', 'NoTestResult', 'Stopped', 'Interrupted'), default='NoTestResult')
+    melttest_state = db.Column(db.Enum('Failed', 'Passed', 'Running', 'NotTested'), default='NotTested')
+    linetest_state = db.Column(db.Enum('Failed', 'Passed', 'Running', 'NotTested'), default='NotTested')
