@@ -14,7 +14,6 @@ import os
 
 from nesi.keymile.keymile_resources import *
 
-
 from nesi.softbox.base_resources import credentials, base
 from nesi.softbox.base_resources.box import BoxCollection, Box, logging
 
@@ -71,19 +70,25 @@ class KeyMileBox(Box):
     @property
     def subscribers(self):
         """Return `SubscriberCollection` object."""
-        return keymile_subscriber.KeymileSubscriberCollection(
+        return keymile_subscriber.KeyMileSubscriberCollection(
             self._conn, base.get_sub_resource_path_by(self, 'subscribers'))
 
     @property
     def portgroupsports(self):
         """Return `PortgrouportCollection` object."""
-        return keymile_portgroupport.KeymilePortGroupPortCollection(
+        return keymile_portgroupport.KeyMilePortGroupPortCollection(
             self._conn, base.get_sub_resource_path_by(self, 'portgrouports'))
 
     def logports(self):
         """Return `LogPortCollection` object."""
         return keymile_logport.KeyMileLogPortCollection(
             self._conn, base.get_sub_resource_path_by(self, 'logports'))
+
+    @property
+    def srvcs(self):
+        """Return `SrvcCollection` object."""
+        return keymile_srvc.KeyMileSrvcCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'srvcs'))
 
     def get_card(self, field, value):
         """Get specific card object."""
@@ -160,33 +165,45 @@ class KeyMileBox(Box):
 
     def get_subscriber(self, field, value):
         """Get specific subscriber object."""
-        return keymile_subscriber.KeymileSubscriberCollection(
+        return keymile_subscriber.KeyMileSubscriberCollection(
             self._conn, base.get_sub_resource_path_by(self, 'subscribers'),
             params={field: value}).find_by_field_value(field, value)
 
     def get_subscribers(self, field, value):
         """Get specific subscribers object."""
-        return keymile_subscriber.KeymileSubscriberCollection(
+        return keymile_subscriber.KeyMileSubscriberCollection(
             self._conn, base.get_sub_resource_path_by(self, 'subscribers'),
             params={field: value})
 
     def add_subscriber(self, **fields):
         """Add new subscriber."""
-        return keymile_subscriber.KeymileSubscriber.create(
+        return keymile_subscriber.KeyMileSubscriber.create(
                 self._conn,
                 os.path.join(self.path, 'subscribers'),
                 **fields)
 
     def get_portgroupport(self, field, value):
         """Get specific portgroupport object."""
-        return keymile_portgroupport.KeymilePortGroupPortCollection(
+        return keymile_portgroupport.KeyMilePortGroupPortCollection(
             self._conn, base.get_sub_resource_path_by(self, 'portgroupports'),
             params={field: value}).find_by_field_value(field, value)
 
     def get_portgroupports(self, field, value):
         """Get specific portgroupports object."""
-        return keymile_portgroupport.KeymilePortGroupPortCollection(
+        return keymile_portgroupport.KeyMilePortGroupPortCollection(
             self._conn, base.get_sub_resource_path_by(self, 'portgroupports'),
+            params={field: value})
+    
+    def get_srvc(self, field, value):
+        """Get specific srvc object."""
+        return keymile_srvc.KeyMileSrvcCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'srvcs'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_srvcs(self, field, value):
+        """Get specific srvcs object."""
+        return keymile_srvc.KeyMileSrvcCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'srvcs'),
             params={field: value})
 
 
