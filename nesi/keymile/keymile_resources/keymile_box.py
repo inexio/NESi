@@ -207,6 +207,13 @@ class KeyMileBox(Box):
             self._conn, base.get_sub_resource_path_by(self, 'srvcs'),
             params={field: value})
 
+    def add_srvc(self, **fields):
+        """Add new srvc."""
+        return keymile_srvc.KeyMileSrvc.create(
+                self._conn,
+                os.path.join(self.path, 'srvcs'),
+                **fields)
+
 
 class KeyMileBoxCollection(BoxCollection):
     """Represent a collection of boxen.
