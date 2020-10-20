@@ -200,9 +200,6 @@ class BaseCommandProcessor(base.CommandProcessor):
                                                    command=command)
 
     def change_directory(self, path, context=None):
-        if re.match("1to1DoubleTag|1to1SingleTag|mcast|nto1|pls|tls", path):
-            context['ServiceType'] = path
-            path = 'subpacket'
         path = path.lower()
         if path == '/':
             if self.__name__ != 'root':
@@ -214,9 +211,11 @@ class BaseCommandProcessor(base.CommandProcessor):
         components = [x for x in path.split('/') if x]
 
         if not re.search(
-                '^(unit-[0-9]+|port-[0-9]+|portgroup-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|alarm-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|packet|subpacket|srvc-[0-9]|macaccessctrl|tdmconnections|logports|logport-[0-9]|\.|\.\.)$',
+                '^(unit-[0-9]+|port-[0-9]+|portgroup-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|alarm-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|packet|subpacket|srvc-[0-9]|macaccessctrl|tdmconnections|logports|logport-[0-9]|1to1doubletag|1to1singletag|mcast|nto1|pls|tls|\.|\.\.)$',
                 components[0]):
-            raise exceptions.SoftboxenError()
+            raise exceptions.CommandExecutionError(template='invalid_management_function_error',
+                                                       template_scopes=('login', 'base', 'execution_errors'),
+                                                       command=None)
 
         if path == '.':
             return self
@@ -280,7 +279,17 @@ class BaseCommandProcessor(base.CommandProcessor):
 
                 command_processor = component_type.capitalize() + 'CommandProcessor'
             else:
-                command_processor = components[0].capitalize() + 'CommandProcessor'
+                if components[0] in ('1to1doubletag', '1to1singletag', 'mcast', 'nto1', 'pls', 'tls'):
+                    if context['path'].split('/')[-1] in (
+                    '1to1doubletag', '1to1singletag', 'mcast', 'nto1', 'pls', 'tls'):
+                        raise exceptions.CommandExecutionError(command=None, template=None,
+                                                               template_scopes=())  # TODO: fix exception to not require all fields as empty
+
+                    context['ServiceType'] = components[0]
+
+                    command_processor = 'SubpacketCommandProcessor'
+                else:
+                    command_processor = components[0].capitalize() + 'CommandProcessor'
 
             if component_type == 'unit':
                 if (self._model.version == '2200' and not 9 <= int(component_id) <= 12) or (self._model.version == '2300' and not 7 <= int(component_id) <= 14) or (self._model.version == '2500' and not 1 <= int(component_id) <= 21):
@@ -319,26 +328,40 @@ class BaseCommandProcessor(base.CommandProcessor):
                 if self.__name__ != 'chan':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
-            elif component_type == 'packet' or component_type == 'macAccessCtrl':
+
+            elif components[0] in ('packet', 'macAccessCtrl'):
                 if self.__name__ != 'services':
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-            elif component_type == 'subpacket':
-                if self.__name__ != 'packet':
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-            elif component_type == 'srvc':
-                if self.__name__ != 'subpacket':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             if components[0] in ('fan', 'eoam', 'tdmConnections', 'multicast', 'services'):
                 if self.__name__ != 'root':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
+            if components[0] in ('1to1doubletag', '1to1singletag', 'mcast', 'nto1', 'pls', 'tls'):
+                if self.__name__ != 'packet':
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
 
             if components[0] in ('main', 'cfgm', 'fm', 'pm', 'status'):
-                if re.search('(main|cfgm|fm|pm|status)', context['path']):
-                    return self
+                if context['path'].split('/')[-1] in ('main', 'cfgm', 'fm', 'pm', 'status'):
+                    raise exceptions.CommandExecutionError(command=None, template='invalid_address_error', template_scopes=('login', 'base', 'execution_errors'))
+
+                mf_layers = {}
+                if components[0] == 'status':
+                    mf_layers = self.status
+                elif components[0] == 'cfgm':
+                    mf_layers = self.cfgm
+                elif components[0] == 'fm':
+                    mf_layers = self.fm
+                elif components[0] == 'pm':
+                    mf_layers = self.pm
+                elif components[0] == 'main':
+                    mf_layers = self.main
+
+                if len(mf_layers) == 0:
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                     template_scopes=())  # TODO: fix exception to not require all fields as empty
+
                 if context['component_path'] == '/':
                     new_path = components[0]
                 else:
@@ -508,18 +531,12 @@ class BaseCommandProcessor(base.CommandProcessor):
             raise exceptions.CommandSyntaxError()
         elif self._validate(args, str):
             path = args[0]
-            if re.match("1to1DoubleTag|1to1SingleTag|mcast|nto1|pls|tls", path):
-                context['ServiceType'] = path
-                path = 'subpacket'
-
             try:
                 subprocessor = self.change_directory(path, context=context)
                 return_to = self.get_command_processor(subprocessor)
             except:
                 context['component_path'] = context['path']
-                raise exceptions.CommandExecutionError(template='invalid_management_function_error',
-                                                       template_scopes=('login', 'base', 'execution_errors'),
-                                                       command=None)
+                raise
             context['path'] = context['component_path']
             subprocessor.loop(context=context, return_to=return_to)
         else:
