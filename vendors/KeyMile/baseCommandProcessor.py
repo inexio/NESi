@@ -201,63 +201,32 @@ class BaseCommandProcessor(base.CommandProcessor):
 
     def change_directory(self, path, context=None):
         path = path.lower()
-        if re.search('^(?:[^.]+/)+\.\.$', path):
+
+        if re.search('^(?:[^.]+/)+\.{1,2}$', path):
             raise exceptions.CommandExecutionError(template='invalid_management_function_error',
                                                    template_scopes=('login', 'base', 'execution_errors'),
                                                    command=None)
-        if re.search('^(?:[^.]+/)+\.\.(?:/.+)+$', path):
+        if re.search('^(?:[^.]+/)+\.{1,2}(?:/.+)+$', path):
             raise exceptions.CommandExecutionError(template='invalid_address_error',
                                                    template_scopes=('login', 'base', 'execution_errors'),
                                                    command=None)
 
-        if path == '/':
-            if self.__name__ != 'root':
-                return self._parent.change_directory(path, context=context)
-            else:
-                context['path'] = '/'
-                return self
+        allowed_path_components = (
+            'unit-[0-9]+', 'port-[0-9]+', 'portgroup-[0-9]+', 'chan-[0-9]+', 'interface-[0-9]+', 'vcc-[0-9]+',
+            'alarm-[0-9]+', 'main', 'cfgm', 'fm', 'pm', 'status', 'eoam', 'fan', 'multicast', 'services', 'packet',
+            'srvc-[0-9]', 'macaccessctrl', 'tdmconnections', 'logports', 'logport-[0-9]', '1to1doubletag',
+            '1to1singletag', 'mcast', 'nto1', 'pls', 'tls', '\.', '\.\.'
+        )
 
         components = [x for x in path.split('/') if x]
-
-        if not re.search(
-                '^(unit-[0-9]+|port-[0-9]+|portgroup-[0-9]+|chan-[0-9]+|interface-[0-9]+|vcc-[0-9]+|alarm-[0-9]+|main|cfgm|fm|pm|status|eoam|fan|multicast|services|packet|subpacket|srvc-[0-9]|macaccessctrl|tdmconnections|logports|logport-[0-9]|1to1doubletag|1to1singletag|mcast|nto1|pls|tls|\.|\.\.)$',
-                components[0]):
-            raise exceptions.CommandExecutionError(template='invalid_management_function_error',
-                                                       template_scopes=('login', 'base', 'execution_errors'),
-                                                       command=None)
-
-        if path == '.':
-            return self
-
-        if path.startswith('./'):
-            if path == './':
-                return self
-
-            return self.change_directory(path[2:], context=context)
-
-        if path.startswith('..'):
-            splitted_path = [x for x in context['path'].split('/') if x]
-            exit_component = None
-            if len(splitted_path) != 0:
-                exit_component = splitted_path.pop()
-            context['path'] = '/' + '/'.join(splitted_path)
-
-            if exit_component in ('main', 'cfgm', 'fm', 'pm', 'status'):
-                self.set_prompt_end_pos(context=context)
-                if path != '..':
-                    return self.change_directory(path[3:], context=context)
-                return self
-
-            if path == '..':
-                if self.__name__ == 'root':
-                    return self
-                return self._parent
-
-            if self.__name__ == 'root':
-                return self.change_directory(path[3:], context=context)
-
-            return self._parent.change_directory(path[3:], context=context)
         if path.startswith('/'):
+            if path == '/':
+                if self.__name__ != 'root':
+                    return self._parent.change_directory(path, context=context)
+                else:
+                    context['path'] = '/'
+                    return self
+
             if 'unit-' not in components[0] and components[0] not in (
                     'eoam', 'fan', 'multicast', 'services', 'tdmConnection', 'main', 'cfgm', 'fm', 'pm', 'status'):
                 raise exceptions.CommandExecutionError(command=None, template=None,
@@ -268,7 +237,44 @@ class BaseCommandProcessor(base.CommandProcessor):
             else:
                 context['path'] = '/'
                 subprocessor = self.change_directory(path.lstrip('/'), context=context)
+        elif path.startswith('.'):
+            if path == '.':
+                return self
+
+            if path.startswith('./'):
+                if path == './':
+                    return self
+
+                return self.change_directory(path[2:], context=context)
+
+            if path.startswith('..'):
+                splitted_path = [x for x in context['path'].split('/') if x]
+                exit_component = None
+                if len(splitted_path) != 0:
+                    exit_component = splitted_path.pop()
+                context['path'] = '/' + '/'.join(splitted_path)
+
+                if exit_component in ('main', 'cfgm', 'fm', 'pm', 'status'):
+                    self.set_prompt_end_pos(context=context)
+                    if path != '..':
+                        return self.change_directory(path[3:], context=context)
+                    return self
+
+                if path == '..' or path == '../':
+                    if self.__name__ == 'root':
+                        return self
+                    return self._parent
+
+                if self.__name__ == 'root':
+                    return self.change_directory(path[3:], context=context)
+
+                return self._parent.change_directory(path[3:], context=context)
         else:
+            if not re.search('^(' + '|'.join(allowed_path_components) + ')$', components[0]):
+                raise exceptions.CommandExecutionError(template='invalid_management_function_error',
+                                                       template_scopes=('login', 'base', 'execution_errors'),
+                                                       command=None)
+
             remaining_args = '/'.join(components[1:])
 
             component_type = None
@@ -324,6 +330,12 @@ class BaseCommandProcessor(base.CommandProcessor):
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'chan':
+                try:
+                    self._model.get_chan('name', self._parent.component_id + '/' + self.component_id + '/' + component_id)
+                except exceptions.InvalidInputError:
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+
                 if self.__name__ != 'port':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
@@ -336,19 +348,47 @@ class BaseCommandProcessor(base.CommandProcessor):
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'interface':
+                try:
+                    self._model.get_interface('name', self._parent.component_id + '/' + self.component_id + '/' + component_id)
+                except exceptions.InvalidInputError:
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+
                 if self.__name__ != 'port' and self.__name__ != 'chan' and self.__name__ != 'logport':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'logport':
+                try:
+                    self._model.get_logport('name', self._parent.component_id + '/L/' + component_id)
+                except exceptions.InvalidInputError:
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+
                 if self.__name__ != 'logports':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'vcc':
-                if self.__name__ != 'chan':
+                try:
+                    self._model.get_interface('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id + '/' + component_id)
+                except exceptions.InvalidInputError:
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
 
-            elif components[0] in ('packet', 'macAccessCtrl'):
+                if self.__name__ != 'chan':
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+            elif component_type == 'srvc':
+                try:
+                    self._model.get_srvc('name', 'srvc-' + component_id)
+                except exceptions.InvalidInputError:
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+
+                if self.__name__ != 'subpacket':
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+
+            if components[0] in ('packet', 'macAccessCtrl'):
                 if self.__name__ != 'services':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
@@ -386,6 +426,7 @@ class BaseCommandProcessor(base.CommandProcessor):
                 else:
                     new_path = '/' + components[0]
                 context['path'] += new_path
+                self.set_prompt_end_pos(context=context)
                 return self
 
             from vendors.KeyMile.accessPoints.root.unit.unitCommandProcessor import UnitCommandProcessor
@@ -416,19 +457,13 @@ class BaseCommandProcessor(base.CommandProcessor):
             from vendors.KeyMile.accessPoints.root.mgmt_unit.mgmt_port.mgmtportCommandProcessor import MgmtportCommandProcessor
             subprocessor = self._create_subprocessor(eval(command_processor), 'login', 'base')
 
-            if component_id is not None and self.component_id is not None:
-                subprocessor.set_component_id(self.component_id + '/' + component_id)
-
             if component_id is not None:
                 subprocessor.set_component_id(component_id)
 
             if context['path'] == '/':
                 new_path = components[0]
             else:
-                if path == 'subpacket':
-                    new_path = '/' + context['ServiceType']
-                else:
-                    new_path = '/' + components[0]
+                new_path = '/' + components[0]
             context['path'] += new_path
 
             if len(remaining_args) > 0:
@@ -492,7 +527,8 @@ class BaseCommandProcessor(base.CommandProcessor):
             except:
                 context['path'] = current_path
                 raise
-            subprocessor.loop(context=context, return_to=subprocessor._parent)
+            if not isinstance(subprocessor, self.__class__):
+                subprocessor.loop(context=context, return_to=subprocessor._parent)
         else:
             raise exceptions.CommandExecutionError(template='invalid_management_function_error',
                                                    template_scopes=('login', 'base', 'execution_errors'),
