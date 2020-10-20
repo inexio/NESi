@@ -62,10 +62,24 @@ class KeyMileBox(Box):
 
     @property
     def cards(self):
-        """Return `CredentialsCollection` object."""
+        """Return `cardCollection` object."""
         return keymile_card.KeyMileCardCollection(
             self._conn, base.get_sub_resource_path_by(
                 self, 'cards'))
+
+    @property
+    def mgmt_cards(self):
+        """Return `mgmtcardCollection` object."""
+        return keymile_mgmt_card.KeyMileMgntCardCollection(
+            self._conn, base.get_sub_resource_path_by(
+                self, 'mgmt_cards'))
+
+    @property
+    def mgmt_ports(self):
+        """Return `mgmtportCollection` object."""
+        return keymile_mgmt_port.KeyMileMgmtPortCollection(
+            self._conn, base.get_sub_resource_path_by(
+                self, 'mgmt_ports'))
 
     @property
     def subscribers(self):
@@ -101,6 +115,18 @@ class KeyMileBox(Box):
         return keymile_card.KeyMileCardCollection(
             self._conn, base.get_sub_resource_path_by(self, 'cards'),
             params={field: value})
+
+    def get_mgmt_card(self, field, value):
+        """Get specific mgnt card object."""
+        return keymile_mgmt_card.KeyMileMgntCardCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'mgmt_cards'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_mgmt_port(self, field, value):
+        """Get specific mgmtport object."""
+        return keymile_mgmt_port.KeyMileMgmtPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'mgmt_ports'),
+            params={field: value}).find_by_field_value(field, value)
 
     def get_port(self, field, value):
         """Get specific port object."""

@@ -17,7 +17,7 @@ class MgmtPort(db.Model):
     name = db.Column(db.String(64))
     box_id = db.Column(db.Integer, db.ForeignKey('box.id'))
     mgmt_card_id = db.Column(db.Integer, db.ForeignKey('mgmt_card.id'))
+
     admin_state = db.Column(db.Enum('0', '1'), default='0')
     operational_state = db.Column(db.Enum('0', '1'), default='0')
-
     description = db.Column(db.String(64))

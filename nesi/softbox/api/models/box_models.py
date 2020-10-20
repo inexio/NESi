@@ -34,6 +34,8 @@ from .portgroupport_models import PortGroupPort
 from .logport_models import LogPort
 from .interface_models import Interface
 from .srvc_models import Srvc
+from .mgmt_card_models import MgmtCard
+from .mgmt_port_models import MgmtPort
 
 
 class Box(db.Model):
