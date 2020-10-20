@@ -1,12 +1,10 @@
 admin
 secret
-#analog or isdn
-cd /unit-{$slotIpss}/cfgm
+cd /unit-19/cfgm
 get Sip
-set Proxy PrimaryOnly $domain 5060 "" 0 true Options 10 "" 0 true Options 10
-set Registrar $domain 5060 OneByOneRegistration 1
-set Sip $name $domain 5060 +49 $area 500 4 false None true 30 false false 1800
-set digitmap {sip "xxx" $domain 0 ""; sip "*xx*x.#" $domain 0 ""; sip "*xx*" $domain 0 ""; sip "*xx#" $domain 0 ""; sip "#xx#" $domain 0 ""; }
+set Proxy PrimaryOnly domain 5060 "" 0 true Options 10 "" 0 true Options 10
+set Registrar domain 5060 OneByOneRegistration 1
+set Sip $name domain 5060 +49 area 500 4 false None true 30 false false 1800
 cd /cfgm
 save
 exit

@@ -1,18 +1,11 @@
 admin
 secret
-#adsl
-cd /unit-$card/port-$port/main
+cd /unit-1/port-1/main
 set AdministrativeStatus down
-#vdsl
-cd /unit-$card/port-$port/main
+cd /unit-5/port-1/main
 set AdministrativeStatus down
-#xdsl
-cd /unit-$card/port-$port/main
+cd /unit-7/port-1/main
 set AdministrativeStatus down
-#ftth
-cd /unit-$card/port-$port/main
-set AdministrativeStatus down
-#sdsl
-cd /unit-$card/logports/logport-$port/main
+cd /unit-2/logports/logport-2/main
 set AdministrativeStatus down
 exit

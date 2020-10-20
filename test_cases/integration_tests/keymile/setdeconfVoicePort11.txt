@@ -1,7 +1,6 @@
 admin
 secret
-#isdn or analog
-cd /unit-$ipsxSlot/portgroup-$card/port-$port/cfgm
+cd /unit-19/portgroup-1/port-1/cfgm
 get pstnport
 cd /
 exit
