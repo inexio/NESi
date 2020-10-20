@@ -385,7 +385,7 @@ req='{
   "description": "Channel #1"
 }'
 
-chan_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/channels)
+chan_5_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/channels)
 
 ### Unit-6 ###
 
@@ -413,6 +413,17 @@ req='{
 }'
 
 unit_6=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
+
+### Port-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "card_id": '$unit_6',
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_6_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
 
 ### Unit-7 ###
 
@@ -450,7 +461,7 @@ req='{
   "operational_state": "1"
 }'
 
-port_2_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+port_7_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
 
 ### Unit-8 ###
 
@@ -515,7 +526,7 @@ req='{
   "operational_state": "1"
 }'
 
-port_4_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/mgmt_ports)
+port_11_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/mgmt_ports)
 
 
 
@@ -539,7 +550,7 @@ req='{
   "operational_state": "1"
 }'
 
-port_2_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+port_19_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
 
 ### PortGroupPort-1 ###
 

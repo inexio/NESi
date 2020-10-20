@@ -1,10 +1,9 @@
 admin
 secret
-cd /unit-{$voice_card}/main
+cd /unit-19/main
 get HardwareAndSoftware
-/unit-$voice_card/port-$voice_port/status/StartLineTest
-get /unit-$voice_card/port-$voice_port/status/LineTestResults
-#SUVM6
-cd /unit-$card/port-$port/main
+/unit-19/port-1/status/StartLineTest
+get /unit-19/port-1/status/LineTestResults
+cd /unit-6/port-1/main
 set AdministrativeStatus up
 exit

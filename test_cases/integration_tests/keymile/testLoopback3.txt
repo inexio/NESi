@@ -1,7 +1,6 @@
 admin
 secret
-#isdn
-cd /unit-$voiceCard/port-$voicePort/status
+cd /unit-19/port-1/status
 Lock
 StartQuickLoopbackTest
 get QuickLoopbackTest

@@ -10,12 +10,4 @@ cd ..
 cd unit-1
 ls
 cd ..
-
-
-
-
-
-
-
-
 exit
