@@ -40,7 +40,7 @@ class LogportsCommandProcessor(BaseCommandProcessor):
         raise exceptions.CommandSyntaxError(command=command)
 
     def do_delete(self, command, *args, context=None):
-        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm':
+        if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm':
             name, = self._dissect(args, str)
             if name.startswith('logport-'):
                 id = name.split('-')[1]
@@ -55,7 +55,7 @@ class LogportsCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_create(self, command, *args, context=None):
-        if self._validate(args, str, str, str, str) and context['component_path'].split('/')[-1] == 'cfgm':
+        if self._validate(args, str, str, str, str) and context['path'].split('/')[-1] == 'cfgm':
             p1, p2, p3, p4, = self._dissect(args, str, str, str, str)
             ids = []
             ids.append(int(p1.split('-')[1])) if p1.startswith('port-') else ids

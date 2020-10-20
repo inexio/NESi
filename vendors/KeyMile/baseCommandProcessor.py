@@ -111,13 +111,12 @@ class BaseCommandProcessor(base.CommandProcessor):
         context['spacer'] = self.create_spacers((67,), (context['path'],))[0] * ' '
         self._write(self._render('pwd', 'login', 'base', context=context))
 
-    def ls(self, context=None, path_type='path'):
+    def ls(self, context=None):
         scopes = ('login', 'base', 'ls')
-        context['ls_path'] = context[path_type]
-        if re.search('(pm|fm|status|main|cfgm)', context['ls_path']):
-            mf_type = context['ls_path'].split('/')[-1]
+        if re.search('(pm|fm|status|main|cfgm)', context['path']):
+            mf_type = context['path'].split('/')[-1]
 
-            mf_layers = None
+            mf_layers = {}
             if mf_type == 'status':
                 mf_layers = self.status
             elif mf_type == 'cfgm':
@@ -183,17 +182,18 @@ class BaseCommandProcessor(base.CommandProcessor):
             pass
         elif self._validate(args, str):
             path = args[0]
+            current_path = context['path']
 
             try:
                 tmp_cmdproc = self.change_directory(path, context=context)
-                tmp_cmdproc.ls(context=context, path_type='component_path')
+                tmp_cmdproc.ls(context=context)
             except exceptions.CommandExecutionError:
-                context['component_path'] = context['path']
+                context['path'] = current_path
                 raise exceptions.CommandExecutionError(template='invalid_management_function_error',
                                                        template_scopes=('login', 'base', 'execution_errors'),
                                                        command=None)
 
-            context['component_path'] = context['path']
+            context['path'] = current_path
         else:
             raise exceptions.CommandExecutionError(template='invalid_management_function_error',
                                                    template_scopes=('login', 'base', 'execution_errors'),
@@ -205,7 +205,7 @@ class BaseCommandProcessor(base.CommandProcessor):
             if self.__name__ != 'root':
                 return self._parent.change_directory(path, context=context)
             else:
-                context['component_path'] = '/'
+                context['path'] = '/'
                 return self
 
         components = [x for x in path.split('/') if x]
@@ -237,16 +237,15 @@ class BaseCommandProcessor(base.CommandProcessor):
                                                        command=None)
 
         if path.startswith('..'):
-            splitted_path = [x for x in context['component_path'].split('/') if x]
+            splitted_path = [x for x in context['path'].split('/') if x]
             exit_component = None
             if len(splitted_path) != 0:
                 exit_component = splitted_path.pop()
-            context['component_path'] = '/' + '/'.join(splitted_path)
+            context['path'] = '/' + '/'.join(splitted_path)
 
             if exit_component in ('main', 'cfgm', 'fm', 'pm', 'status'):
                 self.set_prompt_end_pos(context=context)
                 if path != '..':
-                    context['path'] = context['component_path']
                     return self.change_directory(path[3:], context=context)
                 return self
 
@@ -263,7 +262,7 @@ class BaseCommandProcessor(base.CommandProcessor):
             if self.__name__ != 'root':
                 subprocessor = self._parent.change_directory(path, context=context)
             else:
-                context['component_path'] = '/'
+                context['path'] = '/'
                 subprocessor = self.change_directory(path.lstrip('/'), context=context)
         else:
             remaining_args = '/'.join(components[1:])
@@ -362,11 +361,11 @@ class BaseCommandProcessor(base.CommandProcessor):
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                      template_scopes=())  # TODO: fix exception to not require all fields as empty
 
-                if context['component_path'] == '/':
+                if context['path'] == '/':
                     new_path = components[0]
                 else:
                     new_path = '/' + components[0]
-                context['component_path'] += new_path
+                context['path'] += new_path
                 return self
 
             from vendors.KeyMile.accessPoints.root.unit.unitCommandProcessor import UnitCommandProcessor
@@ -401,14 +400,14 @@ class BaseCommandProcessor(base.CommandProcessor):
             if component_id is not None:
                 subprocessor.set_component_id(component_id)
 
-            if context['component_path'] == '/':
+            if context['path'] == '/':
                 new_path = components[0]
             else:
                 if path == 'subpacket':
                     new_path = '/' + context['ServiceType']
                 else:
                     new_path = '/' + components[0]
-            context['component_path'] += new_path
+            context['path'] += new_path
 
             if len(remaining_args) > 0:
                 subprocessor = subprocessor.change_directory(remaining_args, context=context)
@@ -531,13 +530,13 @@ class BaseCommandProcessor(base.CommandProcessor):
             raise exceptions.CommandSyntaxError()
         elif self._validate(args, str):
             path = args[0]
+            current_path = context['path']
             try:
                 subprocessor = self.change_directory(path, context=context)
                 return_to = self.get_command_processor(subprocessor)
             except:
-                context['component_path'] = context['path']
+                context['path'] = current_path
                 raise
-            context['path'] = context['component_path']
             subprocessor.loop(context=context, return_to=return_to)
         else:
             raise exceptions.CommandExecutionError(template='invalid_management_function_error',
