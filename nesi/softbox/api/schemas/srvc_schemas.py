@@ -36,7 +36,7 @@ class SrvcsSchema(ma.ModelSchema):
     class SrvcSchema(ma.ModelSchema):
         class Meta:
             model = Srvc
-            fields = ('id', '_links')
+            fields = ('id', 'name', '_links')
 
         _links = ma.Hyperlinks(
             {'self': ma.URLFor(

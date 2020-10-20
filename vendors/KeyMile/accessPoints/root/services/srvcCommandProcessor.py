@@ -28,7 +28,7 @@ class SrvcCommandProcessor(BaseCommandProcessor):
         service_name = 'srvc-' + self.component_id
         services = self._model.get_srvcs('name', service_name)
         for s in services:
-            if s.service_type == context['ServiceType']:
+            if s.service_type.lower() == context['ServiceType']:
                 service = s
                 context['service'] = service
                 break
@@ -37,9 +37,10 @@ class SrvcCommandProcessor(BaseCommandProcessor):
             super().get_property(command, *args, context=context)
         except exceptions.CommandExecutionError:
             if self._validate((args[0],), 'Service') and context['path'].split('/')[-1] == 'cfgm':
-                if service.service_type == '1to1DoubleTag':
+                # TODO: Find missing templates, and replace placeholder templates
+                if service.service_type == '1to1doubletag':
                     template_name = 'service_onetoonedoubletag'
-                elif service.service_type == '1to1SingleTag':
+                elif service.service_type == '1to1singletag':
                     template_name = 'service_onetoonesingletag'
                 elif service.service_type == 'mcast':
                     template_name = 'service_mcast'

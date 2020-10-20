@@ -44,8 +44,22 @@ def update_srvc(box_id, id):
 @app.route(PREFIX + '/boxen/<box_id>/srvcs', methods=['POST'])
 def new_srvc(box_id):
     req = flask.request.json
+
+    if 'name' not in req or req['name'] == "":
+        srvcs = json.loads(show_components(SrvcsSchema(), Srvc, req={'service_type': req['service_type']}, box_id=box_id).data.decode('utf-8'))
+        last_srvc = None
+        for s in srvcs['members']:
+            last_srvc = s
+
+        if last_srvc is not None:
+            _, num = last_srvc['name'].split('-')
+            req['name'] = 'srvc-' + str(int(num)+1)
+        else:
+            req['name'] = 'srvc-1'
+
     response = new_component(SrvcSchema(), Srvc, req, box_id)
     return response, 201
+
 
 @app.route(PREFIX + '/boxen/<box_id>/srvcs/<id>', methods=['DELETE'])
 def del_srvc(box_id, id):

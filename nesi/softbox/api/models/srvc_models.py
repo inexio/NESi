@@ -18,6 +18,6 @@ class Srvc(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64))
     box_id = db.Column(db.Integer, db.ForeignKey('box.id'))
-    service_type = db.Column(db.Enum('1to1DoubleTag', '1to1SingleTag', 'mcast', 'nto1', 'pls', 'tls', ''), default='')
+    service_type = db.Column(db.Enum('1to1doubletag', '1to1singletag', 'mcast', 'nto1', 'pls', 'tls'))
     address = db.Column(db.String(), default='')
     svid = db.Column(db.Integer(), default=None)
