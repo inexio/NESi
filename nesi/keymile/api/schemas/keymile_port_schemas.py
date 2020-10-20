@@ -17,6 +17,9 @@ class KeyMilePortSchema(PortSchema):
     class Meta:
         model = Port
         fields = PortSchema.Meta.fields + ('channels', 'label1', 'label2', 'loopbacktest_state', 'melttest_state',
-                                           'linetest_state')
+                                           'linetest_state', 'profile1_enable', 'profile1_name', 'profile1_elength',
+                                           'profile2_enable', 'profile2_name', 'profile2_elength', 'profile3_enable',
+                                           'profile3_name', 'profile3_elength', 'profile4_enable', 'profile4_name',
+                                           'profile_mode')
 
     channels = ma.Nested(CpesSchema.CpeSchema, many=True)
