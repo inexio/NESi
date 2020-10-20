@@ -128,6 +128,12 @@ class KeyMileBox(Box):
             self._conn, base.get_sub_resource_path_by(self, 'mgmt_ports'),
             params={field: value}).find_by_field_value(field, value)
 
+    def get_mgmt_ports(self, field, value):
+        """Get specific mgmtport object."""
+        return keymile_mgmt_port.KeyMileMgmtPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'mgmt_ports'),
+            params={field: value})
+
     def get_port(self, field, value):
         """Get specific port object."""
         return keymile_port.KeyMilePortCollection(

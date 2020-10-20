@@ -23,11 +23,11 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
     from .portgroupportManagementFunctions import cfgm
     from .portgroupportManagementFunctions import status
 
-    def get_port_component(self):
+    def get_component(self):
         return self._model.get_portgroupport('name', self._parent._parent.component_id + '/G' + self._parent.component_id + '/' + self.component_id)
 
     def get_property(self, command, *args, context=None):
-        port = self.get_port_component()
+        port = self.get_component()
         scopes = ('login', 'base', 'get')
         try:
             super().get_property(command, *args, context=context)
@@ -131,7 +131,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                 enable, subident, register, phone, sip, proxy, codec, pstn, enterprise = self._dissect(args, 'pstnport',
                         str, str, str, str, str, str, str, str, str)
                 try:
-                    port = self.get_port_component()
+                    port = self.get_component()
                     enable = True if enable.lower() == 'true' else False
                     register = True if register.lower() == 'true' else False
                     phone = True if phone.lower() == 'true' else False
@@ -143,7 +143,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                                 str) and context['path'].split('/')[-1] == 'cfgm':
                 enable, number, username, password, displayname, privacy, register, phone, sip, proxy, codec, pstn, enterprise = self._dissect(args, 'pstnport', str, '{', str, str, str, str, str, '}', str, str, str, str, str, str, str)
                 try:
-                    port = self.get_port_component()
+                    port = self.get_component()
                     try:
                         subscriber = self._model.get_subscriber('number', int(number))
                         subscriber.set('autorisation_user_name', username)
@@ -167,7 +167,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                                 str) and context['path'].split('/')[-1] == 'cfgm':
                 enable, number, username, password, displayname, privacy, register, regdefault, layer1, sip, proxy, codec, isdnba = self._dissect(args, 'isdnport', str, '{', str, str, str, str, str, '}', str, str, str, str, str, str, str)
                 try:
-                    port = self.get_port_component()
+                    port = self.get_component()
                     try:
                         subscriber = self._model.get_subscriber('number', int(number))
                         assert subscriber.address == self._parent._parent.component_id + '/G' + self._parent.component_id + '/' + self.component_id
@@ -196,7 +196,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                 enable, subident, register, regdefault, layer1, sip, proxy, codec, isdnba = self._dissect(args, 'isdnport',
                         str, str, str, str, str, str, str, str, str)
                 try:
-                    port = self.get_port_component()
+                    port = self.get_component()
                     enable = True if enable.lower() == 'true' else False
                     register = True if register.lower() == 'true' else False
                     regdefault = True if regdefault.lower() == 'true' else False
