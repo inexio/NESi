@@ -1,5 +1,5 @@
                                                                    \ # Ip
-10.16.12.14                                                       \ # GatewayIpAddress
-255.255.255.0                                                      \ # SubnetMask
-10.16.12.1                                                        \ # DefaultGateway
+{{ context.card.gateway_ipaddress }}{{ context.spacer1 }}\ # GatewayIpAddress
+{{ context.card.subnet_mask }}{{ context.spacer2 }}\ # SubnetMask
+{{ context.card.default_gateway }}{{ context.spacer3 }}\ # DefaultGateway
 

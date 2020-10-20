@@ -103,6 +103,9 @@ class Card(db.Model):
     processor = db.Column(db.String(), default='')
     label1 = db.Column(db.String(), default='""')
     label2 = db.Column(db.String(), default='""')
+    gateway_ipaddress = db.Column(db.String(), default='""')
+    subnet_mask = db.Column(db.String(), default='""')
+    default_gateway = db.Column(db.String(), default='""')
 
     # Keymile ipsx2/3 card SIP specifications
     gateway_name = db.Column(db.String(), default='""')
