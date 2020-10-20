@@ -22,6 +22,36 @@ class KeyMilePort(Port):
     loopbacktest_state = base.Field('loopbacktest_state')
     melttest_state = base.Field('melttest_state')
     linetest_state = base.Field('linetest_state')
+    profile1_enable = base.Field('profile1_enable')
+    profile1_name = base.Field('profile1_name')
+    profile1_elength = base.Field('profile1_elength')
+    profile2_enable = base.Field('profile2_enable')
+    profile2_name = base.Field('profile2_name')
+    profile2_elength = base.Field('profile2_elength')
+    profile3_enable = base.Field('profile3_enable')
+    profile3_name = base.Field('profile3_name')
+    profile3_elength = base.Field('profile3_elength')
+    profile4_enable = base.Field('profile4_enable')
+    profile4_name = base.Field('profile4_name')
+    profile_mode = base.Field('profile_mode')
+
+    def set_profile(self, name):
+        self.update(profile1_name=name)
+
+
+    def set_profiles(self, e1, n1, el1, e2, n2, el2, e3, n3, el3, e4, n4, mode):
+        self.update(profile1_enable=e1)
+        self.update(profile1_name=n1)
+        self.update(profile1_elength=el1)
+        self.update(profile2_enable=e2)
+        self.update(profile2_name=n2)
+        self.update(profile2_elength=el2)
+        self.update(profile3_enable=e3)
+        self.update(profile3_name=n3)
+        self.update(profile3_elength=el3)
+        self.update(profile4_enable=e4)
+        self.update(profile4_name=n4)
+        self.update(profile_mode=mode)
 
     def set_label(self, l1, l2, desc):
         self.update(label1=l1)
