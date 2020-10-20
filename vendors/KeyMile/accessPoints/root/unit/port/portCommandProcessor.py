@@ -35,6 +35,35 @@ class PortCommandProcessor(BaseCommandProcessor):
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
+
+        elif self._validate(args, 'Portprofile') and context['component_path'].split('/')[-1] == 'cfgm' and 'SUVM'\
+                not in card.board_name and 'SUVD2' not in card.board_name and self.__name__ == 'port':
+            context['spacer1'] = self.create_spacers((67,), (port.profile1_name,))[0] * ' '
+            context['profile_name'] = port.profile1_name
+            text = self._render('port_profile', *scopes, context=context)
+            self._write(text)
+        elif self._validate(args, 'Portprofiles') and context['component_path'].split('/')[-1] == 'cfgm' and \
+                'SUVD2' in card.board_name and self.__name__ == 'port':
+            context['spacer1'] = self.create_spacers((67,), (port.profile1_name,))[0] * ' '
+            context['profile_name'] = port.profile1_name
+            text = self._render('port_profile', *scopes, context=context)
+            self._write(text)
+        elif self._validate(args, 'Portprofiles') and self.__name__ == 'port' and \
+                context['component_path'].split('/')[-1] == 'cfgm' and 'SUVM' in card.board_name:
+            context['spacer1'] = self.create_spacers((67,), (port.profile1_enable,))[0] * ' '
+            context['spacer2'] = self.create_spacers((67,), (port.profile1_name,))[0] * ' '
+            context['spacer3'] = self.create_spacers((67,), (port.profile1_elength,))[0] * ' '
+            context['spacer4'] = self.create_spacers((67,), (port.profile2_enable,))[0] * ' '
+            context['spacer5'] = self.create_spacers((67,), (port.profile2_name,))[0] * ' '
+            context['spacer6'] = self.create_spacers((67,), (port.profile2_elength,))[0] * ' '
+            context['spacer7'] = self.create_spacers((67,), (port.profile3_enable,))[0] * ' '
+            context['spacer8'] = self.create_spacers((67,), (port.profile3_name,))[0] * ' '
+            context['spacer9'] = self.create_spacers((67,), (port.profile3_elength,))[0] * ' '
+            context['spacer10'] = self.create_spacers((67,), (port.profile4_enable,))[0] * ' '
+            context['spacer11'] = self.create_spacers((67,), (port.profile4_name,))[0] * ' '
+            context['spacer12'] = self.create_spacers((67,), (port.profile_mode,))[0] * ' '
+            text = self._render('port_profiles', *scopes, context=dict(context, port=port))
+            self._write(text)
         elif self._validate((args[0],), 'AttainableRate') and context['component_path'].split('/')[-1] == 'status':
             text = self._render('attainable_rate', *scopes, context=context)
             self._write(text)
@@ -206,7 +235,7 @@ class PortCommandProcessor(BaseCommandProcessor):
                     interf = self._model.add_interface(name=name, port_id=port.id, vlan_profile=vlan_prof)
                     context['spacer1'] = self.create_spacers((57,), (str(id),))[0] * ' '
                     context['id'] = str(id)
-                    # TODO: Template is unknown
+                    # TODO: unknown Template
                     text = self._render('interface_success', *scopes, context=context)
                     self._write(text)
                 except AssertionError:
@@ -222,11 +251,47 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def set(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
+        card = self._model.get_card('name', self._parent.component_id)
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
+        elif self._validate(args, 'Portprofile', str) and context['component_path'].split('/')[-1] == 'cfgm' and 'SUVM'\
+                not in card.board_name and 'SUVD2' not in card.board_name and self.__name__ == 'port':
+            profile, = self._dissect(args, 'Portprofile', str)
+            try:
+                port = self.get_port_component()
+                port.set_profile(profile)
+
+            except exceptions.SoftboxenError():
+                raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                       template_scopes=('login', 'base', 'execution_errors'))
+        elif self._validate(args, 'Portprofiles', str) and context['component_path'].split('/')[-1] == 'cfgm' and \
+                'SUVD2' in card.board_name and self.__name__ == 'port':
+            profile, = self._dissect(args, 'Portprofiles', str)
+            try:
+                port = self.get_port_component()
+                port.set_profile(profile)
+
+            except exceptions.SoftboxenError():
+                raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                       template_scopes=('login', 'base', 'execution_errors'))
+        elif self._validate(args, 'Portprofiles', str, str, str, str, str, str, str, str, str, str, str, str) and \
+                context['component_path'].split('/')[-1] == 'cfgm' and 'SUVM' in card.board_name and self.__name__ == 'port':
+            en1, name1, elen1, en2, name2, elen2, en3, name3, elen3, en4, name4, mode = self._dissect(args,
+                                        'Portprofiles', str, str, str, str, str, str, str, str, str, str, str, str)
+            try:
+                port = self.get_port_component()
+                en1 = True if en1.lower() == 'true' else False
+                en2 = True if en2.lower() == 'true' else False
+                en3 = True if en3.lower() == 'true' else False
+                en4 = True if en4.lower() == 'true' else False
+                port.set_profiles(en1, name1, int(elen1), en2, name2, int(elen2), en3, name3, int(elen3), en4, name4, mode)
+
+            except exceptions.SoftboxenError():
+                raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                       template_scopes=('login', 'base', 'execution_errors'))
         elif self._validate(args, 'AdministrativeStatus', str) and context['component_path'].split('/')[-1] == 'main':
             state, = self._dissect(args, 'AdministrativeStatus', str)
             try:
