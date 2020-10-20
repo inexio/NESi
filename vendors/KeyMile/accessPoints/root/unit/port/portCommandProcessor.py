@@ -313,5 +313,41 @@ class PortCommandProcessor(BaseCommandProcessor):
             except exceptions.SoftboxenError():
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
+
+        elif self._validate(args, 'Mode', str) and context['path'].split('/')[-1] == 'cfgm' and "SUE" in \
+                card.board_name and self.__name__ == 'port' and card.product == 'ftth':
+            if '"' in args[1]:
+                mode = self.args_in_quotes_joiner((args[1],))
+            else:
+                mode, = self._dissect(args, 'Mode', str)
+            try:
+                port = self.get_port_component()
+                port.set_mode(mode)
+            except exceptions.SoftboxenError():
+                raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                       template_scopes=('login', 'base', 'execution_errors'))
+
+        elif self._validate(args, 'Mode', str, str, str) and context['path'].split('/')[-1] == 'cfgm' and "SUE" in \
+                card.board_name and self.__name__ == 'port' and card.product == 'ftth':
+            if '"' in args[1]:
+                mode = self.args_in_quotes_joiner(args[1:])
+            else:
+                mode, = self._dissect(args, 'Mode', str)
+            try:
+                port = self.get_port_component()
+                port.set_mode(mode)
+            except exceptions.SoftboxenError():
+                raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                       template_scopes=('login', 'base', 'execution_errors'))
+
+        elif self._validate(args, 'FlowControl', str) and context['path'].split('/')[-1] == 'cfgm' and "SUE" in \
+                card.board_name and self.__name__ == 'port' and card.product == 'ftth':
+            ctrl, = self._dissect(args, 'FlowControl', str)
+            try:
+                port = self.get_port_component()
+                port.set_flow_control(ctrl)
+            except exceptions.SoftboxenError():
+                raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                       template_scopes=('login', 'base', 'execution_errors'))
         else:
             raise exceptions.CommandSyntaxError(command=command)

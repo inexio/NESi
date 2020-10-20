@@ -20,6 +20,6 @@ class KeyMilePortSchema(PortSchema):
                                            'linetest_state', 'profile1_enable', 'profile1_name', 'profile1_elength',
                                            'profile2_enable', 'profile2_name', 'profile2_elength', 'profile3_enable',
                                            'profile3_name', 'profile3_elength', 'profile4_enable', 'profile4_name',
-                                           'profile_mode')
+                                           'profile_mode', 'mode', 'flow_control')
 
     channels = ma.Nested(CpesSchema.CpeSchema, many=True)
