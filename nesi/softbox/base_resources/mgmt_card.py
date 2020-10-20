@@ -22,9 +22,25 @@ class MgmtCard(base.Resource):
     """Represent physical shelf resource."""
     id = base.Field('id')
     name = base.Field('name')
-    box_id = base.Field('box_id')
     description = base.Field('description')
-    subrack_id = base.Field('subrack_id')
+    admin_state = base.Field('admin_state')
+    operational_state = base.Field('operational_state')
+
+    def admin_up(self):
+        """Set the admin port state to up"""
+        self.update(admin_state='1')
+
+    def admin_down(self):
+        """Set the admin port state to down"""
+        self.update(admin_state='0')
+
+    def down(self):
+        """Set the port state to down"""
+        self.update(operational_state='0')
+
+    def up(self):
+        """Set the port state to down"""
+        self.update(operational_state='1')
 
 
 class MgmtCardCollection(base.ResourceCollection):
