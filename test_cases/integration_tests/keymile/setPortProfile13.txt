@@ -1,10 +1,5 @@
 admin
 secret
-
-cd /unit-$card/port-$port/cfgm
-#SUVM6 posibilities
-set portprofiles true $vdslProfile 0 false default 0 false default 0 false default Priority
-set portprofiles true " . $vdslProfile . " 0 false default 0 false default 0 false default Priority
-set portprofiles false default 0 false default 0 false default 0 true " . $adslProfile . " Priority
+cd /unit-6/port-1/cfgm
 set portprofiles true default 0 false default 0 false default 0 true default Priority
 exit

@@ -3,16 +3,16 @@ secret
 ls
 cd /services/packet/nto1/
 ls
-cd /services/packet/nto1/srvc-{$match}/cfgm
+cd /services/packet/nto1/srvc-1/cfgm
 get Service
-cd /unit-{$slot}
+cd /unit-11
 ls
-cd /unit-{$slot}/mai
+cd /unit-19/main
 get HardwareAndSoftware
 get CurrentStatus
 get EquipmentInventory
-cd /unit-{$slot}/port-{$port}
+cd /unit-1/port-1}
 ls
-cd /unit-{$slot}/port-{$port}/main
+cd /unit-1/port-{1/main
 get OperationalStatus
 exit

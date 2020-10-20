@@ -1,6 +1,6 @@
 admin
 secret
-cd /unit-$card/port-$port/chan-1/cfgm
-CreateVcc $profile default
+cd /unit-1/port-1/chan-1/cfgm
+CreateVcc default default
 DeleteVcc all
 exit
