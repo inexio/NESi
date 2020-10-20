@@ -60,7 +60,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate(args, 'SubscriberList') and context['component_path'].split('/')[-1] == 'status' and \
+        elif self._validate(args, 'SubscriberList') and context['path'].split('/')[-1] == 'status' and \
                 (card.product == 'isdn' or card.product == 'analog'):
             text = self._render('subscriberList_top', *scopes, context=context)
             i = 0
@@ -75,7 +75,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
                     text += self._render('subscriberList_item', *scopes, context=dict(context, subscriber=subscriber))
             text += self._render('subscriberList_bottom', *scopes, context=context)
             self._write(text)
-        elif self._validate(args, 'SIP') and context['component_path'].split('/')[-1] == 'cfgm' and \
+        elif self._validate(args, 'SIP') and context['path'].split('/')[-1] == 'cfgm' and \
                 (card.product == 'isdn' or card.product == 'analog'):
             context['spacer1'] = self.create_spacers((67,), (card.gateway_name,))[0] * ' '
             context['spacer2'] = self.create_spacers((67,), (card.home_domain,))[0] * ' '
@@ -93,7 +93,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             context['spacer14'] = self.create_spacers((67,), (card.session_expiration,))[0] * ' '
             text = self._render('sip', *scopes, context=dict(context, card=card))
             self._write(text)
-        elif self._validate(args, 'Proxy') and context['component_path'].split('/')[-1] == 'cfgm' and \
+        elif self._validate(args, 'Proxy') and context['path'].split('/')[-1] == 'cfgm' and \
                 (card.product == 'isdn' or card.product == 'analog'):
             context['spacer1'] = self.create_spacers((67,), (card.proxy_mode,))[0] * ' '
             context['spacer2'] = self.create_spacers((67,), (card.proxy_address,))[0] * ' '
@@ -105,20 +105,20 @@ class UnitCommandProcessor(BaseCommandProcessor):
             context['spacer8'] = self.create_spacers((67,), (card.proxy_interval,))[0] * ' '
             text = self._render('proxy', *scopes, context=dict(context, card=card))
             self._write(text)
-        elif self._validate(args, 'IP') and context['component_path'].split('/')[-1] == 'cfgm' and \
+        elif self._validate(args, 'IP') and context['path'].split('/')[-1] == 'cfgm' and \
                 (card.product == 'isdn' or card.product == 'analog'):
             # TODO: dynamic fields
             text = self._render('ip', *scopes, context=context)
             self._write(text)
 
-        elif self._validate(args, 'Labels') and context['component_path'].split('/')[-1] == 'main':
+        elif self._validate(args, 'Labels') and context['path'].split('/')[-1] == 'main':
             context['spacer1'] = self.create_spacers((67,), (card.label1,))[0] * ' '
             context['spacer2'] = self.create_spacers((67,), (card.label2,))[0] * ' '
             context['spacer3'] = self.create_spacers((67,), (card.description,))[0] * ' '
             text = self._render('labels', *scopes, context=dict(context, port=card))
             self._write(text)
 
-        elif self._validate(args, 'Registrar') and context['component_path'].split('/')[-1] == 'cfgm':
+        elif self._validate(args, 'Registrar') and context['path'].split('/')[-1] == 'cfgm':
             context['spacer1'] = self.create_spacers((67,), (card.registrar_adress,))[0] * ' '
             context['spacer2'] = self.create_spacers((67,), (card.registrar_port,))[0] * ' '
             context['spacer3'] = self.create_spacers((67,), (card.registration_mode,))[0] * ' '
@@ -126,7 +126,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             text = self._render('registrar', *scopes, context=dict(context, card=card))
             self._write(text)
 
-        elif self._validate(args, 'HardwareAndSoftware') and context['component_path'].split('/')[-1] == 'main':
+        elif self._validate(args, 'HardwareAndSoftware') and context['path'].split('/')[-1] == 'main':
             unit_hardware = '"' + card.board_name + '"'
             context['unit_hardware'] = unit_hardware
             context['spacer_1'] = self.create_spacers((67,), (unit_hardware,))[0] * ' '
@@ -151,7 +151,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             text = self._render('hardware_and_software', *scopes, context=context)
             self._write(text)
 
-        elif self._validate(args, 'CurrentStatus') and context['component_path'].split('/')[-1] == 'main':
+        elif self._validate(args, 'CurrentStatus') and context['path'].split('/')[-1] == 'main':
             unit_state = card.state
             context['unit_state'] = unit_state
             context['spacer_1'] = self.create_spacers((67,), (unit_state,))[0] * ' '
@@ -173,7 +173,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             text = self._render('current_status', *scopes, context=context)
             self._write(text)
 
-        elif self._validate(args, 'EquipmentInventory') and context['component_path'].split('/')[-1] == 'main':
+        elif self._validate(args, 'EquipmentInventory') and context['path'].split('/')[-1] == 'main':
             unit_symbol = '"' + card.board_name + '"'
             context['unit_symbol'] = unit_symbol
             context['spacer_1'] = self.create_spacers((67,), (unit_symbol,))[0] * ' '
@@ -239,7 +239,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate(args, 'Labels', str, str, str) and context['component_path'].split('/')[-1] == 'main':
+        elif self._validate(args, 'Labels', str, str, str) and context['path'].split('/')[-1] == 'main':
             label1, label2, description = self._dissect(args, 'Labels', str, str, str)
             try:
                 component = self.get_component()
@@ -248,7 +248,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
         elif self._validate(args, 'SIP', str, str, str, str, str, str, str, str, str, str, str, str, str, str) and \
-                context['component_path'].split('/')[-1] == 'cfgm' and (card.product == 'isdn' or card.product == 'analog'):
+                context['path'].split('/')[-1] == 'cfgm' and (card.product == 'isdn' or card.product == 'analog'):
             gw, hd, spn, cc, ac, rt, mri, se, aim, os, ot, uac, uas, sessione = self._dissect(
                 args, 'Sip', str, str, str, str, str, str, str, str, str, str, str, str, str, str)
             try:
@@ -262,14 +262,14 @@ class UnitCommandProcessor(BaseCommandProcessor):
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
         elif self._validate(args, 'Registrar', str, str, str, str) and \
-            context['component_path'].split('/')[-1] == 'cfgm' and (card.product == 'isdn' or card.product == 'analog'):
+            context['path'].split('/')[-1] == 'cfgm' and (card.product == 'isdn' or card.product == 'analog'):
             ra, rp, rm, rt = self._dissect(args, 'Registrar', str, str, str, str)
             try:
                 card.set_registrar(ra, int(rp), rm, int(rt))
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
         elif self._validate(args, 'Proxy', str, str, str, str, str, str, str, str) and \
-            context['component_path'].split('/')[-1] == 'cfgm' and (card.product == 'isdn' or card.product == 'analog'):
+            context['path'].split('/')[-1] == 'cfgm' and (card.product == 'isdn' or card.product == 'analog'):
             pm, pa1, pp1, pa2, pp2, pe, pmethod, pi = self._dissect(args, 'Proxy', str, str, str, str, str, str, str, str)
             try:
                 pe = True if pe.lower() == 'true' else False

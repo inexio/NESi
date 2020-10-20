@@ -76,13 +76,13 @@ class RootCommandProcessor(BaseCommandProcessor):
                                                    template_scopes=('login', 'base', 'execution_errors'))
 
     def do_save(self, command, *args, context=None):
-        if len(args) == 0 and context['component_path'].split('/')[-1] == 'cfgm':
+        if len(args) == 0 and context['path'].split('/')[-1] == 'cfgm':
             pass
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_ftpserver(self, command, *args, context=None):
-        if self._validate(args, str, str, str) and context['component_path'].split('/')[-1] != 'cfgm':
+        if self._validate(args, str, str, str) and context['path'].split('/')[-1] != 'cfgm':
             ip, login, pw = self._dissect(args, str, str, str)
             try:
                 self._model.set_backup(ip, login, pw)
@@ -92,7 +92,7 @@ class RootCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_upload(self, command, *args, context=None):
-        if self._validate(args, '/cfgm/configuration', str) and context['component_path'].split('/')[-1] != 'cfgm':
+        if self._validate(args, '/cfgm/configuration', str) and context['path'].split('/')[-1] != 'cfgm':
             path,  = self._dissect(args, '/cfgm/configuration', str)
             try:
                 self._model.set_path(path)

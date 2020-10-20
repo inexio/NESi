@@ -43,7 +43,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
 
     def do_deletevcc(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent._parent.component_id)
-        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.product == 'adsl':
+        if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'adsl':
             # all or vcc_id
             name, = self._dissect(args, str)
             if name == 'all':
@@ -64,7 +64,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
 
     def do_deleteinterface(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent._parent.component_id)
-        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.product != 'adsl' and card.product != 'sdsl':
+        if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product != 'adsl' and card.product != 'sdsl':
             # all or interface_id
             name, = self._dissect(args, str)
             if name == 'all':
@@ -86,7 +86,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
     def do_createinterface(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
         card = self._model.get_card('name', self._parent._parent.component_id)
-        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and 'SUV' in card.board_name:
+        if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and 'SUV' in card.board_name:
             # vcc profile and vlan profile
             vlan_prof, = self._dissect(args, str)
             # TODO: Check if profiles := default or profile names
@@ -113,7 +113,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
 
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
-        elif self._validate(args, str, str) and context['component_path'].split('/')[-1] == 'cfgm' and 'SUV' in card.board_name :
+        elif self._validate(args, str, str) and context['path'].split('/')[-1] == 'cfgm' and 'SUV' in card.board_name :
             # vcc profile and vlan profile
             vlan_prof, vcc_prof = self._dissect(args, str, str)
             # TODO: Check if profiles := default or profile names
@@ -147,7 +147,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
     def do_createvcc(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
         card = self._model.get_card('name', self._parent._parent.component_id)
-        if self._validate(args, str, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.product == 'adsl':
+        if self._validate(args, str, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'adsl':
             # vcc profile and vlan profile
             vcc_prof, vlan_prof = self._dissect(args, str, str)
             # TODO: Check if profiles := default or profile names

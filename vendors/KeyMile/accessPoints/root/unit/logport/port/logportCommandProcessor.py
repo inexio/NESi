@@ -32,7 +32,7 @@ class LogportCommandProcessor(PortCommandProcessor):
         try:
             super().get_property(command, *args, context=context)
         except exceptions.CommandExecutionError:
-            if self._validate((args[0],), 'AttainableRate') and context['component_path'].split('/')[-1] == 'status':
+            if self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status':
                 text = self._render('attainable_rate', *scopes, context=context)
                 self._write(text)
             else:
@@ -59,7 +59,7 @@ class LogportCommandProcessor(PortCommandProcessor):
 
     def do_deleteinterface(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent._parent.component_id)
-        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.product == 'sdsl':
+        if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'sdsl':
             # all or interface_id
             name, = self._dissect(args, str)
             if name == 'all':
@@ -82,7 +82,7 @@ class LogportCommandProcessor(PortCommandProcessor):
     def do_createinterface(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
         card = self._model.get_card('name', self._parent._parent.component_id)
-        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.product == 'sdsl':
+        if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'sdsl':
             # vcc profile and vlan profile
             vlan_prof, = self._dissect(args, str)
             # TODO: Check if profiles := default or profile names
