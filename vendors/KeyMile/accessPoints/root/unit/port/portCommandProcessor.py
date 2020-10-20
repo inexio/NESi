@@ -36,20 +36,20 @@ class PortCommandProcessor(BaseCommandProcessor):
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
 
-        elif self._validate(args, 'Portprofile') and context['component_path'].split('/')[-1] == 'cfgm' and 'SUVM'\
+        elif self._validate(args, 'Portprofile') and context['path'].split('/')[-1] == 'cfgm' and 'SUVM'\
                 not in card.board_name and 'SUVD2' not in card.board_name and self.__name__ == 'port':
             context['spacer1'] = self.create_spacers((67,), (port.profile1_name,))[0] * ' '
             context['profile_name'] = port.profile1_name
             text = self._render('port_profile', *scopes, context=context)
             self._write(text)
-        elif self._validate(args, 'Portprofiles') and context['component_path'].split('/')[-1] == 'cfgm' and \
+        elif self._validate(args, 'Portprofiles') and context['path'].split('/')[-1] == 'cfgm' and \
                 'SUVD2' in card.board_name and self.__name__ == 'port':
             context['spacer1'] = self.create_spacers((67,), (port.profile1_name,))[0] * ' '
             context['profile_name'] = port.profile1_name
             text = self._render('port_profile', *scopes, context=context)
             self._write(text)
         elif self._validate(args, 'Portprofiles') and self.__name__ == 'port' and \
-                context['component_path'].split('/')[-1] == 'cfgm' and 'SUVM' in card.board_name:
+                context['path'].split('/')[-1] == 'cfgm' and 'SUVM' in card.board_name:
             context['spacer1'] = self.create_spacers((67,), (port.profile1_enable,))[0] * ' '
             context['spacer2'] = self.create_spacers((67,), (port.profile1_name,))[0] * ' '
             context['spacer3'] = self.create_spacers((67,), (port.profile1_elength,))[0] * ' '
@@ -257,7 +257,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate(args, 'Portprofile', str) and context['component_path'].split('/')[-1] == 'cfgm' and 'SUVM'\
+        elif self._validate(args, 'Portprofile', str) and context['path'].split('/')[-1] == 'cfgm' and 'SUVM'\
                 not in card.board_name and 'SUVD2' not in card.board_name and self.__name__ == 'port':
             profile, = self._dissect(args, 'Portprofile', str)
             try:
@@ -267,7 +267,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             except exceptions.SoftboxenError():
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
-        elif self._validate(args, 'Portprofiles', str) and context['component_path'].split('/')[-1] == 'cfgm' and \
+        elif self._validate(args, 'Portprofiles', str) and context['path'].split('/')[-1] == 'cfgm' and \
                 'SUVD2' in card.board_name and self.__name__ == 'port':
             profile, = self._dissect(args, 'Portprofiles', str)
             try:
@@ -278,7 +278,7 @@ class PortCommandProcessor(BaseCommandProcessor):
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
         elif self._validate(args, 'Portprofiles', str, str, str, str, str, str, str, str, str, str, str, str) and \
-                context['component_path'].split('/')[-1] == 'cfgm' and 'SUVM' in card.board_name and self.__name__ == 'port':
+                context['path'].split('/')[-1] == 'cfgm' and 'SUVM' in card.board_name and self.__name__ == 'port':
             en1, name1, elen1, en2, name2, elen2, en3, name3, elen3, en4, name4, mode = self._dissect(args,
                                         'Portprofiles', str, str, str, str, str, str, str, str, str, str, str, str)
             try:
