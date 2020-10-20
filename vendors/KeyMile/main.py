@@ -56,7 +56,6 @@ class LoginCommandProcessor(base.CommandProcessor):
             RootCommandProcessor, 'login', 'base')
 
         context['path'] = '/'
-        context['component_path'] = '/'
 
         self._write(self._render('login_message', 'login', 'base', context=context))
 

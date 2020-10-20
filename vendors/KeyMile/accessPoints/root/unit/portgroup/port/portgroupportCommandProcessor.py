@@ -32,7 +32,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
         try:
             super().get_property(command, *args, context=context)
         except exceptions.CommandExecutionError:
-            if self._validate((args[0],), 'SubscriberList') and context['component_path'].split('/')[-1] == 'status' and \
+            if self._validate((args[0],), 'SubscriberList') and context['path'].split('/')[-1] == 'status' and \
                     self._model.get_card('name', self._parent._parent.component_id).product == 'isdn':
                 text = self._render('subscriberList_top', *scopes, context=context)
                 i = 0
@@ -48,7 +48,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                 text += self._render('subscriberList_bottom', *scopes, context=context)
 
                 self._write(text)
-            elif self._validate((args[0],), 'Isdnport') and context['component_path'].split('/')[-1] == 'cfgm' and \
+            elif self._validate((args[0],), 'Isdnport') and context['path'].split('/')[-1] == 'cfgm' and \
                 port.type == 'ISDN':
                 context['spacer1'] = self.create_spacers((67,), (port.enable,))[0] * ' '
                 context['spacer2'] = self.create_spacers((67,), (port.register_as_global,))[0] * ' '
@@ -74,7 +74,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
 
                 text += self._render('isdnport_bottom', *scopes, context=dict(context, port=port))
                 self._write(text)
-            elif self._validate((args[0],), 'pstnport') and context['component_path'].split('/')[-1] == 'cfgm' and \
+            elif self._validate((args[0],), 'pstnport') and context['path'].split('/')[-1] == 'cfgm' and \
                 port.type == 'PSTN':
                 context['spacer1'] = self.create_spacers((67,), (port.enable,))[0] * ' '
                 context['spacer2'] = self.create_spacers((67,), (port.register_as_global,))[0] * ' '
@@ -127,7 +127,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                 exc.template_scopes = ('login', 'base', 'syntax_errors')
                 raise exc
             elif self._validate(args, 'pstnport', str, str, str, str, str, str, str, str, str) and \
-                    context['component_path'].split('/')[-1] == 'cfgm':
+                    context['path'].split('/')[-1] == 'cfgm':
                 enable, subident, register, phone, sip, proxy, codec, pstn, enterprise = self._dissect(args, 'pstnport',
                         str, str, str, str, str, str, str, str, str)
                 try:
@@ -140,7 +140,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                     raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                            template_scopes=('login', 'base', 'execution_errors'))
             elif self._validate(args, 'pstnport', str, '{', str, str, str, str, str, '}', str, str, str, str, str, str,
-                                str) and context['component_path'].split('/')[-1] == 'cfgm':
+                                str) and context['path'].split('/')[-1] == 'cfgm':
                 enable, number, username, password, displayname, privacy, register, phone, sip, proxy, codec, pstn, enterprise = self._dissect(args, 'pstnport', str, '{', str, str, str, str, str, '}', str, str, str, str, str, str, str)
                 try:
                     port = self.get_port_component()
@@ -164,7 +164,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                     raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                            template_scopes=('login', 'base', 'execution_errors'))
             elif self._validate(args, 'isdnport', str, '{', str, str, str, str, str, '}', str, str, str, str, str, str,
-                                str) and context['component_path'].split('/')[-1] == 'cfgm':
+                                str) and context['path'].split('/')[-1] == 'cfgm':
                 enable, number, username, password, displayname, privacy, register, regdefault, layer1, sip, proxy, codec, isdnba = self._dissect(args, 'isdnport', str, '{', str, str, str, str, str, '}', str, str, str, str, str, str, str)
                 try:
                     port = self.get_port_component()
@@ -192,7 +192,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                     raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                            template_scopes=('login', 'base', 'execution_errors'))
             elif self._validate(args, 'isdnport', str, str, str, str, str, str, str, str, str) and \
-                    context['component_path'].split('/')[-1] == 'cfgm':
+                    context['path'].split('/')[-1] == 'cfgm':
                 enable, subident, register, regdefault, layer1, sip, proxy, codec, isdnba = self._dissect(args, 'isdnport',
                         str, str, str, str, str, str, str, str, str)
                 try:

@@ -36,7 +36,7 @@ class SrvcCommandProcessor(BaseCommandProcessor):
         try:
             super().get_property(command, *args, context=context)
         except exceptions.CommandExecutionError:
-            if self._validate((args[0],), 'Service') and context['component_path'].split('/')[-1] == 'cfgm':
+            if self._validate((args[0],), 'Service') and context['path'].split('/')[-1] == 'cfgm':
                 if service.service_type == '1to1DoubleTag':
                     template_name = 'service_onetoonedoubletag'
                 elif service.service_type == '1to1SingleTag':

@@ -64,39 +64,39 @@ class PortCommandProcessor(BaseCommandProcessor):
             context['spacer12'] = self.create_spacers((67,), (port.profile_mode,))[0] * ' '
             text = self._render('port_profiles', *scopes, context=dict(context, port=port))
             self._write(text)
-        elif self._validate((args[0],), 'AttainableRate') and context['component_path'].split('/')[-1] == 'status':
+        elif self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status':
             text = self._render('attainable_rate', *scopes, context=context)
             self._write(text)
-        elif self._validate((args[0],), 'QuickLoopbackTest') and context['component_path'].split('/')[-1] == 'status'\
+        elif self._validate((args[0],), 'QuickLoopbackTest') and context['path'].split('/')[-1] == 'status'\
                 and (card.product == 'isdn' or 'SUI' in card.board_name) and self.__name__ == 'port':
             context['spacer1'] = self.create_spacers((67,), (port.loopbacktest_state,))[0] * ' '
             context['loopbacktest_state'] = port.loopbacktest_state
             text = self._render('quickloopbacktest', *scopes, context=context)
             self._write(text)
-        elif self._validate((args[0],), 'LineTestResults') and context['component_path'].split('/')[-1] == 'status'\
+        elif self._validate((args[0],), 'LineTestResults') and context['path'].split('/')[-1] == 'status'\
                 and 'SUP' in card.board_name and self.__name__ == 'port':
             context['spacer1'] = self.create_spacers((67,), (port.linetest_state,))[0] * ' '
             context['test_state'] = port.linetest_state
             text = self._render('line_results', *scopes, context=context)
             self._write(text)
-        elif self._validate((args[0],), 'MeltResults') and context['component_path'].split('/')[-1] == 'status'\
+        elif self._validate((args[0],), 'MeltResults') and context['path'].split('/')[-1] == 'status'\
                 and card.product != 'isdn' and self.__name__ == 'port':
             context['spacer1'] = self.create_spacers((67,), (port.melttest_state,))[0] * ' '
             context['test_state'] = port.melttest_state
             text = self._render('melt_results', *scopes, context=context)
             self._write(text)
-        elif self._validate((args[0],), 'AdministrativeStatus') and context['component_path'].split('/')[-1] == 'main':
+        elif self._validate((args[0],), 'AdministrativeStatus') and context['path'].split('/')[-1] == 'main':
             self.map_states(port, 'port')
             context['spacer'] = self.create_spacers((67,), (port.admin_state,))[0] * ' '
             text = self._render('administrative_status', *scopes, context=dict(context, port=port))
             self._write(text)
-        elif self._validate(args, 'Labels') and context['component_path'].split('/')[-1] == 'main':
+        elif self._validate(args, 'Labels') and context['path'].split('/')[-1] == 'main':
             context['spacer1'] = self.create_spacers((67,), (port.label1,))[0] * ' '
             context['spacer2'] = self.create_spacers((67,), (port.label2,))[0] * ' '
             context['spacer3'] = self.create_spacers((67,), (port.description,))[0] * ' '
             text = self._render('labels', *scopes, context=dict(context, port=port))
             self._write(text)
-        elif self._validate((args[0],), 'OperationalStatus') and context['component_path'].split('/')[-1] == 'main':
+        elif self._validate((args[0],), 'OperationalStatus') and context['path'].split('/')[-1] == 'main':
             self.map_states(port, 'port')
             port_operational_state = port.operational_state
             context['port_operational_state'] = port_operational_state
@@ -125,7 +125,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_lock(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent.component_id)
-        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product == 'isdn' \
+        if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
                 and self.__name__ == 'port':
             try:
                 port = self.get_port_component()
@@ -137,7 +137,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_startquickloopbacktest(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent.component_id)
-        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product == 'isdn' \
+        if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
                 and self.__name__ == 'port':
             try:
                 port = self.get_port_component()
@@ -151,7 +151,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_startlinetest(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent.component_id)
-        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and 'SUP' in card.board_name \
+        if len(args) == 0 and context['path'].split('/')[-1] == 'status' and 'SUP' in card.board_name \
                 and self.__name__ == 'port':
             try:
                 port = self.get_port_component()
@@ -165,7 +165,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_startmeltmeasurement(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent.component_id)
-        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product != 'isdn' \
+        if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product != 'isdn' \
                 and self.__name__ == 'port':
             try:
                 port = self.get_port_component()
@@ -179,7 +179,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_unlock(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent.component_id)
-        if len(args) == 0 and context['component_path'].split('/')[-1] == 'status' and card.product == 'isdn' \
+        if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
                 and self.__name__ == 'port':
             try:
                 port = self.get_port_component()
@@ -194,7 +194,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_deleteinterface(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent.component_id)
-        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and card.product == 'ftth':
+        if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'ftth':
             # all or interface_id
             name, = self._dissect(args, str)
             if name == 'all':
@@ -216,7 +216,7 @@ class PortCommandProcessor(BaseCommandProcessor):
     def do_createinterface(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
         card = self._model.get_card('name',  self._parent.component_id)
-        if self._validate(args, str) and context['component_path'].split('/')[-1] == 'cfgm' and 'SUE' in card.board_name:
+        if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and 'SUE' in card.board_name:
             # vcc profile and vlan profile
             vlan_prof, = self._dissect(args, str)
             # TODO: Check if profiles := default or profile names
@@ -292,7 +292,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             except exceptions.SoftboxenError():
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
-        elif self._validate(args, 'AdministrativeStatus', str) and context['component_path'].split('/')[-1] == 'main':
+        elif self._validate(args, 'AdministrativeStatus', str) and context['path'].split('/')[-1] == 'main':
             state, = self._dissect(args, 'AdministrativeStatus', str)
             try:
                 port = self.get_port_component()
@@ -305,7 +305,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             except exceptions.SoftboxenError():
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
-        elif self._validate(args, 'Labels', str, str, str) and context['component_path'].split('/')[-1] == 'main':
+        elif self._validate(args, 'Labels', str, str, str) and context['path'].split('/')[-1] == 'main':
             label1, label2, description = self._dissect(args, 'Labels', str, str, str)
             try:
                 port = self.get_port_component()
