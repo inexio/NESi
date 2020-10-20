@@ -28,7 +28,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
     def _init_access_points(self, context=None):
         self.access_points = ()
         try:
-            card = self._model.get_card('name', self.component_id)
+            card = self.get_component()
 
             self.management_functions = ('main', 'cfgm', 'fm', 'status')
 
@@ -45,11 +45,22 @@ class UnitCommandProcessor(BaseCommandProcessor):
                     continue
                 self.access_points += (identifier,)
 
+            for port in self._model.get_mgmt_port('mgmt_card_id', card.id):
+                identifier = 'port-' + port.name.split('/')[-1]
+                if identifier in self.access_points:
+                    continue
+                self.access_points += (identifier,)
+
+            for gport in self._model.get_portgroupports('card_id', card.id):
+                identifier = 'portgroup-' + gport.name.split('/')[1][1]
+                if identifier in self.access_points:
+                    continue
+                self.access_points += (identifier,)
         except exceptions.InvalidInputError:
             pass
 
     def get_property(self, command, *args, context=None):
-        card = self._model.get_card('name', self.component_id)
+        card = self.get_component()
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
@@ -116,7 +127,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             text = self._render('labels', *scopes, context=dict(context, port=card))
             self._write(text)
 
-        elif self._validate(args, 'Registrar') and context['path'].split('/')[-1] == 'cfgm':
+        elif self._validate(args, 'Registrar') and context['path'].split('/')[-1] == 'cfgm' and card.product != 'mgmt':
             context['spacer1'] = self.create_spacers((67,), (card.registrar_adress,))[0] * ' '
             context['spacer2'] = self.create_spacers((67,), (card.registrar_port,))[0] * ' '
             context['spacer3'] = self.create_spacers((67,), (card.registration_mode,))[0] * ' '
@@ -225,11 +236,17 @@ class UnitCommandProcessor(BaseCommandProcessor):
         raise exceptions.CommandSyntaxError(command=command)
 
     def get_component(self):
-        return self._model.get_card('name', self.component_id)
+        try:
+            if self.component_id == '11' or self.component_id == '13':
+                return self._model.get_mgmt_card('name', self.component_id)
+            else:
+                return self._model.get_card('name', self.component_id)
+        except exceptions.SoftboxenError:
+            raise exceptions.CommandSyntaxError()
 
     def set(self, command, *args, context=None):
         try:
-            card = self._model.get_card('name', self.component_id)
+            card = self.get_component()
         except exceptions.SoftboxenError:
             raise exceptions.CommandSyntaxError(command=command)
         if self._validate(args, *()):
@@ -245,7 +262,8 @@ class UnitCommandProcessor(BaseCommandProcessor):
             except exceptions.SoftboxenError():
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
-        elif self._validate(args, 'Ip', str, str, str) and context['component_path'].split('/')[-1] == 'cfgm':
+        elif self._validate(args, 'Ip', str, str, str) and context['component_path'].split('/')[-1] == 'cfgm' and \
+                card.product != 'mgmt':
             ip1, ip2, ip3 = self._dissect(args, 'Ip', str, str, str)
             try:
                 component = self.get_component()
@@ -286,7 +304,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_restart(self, command, *args, context=None):
-        card = self._model.get_card('name', self.component_id)
+        card = self.get_component()
         if len(args) == 0 and context['path'].split('/')[-1] == 'main' and (card.product == 'isdn' or card.product == 'analog'):
             time.sleep(10)
             exc = exceptions.TerminalExitError()

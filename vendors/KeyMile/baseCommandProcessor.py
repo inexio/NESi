@@ -307,7 +307,10 @@ class BaseCommandProcessor(base.CommandProcessor):
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'port':
                 try:
-                    self._model.get_port('name', self.component_id + '/' + component_id)
+                    if self.component_id == '11' or self.component_id == '13':
+                        self._model.get_mgmt_port('name', self.component_id + '/' + component_id)
+                    else:
+                        self._model.get_port('name', self.component_id + '/' + component_id)
                 except exceptions.InvalidInputError:
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty

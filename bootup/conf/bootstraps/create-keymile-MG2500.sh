@@ -479,6 +479,46 @@ req='{
 
 unit_8=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 
+
+### Mgmt-Unit-11 ###
+
+# Create a physical card at the network device (admin operation)
+req='{
+  "subrack_id": '$subrack_id',
+  "board_name": "COGE1",
+  "supplier_build_state": "R3D",
+  "board_id": "305",
+  "hardware_key": 104,
+  "software": "COGE1_r5c01.esw",
+  "software_name": "COGE1",
+  "software_revision": "R5C01",
+  "state": "Ok",
+  "serial_number": "4810312946",
+  "manufacturer_name": "KEYMILE",
+  "model_name": "37900030",
+  "short_text": "MG COGE1 COGE1+ AnnexB 32-port",
+  "manufacturer_id": "100989",
+  "manufacturer_part_number": "09860762",
+  "manufacturer_build_state": "05",
+  "boot_loader": "BLSU1_R1F01/CT18388",
+  "processor": "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"
+}'
+
+unit_11=$(create_resource "$req" $ENDPOINT/boxen/$box_id/mgmt_cards)
+
+### Mgmt-Port-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "mgmt_card_id": '$unit_11',
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_4_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/mgmt_ports)
+
+
+
 ### Unit-19 ###
 
 # Create a physical card at the network device (admin operation)

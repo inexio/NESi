@@ -28,7 +28,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def get_property(self, command, *args, context=None):
         port = self.get_port_component()
-        card = self._model.get_card('name', self._parent.component_id)
+        card = self._parent.get_component()
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
@@ -37,7 +37,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exc
 
         elif self._validate(args, 'Portprofile') and context['path'].split('/')[-1] == 'cfgm' and 'SUVM'\
-                not in card.board_name and 'SUVD2' not in card.board_name and self.__name__ == 'port':
+                not in card.board_name and 'SUVD2' not in card.board_name and self.__name__ == 'port' and card.product != 'mgmt':
             context['spacer1'] = self.create_spacers((67,), (port.profile1_name,))[0] * ' '
             context['profile_name'] = port.profile1_name
             text = self._render('port_profile', *scopes, context=context)
@@ -64,7 +64,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             context['spacer12'] = self.create_spacers((67,), (port.profile_mode,))[0] * ' '
             text = self._render('port_profiles', *scopes, context=dict(context, port=port))
             self._write(text)
-        elif self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status':
+        elif self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status' and card.product != 'mgmt':
             text = self._render('attainable_rate', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'QuickLoopbackTest') and context['path'].split('/')[-1] == 'status'\
@@ -80,7 +80,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             text = self._render('line_results', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'MeltResults') and context['path'].split('/')[-1] == 'status'\
-                and card.product != 'isdn' and self.__name__ == 'port':
+                and card.product != 'isdn' and self.__name__ == 'port' and card.product != 'mgmt':
             context['spacer1'] = self.create_spacers((67,), (port.melttest_state,))[0] * ' '
             context['test_state'] = port.melttest_state
             text = self._render('melt_results', *scopes, context=context)
@@ -109,7 +109,10 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def _init_access_points(self, context=None):
         self.access_points = ()
-        port = self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
+        port = self.get_port_component()
+
+        if port.name.startswith('11') or port.name.startswith('13'):
+            return
 
         for chan in self._model.get_chans('port_id', port.id):
             identifier = 'chan-' + chan.name.split('/')[-1]
@@ -124,7 +127,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             self.access_points += (identifier,)
 
     def do_lock(self, command, *args, context=None):
-        card = self._model.get_card('name', self._parent.component_id)
+        card = self._parent.get_component()
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
                 and self.__name__ == 'port':
             try:
@@ -136,7 +139,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_startquickloopbacktest(self, command, *args, context=None):
-        card = self._model.get_card('name', self._parent.component_id)
+        card = self._parent.get_component()
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
                 and self.__name__ == 'port':
             try:
@@ -150,7 +153,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_startlinetest(self, command, *args, context=None):
-        card = self._model.get_card('name', self._parent.component_id)
+        card = self._parent.get_component()
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and 'SUP' in card.board_name \
                 and self.__name__ == 'port':
             try:
@@ -164,9 +167,9 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_startmeltmeasurement(self, command, *args, context=None):
-        card = self._model.get_card('name', self._parent.component_id)
+        card = self._parent.get_component()
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product != 'isdn' \
-                and self.__name__ == 'port':
+                and self.__name__ == 'port' and card.product != 'mgmt':
             try:
                 port = self.get_port_component()
                 port.set_melttest_state('Running')
@@ -178,7 +181,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_unlock(self, command, *args, context=None):
-        card = self._model.get_card('name', self._parent.component_id)
+        card = self._parent.get_component()
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
                 and self.__name__ == 'port':
             try:
@@ -193,7 +196,7 @@ class PortCommandProcessor(BaseCommandProcessor):
         raise exceptions.CommandSyntaxError(command=command)
 
     def do_deleteinterface(self, command, *args, context=None):
-        card = self._model.get_card('name', self._parent.component_id)
+        card = self._parent.get_component()
         if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'ftth':
             # all or interface_id
             name, = self._dissect(args, str)
@@ -215,7 +218,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_createinterface(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
-        card = self._model.get_card('name',  self._parent.component_id)
+        card = self._parent.get_component()
         if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and 'SUE' in card.board_name:
             # vcc profile and vlan profile
             vlan_prof, = self._dissect(args, str)
@@ -247,18 +250,21 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def get_port_component(self):
-        return self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
+        if self._parent.component_id == '11' or self._parent.component_id == '13':
+            return self._model.get_mgmt_port('name', self._parent.component_id + '/' + self.component_id)
+        else:
+            return self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
 
     def set(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
-        card = self._model.get_card('name', self._parent.component_id)
+        card = self._parent.get_component()
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
         elif self._validate(args, 'Portprofile', str) and context['path'].split('/')[-1] == 'cfgm' and 'SUVM'\
-                not in card.board_name and 'SUVD2' not in card.board_name and self.__name__ == 'port':
+                not in card.board_name and 'SUVD2' not in card.board_name and self.__name__ == 'port' and card.product != 'mgmt':
             profile, = self._dissect(args, 'Portprofile', str)
             try:
                 port = self.get_port_component()
@@ -268,7 +274,7 @@ class PortCommandProcessor(BaseCommandProcessor):
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
         elif self._validate(args, 'Portprofiles', str) and context['path'].split('/')[-1] == 'cfgm' and \
-                'SUVD2' in card.board_name and self.__name__ == 'port':
+                'SUVD2' in card.board_name and self.__name__ == 'port' and card.product != 'mgmt':
             profile, = self._dissect(args, 'Portprofiles', str)
             try:
                 port = self.get_port_component()
