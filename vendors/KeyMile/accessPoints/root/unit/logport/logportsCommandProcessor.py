@@ -69,7 +69,7 @@ class LogportsCommandProcessor(BaseCommandProcessor):
                         _ = self._model.get_logport('name', self._parent.component_id + '/L/' + str(x))
                         break
                 except exceptions.SoftboxenError:
-                    name =  self._parent.component_id + '/L/' + str(ids[0])
+                    name = self._parent.component_id + '/L/' + str(ids[0])
                     ports = 'ports: '
                     for x in ids:
                         ports += str(x) + ', '

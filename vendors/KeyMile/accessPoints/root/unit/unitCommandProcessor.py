@@ -45,12 +45,6 @@ class UnitCommandProcessor(BaseCommandProcessor):
                     continue
                 self.access_points += (identifier,)
 
-            for port in self._model.get_mgmt_port('mgmt_card_id', card.id):
-                identifier = 'port-' + port.name.split('/')[-1]
-                if identifier in self.access_points:
-                    continue
-                self.access_points += (identifier,)
-
             for gport in self._model.get_portgroupports('card_id', card.id):
                 identifier = 'portgroup-' + gport.name.split('/')[1][1]
                 if identifier in self.access_points:
@@ -127,7 +121,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             text = self._render('labels', *scopes, context=dict(context, port=card))
             self._write(text)
 
-        elif self._validate(args, 'Registrar') and context['path'].split('/')[-1] == 'cfgm' and card.product != 'mgmt':
+        elif self._validate(args, 'Registrar') and context['path'].split('/')[-1] == 'cfgm':
             context['spacer1'] = self.create_spacers((67,), (card.registrar_adress,))[0] * ' '
             context['spacer2'] = self.create_spacers((67,), (card.registrar_port,))[0] * ' '
             context['spacer3'] = self.create_spacers((67,), (card.registration_mode,))[0] * ' '
@@ -238,7 +232,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
     def get_component(self):
         try:
             if self.component_id == '11' or self.component_id == '13':
-                return self._model.get_mgmt_card('name', self.component_id)
+                raise exceptions.CommandSyntaxError()
             else:
                 return self._model.get_card('name', self.component_id)
         except exceptions.SoftboxenError:
@@ -262,8 +256,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             except exceptions.SoftboxenError():
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
-        elif self._validate(args, 'Ip', str, str, str) and context['component_path'].split('/')[-1] == 'cfgm' and \
-                card.product != 'mgmt':
+        elif self._validate(args, 'Ip', str, str, str) and context['component_path'].split('/')[-1] == 'cfgm':
             ip1, ip2, ip3 = self._dissect(args, 'Ip', str, str, str)
             try:
                 component = self.get_component()
