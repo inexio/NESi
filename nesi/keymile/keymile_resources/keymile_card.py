@@ -41,6 +41,10 @@ class KeyMileCard(Card):
     label1 = base.Field('label1')
     label2 = base.Field('label2')
 
+    gateway_ipaddress = base.Field('gateway_ipaddress')
+    subnet_mask = base.Field('subnet_mask')
+    default_gateway = base.Field('default_gateway')
+
     # Keymile ipsx2/3 card SIP specifications
     gateway_name = base.Field('gateway_name')
     home_domain = base.Field('home_domain')
@@ -89,6 +93,10 @@ class KeyMileCard(Card):
         self.update(uas_request_timer=uas_request_timer)
         self.update(session_expiration=session_expiration)
 
+    def set_ip(self, gateway_ipaddress, subnet_mask, default_gateway):
+        self.update(gateway_ipaddress=gateway_ipaddress)
+        self.update(subnet_mask=subnet_mask)
+        self.update(default_gateway=default_gateway)
 
     def set_label(self, l1, l2, desc):
         self.update(label1=l1)
