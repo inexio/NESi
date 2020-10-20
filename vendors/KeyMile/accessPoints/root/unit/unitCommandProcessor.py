@@ -9,6 +9,7 @@
 # - Alexander Dincher <https://github.com/Dinker1996>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
+import time
 
 from nesi import exceptions
 from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
@@ -102,8 +103,10 @@ class UnitCommandProcessor(BaseCommandProcessor):
             self._write(text)
         elif self._validate(args, 'IP') and context['path'].split('/')[-1] == 'cfgm' and \
                 (card.product == 'isdn' or card.product == 'analog'):
-            # TODO: dynamic fields
-            text = self._render('ip', *scopes, context=context)
+            context['spacer1'] = self.create_spacers((67,), (card.gateway_ipaddress,))[0] * ' '
+            context['spacer2'] = self.create_spacers((67,), (card.subnet_mask,))[0] * ' '
+            context['spacer3'] = self.create_spacers((67,), (card.default_gateway,))[0] * ' '
+            text = self._render('ip', *scopes, context=dict(context, card=card))
             self._write(text)
 
         elif self._validate(args, 'Labels') and context['path'].split('/')[-1] == 'main':
@@ -242,6 +245,14 @@ class UnitCommandProcessor(BaseCommandProcessor):
             except exceptions.SoftboxenError():
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
+        elif self._validate(args, 'Ip', str, str, str) and context['component_path'].split('/')[-1] == 'cfgm':
+            ip1, ip2, ip3 = self._dissect(args, 'Ip', str, str, str)
+            try:
+                component = self.get_component()
+                component.set_ip(ip1, ip2, ip3)
+            except exceptions.SoftboxenError():
+                raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                       template_scopes=('login', 'base', 'execution_errors'))
         elif self._validate(args, 'SIP', str, str, str, str, str, str, str, str, str, str, str, str, str, str) and \
                 context['path'].split('/')[-1] == 'cfgm' and (card.product == 'isdn' or card.product == 'analog'):
             gw, hd, spn, cc, ac, rt, mri, se, aim, os, ot, uac, uas, sessione = self._dissect(
@@ -271,5 +282,15 @@ class UnitCommandProcessor(BaseCommandProcessor):
                 card.set_proxy(pm, pa1, int(pp1), pa2, int(pp2), pe, pmethod, int(pi))
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_restart(self, command, *args, context=None):
+        card = self._model.get_card('name', self.component_id)
+        if len(args) == 0 and context['path'].split('/')[-1] == 'main' and (card.product == 'isdn' or card.product == 'analog'):
+            time.sleep(10)
+            exc = exceptions.TerminalExitError()
+            exc.return_to = 'sysreboot'
+            raise exc
         else:
             raise exceptions.CommandSyntaxError(command=command)

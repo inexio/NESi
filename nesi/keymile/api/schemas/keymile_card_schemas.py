@@ -27,4 +27,5 @@ class KeyMileCardSchema(CardSchema):
                                            'uac_request_timer', 'uas_request_timer', 'session_expiration', 'proxy_mode',
                                            'proxy_address', 'proxy_port', 'proxy_address_sec', 'proxy_port_sec',
                                            'proxy_enable', 'proxy_method', 'proxy_interval', 'registrar_adress',
-                                           'registrar_port', 'registration_mode', 'registration_expiration_time')
+                                           'registrar_port', 'registration_mode', 'registration_expiration_time',
+                                           'gateway_ipaddress', 'subnet_mask', 'default_gateway')
