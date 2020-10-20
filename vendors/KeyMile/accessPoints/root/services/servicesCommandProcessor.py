@@ -17,7 +17,7 @@ from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 class ServicesCommandProcessor(BaseCommandProcessor):
     __name__ = 'services'
     management_functions = ('main', 'fm', 'status')
-    access_points = ('packet', 'macAccessCtrl')
+    access_points = ('macAccessCtrl', 'packet')
 
     from .servicesManagementFunctions import main
     from .servicesManagementFunctions import fm
