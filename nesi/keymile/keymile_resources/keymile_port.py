@@ -22,6 +22,8 @@ class KeyMilePort(Port):
     loopbacktest_state = base.Field('loopbacktest_state')
     melttest_state = base.Field('melttest_state')
     linetest_state = base.Field('linetest_state')
+    mode = base.Field('mode')
+    flow_control = base.Field('flow_control')
     profile1_enable = base.Field('profile1_enable')
     profile1_name = base.Field('profile1_name')
     profile1_elength = base.Field('profile1_elength')
@@ -74,6 +76,12 @@ class KeyMilePort(Port):
 
     def set_linetest_state(self, state):
         self.update(linetest_state=state)
+
+    def set_mode(self, mode):
+        self.update(mode=mode)
+
+    def set_flow_control(self, ctrl):
+        self.update(flow_control=ctrl)
 
 
 class KeyMilePortCollection(PortCollection):

@@ -113,7 +113,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
 
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
-        elif self._validate(args, str, str) and context['path'].split('/')[-1] == 'cfgm' and 'SUV' in card.board_name :
+        elif self._validate(args, str, str) and context['path'].split('/')[-1] == 'cfgm' and 'SUV' in card.board_name:
             # vcc profile and vlan profile
             vlan_prof, vcc_prof = self._dissect(args, str, str)
             # TODO: Check if profiles := default or profile names

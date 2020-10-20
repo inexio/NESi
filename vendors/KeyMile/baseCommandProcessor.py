@@ -541,3 +541,17 @@ class BaseCommandProcessor(base.CommandProcessor):
 
     def _init_access_points(self, context=None):
         pass  # Abstract method not implemented
+
+    def args_in_quotes_joiner(self, args):
+        saved_args = []
+        save = False
+        for i in range(len(args)):
+            if args[i].startswith("\""):
+                save = True
+            if save:
+                saved_args.append(args[i])
+            if args[i].endswith("\""):
+                save = False
+        name = ' '.join(saved_args).replace("\"", "")
+
+        return name
