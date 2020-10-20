@@ -27,7 +27,7 @@ class PortCommandProcessor(BaseCommandProcessor):
     from .portManagementFunctions import status
 
     def get_property(self, command, *args, context=None):
-        port = self.get_port_component()
+        port = self.get_component()
         card = self._parent.get_component()
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
@@ -37,7 +37,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exc
 
         elif self._validate(args, 'Portprofile') and context['path'].split('/')[-1] == 'cfgm' and 'SUVM'\
-                not in card.board_name and 'SUVD2' not in card.board_name and self.__name__ == 'port' and card.product != 'mgmt':
+                not in card.board_name and 'SUVD2' not in card.board_name and self.__name__ == 'port':
             context['spacer1'] = self.create_spacers((67,), (port.profile1_name,))[0] * ' '
             context['profile_name'] = port.profile1_name
             text = self._render('port_profile', *scopes, context=context)
@@ -64,7 +64,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             context['spacer12'] = self.create_spacers((67,), (port.profile_mode,))[0] * ' '
             text = self._render('port_profiles', *scopes, context=dict(context, port=port))
             self._write(text)
-        elif self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status' and card.product != 'mgmt':
+        elif self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status':
             text = self._render('attainable_rate', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'QuickLoopbackTest') and context['path'].split('/')[-1] == 'status'\
@@ -80,7 +80,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             text = self._render('line_results', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'MeltResults') and context['path'].split('/')[-1] == 'status'\
-                and card.product != 'isdn' and self.__name__ == 'port' and card.product != 'mgmt':
+                and card.product != 'isdn' and self.__name__ == 'port':
             context['spacer1'] = self.create_spacers((67,), (port.melttest_state,))[0] * ' '
             context['test_state'] = port.melttest_state
             text = self._render('melt_results', *scopes, context=context)
@@ -109,10 +109,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def _init_access_points(self, context=None):
         self.access_points = ()
-        port = self.get_port_component()
-
-        if port.name.startswith('11') or port.name.startswith('13'):
-            return
+        port = self.get_component()
 
         for chan in self._model.get_chans('port_id', port.id):
             identifier = 'chan-' + chan.name.split('/')[-1]
@@ -131,7 +128,7 @@ class PortCommandProcessor(BaseCommandProcessor):
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
                 and self.__name__ == 'port':
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 port.lock_admin()
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
@@ -143,7 +140,7 @@ class PortCommandProcessor(BaseCommandProcessor):
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
                 and self.__name__ == 'port':
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 port.set_test_state('Running')
                 time.sleep(5)
                 port.set_test_state('Passed')
@@ -157,7 +154,7 @@ class PortCommandProcessor(BaseCommandProcessor):
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and 'SUP' in card.board_name \
                 and self.__name__ == 'port':
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 port.set_test_state('Running')
                 time.sleep(5)
                 port.set_linetest_state('Passed')
@@ -169,9 +166,9 @@ class PortCommandProcessor(BaseCommandProcessor):
     def do_startmeltmeasurement(self, command, *args, context=None):
         card = self._parent.get_component()
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product != 'isdn' \
-                and self.__name__ == 'port' and card.product != 'mgmt':
+                and self.__name__ == 'port':
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 port.set_melttest_state('Running')
                 time.sleep(5)
                 port.set_melttest_state('Passed')
@@ -185,7 +182,7 @@ class PortCommandProcessor(BaseCommandProcessor):
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
                 and self.__name__ == 'port':
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 port.unlock_admin()
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
@@ -201,7 +198,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             # all or interface_id
             name, = self._dissect(args, str)
             if name == 'all':
-                port = self.get_port_component()
+                port = self.get_component()
                 for interface in self._model.get_interfaces('port_id', port.id):
                     interface.delete()
             elif name.startswith('interface-'):
@@ -224,7 +221,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             vlan_prof, = self._dissect(args, str)
             # TODO: Check if profiles := default or profile names
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 id = 1
                 for interface in self._model.get_interfaces('port_id', port.id):
                     if interface.port_id is not None:
@@ -249,11 +246,8 @@ class PortCommandProcessor(BaseCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def get_port_component(self):
-        if self._parent.component_id == '11' or self._parent.component_id == '13':
-            return self._model.get_mgmt_port('name', self._parent.component_id + '/' + self.component_id)
-        else:
-            return self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
+    def get_component(self):
+        return self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
 
     def set(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
@@ -264,20 +258,20 @@ class PortCommandProcessor(BaseCommandProcessor):
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
         elif self._validate(args, 'Portprofile', str) and context['path'].split('/')[-1] == 'cfgm' and 'SUVM'\
-                not in card.board_name and 'SUVD2' not in card.board_name and self.__name__ == 'port' and card.product != 'mgmt':
+                not in card.board_name and 'SUVD2' not in card.board_name and self.__name__ == 'port':
             profile, = self._dissect(args, 'Portprofile', str)
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 port.set_profile(profile)
 
             except exceptions.SoftboxenError():
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
         elif self._validate(args, 'Portprofiles', str) and context['path'].split('/')[-1] == 'cfgm' and \
-                'SUVD2' in card.board_name and self.__name__ == 'port' and card.product != 'mgmt':
+                'SUVD2' in card.board_name and self.__name__ == 'port':
             profile, = self._dissect(args, 'Portprofiles', str)
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 port.set_profile(profile)
 
             except exceptions.SoftboxenError():
@@ -288,7 +282,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             en1, name1, elen1, en2, name2, elen2, en3, name3, elen3, en4, name4, mode = self._dissect(args,
                                         'Portprofiles', str, str, str, str, str, str, str, str, str, str, str, str)
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 en1 = True if en1.lower() == 'true' else False
                 en2 = True if en2.lower() == 'true' else False
                 en3 = True if en3.lower() == 'true' else False
@@ -301,7 +295,7 @@ class PortCommandProcessor(BaseCommandProcessor):
         elif self._validate(args, 'AdministrativeStatus', str) and context['path'].split('/')[-1] == 'main':
             state, = self._dissect(args, 'AdministrativeStatus', str)
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 if state == 'up':
                     port.admin_up()
                 elif state == 'down':
@@ -314,7 +308,7 @@ class PortCommandProcessor(BaseCommandProcessor):
         elif self._validate(args, 'Labels', str, str, str) and context['path'].split('/')[-1] == 'main':
             label1, label2, description = self._dissect(args, 'Labels', str, str, str)
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 port.set_label(label1, label2, description)
             except exceptions.SoftboxenError():
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',

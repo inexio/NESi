@@ -279,6 +279,11 @@ class BaseCommandProcessor(base.CommandProcessor):
                 if component_type == 'port':
                     if self.__name__ == 'portgroup':
                         component_type = 'portgroupport'
+                    elif self.__name__ == 'mgmtunit':
+                        component_type = 'mgmtport'
+                if component_type == 'unit':
+                    if component_id == '11' or component_id == '13':
+                        component_type = 'mgmtunit'
 
                 command_processor = component_type.capitalize() + 'CommandProcessor'
             else:
@@ -320,6 +325,14 @@ class BaseCommandProcessor(base.CommandProcessor):
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'chan':
                 if self.__name__ != 'port':
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+            elif component_type == 'mgmtunit':
+                if self.__name__ != 'root':
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+            elif component_type == 'mgmtport':
+                if self.__name__ != 'mgmtunit':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'interface':
@@ -399,6 +412,8 @@ class BaseCommandProcessor(base.CommandProcessor):
                 MacaccessctrlCommandProcessor
             from vendors.KeyMile.accessPoints.root.services.subpacketCommandProcessor import SubpacketCommandProcessor
             from vendors.KeyMile.accessPoints.root.services.srvcCommandProcessor import SrvcCommandProcessor
+            from vendors.KeyMile.accessPoints.root.mgmt_unit.mgmtunitCommandProcessor import MgmtunitCommandProcessor
+            from vendors.KeyMile.accessPoints.root.mgmt_unit.mgmt_port.mgmtportCommandProcessor import MgmtportCommandProcessor
             subprocessor = self._create_subprocessor(eval(command_processor), 'login', 'base')
 
             if component_id is not None and self.component_id is not None:
