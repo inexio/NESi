@@ -201,6 +201,15 @@ class BaseCommandProcessor(base.CommandProcessor):
 
     def change_directory(self, path, context=None):
         path = path.lower()
+        if re.search('^(?:[^.]+/)+\.\.$', path):
+            raise exceptions.CommandExecutionError(template='invalid_management_function_error',
+                                                   template_scopes=('login', 'base', 'execution_errors'),
+                                                   command=None)
+        if re.search('^(?:[^.]+/)+\.\.(?:/.+)+$', path):
+            raise exceptions.CommandExecutionError(template='invalid_address_error',
+                                                   template_scopes=('login', 'base', 'execution_errors'),
+                                                   command=None)
+
         if path == '/':
             if self.__name__ != 'root':
                 return self._parent.change_directory(path, context=context)
@@ -226,16 +235,6 @@ class BaseCommandProcessor(base.CommandProcessor):
 
             return self.change_directory(path[2:], context=context)
 
-        if re.search('\.\./(?:[^.]+/)+\.\.', path):
-            if path.endswith('..'):
-                raise exceptions.CommandExecutionError(template='invalid_management_function_error',
-                                                       template_scopes=('login', 'base', 'execution_errors'),
-                                                       command=None)
-            else:
-                raise exceptions.CommandExecutionError(template='invalid_address_error',
-                                                       template_scopes=('login', 'base', 'execution_errors'),
-                                                       command=None)
-
         if path.startswith('..'):
             splitted_path = [x for x in context['path'].split('/') if x]
             exit_component = None
@@ -250,7 +249,12 @@ class BaseCommandProcessor(base.CommandProcessor):
                 return self
 
             if path == '..':
+                if self.__name__ == 'root':
+                    return self
                 return self._parent
+
+            if self.__name__ == 'root':
+                return self.change_directory(path[3:], context=context)
 
             return self._parent.change_directory(path[3:], context=context)
         if path.startswith('/'):
@@ -414,72 +418,6 @@ class BaseCommandProcessor(base.CommandProcessor):
 
         return subprocessor
 
-    '''
-    search := string keyword like "unit" or "port"
-    parent := string keyword to describe the parent of search like "root"
-    node := contains the dict tree or
-            None for default tree structure
-    parent_keys := should be None / important for recursive call
-    return := Tuple of (ParentList, ChildList) or ([],[])
-    '''
-
-    def get_parent_and_child_relation(self, search, parent=None, node=None, parent_keys=None):
-        if parent == "":
-            return ([], [])
-        if node is None:
-            node = {
-                "root": {
-                    "unit": {
-                        "control": {},
-                        "media": {},
-                        "port": {
-                            "channel": {
-                                "interfaces": {
-                                    "hell": {}
-                                }
-                            },
-                            "interfaces": {
-                                "hell2": {}
-                            }
-                        },
-                        "portgroups": {"portgroupports": {}},
-                        "logports": {
-                            "logport": {
-                                "interface": {}}},
-                        "vectoringports": {"vectorport": {}},
-                        "internalports": {"internalport": {}}
-                    },
-                    "eoam": {},
-                    "tdmconnections": {},
-                    "services": {
-                        "packet": {
-                            "subpacket": {
-                                "srvc": {}
-                            }
-                        },
-                        "macaccessctrl": {}
-                    },
-                    "multicast": {}
-                }}
-        for x, y in node.items():
-            if x == search and (parent is None or parent_keys.__contains__(parent)):
-                if parent is not None:
-                    pp = [parent]
-                elif parent_keys is None:
-                    pp = []
-                else:
-                    pp = [parent_keys]
-                pc = list(y.keys())
-                return (pp, pc)
-            else:
-                (pp, pc) = self.get_parent_and_child_relation(search=search, parent=parent, node=y, parent_keys=x)
-                if pp == [] and pc == []:
-                    pass
-                else:
-                    return (pp, pc)
-        else:
-            return ([], [])
-
     def do_get(self, command, *args, context=None):
         if len(args) >= 1:
             if '/' in args[0]:
@@ -533,99 +471,14 @@ class BaseCommandProcessor(base.CommandProcessor):
             current_path = context['path']
             try:
                 subprocessor = self.change_directory(path, context=context)
-                return_to = self.get_command_processor(subprocessor)
             except:
                 context['path'] = current_path
                 raise
-            subprocessor.loop(context=context, return_to=return_to)
+            subprocessor.loop(context=context, return_to=subprocessor._parent)
         else:
             raise exceptions.CommandExecutionError(template='invalid_management_function_error',
                                                    template_scopes=('login', 'base', 'execution_errors'),
                                                    command=command)
-
-    def get_command_processor(self, current_processor, component_type=None):
-        from vendors.KeyMile.accessPoints.root.rootCommandProcessor import RootCommandProcessor
-        from vendors.KeyMile.accessPoints.root.unit.unitCommandProcessor import UnitCommandProcessor
-        from vendors.KeyMile.accessPoints.root.unit.port.portCommandProcessor import PortCommandProcessor
-        from vendors.KeyMile.accessPoints.root.unit.port.chan.chanCommandProcessor import ChanCommandProcessor
-        from vendors.KeyMile.accessPoints.root.unit.port.interface.interfaceCommandProcessor import \
-            InterfaceCommandProcessor
-        from vendors.KeyMile.accessPoints.root.fan.fanCommandProcessor import FanCommandProcessor
-        from vendors.KeyMile.accessPoints.root.fan.alarmCommandProcessor import AlarmCommandProcessor
-        from vendors.KeyMile.accessPoints.root.eoamCommandProcessor import EoamCommandProcessor
-        from vendors.KeyMile.accessPoints.root.multicastCommandProcessor import MulticastCommandProcessor
-        from vendors.KeyMile.accessPoints.root.tdmconnectionsCommandProcessor import TdmconnectionsCommandProcessor
-        from vendors.KeyMile.accessPoints.root.services.servicesCommandProcessor import ServicesCommandProcessor
-        from vendors.KeyMile.accessPoints.root.unit.portgroup.portgroupCommandProcessor import \
-            PortgroupCommandProcessor
-        from vendors.KeyMile.accessPoints.root.unit.portgroup.port.portgroupportCommandProcessor import \
-            PortgroupportCommandProcessor
-        from vendors.KeyMile.accessPoints.root.unit.logport.logportsCommandProcessor import LogportsCommandProcessor
-        from vendors.KeyMile.accessPoints.root.unit.logport.port.logportCommandProcessor import \
-            LogportCommandProcessor
-        from vendors.KeyMile.accessPoints.root.unit.port.chan.vcc.vccCommandProcessor import VccCommandProcessor
-        from vendors.KeyMile.accessPoints.root.services.packetCommandProcessor import PacketCommandProcessor
-        from vendors.KeyMile.accessPoints.root.services.macaccessctrlCommandProcessor import\
-            MacaccessctrlCommandProcessor
-        from vendors.KeyMile.accessPoints.root.services.subpacketCommandProcessor import SubpacketCommandProcessor
-        from vendors.KeyMile.accessPoints.root.services.srvcCommandProcessor import SrvcCommandProcessor
-        if current_processor.__class__ == RootCommandProcessor:
-            return_to = RootCommandProcessor
-            if component_type not in ('fan', 'eoam', 'tdmconnections', 'multicast', 'services', 'unit') \
-                    and component_type is not None:
-                raise exceptions.CommandExecutionError(command=None, template=None,
-                                                       template_scopes=())  # TODO: fix exception to not require all fields as empty
-        elif current_processor.__class__ == UnitCommandProcessor:
-            return_to = RootCommandProcessor
-            if (component_type != 'port' or component_type != 'logports') and component_type is not None:
-                raise exceptions.CommandExecutionError(command=None, template=None,
-                                                       template_scopes=())  # TODO: fix exception to not require all fields as empty
-        elif current_processor.__class__ == PortCommandProcessor:
-            return_to = UnitCommandProcessor
-            if component_type != 'chan' and component_type is not None:
-                raise exceptions.CommandExecutionError(command=None, template=None,
-                                                       template_scopes=())  # TODO: fix exception to not require all fields as empty
-        elif current_processor.__class__ == ChanCommandProcessor:
-            return_to = PortCommandProcessor
-            if component_type != 'interface' and component_type is not None:
-                raise exceptions.CommandExecutionError(command=None, template=None,
-                                                       template_scopes=())  # TODO: fix exception to not require all fields as empty
-        elif current_processor.__class__ == InterfaceCommandProcessor:
-            return_to = LogportCommandProcessor
-            return_to = ChanCommandProcessor
-            return_to = PortCommandProcessor
-        elif current_processor.__class__ == FanCommandProcessor:
-            return_to = RootCommandProcessor
-        elif current_processor.__class__ == AlarmCommandProcessor:
-            return_to = FanCommandProcessor
-        elif current_processor.__class__ == EoamCommandProcessor:
-            return_to = RootCommandProcessor
-        elif current_processor.__class__ == MulticastCommandProcessor:
-            return_to = RootCommandProcessor
-        elif current_processor.__class__ == TdmconnectionsCommandProcessor:
-            return_to = RootCommandProcessor
-        elif current_processor.__class__ == ServicesCommandProcessor:
-            return_to = RootCommandProcessor
-        elif current_processor.__class__ == PortgroupportCommandProcessor:
-            return_to = PortgroupCommandProcessor
-        elif current_processor.__class__ == PortgroupCommandProcessor:
-            return_to = UnitCommandProcessor
-        elif current_processor.__class__ == LogportsCommandProcessor:
-            return_to = UnitCommandProcessor
-        elif current_processor.__class__ == LogportCommandProcessor:
-            return_to = LogportsCommandProcessor
-        elif current_processor.__class__ == VccCommandProcessor:
-            return_to = ChanCommandProcessor
-        elif current_processor.__class__ == PacketCommandProcessor:
-            return_to = ServicesCommandProcessor
-        elif current_processor.__class__ == MacaccessctrlCommandProcessor:
-            return_to = ServicesCommandProcessor
-        elif current_processor.__class__ == SubpacketCommandProcessor:
-            return_to = PacketCommandProcessor
-        elif current_processor.__class__ == SrvcCommandProcessor:
-            return_to = SubpacketCommandProcessor
-
-        return return_to
 
     def do_exit(self, command, *args, context=None):
         exc = exceptions.TerminalExitError()
