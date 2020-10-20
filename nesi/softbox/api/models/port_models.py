@@ -316,7 +316,9 @@ class Port(db.Model):
     loopbacktest_state = db.Column(db.Enum('Failed', 'Passed', 'Running', 'NoTestResult', 'Stopped', 'Interrupted'), default='NoTestResult')
     melttest_state = db.Column(db.Enum('Failed', 'Passed', 'Running', 'NotTested'), default='NotTested')
     linetest_state = db.Column(db.Enum('Failed', 'Passed', 'Running', 'NotTested'), default='NotTested')
-    #profiles
+    mode = db.Column(db.String(), default='')
+    flow_control = db.Column(db.String(), default='')
+    # profiles
     profile1_enable = db.Column(db.Boolean(), default=False)
     profile1_name = db.Column(db.String(), default='')
     profile1_elength = db.Column(db.Integer, default=0)
