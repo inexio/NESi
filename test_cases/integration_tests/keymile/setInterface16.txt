@@ -1,4 +1,4 @@
-admin
+manager
 secret
 cd /unit-2/logports/logport-2/cfgm
 CreateInterface default VCC_1_100

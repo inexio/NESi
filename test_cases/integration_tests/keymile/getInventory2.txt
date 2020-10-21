@@ -1,4 +1,4 @@
-admin
+manager
 secret
 ls
 cd /services/packet/nto1/

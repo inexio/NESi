@@ -13,6 +13,7 @@
 from .base_views import *
 from ..models.port_models import Port
 from ..models.channel_models import Channel
+from ..models.logport_models import LogPort
 from ..schemas.interface_schemas import *
 
 PREFIX = '/nesi/v1'
@@ -46,6 +47,9 @@ def new_interface(box_id):
         elif 'chan_id' in req:
             channel = json.loads(show_component(Channel, box_id, req['chan_id']).data.decode('utf-8'))
             req['name'] = channel['name'] + "/" + str(len(channel['interfaces']) + 1)
+        elif 'logport_id' in req:
+            logport = json.loads(show_component(LogPort, box_id, req['logport_id']).data.decode('utf-8'))
+            req['name'] = logport['name'] + "/" + str(len(logport['interfaces']) + 1)
         else:
             raise exceptions.Forbidden('can not have port and channel as parent')
     response = new_component(InterfaceSchema(), Interface, req, box_id)

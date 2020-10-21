@@ -1,4 +1,4 @@
-admin
+manager
 secret
 cd /unit-1/port-1/chan-1/cfgm
 CreateVcc default default

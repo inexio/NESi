@@ -205,7 +205,7 @@ req='{
 
 srvc_1to1singletag_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/srvcs)
 
-
+####################################################################################################################
 
 ### Subrack 0 ###
 
@@ -323,7 +323,7 @@ req='{
 
 port_2_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
 
-### LogPort 1 ###
+### LogPort-2 ###
 
 # Create a logical logport object at the network device (admin operation)
 req='{
@@ -333,6 +333,15 @@ req='{
 }'
 
 logport_2_l_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/logports)
+
+### Interface-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "logport_id": '$logport_2_l_2'
+}'
+
+interface_2_l_2_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/interfaces)
 
 ### Unit-3 ###
 

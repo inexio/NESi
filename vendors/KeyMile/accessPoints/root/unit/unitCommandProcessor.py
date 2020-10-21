@@ -256,7 +256,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             except exceptions.SoftboxenError():
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
-        elif self._validate(args, 'Ip', str, str, str) and context['component_path'].split('/')[-1] == 'cfgm':
+        elif self._validate(args, 'Ip', str, str, str) and context['path'].split('/')[-1] == 'cfgm':
             ip1, ip2, ip3 = self._dissect(args, 'Ip', str, str, str)
             try:
                 component = self.get_component()
@@ -278,6 +278,9 @@ class UnitCommandProcessor(BaseCommandProcessor):
                 card.set_sip(gw, hd, int(spn), cc, ac, int(rt), int(mri), se, aim, os, int(ot), uac, uas, int(sessione))
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
+        elif self._validate(args[0], 'Digitmap') and \
+                context['path'].split('/')[-1] == 'cfgm' and (card.product == 'isdn' or card.product == 'analog'):
+            pass
         elif self._validate(args, 'Registrar', str, str, str, str) and \
             context['path'].split('/')[-1] == 'cfgm' and (card.product == 'isdn' or card.product == 'analog'):
             ra, rp, rm, rt = self._dissect(args, 'Registrar', str, str, str, str)

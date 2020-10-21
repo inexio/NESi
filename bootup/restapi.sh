@@ -191,7 +191,7 @@ if [ $huawei_api = "yes" ]; then
     bash bootup/conf/bootstraps/create-huawei-5623.sh
 fi
 if [ $keymile_api = "yes" ]; then
-    bash bootup/conf/bootstraps/create-keymile-MG2200.sh #work_in_progress
+    bash bootup/conf/bootstraps/create-keymile-MG2500.sh
 fi
 if [ $edgecore_api = "yes" ]; then
     bash bootup/conf/bootstraps/create-alcatel-7360.sh #work_in_progress
