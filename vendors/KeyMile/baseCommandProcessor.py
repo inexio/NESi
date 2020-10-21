@@ -23,8 +23,13 @@ class BaseCommandProcessor(base.CommandProcessor):
 
     component_id = None
 
+    component_name = None
+
     def set_component_id(self, id):
         self.component_id = id
+
+    def set_component_name(self, name):
+        self.component_name = name
 
     main = {}
 
@@ -324,23 +329,38 @@ class BaseCommandProcessor(base.CommandProcessor):
                     'port': ('chan', 'interface'),
                     'portgroup': ('port',),
                     'chan': ('vcc', 'interface',),
+                    'logports': ('logport',),
                     'logport': ('interface',),
                     'packet': ('1to1doubletag', '1to1singletag', 'mcast', 'nto1', 'pls', 'tls'),
                     'subpacket': ('srvc',),
                 }
 
-                if component_type not in relations[name]:
+                try:
+                    if component_type not in relations[name]:
+                        return False
+                except KeyError:
+                    return False
+
+                return True
+
+            def check_for_component(component_type, component_name):
+                try:
+                    self._model.get_ + component_type('name', component_name)
+                except exceptions.InvalidInputError:
                     return False
 
                 return True
 
             if component_type:
                 validation = validate_relation(component_type, self.__name__)
+                #if validation:
+                    #validation = check_for_component(component_type, self.component_name + '/' + component_id)
             else:
                 validation = validate_relation(components[0], self.__name__)
-            if validation is False:
-                raise exceptions.CommandExecutionError(command=None, template=None,
-                                                       template_scopes=())  # TODO: fix exception to not require all fields as empty
+            if components[0] not in ('main', 'cfgm', 'fm', 'pm', 'status'):
+                if validation is False:
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
 
             if component_type == 'unit':
                 if (self._model.version == '2200' and not 9 <= int(component_id) <= 12) or (self._model.version == '2300' and not 7 <= int(component_id) <= 14) or (self._model.version == '2500' and not 1 <= int(component_id) <= 21):
