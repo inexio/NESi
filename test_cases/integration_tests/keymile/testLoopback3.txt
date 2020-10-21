@@ -1,4 +1,4 @@
-admin
+manager
 secret
 cd /unit-19/port-1/status
 Lock

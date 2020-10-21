@@ -1,4 +1,4 @@
-admin
+manager
 secret
 cd /unit-$card/port-$port/main
 set AdministrativeStatus down

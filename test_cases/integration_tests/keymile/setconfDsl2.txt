@@ -1,6 +1,5 @@
-admin
+manager
 secret
-#adsl
 cd /unit-1/port-1/main
 Set Labels "umlctId)" "arrierId" ""
 set AdministrativeStatus up
@@ -12,8 +11,8 @@ Set Labels "ctId" "d" ""
 set AdministrativeStatus up
 cd /unit-2/logports/cfgm
 create port-1
-cd /unit-$card/logports/logport-1/cfgm
+cd /unit-2/logports/logport-1/cfgm
 CreateInterface name
-cd /unit-$card/logports/logport-1/main
+cd /unit-2/logports/logport-1/main
 set AdministrativeStatus up
 exit

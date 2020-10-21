@@ -1,6 +1,5 @@
-admin
+manager
 secret
-#analog
 cd /unit-19/portgroup-1/port-1/cfgm
 set pstnport true 11 true false none none none none none
 cd /unit-19/portgroup-1/port-1/main

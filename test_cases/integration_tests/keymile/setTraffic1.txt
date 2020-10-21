@@ -1,4 +1,4 @@
-admin
+manager
 secret
 cd /unit-7
 ls
