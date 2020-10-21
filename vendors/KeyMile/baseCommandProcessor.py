@@ -31,6 +31,26 @@ class BaseCommandProcessor(base.CommandProcessor):
     def set_component_name(self, name):
         self.component_name = name
 
+    def get_component(self, component_type, component_name):
+        if component_type == 'unit':
+            self._model.get_card('name', component_name)
+        if component_type == 'mgmtunit':
+            self._model.get_mgmt_card('name', component_name)
+        elif component_type == 'port':
+            self._model.get_port('name', component_name)
+        elif component_type == 'chan':
+            self._model.get_chan('name', component_name)
+        elif component_type == 'mgmtport':
+            self._model.get_mgmt_port('name', component_name)
+        elif component_type == 'interface' or component_type == 'vcc':
+            self._model.get_interface('name', component_name)
+        elif component_type == 'logport':
+            self._model.get_logport('name', component_name)
+        elif component_type == 'srvc':
+            self._model.get_srvc('name', component_name)
+        elif component_type == 'portgroupport':
+            self._model.get_portgroupport('name', component_name)
+
     main = {}
 
     cfgm = {}
@@ -232,11 +252,6 @@ class BaseCommandProcessor(base.CommandProcessor):
                     context['path'] = '/'
                     return self
 
-            if 'unit-' not in components[0] and components[0] not in (
-                    'eoam', 'fan', 'multicast', 'services', 'tdmConnection', 'main', 'cfgm', 'fm', 'pm', 'status'):
-                raise exceptions.CommandExecutionError(command=None, template=None,
-                                                       template_scopes=())  # TODO: fix exception to not require all fields as empty
-
             if self.__name__ != 'root':
                 subprocessor = self._parent.change_directory(path, context=context)
             else:
@@ -321,13 +336,13 @@ class BaseCommandProcessor(base.CommandProcessor):
 
             def validate_relation(component_type, name):
                 relations = {
-                    'root': ('unit', 'mgmtunit', 'fan', 'eoam', 'tdmConnections', 'multicast', 'services'),
+                    'root': ('unit', 'mgmtunit', 'fan', 'eoam', 'tdmconnections', 'multicast', 'services'),
                     'unit': ('port', 'portgroup', 'logports', 'huntgroup'),
                     'mgmtunit': ('mgmtport',),
                     'fan': ('alarm',),
                     'services': ('packet', 'macaccessctrl'),
                     'port': ('chan', 'interface'),
-                    'portgroup': ('port',),
+                    'portgroup': ('portgroupport',),
                     'chan': ('vcc', 'interface',),
                     'logports': ('logport',),
                     'logport': ('interface',),
@@ -344,8 +359,11 @@ class BaseCommandProcessor(base.CommandProcessor):
                 return True
 
             def check_for_component(component_type, component_name):
+                if component_type in ('portgroup', 'unit', 'mgmtunit'):
+                    return True
+
                 try:
-                    self._model.get_ + component_type('name', component_name)
+                    self.get_component(component_type, component_name)
                 except exceptions.InvalidInputError:
                     return False
 
@@ -353,8 +371,16 @@ class BaseCommandProcessor(base.CommandProcessor):
 
             if component_type:
                 validation = validate_relation(component_type, self.__name__)
-                #if validation:
-                    #validation = check_for_component(component_type, self.component_name + '/' + component_id)
+                if validation:
+                    if self.component_name:
+                        if component_type == 'srvc':
+                            validation = check_for_component(component_type, components[0])
+                        elif component_type == 'logport':
+                            validation = check_for_component(component_type, self.component_name + '/L/' + component_id)
+                        else:
+                            validation = check_for_component(component_type, self.component_name + '/' + component_id)
+                    else:
+                        validation = check_for_component(component_type, component_id)
             else:
                 validation = validate_relation(components[0], self.__name__)
             if components[0] not in ('main', 'cfgm', 'fm', 'pm', 'status'):
@@ -366,63 +392,12 @@ class BaseCommandProcessor(base.CommandProcessor):
                 if (self._model.version == '2200' and not 9 <= int(component_id) <= 12) or (self._model.version == '2300' and not 7 <= int(component_id) <= 14) or (self._model.version == '2500' and not 1 <= int(component_id) <= 21):
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty#
-            elif component_type == 'port':
-                try:
-                    if self.component_id == '11' or self.component_id == '13':
-                        self._model.get_mgmt_port('name', self.component_id + '/' + component_id)
-                    else:
-                        self._model.get_port('name', self.component_id + '/' + component_id)
-                except exceptions.InvalidInputError:
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-            elif component_type == 'chan':
-                try:
-                    self._model.get_chan('name', self._parent.component_id + '/' + self.component_id + '/' + component_id)
-                except exceptions.InvalidInputError:
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-            elif component_type == 'interface':
-                try:
-                    self._model.get_interface('name', self._parent.component_id + '/' + self.component_id + '/' + component_id)
-                except exceptions.InvalidInputError:
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-            elif component_type == 'logport':
-                try:
-                    self._model.get_logport('name', self._parent.component_id + '/L/' + component_id)
-                except exceptions.InvalidInputError:
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-            elif component_type == 'vcc':
-                try:
-                    self._model.get_interface('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id + '/' + component_id)
-                except exceptions.InvalidInputError:
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-            elif component_type == 'srvc':
-                try:
-                    self._model.get_srvc('name', 'srvc-' + component_id)
-                except exceptions.InvalidInputError:
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
 
             if components[0] in ('main', 'cfgm', 'fm', 'pm', 'status'):
                 if context['path'].split('/')[-1] in ('main', 'cfgm', 'fm', 'pm', 'status'):
                     raise exceptions.CommandExecutionError(command=None, template='invalid_address_error', template_scopes=('login', 'base', 'execution_errors'))
 
-                mf_layers = {}
-                if components[0] == 'status':
-                    mf_layers = self.status
-                elif components[0] == 'cfgm':
-                    mf_layers = self.cfgm
-                elif components[0] == 'fm':
-                    mf_layers = self.fm
-                elif components[0] == 'pm':
-                    mf_layers = self.pm
-                elif components[0] == 'main':
-                    mf_layers = self.main
-
-                if len(mf_layers) == 0:
+                if components[0] not in self.management_functions:
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                      template_scopes=())  # TODO: fix exception to not require all fields as empty
 
@@ -464,6 +439,19 @@ class BaseCommandProcessor(base.CommandProcessor):
 
             if component_id is not None:
                 subprocessor.set_component_id(component_id)
+
+            if self.component_name:
+                if components[0] == 'logports':
+                    component_name = self.component_name + '/L'
+                elif component_type == 'portgroup':
+                    component_name = self.component_name + '/G' + component_id
+                elif component_type == 'srvc':
+                    component_name = 'srvc' + component_id
+                else:
+                    component_name = self.component_name + '/' + component_id
+                subprocessor.set_component_name(component_name)
+            else:
+                subprocessor.set_component_name(component_id)
 
             if context['path'] == '/':
                 new_path = components[0]
