@@ -25,6 +25,14 @@ class KeyMileSrvc(base.Resource):
     service_type = base.Field('service_type')
     address = base.Field('address')
     svid = base.Field('svid')
+    stag_priority = base.Field('stag_priority')
+    vlan_handling = base.Field('vlan_handling')
+
+    def set_service(self, address, svid, stag_prio, vlan):
+        self.update(address=address)
+        self.update(svid=svid)
+        self.update(stag_priority=stag_prio)
+        self.update(vlan_handling=vlan)
 
 
 class KeyMileSrvcCollection(base.ResourceCollection):

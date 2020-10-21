@@ -3,9 +3,9 @@
 {{ context.service.address }}{{ context.spacer1 }}\ # Address
                                                                    \ # Specific
 {{ context.service.svid }}{{ context.spacer2 }}\ # Svid
-CoS0                                                               \ # STagPriority
+{{ context.service.stag_priority }}{{ context.spacer3 }}\ # STagPriority
 PPPoE                                                              \ # LogonMethod
-Add                                                                \ # VLANHandling
+{{ context.service.vlan_handling }}{{ context.spacer4 }}\ # VLANHandling
 false                                                              \ # SourceFilter
 false                                                              \ # DestinationFilter
 false                                                              \ # SourceIPFilter

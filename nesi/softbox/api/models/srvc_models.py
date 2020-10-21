@@ -21,3 +21,5 @@ class Srvc(db.Model):
     service_type = db.Column(db.Enum('1to1doubletag', '1to1singletag', 'mcast', 'nto1', 'pls', 'tls'))
     address = db.Column(db.String(), default='')
     svid = db.Column(db.Integer(), default=None)
+    stag_priority = db.Column(db.Enum('CoS0', 'CoS1', 'CoS2', 'CoS3', 'CoS4', 'CoS5', 'CoS6', 'CoS7'), default=None)
+    vlan_handling = db.Column(db.Enum('Add', 'Transparent', 'Swap'), default=None)

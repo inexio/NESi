@@ -588,3 +588,25 @@ req='{
 }'
 
 srvc_nto1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/srvcs)
+
+### 1to1singletag-Service-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "service_type": "1to1singletag",
+  "svid": 1213,
+  "address": "/unit-19/control"
+}'
+
+srvc_nto1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/srvcs)
+
+### 1to1singletag-Service-2 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "service_type": "1to1singletag",
+  "svid": 187,
+  "address": "/unit-19/media"
+}'
+
+srvc_nto1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/srvcs)
