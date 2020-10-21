@@ -20,6 +20,51 @@ path="`dirname \"$0\"`"
 
 . $path/functions.sh
 
+
+#--------------------------------------------------------#
+#                                                        #
+#   Subrack 0                                            #
+#   |---> Unit-1   (adsl) (SUAD2)                        #
+#   |     |-> Port-1                                     #
+#   |     |   |-> Chan-1                                 #
+#   |     |       |-> Interface-1                        #
+#   |                                                    #
+#   |---> Unit-2   (sdsl) (SUSE1)                        #
+#   |     |-> Port-1                                     #
+#   |     |-> Port-2                                     #
+#   |     |-> LogPorts                                   #
+#   |     |   |-> LogPort-2                              #
+#   |                                                    #
+#   |---> Unit-3   (sdsl) (SUSE1)                        #
+#   |     |-> Port-1                                     #
+#   |     |   |-> Interface-1                            #
+#   |                                                    #
+#   |---> Unit-4   (adsl) (SUAD2)                        #
+#   |     |-> Port-1                                     #
+#   |                                                    #
+#   |---> Unit-5   (vdsl) (SUVM4)                        #
+#   |     |-> Port-1                                     #
+#   |     |   |-> Chan-1                                 #
+#   |                                                    #
+#   |---> Unit-6   (vdsl) (SUVM6)                        #
+#   |     |-> Port-1                                     #
+#   |                                                    #
+#   |---> Unit-7   (ftth) (SUEN3)                        #
+#   |     |-> Port-1                                     #
+#   |                                                    #
+#   |---> Unit-8   (vdsl) (SUVM6)                        #
+#   |                                                    #
+#   |---> Unit-11   (mgmt) (COGE1)                       #
+#   |     |-> Port-1   (mgmt)                            #
+#   |                                                    #
+#   |---> Unit-19   (isdn) (isdn)                        #
+#   |     |-> Port-1                                     #
+#   |     |-> PortGroup-1  (PSTN)                        #
+#   |     |   |-> Port-1                                 #
+#   |     |-> PortGroup-2  (ISDN)                        #
+#   |     |   |-> Port-1                                 #
+#--------------------------------------------------------#
+
 # Create a network device (admin operation)
 req='{
   "vendor": "KeyMile",
@@ -126,6 +171,41 @@ req='{
 }'
 
 subscriber_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subscribers)
+
+### Nto1-Service-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "service_type": "nto1",
+  "svid": 123,
+  "address": "/unit-1/port-1/chan-1/interface-1"
+}'
+
+srvc_nto1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/srvcs)
+
+### 1to1singletag-Service-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "service_type": "1to1singletag",
+  "svid": 1213,
+  "address": "/unit-19/control"
+}'
+
+srvc_1to1singletag_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/srvcs)
+
+### 1to1singletag-Service-2 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "service_type": "1to1singletag",
+  "svid": 187,
+  "address": "/unit-19/media"
+}'
+
+srvc_1to1singletag_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/srvcs)
+
+
 
 ### Subrack 0 ###
 
@@ -577,36 +657,3 @@ req='{
 }'
 
 port_19_G1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/portgroupports)
-
-### Nto1-Service-1 ###
-
-# Create a physical port at the network device (admin operation)
-req='{
-  "service_type": "nto1",
-  "svid": 123,
-  "address": "/unit-1/port-1/chan-1/interface-1"
-}'
-
-srvc_nto1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/srvcs)
-
-### 1to1singletag-Service-1 ###
-
-# Create a physical port at the network device (admin operation)
-req='{
-  "service_type": "1to1singletag",
-  "svid": 1213,
-  "address": "/unit-19/control"
-}'
-
-srvc_nto1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/srvcs)
-
-### 1to1singletag-Service-2 ###
-
-# Create a physical port at the network device (admin operation)
-req='{
-  "service_type": "1to1singletag",
-  "svid": 187,
-  "address": "/unit-19/media"
-}'
-
-srvc_nto1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/srvcs)
