@@ -238,6 +238,15 @@ class BaseCommandProcessor(base.CommandProcessor):
                 context['path'] = '/'
                 subprocessor = self.change_directory(path.lstrip('/'), context=context)
         elif path.startswith('.'):
+            if path.startswith('...'):
+                if '/' in path:
+                    raise exceptions.CommandExecutionError(template='invalid_address_error',
+                                                           template_scopes=('login', 'base', 'execution_errors'),
+                                                           command=None)
+                else:
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                       template_scopes=())  # TODO: fix exception to not require all fields as empty
+
             if path == '.':
                 return self
 
@@ -305,17 +314,38 @@ class BaseCommandProcessor(base.CommandProcessor):
                 else:
                     command_processor = components[0].capitalize() + 'CommandProcessor'
 
+            def validate_relation(component_type, name):
+                relations = {
+                    'root': ('unit', 'mgmtunit', 'fan', 'eoam', 'tdmConnections', 'multicast', 'services'),
+                    'unit': ('port', 'portgroup', 'logports', 'huntgroup'),
+                    'mgmtunit': ('mgmtport',),
+                    'fan': ('alarm',),
+                    'services': ('packet', 'macaccessctrl'),
+                    'port': ('chan', 'interface'),
+                    'portgroup': ('port',),
+                    'chan': ('vcc', 'interface',),
+                    'logport': ('interface',),
+                    'packet': ('1to1doubletag', '1to1singletag', 'mcast', 'nto1', 'pls', 'tls'),
+                    'subpacket': ('srvc',),
+                }
+
+                if component_type not in relations[name]:
+                    return False
+
+                return True
+
+            if component_type:
+                validation = validate_relation(component_type, self.__name__)
+            else:
+                validation = validate_relation(components[0], self.__name__)
+            if validation is False:
+                raise exceptions.CommandExecutionError(command=None, template=None,
+                                                       template_scopes=())  # TODO: fix exception to not require all fields as empty
+
             if component_type == 'unit':
                 if (self._model.version == '2200' and not 9 <= int(component_id) <= 12) or (self._model.version == '2300' and not 7 <= int(component_id) <= 14) or (self._model.version == '2500' and not 1 <= int(component_id) <= 21):
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty#
-                if self.__name__ != 'root':
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-            elif component_type == 'portgroup' or component_type == 'logports' or component_type == 'huntgroup':
-                if self.__name__ != 'unit':
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'port':
                 try:
                     if self.component_id == '11' or self.component_id == '13':
@@ -325,26 +355,10 @@ class BaseCommandProcessor(base.CommandProcessor):
                 except exceptions.InvalidInputError:
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
-
-                if self.__name__ != 'unit' and self.__name__ != 'portgroup':
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'chan':
                 try:
                     self._model.get_chan('name', self._parent.component_id + '/' + self.component_id + '/' + component_id)
                 except exceptions.InvalidInputError:
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-
-                if self.__name__ != 'port':
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-            elif component_type == 'mgmtunit':
-                if self.__name__ != 'root':
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-            elif component_type == 'mgmtport':
-                if self.__name__ != 'mgmtunit':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'interface':
@@ -353,18 +367,10 @@ class BaseCommandProcessor(base.CommandProcessor):
                 except exceptions.InvalidInputError:
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
-
-                if self.__name__ != 'port' and self.__name__ != 'chan' and self.__name__ != 'logport':
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'logport':
                 try:
                     self._model.get_logport('name', self._parent.component_id + '/L/' + component_id)
                 except exceptions.InvalidInputError:
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-
-                if self.__name__ != 'logports':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'vcc':
@@ -373,31 +379,10 @@ class BaseCommandProcessor(base.CommandProcessor):
                 except exceptions.InvalidInputError:
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
-
-                if self.__name__ != 'chan':
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
             elif component_type == 'srvc':
                 try:
                     self._model.get_srvc('name', 'srvc-' + component_id)
                 except exceptions.InvalidInputError:
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-
-                if self.__name__ != 'subpacket':
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-
-            if components[0] in ('packet', 'macAccessCtrl'):
-                if self.__name__ != 'services':
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-            if components[0] in ('fan', 'eoam', 'tdmConnections', 'multicast', 'services'):
-                if self.__name__ != 'root':
-                    raise exceptions.CommandExecutionError(command=None, template=None,
-                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
-            if components[0] in ('1to1doubletag', '1to1singletag', 'mcast', 'nto1', 'pls', 'tls'):
-                if self.__name__ != 'packet':
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
 
