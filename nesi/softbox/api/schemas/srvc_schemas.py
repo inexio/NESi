@@ -18,7 +18,8 @@ from ..models.srvc_models import Srvc
 class SrvcSchema(ma.ModelSchema):
     class Meta:
         model = Srvc
-        fields = ('id', 'box', 'box_id', 'name', 'service_type', 'address', 'svid', '_links')
+        fields = ('id', 'box', 'box_id', 'name', 'service_type', 'address', 'svid', 'stag_priority', 'vlan_handling',
+                  '_links')
 
     box = ma.Hyperlinks(
         {'_links': {

@@ -28,36 +28,54 @@ class SrvcCommandProcessor(BaseCommandProcessor):
         service_name = 'srvc-' + self.component_id
         services = self._model.get_srvcs('name', service_name)
         for s in services:
-            if s.service_type.lower() == context['ServiceType']:
+            if s.service_type.lower() == context['ServiceType'] and s.name == service_name:
                 service = s
                 context['service'] = service
                 break
         scopes = ('login', 'base', 'get')
-        try:
-            super().get_property(command, *args, context=context)
-        except exceptions.CommandExecutionError:
-            if self._validate((args[0],), 'Service') and context['path'].split('/')[-1] == 'cfgm':
-                # TODO: Find missing templates, and replace placeholder templates
-                if service.service_type == '1to1doubletag':
-                    template_name = 'service_onetoonedoubletag'
-                elif service.service_type == '1to1singletag':
-                    template_name = 'service_onetoonesingletag'
-                elif service.service_type == 'mcast':
-                    template_name = 'service_mcast'
-                elif service.service_type == 'nto1':
-                    template_name = 'service_nto1'
-                elif service.service_type == 'pls':
-                    template_name = 'service_pls'
-                elif service.service_type == 'tls':
-                    template_name = 'service_tls'
-                else:
-                    raise exceptions.CommandExecutionError(command=command)
-                context['spacer1'] = self.create_spacers((67,), (service.address,))[0] * ' '
-                context['spacer2'] = self.create_spacers((67,), (service.svid,))[0] * ' '
-                text = self._render(template_name, *scopes, context=context)
-                self._write(text)
-
+        if self._validate((args[0],), 'Service') and context['path'].split('/')[-1] == 'cfgm':
+            # TODO: Find missing templates, and replace placeholder templates
+            if service.service_type == '1to1doubletag':
+                template_name = 'service_onetoonedoubletag'
+            elif service.service_type == '1to1singletag':
+                template_name = 'service_onetoonesingletag'
+            elif service.service_type == 'mcast':
+                template_name = 'service_mcast'
+            elif service.service_type == 'nto1':
+                template_name = 'service_nto1'
+            elif service.service_type == 'pls':
+                template_name = 'service_pls'
+            elif service.service_type == 'tls':
+                template_name = 'service_tls'
             else:
+                raise exceptions.CommandExecutionError(command=command)
+            context['spacer1'] = self.create_spacers((67,), (service.address,))[0] * ' '
+            context['spacer2'] = self.create_spacers((67,), (service.svid,))[0] * ' '
+            context['spacer3'] = self.create_spacers((67,), (service.stag_priority,))[0] * ' '
+            context['spacer4'] = self.create_spacers((67,), (service.vlan_handling,))[0] * ' '
+            text = self._render(template_name, *scopes, context=context)
+            self._write(text)
+        else:
+            raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                       template_scopes=('login', 'base', 'execution_errors'))
+
+    def set(self, command, *args, context=None):
+        if self._validate(args, *()):
+            exc = exceptions.CommandSyntaxError(command=command)
+            exc.template = 'syntax_error'
+            exc.template_scopes = ('login', 'base', 'syntax_errors')
+            raise exc
+        elif self._validate(args, 'Service', str, str, str, str) and context['path'].split('/')[-1] == 'cfgm':
+            address, svid, stag, vlan = self._dissect(args, 'Service', str, str, str, str)
+            try:
+                service_name = 'srvc-' + self.component_id
+                services = self._model.get_srvcs('name', service_name)
+                for s in services:
+                    if s.service_type.lower() == context['ServiceType'] and s.name == service_name:
+                        service = s
+                        break
+                service.set_service(address, int(svid), stag, vlan)
+            except exceptions.SoftboxenError:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
 
