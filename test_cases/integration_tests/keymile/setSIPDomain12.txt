@@ -1,4 +1,4 @@
-admin
+manager
 secret
 cd /unit-19/cfgm
 get Sip

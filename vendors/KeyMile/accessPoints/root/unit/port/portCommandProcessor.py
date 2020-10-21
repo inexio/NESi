@@ -28,6 +28,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def get_property(self, command, *args, context=None):
         port = self.get_component()
+        context['port'] = port
         card = self._parent.get_component()
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
@@ -264,7 +265,7 @@ class PortCommandProcessor(BaseCommandProcessor):
                 port = self.get_component()
                 port.set_profile(profile)
 
-            except exceptions.SoftboxenError():
+            except exceptions.SoftboxenError:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
         elif self._validate(args, 'Portprofiles', str) and context['path'].split('/')[-1] == 'cfgm' and \
@@ -274,7 +275,7 @@ class PortCommandProcessor(BaseCommandProcessor):
                 port = self.get_component()
                 port.set_profile(profile)
 
-            except exceptions.SoftboxenError():
+            except exceptions.SoftboxenError:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
         elif self._validate(args, 'Portprofiles', str, str, str, str, str, str, str, str, str, str, str, str) and \
@@ -289,7 +290,7 @@ class PortCommandProcessor(BaseCommandProcessor):
                 en4 = True if en4.lower() == 'true' else False
                 port.set_profiles(en1, name1, int(elen1), en2, name2, int(elen2), en3, name3, int(elen3), en4, name4, mode)
 
-            except exceptions.SoftboxenError():
+            except exceptions.SoftboxenError:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
         elif self._validate(args, 'AdministrativeStatus', str) and context['path'].split('/')[-1] == 'main':
@@ -302,7 +303,7 @@ class PortCommandProcessor(BaseCommandProcessor):
                     port.admin_down()
                 else:
                     raise exceptions.SoftboxenError()
-            except exceptions.SoftboxenError():
+            except exceptions.SoftboxenError:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
         elif self._validate(args, 'Labels', str, str, str) and context['path'].split('/')[-1] == 'main':
@@ -310,7 +311,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             try:
                 port = self.get_component()
                 port.set_label(label1, label2, description)
-            except exceptions.SoftboxenError():
+            except exceptions.SoftboxenError:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
 
@@ -321,9 +322,9 @@ class PortCommandProcessor(BaseCommandProcessor):
             else:
                 mode, = self._dissect(args, 'Mode', str)
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 port.set_mode(mode)
-            except exceptions.SoftboxenError():
+            except exceptions.SoftboxenError:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
 
@@ -334,9 +335,9 @@ class PortCommandProcessor(BaseCommandProcessor):
             else:
                 mode, = self._dissect(args, 'Mode', str)
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 port.set_mode(mode)
-            except exceptions.SoftboxenError():
+            except exceptions.SoftboxenError:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
 
@@ -344,9 +345,9 @@ class PortCommandProcessor(BaseCommandProcessor):
                 card.board_name and self.__name__ == 'port' and card.product == 'ftth':
             ctrl, = self._dissect(args, 'FlowControl', str)
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 port.set_flow_control(ctrl)
-            except exceptions.SoftboxenError():
+            except exceptions.SoftboxenError:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
         else:

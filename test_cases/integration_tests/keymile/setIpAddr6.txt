@@ -1,15 +1,15 @@
-admin
+manager
 secret
 cd /services/packet/1to1SingleTag/srvc-1/cfgm
-set Service /unit-19/control {$input->vlan_voice_new} CoS0 Add
+set Service /unit-19/control 11 CoS0 Add
 cd /services/packet/1to1SingleTag/srvc-2/cfgm
-set Service /unit-19/media {$input->vlan_voice_new} CoS0 Add
+set Service /unit-19/media 1 CoS0 Add
 cd /unit-19/cfgm
 set Ip 11.1.1.1 155.255.255.0 2.3.3.3
 cd /cfgm
 save
 cd /unit-19/main
 restart
-admin
+manager
 secret
 exit

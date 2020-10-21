@@ -1,4 +1,4 @@
-admin
+manager
 secret
 /unit-19/port-1/status/StartLineTest
 get /unit-19/port-1/status/LineTestResults
