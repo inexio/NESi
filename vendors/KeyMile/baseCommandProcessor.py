@@ -160,6 +160,7 @@ class BaseCommandProcessor(base.CommandProcessor):
             self._write(text)
 
         else:
+            self._init_context(context=context)
             text = self._render('ls_header', *scopes, context=context)
 
             self._init_access_points(context=context)
@@ -508,6 +509,11 @@ class BaseCommandProcessor(base.CommandProcessor):
 
     def _init_access_points(self, context=None):
         pass  # Abstract method not implemented
+
+    def _init_context(self, context=None):
+        context['ls_Name'] = ''
+        context['ls_MainMode'] = ''
+        context['ls_EquipmentState'] = ''
 
     def args_in_quotes_joiner(self, args):
         saved_args = []

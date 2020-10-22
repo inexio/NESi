@@ -41,6 +41,12 @@ class MgmtunitCommandProcessor(BaseCommandProcessor):
         except exceptions.InvalidInputError:
             pass
 
+    def _init_context(self, context=None):
+        card = self.get_component()
+        context['ls_Name'] = card.board_name + ' ' + card.supplier_build_state
+        context['ls_MainMode'] = card.software[:-4]
+        context['ls_EquipmentState'] = 'Ok'
+
     def get_property(self, command, *args, context=None):
         card = self.get_component()
         scopes = ('login', 'base', 'get')

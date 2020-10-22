@@ -107,6 +107,11 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
     def _init_access_points(self, context=None):
         pass
 
+    def _init_context(self, context=None):
+        context['ls_Name'] = 'ISDN-BA'
+        context['ls_MainMode'] = ''
+        context['ls_EquipmentState'] = ''
+
     def do_deleteinterface(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 

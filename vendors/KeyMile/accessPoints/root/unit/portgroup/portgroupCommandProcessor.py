@@ -33,6 +33,11 @@ class PortgroupCommandProcessor(BaseCommandProcessor):
                     continue
                 self.access_points += (identifier,)
 
+    def _init_context(self, context=None):
+        context['ls_Name'] = 'ISDN-BA'
+        context['ls_MainMode'] = '16 Ports'
+        context['ls_EquipmentState'] = ''
+
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 

@@ -53,6 +53,18 @@ class UnitCommandProcessor(BaseCommandProcessor):
         except exceptions.InvalidInputError:
             pass
 
+    def _init_context(self, context=None):
+        try:
+            card = self.get_component()
+        except exceptions.SoftboxenError:
+            context['ls_Name'] = ''
+            context['ls_MainMode'] = ''
+            context['ls_EquipmentState'] = 'Empty'
+        else:
+            context['ls_Name'] = card.board_name + ' ' + card.supplier_build_state
+            context['ls_MainMode'] = card.software[:-4]
+            context['ls_EquipmentState'] = 'Ok'
+
     def get_property(self, command, *args, context=None):
         card = self.get_component()
         scopes = ('login', 'base', 'get')
