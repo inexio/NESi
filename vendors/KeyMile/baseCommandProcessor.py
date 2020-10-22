@@ -295,8 +295,15 @@ class BaseCommandProcessor(base.CommandProcessor):
                     elif self.__name__ == 'mgmtunit':
                         component_type = 'mgmtport'
                 if component_type == 'unit':
-                    if component_id == '11' or component_id == '13':
+                    if component_id == '11':
                         component_type = 'mgmtunit'
+                    if component_id == '13':
+                        try:
+                            self._model.get_mgmt_card('name', '13')
+                        except exceptions.InvalidInputError:
+                            component_type = 'unit'
+                        else:
+                            component_type = 'mgmtunit'
                 if component_type == 'vcc':
                     component_type = 'interface'
 
@@ -403,7 +410,7 @@ class BaseCommandProcessor(base.CommandProcessor):
         return True
 
     def _check_for_component(self, command_processor):
-        if command_processor.__name__ in ('portgroup', 'unit', 'mgmtunit'):
+        if command_processor.__name__ in ('portgroup', 'unit', 'mgmtunit', 'alarm'):
             return True
 
         try:
