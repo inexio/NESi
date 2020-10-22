@@ -248,7 +248,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def get_component(self):
-        return self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
+        return self._model.get_port('name', self.component_name)
 
     def set(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')

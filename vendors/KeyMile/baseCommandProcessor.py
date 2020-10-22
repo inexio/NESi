@@ -13,6 +13,7 @@
 from nesi import exceptions
 from nesi.softbox.cli import base
 import re
+import importlib
 
 
 class BaseCommandProcessor(base.CommandProcessor):
@@ -30,26 +31,6 @@ class BaseCommandProcessor(base.CommandProcessor):
 
     def set_component_name(self, name):
         self.component_name = name
-
-    def get_component(self, component_type, component_name):
-        if component_type == 'unit':
-            self._model.get_card('name', component_name)
-        if component_type == 'mgmtunit':
-            self._model.get_mgmt_card('name', component_name)
-        elif component_type == 'port':
-            self._model.get_port('name', component_name)
-        elif component_type == 'chan':
-            self._model.get_chan('name', component_name)
-        elif component_type == 'mgmtport':
-            self._model.get_mgmt_port('name', component_name)
-        elif component_type == 'interface' or component_type == 'vcc':
-            self._model.get_interface('name', component_name)
-        elif component_type == 'logport':
-            self._model.get_logport('name', component_name)
-        elif component_type == 'srvc':
-            self._model.get_srvc('name', component_name)
-        elif component_type == 'portgroupport':
-            self._model.get_portgroupport('name', component_name)
 
     main = {}
 
@@ -319,6 +300,8 @@ class BaseCommandProcessor(base.CommandProcessor):
                 if component_type == 'unit':
                     if component_id == '11' or component_id == '13':
                         component_type = 'mgmtunit'
+                if component_type == 'vcc':
+                    component_type = 'interface'
 
                 command_processor = component_type.capitalize() + 'CommandProcessor'
             else:
@@ -334,57 +317,12 @@ class BaseCommandProcessor(base.CommandProcessor):
                 else:
                     command_processor = components[0].capitalize() + 'CommandProcessor'
 
-            def validate_relation(component_type, name):
-                relations = {
-                    'root': ('unit', 'mgmtunit', 'fan', 'eoam', 'tdmconnections', 'multicast', 'services'),
-                    'unit': ('port', 'portgroup', 'logports', 'huntgroup'),
-                    'mgmtunit': ('mgmtport',),
-                    'fan': ('alarm',),
-                    'services': ('packet', 'macaccessctrl'),
-                    'port': ('chan', 'interface'),
-                    'portgroup': ('portgroupport',),
-                    'chan': ('vcc', 'interface',),
-                    'logports': ('logport',),
-                    'logport': ('interface',),
-                    'packet': ('1to1doubletag', '1to1singletag', 'mcast', 'nto1', 'pls', 'tls'),
-                    'subpacket': ('srvc',),
-                }
-
-                try:
-                    if component_type not in relations[name]:
-                        return False
-                except KeyError:
-                    return False
-
-                return True
-
-            def check_for_component(component_type, component_name):
-                if component_type in ('portgroup', 'unit', 'mgmtunit'):
-                    return True
-
-                try:
-                    self.get_component(component_type, component_name)
-                except exceptions.InvalidInputError:
-                    return False
-
-                return True
-
             if component_type:
-                validation = validate_relation(component_type, self.__name__)
-                if validation:
-                    if self.component_name:
-                        if component_type == 'srvc':
-                            validation = check_for_component(component_type, components[0])
-                        elif component_type == 'logport':
-                            validation = check_for_component(component_type, self.component_name + '/L/' + component_id)
-                        else:
-                            validation = check_for_component(component_type, self.component_name + '/' + component_id)
-                    else:
-                        validation = check_for_component(component_type, component_id)
+                relation_is_valid = self._validate_layer_relation(component_type, self.__name__)
             else:
-                validation = validate_relation(components[0], self.__name__)
+                relation_is_valid = self._validate_layer_relation(components[0], self.__name__)
             if components[0] not in ('main', 'cfgm', 'fm', 'pm', 'status'):
-                if validation is False:
+                if relation_is_valid is False:
                     raise exceptions.CommandExecutionError(command=None, template=None,
                                                            template_scopes=())  # TODO: fix exception to not require all fields as empty
 
@@ -409,33 +347,7 @@ class BaseCommandProcessor(base.CommandProcessor):
                 self.set_prompt_end_pos(context=context)
                 return self
 
-            from vendors.KeyMile.accessPoints.root.unit.unitCommandProcessor import UnitCommandProcessor
-            from vendors.KeyMile.accessPoints.root.unit.port.portCommandProcessor import PortCommandProcessor
-            from vendors.KeyMile.accessPoints.root.unit.port.chan.chanCommandProcessor import ChanCommandProcessor
-            from vendors.KeyMile.accessPoints.root.unit.port.interface.interfaceCommandProcessor import \
-                InterfaceCommandProcessor
-            from vendors.KeyMile.accessPoints.root.fan.fanCommandProcessor import FanCommandProcessor
-            from vendors.KeyMile.accessPoints.root.fan.alarmCommandProcessor import AlarmCommandProcessor
-            from vendors.KeyMile.accessPoints.root.eoamCommandProcessor import EoamCommandProcessor
-            from vendors.KeyMile.accessPoints.root.multicastCommandProcessor import MulticastCommandProcessor
-            from vendors.KeyMile.accessPoints.root.tdmconnectionsCommandProcessor import TdmconnectionsCommandProcessor
-            from vendors.KeyMile.accessPoints.root.services.servicesCommandProcessor import ServicesCommandProcessor
-            from vendors.KeyMile.accessPoints.root.unit.portgroup.portgroupCommandProcessor import \
-                PortgroupCommandProcessor
-            from vendors.KeyMile.accessPoints.root.unit.portgroup.port.portgroupportCommandProcessor import \
-                PortgroupportCommandProcessor
-            from vendors.KeyMile.accessPoints.root.unit.logport.logportsCommandProcessor import LogportsCommandProcessor
-            from vendors.KeyMile.accessPoints.root.unit.logport.port.logportCommandProcessor import \
-                LogportCommandProcessor
-            from vendors.KeyMile.accessPoints.root.unit.port.chan.vcc.vccCommandProcessor import VccCommandProcessor
-            from vendors.KeyMile.accessPoints.root.services.packetCommandProcessor import PacketCommandProcessor
-            from vendors.KeyMile.accessPoints.root.services.macaccessctrlCommandProcessor import \
-                MacaccessctrlCommandProcessor
-            from vendors.KeyMile.accessPoints.root.services.subpacketCommandProcessor import SubpacketCommandProcessor
-            from vendors.KeyMile.accessPoints.root.services.srvcCommandProcessor import SrvcCommandProcessor
-            from vendors.KeyMile.accessPoints.root.mgmt_unit.mgmtunitCommandProcessor import MgmtunitCommandProcessor
-            from vendors.KeyMile.accessPoints.root.mgmt_unit.mgmt_port.mgmtportCommandProcessor import MgmtportCommandProcessor
-            subprocessor = self._create_subprocessor(eval(command_processor), 'login', 'base')
+            subprocessor = self._create_command_processor_obj(command_processor)
 
             if component_id is not None:
                 subprocessor.set_component_id(component_id)
@@ -453,6 +365,12 @@ class BaseCommandProcessor(base.CommandProcessor):
             else:
                 subprocessor.set_component_name(component_id)
 
+            if component_type:
+                component_exists = self._check_for_component(subprocessor)
+                if component_exists is False:
+                    raise exceptions.CommandExecutionError(command=None, template=None,
+                                                           template_scopes=())  # TODO: fix exception to not require all fields as empty
+
             if context['path'] == '/':
                 new_path = components[0]
             else:
@@ -463,6 +381,68 @@ class BaseCommandProcessor(base.CommandProcessor):
                 subprocessor = subprocessor.change_directory(remaining_args, context=context)
 
         return subprocessor
+
+    def _validate_layer_relation(self, component_type, name):
+        relations = {
+            'root': ('unit', 'mgmtunit', 'fan', 'eoam', 'tdmconnections', 'multicast', 'services'),
+            'unit': ('port', 'portgroup', 'logports', 'huntgroup'),
+            'mgmtunit': ('mgmtport',),
+            'fan': ('alarm',),
+            'services': ('packet', 'macaccessctrl'),
+            'port': ('chan', 'interface'),
+            'portgroup': ('portgroupport',),
+            'chan': ('vcc', 'interface',),
+            'logports': ('logport',),
+            'logport': ('interface',),
+            'packet': ('1to1doubletag', '1to1singletag', 'mcast', 'nto1', 'pls', 'tls'),
+            'subpacket': ('srvc',),
+        }
+
+        try:
+            if component_type not in relations[name]:
+                return False
+        except KeyError:
+            return False
+
+        return True
+
+    def _check_for_component(self, command_processor):
+        if command_processor.__name__ in ('portgroup', 'unit', 'mgmtunit'):
+            return True
+
+        try:
+            command_processor.get_component()
+        except exceptions.InvalidInputError:
+            return False
+
+        return True
+
+    def _create_command_processor_obj(self, command_processor):
+        module_paths = {
+            'UnitCommandProcessor': 'vendors.KeyMile.accessPoints.root.unit.unitCommandProcessor',
+            'PortCommandProcessor': 'vendors.KeyMile.accessPoints.root.unit.port.portCommandProcessor',
+            'ChanCommandProcessor': 'vendors.KeyMile.accessPoints.root.unit.port.chan.chanCommandProcessor',
+            'InterfaceCommandProcessor': 'vendors.KeyMile.accessPoints.root.unit.port.interface.interfaceCommandProcessor',
+            'FanCommandProcessor': 'vendors.KeyMile.accessPoints.root.fan.fanCommandProcessor',
+            'AlarmCommandProcessor': 'vendors.KeyMile.accessPoints.root.fan.alarmCommandProcessor',
+            'EoamCommandProcessor': 'vendors.KeyMile.accessPoints.root.eoamCommandProcessor',
+            'MulticastCommandProcessor': 'vendors.KeyMile.accessPoints.root.multicastCommandProcessor',
+            'TdmconnectionsCommandProcessor': 'vendors.KeyMile.accessPoints.root.tdmconnectionsCommandProcessor',
+            'ServicesCommandProcessor': 'vendors.KeyMile.accessPoints.root.services.servicesCommandProcessor',
+            'PortgroupCommandProcessor': 'vendors.KeyMile.accessPoints.root.unit.portgroup.portgroupCommandProcessor',
+            'PortgroupportCommandProcessor': 'vendors.KeyMile.accessPoints.root.unit.portgroup.port.portgroupportCommandProcessor',
+            'LogportsCommandProcessor': 'vendors.KeyMile.accessPoints.root.unit.logport.logportsCommandProcessor',
+            'LogportCommandProcessor': 'vendors.KeyMile.accessPoints.root.unit.logport.port.logportCommandProcessor',
+            'PacketCommandProcessor': 'vendors.KeyMile.accessPoints.root.services.packetCommandProcessor',
+            'MacaccessctrlCommandProcessor': 'vendors.KeyMile.accessPoints.root.services.macaccessctrlCommandProcessor',
+            'SubpacketCommandProcessor': 'vendors.KeyMile.accessPoints.root.services.subpacketCommandProcessor',
+            'SrvcCommandProcessor': 'vendors.KeyMile.accessPoints.root.services.srvcCommandProcessor',
+            'MgmtunitCommandProcessor': 'vendors.KeyMile.accessPoints.root.mgmt_unit.mgmtunitCommandProcessor',
+            'MgmtportCommandProcessor': 'vendors.KeyMile.accessPoints.root.mgmt_unit.mgmt_port.mgmtportCommandProcessor',
+        }
+
+        return self._create_subprocessor(
+            getattr(importlib.import_module(module_paths[command_processor]), command_processor), 'login', 'base')
 
     def do_get(self, command, *args, context=None):
         if len(args) >= 1:
