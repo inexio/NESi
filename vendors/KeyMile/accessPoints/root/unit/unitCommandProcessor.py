@@ -294,7 +294,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
                 card.set_registrar(ra, int(rp), rm, int(rt))
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
-        elif self._validate(args, 'Proxy', str, str, str, str, str, str, str, str) and \
+        elif self._validate(args[:9], 'Proxy', str, str, str, str, str, str, str, str) and \
             context['path'].split('/')[-1] == 'cfgm' and (card.product == 'isdn' or card.product == 'analog'):
             pm, pa1, pp1, pa2, pp2, pe, pmethod, pi = self._dissect(args, 'Proxy', str, str, str, str, str, str, str, str)
             try:
