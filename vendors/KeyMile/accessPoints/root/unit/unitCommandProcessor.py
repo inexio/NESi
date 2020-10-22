@@ -230,13 +230,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
         raise exceptions.CommandSyntaxError(command=command)
 
     def get_component(self):
-        try:
-            if self.component_id == '11' or self.component_id == '13':
-                raise exceptions.CommandSyntaxError()
-            else:
-                return self._model.get_card('name', self.component_id)
-        except exceptions.SoftboxenError:
-            raise exceptions.CommandSyntaxError()
+        return self._model.get_card('name', self.component_name)
 
     def set(self, command, *args, context=None):
         try:

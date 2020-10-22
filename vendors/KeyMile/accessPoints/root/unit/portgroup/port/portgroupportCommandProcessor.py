@@ -24,7 +24,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
     from .portgroupportManagementFunctions import status
 
     def get_component(self):
-        return self._model.get_portgroupport('name', self._parent._parent.component_id + '/G' + self._parent.component_id + '/' + self.component_id)
+        return self._model.get_portgroupport('name', self.component_name)
 
     def get_property(self, command, *args, context=None):
         port = self.get_component()
@@ -37,7 +37,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                 text = self._render('subscriberList_top', *scopes, context=context)
                 i = 0
                 for subscriber in self._model.subscribers:
-                    if subscriber.type == 'port' and subscriber.address == self._parent._parent.component_id + '/G' + self._parent.component_id + '/' + self.component_id:
+                    if subscriber.type == 'port' and subscriber.address == self.component_name:
 
                         context['i'] = i
                         context['spacer1'] = self.create_spacers((63,), (subscriber.number,))[0] * ' '

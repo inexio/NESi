@@ -65,11 +65,8 @@ class MgmtportCommandProcessor(BaseCommandProcessor):
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 
-    def get_port_component(self):
-        if self._parent.component_id == '11' or self._parent.component_id == '13':
-            raise exceptions.CommandSyntaxError()
-        else:
-            return self._model.get_port('name', self._parent.component_id + '/' + self.component_id)
+    def get_component(self):
+        return self._model.get_mgmt_port('name', self.component_name)
 
     def set(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
@@ -82,7 +79,7 @@ class MgmtportCommandProcessor(BaseCommandProcessor):
         elif self._validate(args, 'AdministrativeStatus', str) and context['path'].split('/')[-1] == 'main':
             state, = self._dissect(args, 'AdministrativeStatus', str)
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 if state == 'up':
                     port.admin_up()
                 elif state == 'down':
@@ -95,7 +92,7 @@ class MgmtportCommandProcessor(BaseCommandProcessor):
         elif self._validate(args, 'Labels', str, str, str) and context['path'].split('/')[-1] == 'main':
             label1, label2, description = self._dissect(args, 'Labels', str, str, str)
             try:
-                port = self.get_port_component()
+                port = self.get_component()
                 port.set_label(label1, label2, description)
             except exceptions.SoftboxenError():
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',

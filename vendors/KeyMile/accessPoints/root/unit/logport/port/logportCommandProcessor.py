@@ -40,12 +40,11 @@ class LogportCommandProcessor(PortCommandProcessor):
                                                        template_scopes=('login', 'base', 'execution_errors'))
 
     def get_component(self):
-        return self._model.get_logport('name', self._parent._parent.component_id + '/L/' + self.component_id)
+        return self._model.get_logport('name', self.component_name)
 
     def _init_access_points(self, context=None):
         self.access_points = ()
-        logport_name = self._parent._parent.component_id + '/L/' + self.component_id
-        logport = self._model.get_logport('name', logport_name)
+        logport = self.get_component()
         try:
             _ = self._model.get_interface('logport_id', logport.id)
         except exceptions.SoftboxenError:
