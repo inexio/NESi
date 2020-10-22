@@ -33,7 +33,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
             super().get_property(command, *args, context=context)
         except exceptions.CommandExecutionError:
             if self._validate((args[0],), 'SubscriberList') and context['path'].split('/')[-1] == 'status' and \
-                    self._model.get_card('name', self._parent._parent.component_id).product == 'isdn':
+                    self._model.get_card('name', self._parent._parent.component_name).product == 'isdn':
                 text = self._render('subscriberList_top', *scopes, context=context)
                 i = 0
                 for subscriber in self._model.subscribers:
@@ -62,7 +62,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
 
                 i = 0
                 for subscriber in self._model.subscribers:
-                    if subscriber.type == 'port' and subscriber.address == self._parent._parent.component_id + '/G' + self._parent.component_id + '/' + self.component_id:
+                    if subscriber.type == 'port' and subscriber.address == self.component_name:
                         context['i'] = i
                         context['spacer10'] = self.create_spacers((63,), (subscriber.number,))[0] * ' '
                         context['spacer11'] = self.create_spacers((63,), (subscriber.autorisation_user_name,))[0] * ' '
@@ -88,7 +88,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
 
                 i = 0
                 for subscriber in self._model.subscribers:
-                    if subscriber.type == 'port' and subscriber.address == self._parent._parent.component_id + '/G' + self._parent.component_id + '/' + self.component_id:
+                    if subscriber.type == 'port' and subscriber.address == self.component_name:
                         context['i'] = i
                         context['spacer10'] = self.create_spacers((63,), (subscriber.number,))[0] * ' '
                         context['spacer11'] = self.create_spacers((63,), (subscriber.autorisation_user_name,))[0] * ' '
@@ -151,7 +151,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                         subscriber.set('display_name', displayname)
                         subscriber.set('privacy', privacy)
                     except exceptions.SoftboxenError:
-                        address = self._parent._parent.component_id + '/G' + self._parent.component_id + '/' + self.component_id
+                        address = self.component_name
                         subscriber = self._model.add_subscriber(number=int(number), autorisation_user_name=username,
                                                                 address=address, privacy=privacy, type='port',
                                                                 display_name=displayname, autorisation_password=password)
@@ -170,13 +170,13 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                     port = self.get_component()
                     try:
                         subscriber = self._model.get_subscriber('number', int(number))
-                        assert subscriber.address == self._parent._parent.component_id + '/G' + self._parent.component_id + '/' + self.component_id
+                        assert subscriber.address == self.component_name
                         subscriber.set('autorisation_user_name', username)
                         subscriber.set('autorisation_password', password)
                         subscriber.set('display_name', displayname)
                         subscriber.set('privacy', privacy)
                     except exceptions.SoftboxenError:
-                        address = self._parent._parent.component_id + '/G' + self._parent.component_id + '/' + self.component_id
+                        address = self.component_name
                         subscriber = self._model.add_subscriber(number=int(number), autorisation_user_name=username,
                                                                 address=address, privacy=privacy, type='port',
                                                                 display_name=displayname, autorisation_password=password)

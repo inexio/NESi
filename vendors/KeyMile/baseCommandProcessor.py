@@ -22,12 +22,8 @@ class BaseCommandProcessor(base.CommandProcessor):
     management_functions = ()
     access_points = ()
 
-    component_id = None
 
     component_name = None
-
-    def set_component_id(self, id):
-        self.component_id = id
 
     def set_component_name(self, name):
         self.component_name = name
@@ -349,21 +345,20 @@ class BaseCommandProcessor(base.CommandProcessor):
 
             subprocessor = self._create_command_processor_obj(command_processor)
 
-            if component_id is not None:
-                subprocessor.set_component_id(component_id)
-
             if self.component_name:
                 if components[0] == 'logports':
                     component_name = self.component_name + '/L'
                 elif component_type == 'portgroup':
                     component_name = self.component_name + '/G' + component_id
-                elif component_type == 'srvc':
-                    component_name = 'srvc' + component_id
                 else:
                     component_name = self.component_name + '/' + component_id
                 subprocessor.set_component_name(component_name)
             else:
-                subprocessor.set_component_name(component_id)
+                if component_type == 'srvc':
+                    component_name = 'srvc-' + component_id
+                else:
+                    component_name = component_id
+                subprocessor.set_component_name(component_name)
 
             if component_type:
                 component_exists = self._check_for_component(subprocessor)
