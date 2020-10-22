@@ -500,8 +500,7 @@ class BaseCommandProcessor(base.CommandProcessor):
             except:
                 context['path'] = current_path
                 raise
-            if not isinstance(subprocessor, self.__class__):
-                subprocessor.loop(context=context, return_to=subprocessor._parent)
+            subprocessor.loop(context=context, return_to=subprocessor._parent)
         else:
             raise exceptions.CommandExecutionError(template='invalid_management_function_error',
                                                    template_scopes=('login', 'base', 'execution_errors'),
