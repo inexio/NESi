@@ -124,6 +124,33 @@ class PortCommandProcessor(BaseCommandProcessor):
                 continue
             self.access_points += (identifier,)
 
+    def _init_context(self, context=None):
+        port = self.get_component()
+        card = self._model.get_card('id', port.card_id)
+        print(card.product)
+        if card.product == 'vdsl' or card.product == 'xdsl':
+            context['ls_Name'] = 'VDSL'
+            context['ls_MainMode'] = 'VDSL2'
+        elif card.product == 'sdsl':
+            context['ls_Name'] = 'SHDSL'
+            context['ls_MainMode'] = ''
+        elif card.product == 'adsl':
+            context['ls_Name'] = 'ADSL'
+            context['ls_MainMode'] = ''
+        elif card.product == 'isdn':
+            context['ls_Name'] = 'ISDN'
+            context['ls_MainMode'] = 'BA'
+        elif card.product == 'analog':
+            context['ls_Name'] = 'PSTN'
+            context['ls_MainMode'] = ''
+        elif card.product == 'ftth':
+            context['ls_Name'] = '100/1000Base-BX10 cSFP'
+            context['ls_MainMode'] = ''
+        else:
+            context['ls_Name'] = ''
+            context['ls_MainMode'] = ''
+        context['ls_EquipmentState'] = ''
+
     def do_lock(self, command, *args, context=None):
         card = self._model.get_card('name', self.component_name.split('/')[0])
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \

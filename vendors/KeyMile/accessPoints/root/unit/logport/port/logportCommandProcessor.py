@@ -56,6 +56,12 @@ class LogportCommandProcessor(PortCommandProcessor):
                     continue
                 self.access_points += (identifier,)
 
+    def _init_context(self, context=None):
+        logport = self.get_component()
+        context['ls_Name'] = 'SHDSL Spam'
+        context['ls_MainMode'] = logport.ports
+        context['ls_EquipmentState'] = ''
+
     def do_deleteinterface(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent._parent.component_name)
         if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'sdsl':
