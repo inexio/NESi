@@ -24,7 +24,7 @@ class LogportsCommandProcessor(BaseCommandProcessor):
 
     def _init_access_points(self, context=None):    # work in progress
         self.access_points = ()
-        card = self._model.get_card('name', self._parent.component_id)
+        card = self._model.get_card('name', self.component_name.split('/')[0])
 
         for logport in self._model.get_logports('card_id', card.id):
             if logport.name.count('/') == 2:
@@ -45,7 +45,7 @@ class LogportsCommandProcessor(BaseCommandProcessor):
             if name.startswith('logport-'):
                 id = name.split('-')[1]
                 try:
-                    port = self._model.get_logport('name', self._parent.component_id + '/L/' + id)
+                    port = self._model.get_logport('name', self._parent.component_name + '/L/' + id)
                     port.delete()
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
@@ -66,14 +66,15 @@ class LogportsCommandProcessor(BaseCommandProcessor):
                 ids.sort()
                 try:
                     for x in ids:
-                        _ = self._model.get_logport('name', self._parent.component_id + '/L/' + str(x))
+                        self._model.get_logport('name', self._parent.component_name + '/L/' + str(x))
                         break
                 except exceptions.SoftboxenError:
-                    name = self._parent.component_id + '/L/' + str(ids[0])
+                    name = self._parent.component_name + '/L/' + str(ids[0])
                     ports = 'ports: '
                     for x in ids:
                         ports += str(x) + ', '
-                    logport = self._model.add_logport(card_id=self._parent.component_id, name=name, ports=ports[:-2])
+                    card = self._model.get_card('name', self._parent.component_name)
+                    logport = self._model.add_logport(card_id=card.id, name=name, ports=ports[:-2])
             else:
                 raise exceptions.CommandSyntaxError(command=command)
         else:

@@ -31,8 +31,6 @@ class RootCommandProcessor(BaseCommandProcessor):
             context['spacer'] = self.create_spacers((67,), (context['currTemperature'],))[0] * ' '
             self._write(self._render('currTemperature', 'login', 'base', 'get', context=context))
 
-
-
     def _init_access_points(self, context=None):
         self.access_points = ('eoam', 'fan', 'multicast', 'services', 'tdmConnections')
         for card in self._model.cards:

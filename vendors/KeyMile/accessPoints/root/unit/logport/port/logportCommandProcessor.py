@@ -57,19 +57,18 @@ class LogportCommandProcessor(PortCommandProcessor):
                 self.access_points += (identifier,)
 
     def do_deleteinterface(self, command, *args, context=None):
-        card = self._model.get_card('name', self._parent._parent.component_id)
+        card = self._model.get_card('name', self._parent._parent.component_name)
         if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'sdsl':
             # all or interface_id
             name, = self._dissect(args, str)
             if name == 'all':
-                logport_name = self._parent._parent.component_id + '/L/' + self.component_id
-                logport = self._model.get_logport('name', logport_name)
+                logport = self._model.get_logport('name', self.component_name)
                 for interface in self._model.get_interfaces('logport_id', logport.id):
                     interface.delete()
             elif name.startswith('interface-'):
                 id = name.split('-')[1]
                 try:
-                    interface = self._model.get_interface('name', self._parent._parent.component_id + '/L/' + self.component_id + '/' + id)
+                    interface = self._model.get_interface('name', self.component_name + '/' + id)
                     interface.delete()
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
@@ -80,22 +79,20 @@ class LogportCommandProcessor(PortCommandProcessor):
 
     def do_createinterface(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
-        card = self._model.get_card('name', self._parent._parent.component_id)
+        card = self._model.get_card('name', self._parent._parent.component_name)
         if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'sdsl':
             # vcc profile and vlan profile
             vlan_prof, = self._dissect(args, str)
             # TODO: Check if profiles := default or profile names
             try:
-                logport_name = self._parent._parent.component_id + '/L/' + self.component_id
-                logport = self._model.get_logport('name', logport_name)
+                logport = self._model.get_logport('name', self.component_name)
                 id = 1
                 for interface in self._model.get_interfaces('logport_id', logport.id):
                     if interface.logport_id is not None:
                         new_id = int(interface.name[-1]) + 1
                         id = new_id if new_id > id else id
                 try:
-                    name = self._parent._parent.component_id + '/L/' + self.component_id + '/' + str(id)
-                    _ = self._model.get_interface('name',  name)
+                    self._model.get_interface('name',  self.component_name)
                     assert False
                 except exceptions.SoftboxenError as exe:
                     vcc = self._model.add_interface(name=name, logport_id=logport.id, vlan_profile=vlan_prof)

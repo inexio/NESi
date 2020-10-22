@@ -29,7 +29,7 @@ class PortCommandProcessor(BaseCommandProcessor):
     def get_property(self, command, *args, context=None):
         port = self.get_component()
         context['port'] = port
-        card = self._parent.get_component()
+        card = self._model.get_card('name', self.component_name.split('/')[0])
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
@@ -125,7 +125,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             self.access_points += (identifier,)
 
     def do_lock(self, command, *args, context=None):
-        card = self._parent.get_component()
+        card = self._model.get_card('name', self.component_name.split('/')[0])
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
                 and self.__name__ == 'port':
             try:
@@ -137,7 +137,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_startquickloopbacktest(self, command, *args, context=None):
-        card = self._parent.get_component()
+        card = self._model.get_card('name', self.component_name.split('/')[0])
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
                 and self.__name__ == 'port':
             try:
@@ -151,7 +151,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_startlinetest(self, command, *args, context=None):
-        card = self._parent.get_component()
+        card = self._model.get_card('name', self.component_name.split('/')[0])
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and 'SUP' in card.board_name \
                 and self.__name__ == 'port':
             try:
@@ -165,7 +165,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_startmeltmeasurement(self, command, *args, context=None):
-        card = self._parent.get_component()
+        card = self._model.get_card('name', self.component_name.split('/')[0])
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product != 'isdn' \
                 and self.__name__ == 'port':
             try:
@@ -179,7 +179,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_unlock(self, command, *args, context=None):
-        card = self._parent.get_component()
+        card = self._model.get_card('name', self.component_name.split('/')[0])
         if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
                 and self.__name__ == 'port':
             try:
@@ -194,7 +194,7 @@ class PortCommandProcessor(BaseCommandProcessor):
         raise exceptions.CommandSyntaxError(command=command)
 
     def do_deleteinterface(self, command, *args, context=None):
-        card = self._parent.get_component()
+        card = self._model.get_card('name', self.component_name.split('/')[0])
         if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'ftth':
             # all or interface_id
             name, = self._dissect(args, str)
@@ -205,7 +205,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             elif name.startswith('interface-'):
                 id = name.split('-')[1]
                 try:
-                    interface = self._model.get_interface('name', self._parent.component_id + '/' + self.component_id + '/' + id)
+                    interface = self._model.get_interface('name', self.component_name + '/' + id)
                     interface.delete()
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
@@ -216,7 +216,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_createinterface(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
-        card = self._parent.get_component()
+        card = self._model.get_card('name', self.component_name.split('/')[0])
         if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and 'SUE' in card.board_name:
             # vcc profile and vlan profile
             vlan_prof, = self._dissect(args, str)
@@ -229,8 +229,8 @@ class PortCommandProcessor(BaseCommandProcessor):
                         new_id = int(interface.name[-1]) + 1
                         id = new_id if new_id > id else id
                 try:
-                    name = self._parent.component_id + '/' + self.component_id + '/' + str(id)
-                    _ = self._model.get_interface('name',  name)
+                    name = self.component_name + '/' + str(id)
+                    self._model.get_interface('name',  name)
                     assert False
                 except exceptions.SoftboxenError as exe:
                     interf = self._model.add_interface(name=name, port_id=port.id, vlan_profile=vlan_prof)
@@ -252,7 +252,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def set(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
-        card = self._parent.get_component()
+        card = self._model.get_card('name', self.component_name.split('/')[0])
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
             exc.template = 'syntax_error'

@@ -28,7 +28,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
     def _init_access_points(self, context=None):
         self.access_points = ()
         chan = self.get_component()
-        card = self._model.get_card('name', self._parent._parent.component_id)
+        card = self._model.get_card('name', self.component_name.split('/')[0])
 
         for interface in self._model.get_interfaces('chan_id', chan.id):
             if interface.chan_id is not None:
@@ -42,7 +42,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
                 self.access_points += (identifier,)
 
     def do_deletevcc(self, command, *args, context=None):
-        card = self._model.get_card('name', self._parent._parent.component_id)
+        card = self._model.get_card('name', self._parent._parent.component_name)
         if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'adsl':
             # all or vcc_id
             name, = self._dissect(args, str)
@@ -53,7 +53,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
             elif name.startswith('vcc-'):
                 id = name.split('-')[1]
                 try:
-                    vcc = self._model.get_interface('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id + '/' + id)
+                    vcc = self._model.get_interface('name', self.component_name + '/' + id)
                     vcc.delete()
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
@@ -63,7 +63,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_deleteinterface(self, command, *args, context=None):
-        card = self._model.get_card('name', self._parent._parent.component_id)
+        card = self._model.get_card('name', self._parent._parent.component_name)
         if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product != 'adsl' and card.product != 'sdsl':
             # all or interface_id
             name, = self._dissect(args, str)
@@ -74,7 +74,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
             elif name.startswith('interface-'):
                 id = name.split('-')[1]
                 try:
-                    interface = self._model.get_interface('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id + '/' + id)
+                    interface = self._model.get_interface('name', self.component_name + '/' + id)
                     interface.delete()
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
@@ -85,7 +85,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
 
     def do_createinterface(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
-        card = self._model.get_card('name', self._parent._parent.component_id)
+        card = self._model.get_card('name', self._parent._parent.component_name)
         if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and 'SUV' in card.board_name:
             # vcc profile and vlan profile
             vlan_prof, = self._dissect(args, str)
@@ -98,8 +98,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
                         new_id = int(interface.name[-1]) + 1
                         id = new_id if new_id > id else id
                 try:
-                    name = self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id + '/' + str(id)
-                    _ = self._model.get_interface('name',  name)
+                    self._model.get_interface('name',  self.component_name + '/' + str(id))
                     assert False
                 except exceptions.SoftboxenError as exe:
                     interf = self._model.add_interface(name=name, chan_id=chan.id, vlan_profile=vlan_prof)
@@ -125,8 +124,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
                         new_id = int(interface.name[-1]) + 1
                         id = new_id if new_id > id else id
                 try:
-                    name = self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id + '/' + str(id)
-                    _ = self._model.get_interface('name',  name)
+                    self._model.get_interface('name',  self.component_name + '/' + str(id))
                     assert False
                 except exceptions.SoftboxenError as exe:
                     interf = self._model.add_interface(name=name, chan_id=chan.id, vlan_profile=vlan_prof,
@@ -146,7 +144,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
 
     def do_createvcc(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
-        card = self._model.get_card('name', self._parent._parent.component_id)
+        card = self._model.get_card('name', self._parent._parent.component_name)
         if self._validate(args, str, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'adsl':
             # vcc profile and vlan profile
             vcc_prof, vlan_prof = self._dissect(args, str, str)
@@ -159,8 +157,8 @@ class ChanCommandProcessor(BaseCommandProcessor):
                         new_id = int(vcc.name[-1]) + 1
                         id = new_id if new_id > id else id
                 try:
-                    name = self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id + '/' + str(id)
-                    _ = self._model.get_interface('name',  name)
+                    name = self.component_name + '/' + str(id)
+                    self._model.get_interface('name',  name)
                     assert False
                 except exceptions.SoftboxenError as exe:
                     vcc = self._model.add_interface(name=name, chan_id=chan.id, vcc_profile=vcc_prof,
@@ -182,7 +180,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
         raise exceptions.CommandSyntaxError(command=command)
 
     def set(self, command, *args, context=None):
-        card = self._model.get_card('name', self._parent._parent.component_id)
+        card = self._model.get_card('name', self._parent._parent.component_name)
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
             exc.template = 'syntax_error'
@@ -211,7 +209,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
         return self._model.get_chan('name', self.component_name)
 
     def get_property(self, command, *args, context=None):
-        card = self._model.get_card('name', self._parent._parent.component_id)
+        card = self._model.get_card('name', self._parent._parent.component_name)
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)

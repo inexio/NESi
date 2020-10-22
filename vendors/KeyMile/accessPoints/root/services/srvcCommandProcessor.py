@@ -25,13 +25,19 @@ class SrvcCommandProcessor(BaseCommandProcessor):
     from .srvcManagementFunctions import status
 
     def get_property(self, command, *args, context=None):
-        service_name = 'srvc-' + self.component_id
+        service_name = self.component_name
         services = self._model.get_srvcs('name', service_name)
+        service = None
         for s in services:
             if s.service_type.lower() == context['ServiceType'] and s.name == service_name:
                 service = s
                 context['service'] = service
                 break
+
+        if not service:
+            raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                   template_scopes=('login', 'base', 'execution_errors'))
+
         scopes = ('login', 'base', 'get')
         if self._validate((args[0],), 'Service') and context['path'].split('/')[-1] == 'cfgm':
             # TODO: Find missing templates, and replace placeholder templates
@@ -68,12 +74,18 @@ class SrvcCommandProcessor(BaseCommandProcessor):
         elif self._validate(args, 'Service', str, str, str, str) and context['path'].split('/')[-1] == 'cfgm':
             address, svid, stag, vlan = self._dissect(args, 'Service', str, str, str, str)
             try:
-                service_name = 'srvc-' + self.component_id
+                service_name = self.component_name
                 services = self._model.get_srvcs('name', service_name)
+                service = None
                 for s in services:
                     if s.service_type.lower() == context['ServiceType'] and s.name == service_name:
                         service = s
                         break
+
+                if not service:
+                    raise exceptions.CommandExecutionError(command=command, template='invalid_property',
+                                                           template_scopes=('login', 'base', 'execution_errors'))
+
                 service.set_service(address, int(svid), stag, vlan)
             except exceptions.SoftboxenError:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
