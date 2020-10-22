@@ -27,8 +27,8 @@ class MgmtportCommandProcessor(BaseCommandProcessor):
     from .mgmtportManagementFunctions import status
 
     def get_property(self, command, *args, context=None):
-        port = self.get_port_component()
-        card = self._parent.get_component()
+        port = self.get_component()
+        card = self._model.get_card('name', self.component_name.split('/')[0])
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
@@ -70,7 +70,7 @@ class MgmtportCommandProcessor(BaseCommandProcessor):
 
     def set(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
-        card = self._parent.get_component()
+        card = self._model.get_card('name', self.component_name.split('/')[0])
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
             exc.template = 'syntax_error'
