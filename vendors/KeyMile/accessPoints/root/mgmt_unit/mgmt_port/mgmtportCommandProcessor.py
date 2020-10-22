@@ -62,6 +62,11 @@ class MgmtportCommandProcessor(BaseCommandProcessor):
         self.access_points = ()
         return
 
+    def _init_context(self, context=None):
+        context['ls_Name'] = '10/100/1000BASE-T'
+        context['ls_MainMode'] = 'Management'
+        context['ls_EquipmentState'] = ''
+
     def on_unknown_command(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 

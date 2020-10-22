@@ -59,6 +59,11 @@ class RootCommandProcessor(BaseCommandProcessor):
             else:
                 self.access_points = self.access_points[:self.access_points.index('unit-' + str(i - 1)) + 1] + ('unit-' + str(i),) + self.access_points[self.access_points.index('unit-' + str(i - 1)) + 1:]
 
+    def _init_context(self, context=None):
+        context['ls_Name'] = self._model.model + ' ' + self._model.version
+        context['ls_MainMode'] = ''
+        context['ls_EquipmentState'] = 'Ok'
+
     def set(self, command, *args, context=None):
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)

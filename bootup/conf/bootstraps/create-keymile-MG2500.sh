@@ -580,7 +580,6 @@ req='{
 
 unit_8=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 
-
 ### Mgmt-Unit-11 ###
 
 # Create a physical card at the network device (admin operation)
@@ -617,8 +616,6 @@ req='{
 }'
 
 port_11_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/mgmt_ports)
-
-
 
 ### Unit-19 ###
 
