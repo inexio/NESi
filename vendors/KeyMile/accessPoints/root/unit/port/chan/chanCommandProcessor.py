@@ -27,7 +27,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
 
     def _init_access_points(self, context=None):
         self.access_points = ()
-        chan = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+        chan = self.get_component()
         card = self._model.get_card('name', self._parent._parent.component_id)
 
         for interface in self._model.get_interfaces('chan_id', chan.id):
@@ -47,7 +47,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
             # all or vcc_id
             name, = self._dissect(args, str)
             if name == 'all':
-                chan = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+                chan = self.get_component()
                 for vcc in self._model.get_interfaces('chan_id', chan.id):
                     vcc.delete()
             elif name.startswith('vcc-'):
@@ -68,7 +68,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
             # all or interface_id
             name, = self._dissect(args, str)
             if name == 'all':
-                chan = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+                chan = self.get_component()
                 for interface in self._model.get_interfaces('chan_id', chan.id):
                     interface.delete()
             elif name.startswith('interface-'):
@@ -91,7 +91,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
             vlan_prof, = self._dissect(args, str)
             # TODO: Check if profiles := default or profile names
             try:
-                chan = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+                chan = self.get_component()
                 id = 1
                 for interface in self._model.get_interfaces('chan_id', chan.id):
                     if interface.chan_id is not None:
@@ -118,7 +118,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
             vlan_prof, vcc_prof = self._dissect(args, str, str)
             # TODO: Check if profiles := default or profile names
             try:
-                chan = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+                chan = self.get_component()
                 id = 1
                 for interface in self._model.get_interfaces('chan_id', chan.id):
                     if interface.chan_id is not None:
@@ -152,7 +152,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
             vcc_prof, vlan_prof = self._dissect(args, str, str)
             # TODO: Check if profiles := default or profile names
             try:
-                chan = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+                chan = self.get_component()
                 id = 1
                 for vcc in self._model.get_interfaces('chan_id', chan.id):
                     if vcc.chan_id is not None:
@@ -192,7 +192,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
             name, = self._dissect(args, 'chanprofile', str)
             try:
                 #TODO: Check if profile with this name exists or default
-                channel = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+                channel = self.get_component()
                 channel.set_profile_name(name)
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
@@ -200,12 +200,15 @@ class ChanCommandProcessor(BaseCommandProcessor):
             name, = self._dissect(args, 'ProfileName', str)
             try:
                 # TODO: Check if profile with this name exists or default
-                channel = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+                channel = self.get_component()
                 channel.set_profile_name(name)
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
         else:
             raise exceptions.CommandSyntaxError(command=command)
+
+    def get_component(self):
+        return self._model.get_chan('name', self.component_name)
 
     def get_property(self, command, *args, context=None):
         card = self._model.get_card('name', self._parent._parent.component_id)
@@ -216,13 +219,13 @@ class ChanCommandProcessor(BaseCommandProcessor):
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
         elif self._validate(args, 'Chanprofile') and 'SUV' in card.board_name:
-            channel = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+            channel = self.get_component()
             context['spacer1'] = self.create_spacers((67,), (channel.chan_profile_name,))[0] * ' '
             context['profile_name'] = channel.chan_profile_name
             text = self._render('chan_profile', *scopes, context=context)
             self._write(text)
         elif self._validate(args, 'ProfileName') and 'SUV' not in card.board_name:
-            channel = self._model.get_chan('name', self._parent._parent.component_id + '/' + self._parent.component_id + '/' + self.component_id)
+            channel = self.get_component()
             context['spacer1'] = self.create_spacers((67,), (channel.chan_profile_name,))[0] * ' '
             context['profile_name'] = channel.chan_profile_name
             text = self._render('chan_profile', *scopes, context=context)

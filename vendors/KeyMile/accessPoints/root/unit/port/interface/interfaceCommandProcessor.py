@@ -39,3 +39,6 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             return
         else:
             raise exceptions.CommandSyntaxError(command=command)
+
+    def get_component(self):
+        return self._model.get_interface('name', self.component_name)
