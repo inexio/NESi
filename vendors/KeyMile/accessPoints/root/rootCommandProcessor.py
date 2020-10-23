@@ -112,4 +112,4 @@ class RootCommandProcessor(BaseCommandProcessor):
             self._write(self._render('currTemperature', *scopes, context=context))
         else:
             raise exceptions.CommandExecutionError(command=command, template='invalid_property',
-                                               template_scopes=('login', 'base', 'execution_errors'))
+                                                   template_scopes=('login', 'base', 'execution_errors'))

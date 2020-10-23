@@ -16,4 +16,5 @@ from nesi.softbox.api.schemas.channel_schemas import *
 class KeyMileChannelSchema(ChannelSchema):
     class Meta:
         model = Channel
-        fields = ChannelSchema.Meta.fields + ('vccs', 'interfaces', 'chan_profile_name')
+        fields = ChannelSchema.Meta.fields + ('interfaces', 'chan_profile_name', 'curr_rate_u', 'curr_rate_d',
+                                              'prev_rate_u', 'prev_rate_d', 'curr_delay_u')

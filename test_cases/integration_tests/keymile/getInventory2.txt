@@ -11,8 +11,8 @@ cd /unit-19/main
 get HardwareAndSoftware
 get CurrentStatus
 get EquipmentInventory
-cd /unit-1/port-1}
+cd /unit-1/port-1
 ls
-cd /unit-1/port-{1/main
+cd /unit-1/port-1/main
 get OperationalStatus
 exit

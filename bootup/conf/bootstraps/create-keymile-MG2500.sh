@@ -623,7 +623,24 @@ port_11_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/mgmt_ports)
 req='{
   "subrack_id": '$subrack_id',
   "product": "isdn",
-  "name": "19"
+  "name": "19",
+  "board_name": "IPSX3",
+  "supplier_build_state": "R2B",
+  "board_id": "308",
+  "hardware_key": 105,
+  "software": "ipss2_r4e05_02.esw",
+  "software_name": "IPSS2",
+  "software_revision": "R4E05_02",
+  "state": "Ok",
+  "serial_number": "4936551973",
+  "manufacturer_name": "KEYMILE",
+  "model_name": "37900315",
+  "short_text": "MG IPSX3 VoIP SMG 912ch",
+  "manufacturer_id": "100989",
+  "manufacturer_part_number": "37900315",
+  "manufacturer_build_state": "09",
+  "boot_loader": "BLSU2_R1J01/CT40500",
+  "processor": "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"
 }'
 
 unit_19=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)

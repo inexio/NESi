@@ -39,3 +39,28 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
 
     def get_component(self):
         return self._model.get_interface('name', self.component_name)
+
+    def get_property(self, command, *args, context=None):
+        scopes = ('login', 'base', 'get')
+        if self._validate(args, *()):
+            exc = exceptions.CommandSyntaxError(command=command)
+            exc.template = 'syntax_error'
+            exc.template_scopes = ('login', 'base', 'syntax_errors')
+            raise exc
+        elif self._validate(args, 'ServiceStatus') and context['path'].split('/')[-1] == 'status':
+            vcc = self.get_component()
+            context['spacer1'] = self.create_spacers((67,), (vcc.vcc_profile,))[0] * ' '
+            context['spacer2'] = self.create_spacers((67,), (vcc.vlan_profile,))[0] * ' '
+            text = self._render('configured_profiles', *scopes, context=dict(context, vcc=vcc))
+            self._write(text)
+        elif self._validate(args, 'configuredProfiles') and context['path'].split('/')[-1] == 'cfgm':
+            vcc = self.get_component()
+            services_connected = '"' + vcc.services_connected + '"'
+            context['vcc_services_connected'] = services_connected
+            context['spacer1'] = self.create_spacers((67,), (vcc.number_of_conn_services,))[0] * ' '
+            context['spacer2'] = self.create_spacers((67,), (vcc.reconfiguration_allowed,))[0] * ' '
+            context['spacer3'] = self.create_spacers((67,), (services_connected,))[0] * ' '
+            text = self._render('service_status', *scopes, context=dict(context, vcc=vcc))
+            self._write(text)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)

@@ -27,9 +27,12 @@ class KeyMileInterface(base.Resource):
     chan_id = base.Field('chan_id')
     logport_id = base.Field('logport_id')
 
-    #vcc
+    # vcc
     vcc_profile = base.Field('vcc_profile')
     vlan_profile = base.Field('vlan_profile')
+    number_of_conn_services = base.Field('number_of_conn_services')
+    reconfiguration_allowed = base.Field('reconfiguration_allowed')
+    services_connected = base.Field('services_connected')
 
 
 class KeyMileInterfaceCollection(base.ResourceCollection):

@@ -225,6 +225,16 @@ class ChanCommandProcessor(BaseCommandProcessor):
             context['profile_name'] = channel.chan_profile_name
             text = self._render('chan_profile', *scopes, context=context)
             self._write(text)
+        elif self._validate(args, 'Status') and context['path'].split('/')[-1] == 'status':
+            channel = self.get_component()
+            context['spacer1'] = self.create_spacers((67,), (channel.curr_rate_d,))[0] * ' '
+            context['spacer2'] = self.create_spacers((67,), (channel.prev_rate_d,))[0] * ' '
+            context['spacer3'] = self.create_spacers((67,), (channel.curr_delay_d,))[0] * ' '
+            context['spacer4'] = self.create_spacers((67,), (channel.curr_rate_u,))[0] * ' '
+            context['spacer5'] = self.create_spacers((67,), (channel.prev_rate_u,))[0] * ' '
+            context['spacer6'] = self.create_spacers((67,), (channel.curr_delay_u,))[0] * ' '
+            text = self._render('status', *scopes, context=dict(context, channel=channel))
+            self._write(text)
         else:
             raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                    template_scopes=('login', 'base', 'execution_errors'))

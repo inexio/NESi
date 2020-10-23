@@ -1,5 +1,5 @@
                                                                    \ # Ip
-{{ context.card.gateway_ipaddress }}{{ context.spacer1 }}\ # GatewayIpAddress
-{{ context.card.subnet_mask }}{{ context.spacer2 }}\ # SubnetMask
-{{ context.card.default_gateway }}{{ context.spacer3 }}\ # DefaultGateway
+{{ context.card.gateway_ipaddress | safe }}{{ context.spacer1 }}\ # GatewayIpAddress
+{{ context.card.subnet_mask | safe }}{{ context.spacer2 }}\ # SubnetMask
+{{ context.card.default_gateway | safe }}{{ context.spacer3 }}\ # DefaultGateway
 
