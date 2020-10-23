@@ -22,7 +22,6 @@ class BaseCommandProcessor(base.CommandProcessor):
     management_functions = ()
     access_points = ()
 
-
     component_name = None
 
     def set_component_name(self, name):
@@ -37,6 +36,32 @@ class BaseCommandProcessor(base.CommandProcessor):
     pm = {}
 
     status = {}
+
+    def on_unknown_command(self, command, *args, context=None):
+        if len(args) == 0:
+            if '/' in command:
+                path = '/'.join([x for x in command.split('/') if x][:-1]).replace('_', '-')
+                command = [x for x in command.split('/') if x][-1]
+
+                current_path = context['path']
+                try:
+                    command_proc = self.change_directory(path, context=context)
+                    command_proc._parse_and_execute_command(command, context=context)
+                except exceptions.SoftboxenError:
+                    context['path'] = current_path
+                    raise exceptions.CommandExecutionError(template='invalid_management_function_error',
+                                                           template_scopes=('login', 'base', 'execution_errors'),
+                                                           command=None)
+                context['path'] = current_path
+            else:
+                raise exceptions.CommandExecutionError(template='invalid_management_function_error',
+                                                       template_scopes=('login', 'base', 'execution_errors'),
+                                                       command=None)
+        else:
+            raise exceptions.CommandExecutionError(template='invalid_management_function_error',
+                                                   template_scopes=('login', 'base', 'execution_errors'),
+                                                   command=None)
+
 
     def map_states(self, object, type):
         if object.admin_state == '0':

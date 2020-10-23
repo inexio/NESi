@@ -25,9 +25,6 @@ class MulticastCommandProcessor(BaseCommandProcessor):
     from .multicastManagementFunctions import pm
     from .multicastManagementFunctions import status
 
-    def on_unknown_command(self, command, *args, context=None):
-        raise exceptions.CommandSyntaxError(command=command)
-
     def set(self, command, *args, context=None):
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)

@@ -104,9 +104,6 @@ class RootCommandProcessor(BaseCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def on_unknown_command(self, command, *args, context=None):
-        raise exceptions.CommandSyntaxError(command=command)
-
     def get_property(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
         if self._validate(args, "CurrTemperature"):

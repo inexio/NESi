@@ -217,9 +217,6 @@ class PortCommandProcessor(BaseCommandProcessor):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def on_unknown_command(self, command, *args, context=None):
-        raise exceptions.CommandSyntaxError(command=command)
-
     def do_deleteinterface(self, command, *args, context=None):
         card = self._model.get_card('name', self.component_name.split('/')[0])
         if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm' and card.product == 'ftth':

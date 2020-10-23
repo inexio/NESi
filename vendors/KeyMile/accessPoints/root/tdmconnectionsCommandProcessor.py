@@ -22,9 +22,6 @@ class TdmconnectionsCommandProcessor(BaseCommandProcessor):
     from .tdmconnectionsManagementFunctions import main
     from .tdmconnectionsManagementFunctions import cfgm
 
-    def on_unknown_command(self, command, *args, context=None):
-        raise exceptions.CommandSyntaxError(command=command)
-
     def set(self, command, *args, context=None):
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
