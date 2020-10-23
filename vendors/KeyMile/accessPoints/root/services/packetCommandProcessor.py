@@ -21,9 +21,6 @@ class PacketCommandProcessor(BaseCommandProcessor):
 
     from .packetManagementFunctions import main
 
-    def on_unknown_command(self, command, *args, context=None):
-        raise exceptions.CommandSyntaxError(command=command)
-
     def set(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
         try:

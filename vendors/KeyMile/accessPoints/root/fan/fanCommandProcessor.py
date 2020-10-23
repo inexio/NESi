@@ -34,6 +34,3 @@ class FanCommandProcessor(BaseCommandProcessor):
         context['ls_Name'] = 'FANU4'
         context['ls_MainMode'] = ''
         context['ls_EquipmentState'] = 'Ok'
-
-    def on_unknown_command(self, command, *args, context=None):
-        raise exceptions.CommandSyntaxError(command=command)

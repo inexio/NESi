@@ -38,9 +38,6 @@ class PortgroupCommandProcessor(BaseCommandProcessor):
         context['ls_MainMode'] = '16 Ports'
         context['ls_EquipmentState'] = ''
 
-    def on_unknown_command(self, command, *args, context=None):
-        raise exceptions.CommandSyntaxError(command=command)
-
     def set(self, command, *args, context=None):
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)

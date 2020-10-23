@@ -118,9 +118,6 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
     def do_createinterface(self, command, *args, context=None):
         raise exceptions.CommandSyntaxError(command=command)
 
-    def on_unknown_command(self, command, *args, context=None):
-        raise exceptions.CommandSyntaxError(command=command)
-
     def set(self, command, *args, context=None):
         scopes = ('login', 'base', 'set')
         try:
