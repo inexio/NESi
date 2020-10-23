@@ -127,7 +127,6 @@ class PortCommandProcessor(BaseCommandProcessor):
     def _init_context(self, context=None):
         port = self.get_component()
         card = self._model.get_card('id', port.card_id)
-        print(card.product)
         if card.product == 'vdsl' or card.product == 'xdsl':
             context['ls_Name'] = 'VDSL'
             context['ls_MainMode'] = 'VDSL2'

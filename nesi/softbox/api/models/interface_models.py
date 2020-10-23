@@ -22,6 +22,9 @@ class Interface(db.Model):
     port_id = db.Column(db.Integer, db.ForeignKey('port.id'))
     logport_id = db.Column(db.Integer, db.ForeignKey('log_port.id'))
 
-    #vcc
-    vcc_profile = db.Column(db.String(), default=None)  # default or profile_name, default:= vpi=0 and vci=33
-    vlan_profile = db.Column(db.String(), default=None)  # default or profile_name, must be untagged
+    # vcc
+    vcc_profile = db.Column(db.String(), default='')  # default or profile_name, default:= vpi=0 and vci=33
+    vlan_profile = db.Column(db.String(), default='')  # default or profile_name, must be untagged
+    number_of_conn_services = db.Column(db.Integer(), default=0)
+    reconfiguration_allowed = db.Column(db.Enum('true', 'false'), default='true')
+    services_connected = db.Column(db.String(), default='')

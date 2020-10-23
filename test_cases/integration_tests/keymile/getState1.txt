@@ -7,7 +7,6 @@ get AdministrativeStatus
 get OperationalStatus
 cd /unit-1/port-1/chan-1/cfgm
 get ProfileName
-get ChanProfile
 cd /unit-1/port-1/chan-1/status
 get status
 cd /unit-1/port-1/chan-1/vcc-1/cfgm
