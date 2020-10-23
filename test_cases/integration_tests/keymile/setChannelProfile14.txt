@@ -1,7 +1,7 @@
 manager
 secret
 cd /unit-5/port-1/chan-1/cfgm
-set chanprofile rofile
+set chanprofile profile
 set chanprofile default
 #else
 cd /unit-5/port-1/chan-1/cfgm

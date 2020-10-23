@@ -17,8 +17,9 @@ from ..models.interface_models import Interface
 class InterfaceSchema(ma.ModelSchema):
     class Meta:
         model = Interface
-        fields = ('id', 'box_id', 'box', 'chan_id', 'port_id', 'logport_id',
-                  'name', 'description', 'vcc_profile', 'vlan_profile', '_links')
+        fields = ('id', 'box_id', 'box', 'chan_id', 'port_id', 'logport_id', 'number_of_conn_services',
+                  'name', 'description', 'reconfiguration_allowed', 'vcc_profile', 'vlan_profile', 'services_connected',
+                  '_links')
 
     box = ma.Hyperlinks(
         {'_links': {

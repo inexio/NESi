@@ -18,8 +18,8 @@ from ..schemas.interface_schemas import InterfacesSchema
 class ChannelSchema(ma.ModelSchema):
     class Meta:
         model = Channel
-        fields = ('id', 'box_id', 'box', 'port_id', 'interfaces',
-                  'name', 'description', '_links')
+        fields = ('id', 'box_id', 'box', 'port_id', 'interfaces', 'curr_rate_u', 'curr_rate_d', 'prev_rate_u',
+                  'name', 'description', 'prev_rate_d', 'curr_delay_u', 'curr_delay_d', '_links')
 
     interfaces = ma.Nested(InterfacesSchema.InterfaceSchema, many=True)
 

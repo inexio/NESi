@@ -25,6 +25,12 @@ class KeyMileChannel(base.Resource):
     name = base.Field('name')
     description = base.Field('description')
     chan_profile_name = base.Field('chan_profile_name')
+    curr_rate_u = base.Field('curr_rate_u')
+    curr_rate_d = base.Field('curr_rate_d')
+    prev_rate_u = base.Field('prev_rate_u')
+    prev_rate_d = base.Field('prev_rate_d')
+    curr_delay_u = base.Field('curr_delay_u')
+    curr_delay_d = base.Field('curr_delay_d')
 
     def set_profile_name(self, name):
         self.update(chan_profile_name=name)
