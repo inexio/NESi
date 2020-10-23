@@ -67,9 +67,6 @@ class MgmtportCommandProcessor(BaseCommandProcessor):
         context['ls_MainMode'] = 'Management'
         context['ls_EquipmentState'] = ''
 
-    def on_unknown_command(self, command, *args, context=None):
-        raise exceptions.CommandSyntaxError(command=command)
-
     def get_component(self):
         return self._model.get_mgmt_port('name', self.component_name)
 

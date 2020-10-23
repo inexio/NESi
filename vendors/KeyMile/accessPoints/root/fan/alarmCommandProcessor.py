@@ -22,6 +22,3 @@ class AlarmCommandProcessor(BaseCommandProcessor):
     from .alarmManagementFunctions import main
     from .alarmManagementFunctions import cfgm
     from .alarmManagementFunctions import fm
-
-    def on_unknown_command(self, command, *args, context=None):
-        raise exceptions.CommandSyntaxError(command=command)

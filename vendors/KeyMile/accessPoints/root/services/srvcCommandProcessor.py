@@ -91,8 +91,5 @@ class SrvcCommandProcessor(BaseCommandProcessor):
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
 
-    def on_unknown_command(self, command, *args, context=None):
-        raise exceptions.CommandSyntaxError(command=command)
-
     def get_component(self):
         return self._model.get_srvcs('name', self.component_name)

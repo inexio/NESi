@@ -36,9 +36,6 @@ class LogportsCommandProcessor(BaseCommandProcessor):
         accpoint.sort(key=lambda x: int(x.split('-')[1]))
         self.access_points = tuple(accpoint)
 
-    def on_unknown_command(self, command, *args, context=None):
-        raise exceptions.CommandSyntaxError(command=command)
-
     def do_delete(self, command, *args, context=None):
         if self._validate(args, str) and context['path'].split('/')[-1] == 'cfgm':
             name, = self._dissect(args, str)
