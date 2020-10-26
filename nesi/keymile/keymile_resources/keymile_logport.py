@@ -28,6 +28,7 @@ class KeyMileLogPort(base.Resource):
     description = base.Field('description')
     admin_state = base.Field('admin_state')
     operational_state = base.Field('operational_state')
+    profile = base.Field('profile')
 
     def admin_up(self):
         """Set the admin port state to up"""
@@ -44,6 +45,9 @@ class KeyMileLogPort(base.Resource):
     def up(self):
         """Set the port state to down"""
         self.update(operational_state='1')
+
+    def set_profile(self, profile):
+        self.update(profile=profile)
 
     def set_label(self, l1, l2, desc):
         self.update(label1=l1)
