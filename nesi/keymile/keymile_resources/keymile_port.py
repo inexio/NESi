@@ -36,6 +36,8 @@ class KeyMilePort(Port):
     profile4_enable = base.Field('profile4_enable')
     profile4_name = base.Field('profile4_name')
     profile_mode = base.Field('profile_mode')
+    upstream = base.Field('upstream')
+    downstream = base.Field('downstream')
 
     def set_profile(self, name):
         self.update(profile1_name=name)

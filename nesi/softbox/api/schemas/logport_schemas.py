@@ -19,7 +19,7 @@ class LogPortSchema(ma.ModelSchema):
     class Meta:
         model = LogPort
         fields = ('id', 'box_id', 'box', 'card_id', 'name', 'ports', 'interfaces', 'description', 'admin_state',
-                  'operational_state', 'label1', 'label2',
+                  'operational_state', 'label1', 'label2', 'profile',
                   '_links')
 
     interfaces = ma.Nested(InterfacesSchema.InterfaceSchema, many=True)

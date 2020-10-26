@@ -66,7 +66,32 @@ class PortCommandProcessor(BaseCommandProcessor):
             text = self._render('port_profiles', *scopes, context=dict(context, port=port))
             self._write(text)
         elif self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status':
-            text = self._render('attainable_rate', *scopes, context=context)
+            context['spacer1'] = self.create_spacers((67,), (port.downstream,))[0] * ' '
+            context['spacer2'] = self.create_spacers((67,), (port.upstream,))[0] * ' '
+            text = self._render('attainable_rate', *scopes, context=dict(context, port=port))
+            self._write(text)
+        elif self._validate((args[0],), 'PortMacStatus') and context['path'].split('/')[-1] == 'status' and \
+                card.product == 'ftth':
+            text = self._render('port_mac_status', *scopes, context=context)
+            self._write(text)
+        elif self._validate((args[0],), 'DDMStatus') and context['path'].split('/')[-1] == 'status' and \
+                card.product == 'ftth':
+            text = self._render('ddm_status', *scopes, context=context)
+            self._write(text)
+        elif self._validate((args[0],), 'PortGeneralStatus') and context['path'].split('/')[-1] == 'status' and \
+                card.product == 'ftth':
+            text = self._render('port_general_status', *scopes, context=context)
+            self._write(text)
+        elif self._validate((args[0],), 'VendorId') and context['path'].split('/')[-1] == 'status':
+            text = self._render('vendor_id', *scopes, context=context)
+            self._write(text)
+        elif self._validate((args[0],), 'LineActualState') and context['path'].split('/')[-1] == 'status' and \
+                card.product == 'sdsl':
+            text = self._render('line_actual_state', *scopes, context=context)
+            self._write(text)
+        elif self._validate((args[0],), 'LineOperationState') and context['path'].split('/')[-1] == 'status' and \
+                card.product == 'sdsl':
+            text = self._render('line_operation_state', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'QuickLoopbackTest') and context['path'].split('/')[-1] == 'status'\
                 and (card.product == 'isdn' or 'SUI' in card.board_name) and self.__name__ == 'port':

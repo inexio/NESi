@@ -486,7 +486,7 @@ class BaseCommandProcessor(base.CommandProcessor):
                 prop = args[0].split('/')[-1]
                 try:
                     tmp_cmdproc = self.change_directory(path, context=context)
-                    tmp_cmdproc.get_property(command, *prop, context=context)
+                    tmp_cmdproc.get_property(command, prop, context=context)
                 except exceptions.CommandExecutionError:
                     raise exceptions.CommandExecutionError(template='syntax_error',
                                                            template_scopes=('login', 'base', 'syntax_errors'),

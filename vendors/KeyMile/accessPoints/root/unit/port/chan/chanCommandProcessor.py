@@ -98,7 +98,8 @@ class ChanCommandProcessor(BaseCommandProcessor):
                         new_id = int(interface.name[-1]) + 1
                         id = new_id if new_id > id else id
                 try:
-                    self._model.get_interface('name',  self.component_name + '/' + str(id))
+                    name = self.component_name + '/' + str(id)
+                    self._model.get_interface('name', name)
                     assert False
                 except exceptions.SoftboxenError as exe:
                     interf = self._model.add_interface(name=name, chan_id=chan.id, vlan_profile=vlan_prof)
@@ -124,7 +125,8 @@ class ChanCommandProcessor(BaseCommandProcessor):
                         new_id = int(interface.name[-1]) + 1
                         id = new_id if new_id > id else id
                 try:
-                    self._model.get_interface('name',  self.component_name + '/' + str(id))
+                    name = self.component_name + '/' + str(id)
+                    self._model.get_interface('name',  name)
                     assert False
                 except exceptions.SoftboxenError as exe:
                     interf = self._model.add_interface(name=name, chan_id=chan.id, vlan_profile=vlan_prof,

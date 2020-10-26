@@ -28,12 +28,23 @@ class LogportCommandProcessor(PortCommandProcessor):
 
     def get_property(self, command, *args, context=None):
         port = self.get_component()
+        context['port'] = port
         scopes = ('login', 'base', 'get')
         try:
             super().get_property(command, *args, context=context)
         except exceptions.CommandExecutionError:
             if self._validate((args[0],), 'AttainableRate') and context['path'].split('/')[-1] == 'status':
                 text = self._render('attainable_rate', *scopes, context=context)
+                self._write(text)
+            elif self._validate((args[0],), 'ActualStatus') and context['path'].split('/')[-1] == 'status':
+                text = self._render('actual_status', *scopes, context=context)
+                self._write(text)
+            elif self._validate((args[0],), 'OperationalWireState') and context['path'].split('/')[-1] == 'status':
+                text = self._render('operational_wire_state', *scopes, context=context)
+                self._write(text)
+            elif self._validate((args[0],), 'SpanProfiles') and context['path'].split('/')[-1] == 'cfgm':
+                context['spacer1'] = self.create_spacers((67,), (port.profile,))[0] * ' '
+                text = self._render('span_profiles', *scopes, context=context)
                 self._write(text)
             else:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
@@ -101,7 +112,7 @@ class LogportCommandProcessor(PortCommandProcessor):
                     self._model.get_interface('name',  self.component_name)
                     assert False
                 except exceptions.SoftboxenError as exe:
-                    vcc = self._model.add_interface(name=name, logport_id=logport.id, vlan_profile=vlan_prof)
+                    vcc = self._model.add_interface(name=self.component_name, logport_id=logport.id, vlan_profile=vlan_prof)
                     context['spacer1'] = self.create_spacers((57,), (str(id),))[0] * ' '
                     context['id'] = str(id)
                     # TODO: Template is unknown
