@@ -40,7 +40,10 @@ class BaseCommandProcessor(base.CommandProcessor):
     def on_unknown_command(self, command, *args, context=None):
         if len(args) == 0:
             if '/' in command:
-                path = '/'.join([x for x in command.split('/') if x][:-1]).replace('_', '-')
+                if command.startswith('/'):
+                    path = '/' + '/'.join([x for x in command.split('/') if x][:-1]).replace('_', '-')
+                else:
+                    path = '/'.join([x for x in command.split('/') if x][:-1]).replace('_', '-')
                 command = [x for x in command.split('/') if x][-1]
 
                 current_path = context['path']
