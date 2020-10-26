@@ -778,7 +778,12 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_undo(self, command, *args, context=None):
-        if self._validate(args, 'system', 'snmp-user', 'password', 'security'):
+        if self._validate(args, 'alarm', 'output', 'all'):
+            # important for future snmp interactions
+            return
+        elif self._validate(args, 'event', 'output', 'all'):
+            return
+        elif self._validate(args, 'system', 'snmp-user', 'password', 'security'):
             # importend for future snmp interactions
             return
         elif self._validate(args, 'smart'):
