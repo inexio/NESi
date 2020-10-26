@@ -25,7 +25,7 @@ class RootCommandProcessor(BaseCommandProcessor):
     from .rootManagementFunctions import fm
     from .rootManagementFunctions import status
 
-    def do_get(self, command, *args, context=None):
+    def get_property(self, command, *args, context=None):
         if self._validate(args, "CurrTemperature"):
             context['currTemperature'] = self._model.currTemperature
             context['spacer'] = self.create_spacers((67,), (context['currTemperature'],))[0] * ' '

@@ -484,13 +484,16 @@ class BaseCommandProcessor(base.CommandProcessor):
                 for component in args[0].split('/')[:-1]:
                     path += component + '/'
                 prop = args[0].split('/')[-1]
+                current_path = context['path']
                 try:
                     tmp_cmdproc = self.change_directory(path, context=context)
                     tmp_cmdproc.get_property(command, prop, context=context)
                 except exceptions.CommandExecutionError:
+                    context['path'] = current_path
                     raise exceptions.CommandExecutionError(template='syntax_error',
                                                            template_scopes=('login', 'base', 'syntax_errors'),
                                                            command=None)
+                context['path'] = current_path
             else:
                 self.get_property(command, args[0], context=context)
         else:
@@ -510,9 +513,17 @@ class BaseCommandProcessor(base.CommandProcessor):
             path = ''
             for el in args[0].split('/')[:-1]:
                 path += el + '/'
-            proc = self.change_directory(str(path[:-1]), context=context)
-            res = (args[0].split('/')[-1],) + args[1:]
-            proc.set(command, *res, context=context)
+            current_path = context['path']
+            try:
+                proc = self.change_directory(str(path[:-1]), context=context)
+                res = (args[0].split('/')[-1],) + args[1:]
+                proc.set(command, *res, context=context)
+            except exceptions.CommandExecutionError:
+                    context['path'] = current_path
+                    raise exceptions.CommandExecutionError(template='syntax_error',
+                                                           template_scopes=('login', 'base', 'syntax_errors'),
+                                                           command=None)
+            context['path'] = current_path
         elif args[0].count('/') == 0:
             self.set(command, *args, context=context)
 
