@@ -348,6 +348,9 @@ class CommandProcessor:
                     self.line_buffer = line.split('\r\n')
                     continue
                 context['raw_line'] = line
+
+                if self.daemon:
+                    self._write(line)  # write line to stdout if box is in daemon mode
             else:
                 line = command
                 command = None
