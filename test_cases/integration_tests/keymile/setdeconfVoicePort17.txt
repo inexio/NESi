@@ -1,6 +1,6 @@
 manager
 secret
-cd /unit-$card/port-$port/main
+cd /unit-19/port-1/main
 set AdministrativeStatus down
 Set Labels  "" "" ""
 cd /unit-19/portgroup-1/port-1/cfgm

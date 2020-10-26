@@ -27,7 +27,7 @@ path="`dirname \"$0\"`"
 #   |---> Unit-1   (adsl) (SUAD2)                        #
 #   |     |-> Port-1                                     #
 #   |     |   |-> Chan-1                                 #
-#   |     |       |-> Interface-1                        #
+#   |     |       |-> VCC-1                              #
 #   |                                                    #
 #   |---> Unit-2   (sdsl) (SUSE1)                        #
 #   |     |-> Port-1                                     #
@@ -42,6 +42,8 @@ path="`dirname \"$0\"`"
 #   |                                                    #
 #   |---> Unit-4   (adsl) (SUAD2)                        #
 #   |     |-> Port-1                                     #
+#   |     |   |-> Chan-1                                 #
+#   |     |       |-> VCC-1                              #
 #   |                                                    #
 #   |---> Unit-5   (vdsl) (SUVM4)                        #
 #   |     |-> Port-1                                     #
@@ -52,6 +54,7 @@ path="`dirname \"$0\"`"
 #   |                                                    #
 #   |---> Unit-7   (ftth) (SUEN3)                        #
 #   |     |-> Port-1                                     #
+#   |     |   |-> Interface-1                            #
 #   |                                                    #
 #   |---> Unit-8   (vdsl) (SUVM6)                        #
 #   |                                                    #
@@ -429,6 +432,25 @@ req='{
 
 port_4_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
 
+### Chan-1 ###
+
+# Create a logical channel at the network device (admin operation)
+req='{
+  "port_id": '$port_4_1',
+  "description": "Channel #1"
+}'
+
+chan_4_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/channels)
+
+### VCC-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "chan_id": '$chan_4_1_1'
+}'
+
+interface_4_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/interfaces)
+
 ### Unit-5 ###
 
 # Create a physical card at the network device (admin operation)
@@ -552,6 +574,15 @@ req='{
 }'
 
 port_7_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### Interface-1 ###
+
+# Create a physical port at the network device (admin operation)
+req='{
+  "port_id": '$port_7_1'
+}'
+
+interface_7_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/interfaces)
 
 ### Unit-8 ###
 

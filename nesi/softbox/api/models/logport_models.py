@@ -26,3 +26,4 @@ class LogPort(db.Model):
     description = db.Column(db.String(), default='""')
     operational_state = db.Column(db.Enum('0', '1'), default='0')
     admin_state = db.Column(db.Enum('0', '1'), default='0')
+    profile = db.Column(db.String(), default='default')

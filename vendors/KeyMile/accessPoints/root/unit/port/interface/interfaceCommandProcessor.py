@@ -51,7 +51,7 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             vcc = self.get_component()
             context['spacer1'] = self.create_spacers((67,), (vcc.vcc_profile,))[0] * ' '
             context['spacer2'] = self.create_spacers((67,), (vcc.vlan_profile,))[0] * ' '
-            text = self._render('configured_profiles', *scopes, context=dict(context, vcc=vcc))
+            text = self._render('service_status', *scopes, context=dict(context, vcc=vcc))
             self._write(text)
         elif self._validate(args, 'configuredProfiles') and context['path'].split('/')[-1] == 'cfgm':
             vcc = self.get_component()
@@ -60,7 +60,16 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             context['spacer1'] = self.create_spacers((67,), (vcc.number_of_conn_services,))[0] * ' '
             context['spacer2'] = self.create_spacers((67,), (vcc.reconfiguration_allowed,))[0] * ' '
             context['spacer3'] = self.create_spacers((67,), (services_connected,))[0] * ' '
-            text = self._render('service_status', *scopes, context=dict(context, vcc=vcc))
+            text = self._render('configured_profiles', *scopes, context=dict(context, vcc=vcc))
+            self._write(text)
+        elif self._validate(args, 'VlanProfile') and context['path'].split('/')[-1] == 'cfgm':
+            vcc = self.get_component()
+            context['spacer1'] = self.create_spacers((67,), (vcc.vlan_profile,))[0] * ' '
+            text = self._render('vlan_profile', *scopes, context=dict(context, vcc=vcc))
+            self._write(text)
+        elif self._validate(args, 'IfRateLimiting') and context['path'].split('/')[-1] == 'cfgm':
+            vcc = self.get_component()
+            text = self._render('if_rate_limiting', *scopes, context=dict(context, vcc=vcc))
             self._write(text)
         else:
             raise exceptions.CommandSyntaxError(command=command)
