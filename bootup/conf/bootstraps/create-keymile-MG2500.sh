@@ -48,6 +48,7 @@ path="`dirname \"$0\"`"
 #   |---> Unit-5   (vdsl) (SUVM4)                        #
 #   |     |-> Port-1                                     #
 #   |     |   |-> Chan-1                                 #
+#   |     |       |-> Interface-1                        #
 #   |                                                    #
 #   |---> Unit-6   (vdsl) (SUVM6)                        #
 #   |     |-> Port-1                                     #
@@ -498,6 +499,15 @@ req='{
 }'
 
 chan_5_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/channels)
+
+### Interface-1 ###
+
+# Create a physical interface at the network device (admin operation)
+req='{
+  "chan_id": 'chan_5_1_1'
+}'
+
+interface_5_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/interfaces)
 
 ### Unit-6 ###
 
