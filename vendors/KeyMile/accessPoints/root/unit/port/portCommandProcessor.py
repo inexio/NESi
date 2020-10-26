@@ -122,6 +122,16 @@ class PortCommandProcessor(BaseCommandProcessor):
             context['spacer3'] = self.create_spacers((67,), (port.description,))[0] * ' '
             text = self._render('labels', *scopes, context=dict(context, port=port))
             self._write(text)
+        elif self._validate(args, 'UnicastList') and context['path'].split('/')[-1] == 'status':
+            port = self.get_component()
+            try:
+                chan = self._model.get_chan('port_id', port.id)
+                self._model.get_interface('chan_id', chan.id)
+            except exceptions.InvalidInputError:
+                text = self._render('unicast_list_empty', *scopes, context=context)
+            else:
+                text = self._render('unicast_list', *scopes, context=context)  # where does the templates mac-address come from
+            self._write(text)
         elif self._validate((args[0],), 'OperationalStatus') and context['path'].split('/')[-1] == 'main':
             self.map_states(port, 'port')
             port_operational_state = port.operational_state
