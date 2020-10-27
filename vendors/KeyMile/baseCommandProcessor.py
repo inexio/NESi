@@ -488,14 +488,19 @@ class BaseCommandProcessor(base.CommandProcessor):
                 try:
                     tmp_cmdproc = self.change_directory(path, context=context)
                     tmp_cmdproc.get_property(command, prop, context=context)
-                except exceptions.CommandExecutionError:
+                except exceptions.SoftboxenError:
                     context['path'] = current_path
-                    raise exceptions.CommandExecutionError(template='syntax_error',
+                    raise exceptions.CommandExecutionError(template='invalid_property',
                                                            template_scopes=('login', 'base', 'syntax_errors'),
                                                            command=None)
                 context['path'] = current_path
             else:
-                self.get_property(command, args[0], context=context)
+                try:
+                    self.get_property(command, args[0], context=context)
+                except exceptions.SoftboxenError:
+                    raise exceptions.CommandExecutionError(template='invalid_property',
+                                                           template_scopes=('login', 'base', 'execution_errors'),
+                                                           command=None)
         else:
             raise exceptions.CommandExecutionError(template='invalid_management_function_error',
                                                    template_scopes=('login', 'base', 'execution_errors'),
