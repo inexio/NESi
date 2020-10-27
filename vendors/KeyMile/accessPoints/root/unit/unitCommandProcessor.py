@@ -66,7 +66,13 @@ class UnitCommandProcessor(BaseCommandProcessor):
             context['ls_EquipmentState'] = 'Ok'
 
     def get_property(self, command, *args, context=None):
-        card = self.get_component()
+        try:
+            card = self.get_component()
+        except exceptions.InvalidInputError:
+            if args[0] in ('CurrentStatus', 'EquipmentInventory'):
+                card = None
+            else:
+                raise
         scopes = ('login', 'base', 'get')
         if self._validate(args, *()):
             exc = exceptions.CommandSyntaxError(command=command)
@@ -167,71 +173,79 @@ class UnitCommandProcessor(BaseCommandProcessor):
             self._write(text)
 
         elif self._validate(args, 'CurrentStatus') and context['path'].split('/')[-1] == 'main':
-            unit_state = card.state
-            context['unit_state'] = unit_state
-            context['spacer_1'] = self.create_spacers((67,), (unit_state,))[0] * ' '
-            unit_hardware = '"' + card.board_name + ' ' + card.supplier_build_state + '"'
-            context['unit_hardware'] = unit_hardware
-            context['spacer_2'] = self.create_spacers((67,), (unit_hardware,))[0] * ' '
-            unit_software = '"' + card.software[:-4] + '"'
-            context['unit_software'] = unit_software
-            context['spacer_3'] = self.create_spacers((67,), (unit_software,))[0] * ' '
-            unit_serial_number = '"' + card.serial_number + '"'
-            context['unit_serial_number'] = unit_serial_number
-            context['spacer_4'] = self.create_spacers((67,), (unit_serial_number,))[0] * ' '
-            unit_manufacturer_name = '"' + card.manufacturer_name + '"'
-            context['unit_manufacturer_name'] = unit_manufacturer_name
-            context['spacer_5'] = self.create_spacers((67,), (unit_manufacturer_name,))[0] * ' '
-            unit_model_name = '"' + card.model_name + '"'
-            context['unit_model_name'] = unit_model_name
-            context['spacer_6'] = self.create_spacers((67,), (unit_model_name,))[0] * ' '
-            text = self._render('current_status', *scopes, context=context)
+            if card is None:
+                text = self._render('current_status_empty', *scopes, context=context)
+            else:
+                unit_state = card.state
+                context['unit_state'] = unit_state
+                context['spacer_1'] = self.create_spacers((67,), (unit_state,))[0] * ' '
+                unit_hardware = '"' + card.board_name + ' ' + card.supplier_build_state + '"'
+                context['unit_hardware'] = unit_hardware
+                context['spacer_2'] = self.create_spacers((67,), (unit_hardware,))[0] * ' '
+                unit_software = '"' + card.software[:-4] + '"'
+                context['unit_software'] = unit_software
+                context['spacer_3'] = self.create_spacers((67,), (unit_software,))[0] * ' '
+                unit_serial_number = '"' + card.serial_number + '"'
+                context['unit_serial_number'] = unit_serial_number
+                context['spacer_4'] = self.create_spacers((67,), (unit_serial_number,))[0] * ' '
+                unit_manufacturer_name = '"' + card.manufacturer_name + '"'
+                context['unit_manufacturer_name'] = unit_manufacturer_name
+                context['spacer_5'] = self.create_spacers((67,), (unit_manufacturer_name,))[0] * ' '
+                unit_model_name = '"' + card.model_name + '"'
+                context['unit_model_name'] = unit_model_name
+                context['spacer_6'] = self.create_spacers((67,), (unit_model_name,))[0] * ' '
+                text = self._render('current_status', *scopes, context=context)
+
             self._write(text)
 
         elif self._validate(args, 'EquipmentInventory') and context['path'].split('/')[-1] == 'main':
-            unit_symbol = '"' + card.board_name + '"'
-            context['unit_symbol'] = unit_symbol
-            context['spacer_1'] = self.create_spacers((67,), (unit_symbol,))[0] * ' '
-            unit_short_text = '"' + card.short_text + '"'
-            context['unit_short_text'] = unit_short_text
-            context['spacer_2'] = self.create_spacers((67,), (unit_short_text,))[0] * ' '
-            unit_board_id = card.board_id
-            context['unit_board_id'] = unit_board_id
-            context['spacer_3'] = self.create_spacers((67,), (unit_board_id,))[0] * ' '
-            unit_hardware_key = card.hardware_key
-            context['unit_hardware_key'] = unit_hardware_key
-            context['spacer_4'] = self.create_spacers((67,), (unit_hardware_key,))[0] * ' '
-            unit_manufacturer_id = '"' + card.manufacturer_id + '"'
-            context['unit_manufacturer_id'] = unit_manufacturer_id
-            context['spacer_5'] = self.create_spacers((67,), (unit_manufacturer_id,))[0] * ' '
-            unit_serial_number = '"' + card.serial_number + '"'
-            context['unit_serial_number'] = unit_serial_number
-            context['spacer_6'] = self.create_spacers((67,), (unit_serial_number,))[0] * ' '
-            unit_manufacturer_part_number = '"' + card.manufacturer_part_number + '"'
-            context['unit_manufacturer_part_number'] = unit_manufacturer_part_number
-            context['spacer_7'] = self.create_spacers((67,), (unit_manufacturer_part_number,))[0] * ' '
-            unit_manufacturer_build_state = '"' + card.manufacturer_build_state + '"'
-            context['unit_manufacturer_build_state'] = unit_manufacturer_build_state
-            context['spacer_8'] = self.create_spacers((67,), (unit_manufacturer_build_state,))[0] * ' '
-            unit_supplier_part_number = '"' + card.model_name + '"'
-            context['unit_supplier_part_number'] = unit_supplier_part_number
-            context['spacer_9'] = self.create_spacers((67,), (unit_supplier_part_number,))[0] * ' '
-            unit_supplier_build_state = '"' + card.supplier_build_state + '"'
-            context['unit_supplier_build_state'] = unit_supplier_build_state
-            context['spacer_10'] = self.create_spacers((67,), (unit_supplier_build_state,))[0] * ' '
-            unit_customer_id = '"' + card.customer_id + '"'
-            context['unit_customer_id'] = unit_customer_id
-            context['spacer_11'] = self.create_spacers((67,), (unit_customer_id,))[0] * ' '
-            unit_customer_product_id = '"' + card.customer_product_id + '"'
-            context['unit_customer_product_id'] = unit_customer_product_id
-            context['spacer_12'] = self.create_spacers((67,), (unit_customer_product_id,))[0] * ' '
-            unit_boot_loader = '"' + card.boot_loader + '"'
-            context['unit_boot_loader'] = unit_boot_loader
-            context['spacer_13'] = self.create_spacers((67,), (unit_boot_loader,))[0] * ' '
-            unit_processor = '"' + card.processor + '"'
-            context['unit_processor'] = unit_processor
-            context['spacer_14'] = self.create_spacers((67,), (unit_processor,))[0] * ' '
-            text = self._render('equipment_inventory', *scopes, context=context)
+            if card is None:
+                text = self._render('equipment_inventory_empty', *scopes, context=context)
+            else:
+                unit_symbol = '"' + card.board_name + '"'
+                context['unit_symbol'] = unit_symbol
+                context['spacer_1'] = self.create_spacers((67,), (unit_symbol,))[0] * ' '
+                unit_short_text = '"' + card.short_text + '"'
+                context['unit_short_text'] = unit_short_text
+                context['spacer_2'] = self.create_spacers((67,), (unit_short_text,))[0] * ' '
+                unit_board_id = card.board_id
+                context['unit_board_id'] = unit_board_id
+                context['spacer_3'] = self.create_spacers((67,), (unit_board_id,))[0] * ' '
+                unit_hardware_key = card.hardware_key
+                context['unit_hardware_key'] = unit_hardware_key
+                context['spacer_4'] = self.create_spacers((67,), (unit_hardware_key,))[0] * ' '
+                unit_manufacturer_id = '"' + card.manufacturer_id + '"'
+                context['unit_manufacturer_id'] = unit_manufacturer_id
+                context['spacer_5'] = self.create_spacers((67,), (unit_manufacturer_id,))[0] * ' '
+                unit_serial_number = '"' + card.serial_number + '"'
+                context['unit_serial_number'] = unit_serial_number
+                context['spacer_6'] = self.create_spacers((67,), (unit_serial_number,))[0] * ' '
+                unit_manufacturer_part_number = '"' + card.manufacturer_part_number + '"'
+                context['unit_manufacturer_part_number'] = unit_manufacturer_part_number
+                context['spacer_7'] = self.create_spacers((67,), (unit_manufacturer_part_number,))[0] * ' '
+                unit_manufacturer_build_state = '"' + card.manufacturer_build_state + '"'
+                context['unit_manufacturer_build_state'] = unit_manufacturer_build_state
+                context['spacer_8'] = self.create_spacers((67,), (unit_manufacturer_build_state,))[0] * ' '
+                unit_supplier_part_number = '"' + card.model_name + '"'
+                context['unit_supplier_part_number'] = unit_supplier_part_number
+                context['spacer_9'] = self.create_spacers((67,), (unit_supplier_part_number,))[0] * ' '
+                unit_supplier_build_state = '"' + card.supplier_build_state + '"'
+                context['unit_supplier_build_state'] = unit_supplier_build_state
+                context['spacer_10'] = self.create_spacers((67,), (unit_supplier_build_state,))[0] * ' '
+                unit_customer_id = '"' + card.customer_id + '"'
+                context['unit_customer_id'] = unit_customer_id
+                context['spacer_11'] = self.create_spacers((67,), (unit_customer_id,))[0] * ' '
+                unit_customer_product_id = '"' + card.customer_product_id + '"'
+                context['unit_customer_product_id'] = unit_customer_product_id
+                context['spacer_12'] = self.create_spacers((67,), (unit_customer_product_id,))[0] * ' '
+                unit_boot_loader = '"' + card.boot_loader + '"'
+                context['unit_boot_loader'] = unit_boot_loader
+                context['spacer_13'] = self.create_spacers((67,), (unit_boot_loader,))[0] * ' '
+                unit_processor = '"' + card.processor + '"'
+                context['unit_processor'] = unit_processor
+                context['spacer_14'] = self.create_spacers((67,), (unit_processor,))[0] * ' '
+                text = self._render('equipment_inventory', *scopes, context=context)
+
             self._write(text)
 
         else:
