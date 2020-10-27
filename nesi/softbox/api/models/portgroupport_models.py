@@ -1,4 +1,17 @@
+# This file is part of the NESi software.
+#
+# Copyright (c) 2020
+# Original Software Design by Ilya Etingof <https://github.com/etingof>.
+#
+# Software adapted by inexio <https://github.com/inexio>.
+# - Janis Groß <https://github.com/unkn0wn-user>
+# - Philip Konrath <https://github.com/Connyko65>
+# - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
+#
+# License: https://github.com/inexio/NESi/LICENSE.rst
 from nesi.softbox.api import db
+from .subscriber_models import Subscriber
 
 
 class PortGroupPort(db.Model):
@@ -12,6 +25,7 @@ class PortGroupPort(db.Model):
     label2 = db.Column(db.String(), default='""')
     card_id = db.Column(db.Integer, db.ForeignKey('card.id'))
     type = db.Column(db.Enum('ISDN', 'PSTN'), default='ISDN')
+    subscribers = db.relationship('Subscriber', backref='PortGroupPort', lazy='dynamic')
 
     #isdn
     enable = db.Column(db.Boolean(), default=False)
