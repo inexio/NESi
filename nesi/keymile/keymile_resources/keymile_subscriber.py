@@ -30,6 +30,7 @@ class KeyMileSubscriber(base.Resource):
     autorisation_password = base.Field('autorisation_password')
     display_name = base.Field('display_name')
     privacy = base.Field('privacy')
+    portgroupport_id = base.Field('portgroupport_id')
 
     def set(self, field, value):
         mapping = {field: value}
