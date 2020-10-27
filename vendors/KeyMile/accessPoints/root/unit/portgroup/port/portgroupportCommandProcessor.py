@@ -33,11 +33,11 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
             super().get_property(command, *args, context=context)
         except exceptions.CommandExecutionError:
             if self._validate((args[0],), 'SubscriberList') and context['path'].split('/')[-1] == 'status' and \
-                    self._model.get_card('name', self._parent._parent.component_name).product == 'isdn':
+                    self._model.get_card('name', self._parent._parent.component_name).product in ('isdn', 'analog'):
                 text = self._render('subscriberList_top', *scopes, context=context)
                 i = 0
                 for subscriber in self._model.subscribers:
-                    if subscriber.type == 'port' and subscriber.address == self.component_name:
+                    if subscriber.portgroupport_id == port.id:
 
                         context['i'] = i
                         context['spacer1'] = self.create_spacers((63,), (subscriber.number,))[0] * ' '
@@ -62,13 +62,13 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
 
                 i = 0
                 for subscriber in self._model.subscribers:
-                    if subscriber.type == 'port' and subscriber.address == self.component_name:
+                    if subscriber.portgroupport_id == port.id:
                         context['i'] = i
                         context['spacer10'] = self.create_spacers((63,), (subscriber.number,))[0] * ' '
                         context['spacer11'] = self.create_spacers((63,), (subscriber.autorisation_user_name,))[0] * ' '
                         context['spacer12'] = self.create_spacers((63,), (subscriber.autorisation_password,))[0] * ' '
                         context['spacer13'] = self.create_spacers((63,), (subscriber.display_name,))[0] * ' '
-                        context['spacer14'] = self.create_spacers((63,), (subscriber.privacy,))[0] * ' '
+                        context['spacer14'] = self.create_spacers((65,), (subscriber.privacy,))[0] * ' '
                         i += 1
                         text += self._render('isdnport_middle', *scopes, context=dict(context, subscriber=subscriber))
 
@@ -88,7 +88,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
 
                 i = 0
                 for subscriber in self._model.subscribers:
-                    if subscriber.type == 'port' and subscriber.address == self.component_name:
+                    if subscriber.portgroupport_id == port.id:
                         context['i'] = i
                         context['spacer10'] = self.create_spacers((63,), (subscriber.number,))[0] * ' '
                         context['spacer11'] = self.create_spacers((63,), (subscriber.autorisation_user_name,))[0] * ' '

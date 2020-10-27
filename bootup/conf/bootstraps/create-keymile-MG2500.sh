@@ -168,15 +168,6 @@ req='{
 
 information_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
 
-# test subscriber
-req='{
-  "name": "tester",
-  "number": 9023,
-  "type": "unit"
-}'
-
-subscriber_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subscribers)
-
 ### Nto1-Service-1 ###
 
 # Create a physical port at the network device (admin operation)
@@ -681,7 +672,11 @@ req='{
   "manufacturer_part_number": "37900315",
   "manufacturer_build_state": "09",
   "boot_loader": "BLSU2_R1J01/CT40500",
-  "processor": "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"
+  "processor": "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB",
+  "gateway_ipaddress": "10.0.0.20",
+  "subnet_mask": "255.255.255.0",
+  "default_gateway": "10.0.0.1",
+  "country_code": "+672"
 }'
 
 unit_19=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
@@ -710,6 +705,18 @@ req='{
 
 port_19_G1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/portgroupports)
 
+# test subscriber 1
+req='{
+  "name": "tester",
+  "number": 9023,
+  "portgroupport_id": '$port_19_G1_1',
+  "autorisation_user_name": "Test User",
+  "autorisation_password": "topsecret",
+  "display_name": "Mr. Testuser"
+}'
+
+subscriber_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subscribers)
+
 ### PortGroupPort-2 ###
 
 # Create a physical port at the network device (admin operation)
@@ -721,4 +728,28 @@ req='{
   "type": "ISDN"
 }'
 
-port_19_G1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/portgroupports)
+port_19_G2_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/portgroupports)
+
+# test subscriber 3
+req='{
+  "name": "tester2",
+  "number": 7653312,
+  "portgroupport_id": '$port_19_G2_1',
+  "autorisation_user_name": "Test User 2",
+  "autorisation_password": "topsecret",
+  "display_name": "Mrs. Testuser"
+}'
+
+subscriber_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subscribers)
+
+# test subscriber 3
+req='{
+  "name": "tester3",
+  "number": 1234567,
+  "portgroupport_id": '$port_19_G2_1',
+  "autorisation_user_name": "Test User 3",
+  "autorisation_password": "topsecret",
+  "display_name": "Mr. & Mrs. Testuser"
+}'
+
+subscriber_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subscribers)
