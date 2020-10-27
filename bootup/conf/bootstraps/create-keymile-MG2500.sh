@@ -504,7 +504,7 @@ chan_5_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/channels)
 
 # Create a physical interface at the network device (admin operation)
 req='{
-  "chan_id": 'chan_5_1_1'
+  "chan_id": '$chan_5_1_1'
 }'
 
 interface_5_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/interfaces)
