@@ -15,15 +15,15 @@ class PortGroupPort(db.Model):
 
     #isdn
     enable = db.Column(db.Boolean(), default=False)
-    register_as_global = db.Column(db.Boolean, default=None)
-    register_default_number_only = db.Column(db.Boolean, default=None)
-    layer_1_permanently_activated = db.Column(db.Boolean, default=None)
-    sip_profile = db.Column(db.String(), default=None)
-    proxy_registrar_profile = db.Column(db.String(), default=None)
-    codec_sdp_profile = db.Column(db.String(), default=None)
-    isdnba_profile = db.Column(db.String(), default=None)
+    register_as_global = db.Column(db.Boolean, default=True)
+    register_default_number_only = db.Column(db.Boolean, default=False)
+    layer_1_permanently_activated = db.Column(db.Boolean, default=False)
+    sip_profile = db.Column(db.String(), default='none')
+    proxy_registrar_profile = db.Column(db.String(), default='none')
+    codec_sdp_profile = db.Column(db.String(), default='none')
+    isdnba_profile = db.Column(db.String(), default='none')
 
     #pstn
-    pay_phone = db.Column(db.Boolean(), default= None)
-    pstn_profile = db.Column(db.String(), default=None)
-    enterprise_profile = db.Column(db.String(), default=None)
+    pay_phone = db.Column(db.Boolean(), default=False)
+    pstn_profile = db.Column(db.String(), default='none')
+    enterprise_profile = db.Column(db.String(), default='none')
