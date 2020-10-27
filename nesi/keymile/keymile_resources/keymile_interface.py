@@ -10,20 +10,16 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-import logging
 
-from nesi.softbox.base_resources import base
+from nesi.softbox.base_resources.interface import Interface, InterfaceCollection, logging, base
 
 LOG = logging.getLogger(__name__)
 
 
-class KeyMileInterface(base.Resource):
+class KeyMileInterface(Interface):
     """Represent logical interface resource."""
 
-    id = base.Field('id')
     port_id = base.Field('port_id')
-    name = base.Field('name')
-    description = base.Field('description')
     chan_id = base.Field('chan_id')
     logport_id = base.Field('logport_id')
 
@@ -35,7 +31,7 @@ class KeyMileInterface(base.Resource):
     services_connected = base.Field('services_connected')
 
 
-class KeyMileInterfaceCollection(base.ResourceCollection):
+class KeyMileInterfaceCollection(InterfaceCollection):
     """Represent a collection of interfaces."""
 
     @property
