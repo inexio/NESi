@@ -106,6 +106,28 @@ class MgmtunitCommandProcessor(BaseCommandProcessor):
             context['spacer_14'] = self.create_spacers((67,), (unit_processor,))[0] * ' '
             text = self._render('equipment_inventory', *scopes, context=context)
             self._write(text)
+        elif self._validate(args, 'CurrentStatus') and context['path'].split('/')[-1] == 'main':
+            unit_state = card.state
+            context['unit_state'] = unit_state
+            context['spacer_1'] = self.create_spacers((67,), (unit_state,))[0] * ' '
+            unit_hardware = '"' + card.board_name + ' ' + card.supplier_build_state + '"'
+            context['unit_hardware'] = unit_hardware
+            context['spacer_2'] = self.create_spacers((67,), (unit_hardware,))[0] * ' '
+            unit_software = '"' + card.software[:-4] + '"'
+            context['unit_software'] = unit_software
+            context['spacer_3'] = self.create_spacers((67,), (unit_software,))[0] * ' '
+            unit_serial_number = '"' + card.serial_number + '"'
+            context['unit_serial_number'] = unit_serial_number
+            context['spacer_4'] = self.create_spacers((67,), (unit_serial_number,))[0] * ' '
+            unit_manufacturer_name = '"' + card.manufacturer_name + '"'
+            context['unit_manufacturer_name'] = unit_manufacturer_name
+            context['spacer_5'] = self.create_spacers((67,), (unit_manufacturer_name,))[0] * ' '
+            unit_model_name = '"' + card.model_name + '"'
+            context['unit_model_name'] = unit_model_name
+            context['spacer_6'] = self.create_spacers((67,), (unit_model_name,))[0] * ' '
+            text = self._render('current_status', *scopes, context=context)
+
+            self._write(text)
         else:
             raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                    template_scopes=('login', 'base', 'execution_errors'))
