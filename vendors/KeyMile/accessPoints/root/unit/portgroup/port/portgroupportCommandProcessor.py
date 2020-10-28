@@ -36,8 +36,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                     self._model.get_card('name', self._parent._parent.component_name).product in ('isdn', 'analog'):
                 text = self._render('subscriberList_top', *scopes, context=context)
                 i = 0
-                for subscriber in self._model.subscribers:
-                    if subscriber.portgroupport_id == port.id:
+                for subscriber in self._model.get_subscribers('portgroupport_id', port.id):
 
                         context['i'] = i
                         context['spacer1'] = self.create_spacers((63,), (subscriber.number,))[0] * ' '
@@ -61,7 +60,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                 text = self._render('isdnport_top', *scopes, context=dict(context, port=port))
 
                 i = 0
-                for subscriber in self._model.subscribers:
+                for subscriber in self._model.get_subscribers('portgroupport_id', port.id):
                     if subscriber.portgroupport_id == port.id:
                         context['i'] = i
                         context['spacer10'] = self.create_spacers((63,), (subscriber.number,))[0] * ' '
@@ -87,7 +86,7 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                 text = self._render('pstnport_top', *scopes, context=dict(context, port=port))
 
                 i = 0
-                for subscriber in self._model.subscribers:
+                for subscriber in self._model.get_subscribers('portgroupport_id', port.id):
                     if subscriber.portgroupport_id == port.id:
                         context['i'] = i
                         context['spacer10'] = self.create_spacers((63,), (subscriber.number,))[0] * ' '

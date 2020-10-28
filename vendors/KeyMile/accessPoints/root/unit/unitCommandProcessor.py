@@ -84,7 +84,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
             text = self._render('subscriberList_top', *scopes, context=context)
             i = 0
             for subscriber in self._model.subscribers:
-                if subscriber.type == 'unit':
+                if subscriber.registration_state == 'Unregistered':
                     context['i'] = i
                     context['spacer1'] = self.create_spacers((63,), (subscriber.number,))[0] * ' '
                     context['spacer2'] = self.create_spacers((63,), (subscriber.registration_state,))[0] * ' '

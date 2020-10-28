@@ -12,6 +12,7 @@
 
 from .base_views import *
 from ..schemas.subscriber_schemas import *
+from ..models.portgroupport_models import PortGroupPort
 
 PREFIX = '/nesi/v1'
 
@@ -43,6 +44,8 @@ def update_subscriber(box_id, id):
 @app.route(PREFIX + '/boxen/<box_id>/subscribers', methods=['POST'])
 def new_subscriber(box_id):
     req = flask.request.json
+    portgroupport = json.loads(show_component(PortGroupPort, box_id, req['portgroupport_id']).data.decode('utf-8'))
+    req['address'] = '/portgroup-' + portgroupport['name'].split('/')[1][1:] + '/port-' + portgroupport['name'].split('/')[2]
     response = new_component(SubscriberSchema(), Subscriber, req, box_id)
     return response, 201
 
