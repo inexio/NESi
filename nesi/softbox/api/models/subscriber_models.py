@@ -22,7 +22,10 @@ class Subscriber(db.Model):
 
     number = db.Column(db.Integer(), nullable=False, unique=True)
     address = db.Column(db.String(), default='')
-    registration_state = db.Column(db.Enum('registered'), default='registered')
+    registration_state = db.Column(
+        db.Enum('Registered', 'Registering', 'RegisteringWith-Cred',
+                'DeRegInRegistering', 'DeRegistering', 'Reregistering',
+                'Unregistered'), default='Registered')
     autorisation_user_name = db.Column(db.String(), default='')
     autorisation_password = db.Column(db.String(), default='')
     display_name = db.Column(db.String(), default='')

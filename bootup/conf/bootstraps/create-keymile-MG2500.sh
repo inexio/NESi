@@ -749,7 +749,8 @@ req='{
   "portgroupport_id": '$port_19_G2_1',
   "autorisation_user_name": "Test User 3",
   "autorisation_password": "topsecret",
-  "display_name": "Mr. & Mrs. Testuser"
+  "display_name": "Mr. & Mrs. Testuser",
+  "registration_state": "Unregistered"
 }'
 
 subscriber_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subscribers)
