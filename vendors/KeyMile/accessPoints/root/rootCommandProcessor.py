@@ -25,12 +25,6 @@ class RootCommandProcessor(BaseCommandProcessor):
     from .rootManagementFunctions import fm
     from .rootManagementFunctions import status
 
-    def get_property(self, command, *args, context=None):
-        if self._validate(args, "CurrTemperature"):
-            context['currTemperature'] = self._model.currTemperature
-            context['spacer'] = self.create_spacers((67,), (context['currTemperature'],))[0] * ' '
-            self._write(self._render('currTemperature', 'login', 'base', 'get', context=context))
-
     def _init_access_points(self, context=None):
         self.access_points = ('eoam', 'fan', 'multicast', 'services', 'tdmConnections')
         for card in self._model.cards:
@@ -105,7 +99,7 @@ class RootCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def get_property(self, command, *args, context=None):
-        scopes = ('login', 'base', 'set')
+        scopes = ('login', 'base', 'get')
         if self._validate(args, "CurrTemperature"):
             context['currTemperature'] = self._model.currTemperature
             context['spacer'] = self.create_spacers((67,), (context['currTemperature'],))[0] * ' '
