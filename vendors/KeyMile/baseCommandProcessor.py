@@ -367,7 +367,7 @@ class BaseCommandProcessor(base.CommandProcessor):
                 if context['path'].split('/')[-1] in ('main', 'cfgm', 'fm', 'pm', 'status'):
                     raise exceptions.CommandExecutionError(command=None, template='invalid_address_error', template_scopes=('login', 'base', 'execution_errors'))
 
-                self._init_access_points() # make sure all management_functions are loaded correctly
+                self._init_access_points(context=context)  # make sure all management_functions are loaded correctly
 
                 if components[0] not in self.management_functions:
                     raise exceptions.CommandExecutionError(command=None, template=None,
