@@ -569,15 +569,19 @@ class BaseCommandProcessor(base.CommandProcessor):
         context['ls_EquipmentState'] = ''
 
     def args_in_quotes_joiner(self, args):
-        saved_args = []
+        quoted_args = []
+        new_args = []
         save = False
         for i in range(len(args)):
             if args[i].startswith("\""):
                 save = True
             if save:
-                saved_args.append(args[i])
+                quoted_args.append(args[i])
+            else:
+                new_args.append(args[i])
             if args[i].endswith("\""):
                 save = False
-        name = ' '.join(saved_args).replace("\"", "")
+                new_args.append(' '.join(quoted_args).replace("\"", ""))
+                quoted_args = []
 
-        return name
+        return new_args

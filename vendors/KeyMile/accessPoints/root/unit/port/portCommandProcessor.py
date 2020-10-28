@@ -364,8 +364,8 @@ class PortCommandProcessor(BaseCommandProcessor):
             except exceptions.SoftboxenError:
                 raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                        template_scopes=('login', 'base', 'execution_errors'))
-        elif self._validate(args, 'Labels', str, str, str) and context['path'].split('/')[-1] == 'main':
-            label1, label2, description = self._dissect(args, 'Labels', str, str, str)
+        elif self._validate(self.args_in_quotes_joiner(args=args), 'Labels', str, str, str) and context['path'].split('/')[-1] == 'main':
+            label1, label2, description = self._dissect(self.args_in_quotes_joiner(args=args), 'Labels', str, str, str)
             try:
                 port = self.get_component()
                 port.set_label(label1, label2, description)
@@ -376,7 +376,7 @@ class PortCommandProcessor(BaseCommandProcessor):
         elif self._validate(args, 'Mode', str) and context['path'].split('/')[-1] == 'cfgm' and "SUE" in \
                 card.board_name and self.__name__ == 'port' and card.product == 'ftth':
             if '"' in args[1]:
-                mode = self.args_in_quotes_joiner((args[1],))
+                _, mode = self.args_in_quotes_joiner(args=args)
             else:
                 mode, = self._dissect(args, 'Mode', str)
             try:
@@ -389,7 +389,7 @@ class PortCommandProcessor(BaseCommandProcessor):
         elif self._validate(args, 'Mode', str, str, str) and context['path'].split('/')[-1] == 'cfgm' and "SUE" in \
                 card.board_name and self.__name__ == 'port' and card.product == 'ftth':
             if '"' in args[1]:
-                mode = self.args_in_quotes_joiner(args[1:])
+                _, mode = self.args_in_quotes_joiner(args=args)
             else:
                 mode, = self._dissect(args, 'Mode', str)
             try:
