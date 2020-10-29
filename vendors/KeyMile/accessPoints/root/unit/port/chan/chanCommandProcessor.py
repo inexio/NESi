@@ -102,7 +102,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
                     self._model.get_interface('name', name)
                     assert False
                 except exceptions.SoftboxenError as exe:
-                    interf = self._model.add_interface(name=name, chan_id=chan.id, vlan_profile=vlan_prof)
+                    interf = self._model.add_interface(chan_id=chan.id, vlan_profile=vlan_prof)
                     context['spacer1'] = self.create_spacers((57,), (str(id),))[0] * ' '
                     context['id'] = str(id)
                     # TODO: Template is unknown
@@ -129,7 +129,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
                     self._model.get_interface('name',  name)
                     assert False
                 except exceptions.SoftboxenError as exe:
-                    interf = self._model.add_interface(name=name, chan_id=chan.id, vlan_profile=vlan_prof,
+                    interf = self._model.add_interface(chan_id=chan.id, vlan_profile=vlan_prof,
                                                        vcc_profile=vcc_prof)
                     context['spacer1'] = self.create_spacers((57,), (str(id),))[0] * ' '
                     context['id'] = str(id)
@@ -163,7 +163,7 @@ class ChanCommandProcessor(BaseCommandProcessor):
                     self._model.get_interface('name',  name)
                     assert False
                 except exceptions.SoftboxenError as exe:
-                    vcc = self._model.add_interface(name=name, chan_id=chan.id, vcc_profile=vcc_prof,
+                    vcc = self._model.add_interface(chan_id=chan.id, vcc_profile=vcc_prof,
                                                     vlan_profile=vlan_prof)
                     context['spacer1'] = self.create_spacers((63,), (str(id),))[0] * ' '
                     context['id'] = str(id)
