@@ -109,10 +109,10 @@ class LogportCommandProcessor(PortCommandProcessor):
                         new_id = int(interface.name[-1]) + 1
                         id = new_id if new_id > id else id
                 try:
-                    self._model.get_interface('name',  self.component_name)
+                    self._model.get_interface('name',  self.component_name + '/' + str(id))
                     assert False
-                except exceptions.SoftboxenError as exe:
-                    vcc = self._model.add_interface(name=self.component_name, logport_id=logport.id, vlan_profile=vlan_prof)
+                except exceptions.SoftboxenError:
+                    self._model.add_interface(logport_id=logport.id, vlan_profile=vlan_prof)
                     context['spacer1'] = self.create_spacers((57,), (str(id),))[0] * ' '
                     context['id'] = str(id)
                     # TODO: Template is unknown
