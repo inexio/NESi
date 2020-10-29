@@ -291,7 +291,7 @@ class PortCommandProcessor(BaseCommandProcessor):
                     self._model.get_interface('name',  name)
                     assert False
                 except exceptions.SoftboxenError as exe:
-                    interf = self._model.add_interface(name=name, port_id=port.id, vlan_profile=vlan_prof)
+                    interf = self._model.add_interface(port_id=port.id, vlan_profile=vlan_prof)
                     context['spacer1'] = self.create_spacers((57,), (str(id),))[0] * ' '
                     context['id'] = str(id)
                     # TODO: unknown Template
