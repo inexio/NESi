@@ -295,7 +295,7 @@ class UnitCommandProcessor(BaseCommandProcessor):
                 card.set_sip(gw, hd, int(spn), cc, ac, int(rt), int(mri), se, aim, os, int(ot), uac, uas, int(sessione))
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
-        elif self._validate(args[0], 'Digitmap') and \
+        elif self._validate((args[0],), 'Digitmap') and \
                 context['path'].split('/')[-1] == 'cfgm' and (card.product == 'isdn' or card.product == 'analog'):
             pass
         elif self._validate(args, 'Registrar', str, str, str, str) and \
