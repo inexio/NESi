@@ -64,6 +64,12 @@ class RootCommandProcessor(BaseCommandProcessor):
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
+        elif self._validate(args, 'IP_Address', str, str, str):
+            new_ip, net_mask, gateway = self._dissect(args, 'IP_Address', str, str, str)
+
+            self._model.set_mgmt_address(new_ip)
+            self._model.set_net_mask(net_mask)
+            self._model.set_default_gateway(gateway)
         elif self._validate(args, 'test', str):
             ip, = self._dissect(args, 'test', str)
             #TODO test case
@@ -104,6 +110,16 @@ class RootCommandProcessor(BaseCommandProcessor):
             context['currTemperature'] = self._model.currTemperature
             context['spacer'] = self.create_spacers((67,), (context['currTemperature'],))[0] * ' '
             self._write(self._render('currTemperature', *scopes, context=context))
+        elif self._validate(args, 'IP_Address'):
+            context['ip_address'] = self._model.mgmt_address
+            context['spacer1'] = self.create_spacers((67,), (self._model.mgmt_address,))[0] * ' '
+
+            context['net_mask'] = self._model.net_mask
+            context['spacer2'] = self.create_spacers((67,), (self._model.net_mask,))[0] * ' '
+
+            context['default_gateway'] = self._model.default_gateway
+            context['spacer3'] = self.create_spacers((67,), (self._model.default_gateway,))[0] * ' '
+            self._write(self._render('ip_address', *scopes, context=context))
         else:
             raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                    template_scopes=('login', 'base', 'execution_errors'))

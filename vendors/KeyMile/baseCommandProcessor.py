@@ -220,11 +220,13 @@ class BaseCommandProcessor(base.CommandProcessor):
                 tmp_cmdproc.ls(context=context)
             except exceptions.CommandExecutionError:
                 context['path'] = current_path
+                self.set_prompt_end_pos(context=context)
                 raise exceptions.CommandExecutionError(template='invalid_management_function_error',
                                                        template_scopes=('login', 'base', 'execution_errors'),
                                                        command=None)
 
             context['path'] = current_path
+            self.set_prompt_end_pos(context=context)
         else:
             raise exceptions.CommandExecutionError(template='invalid_management_function_error',
                                                    template_scopes=('login', 'base', 'execution_errors'),
@@ -490,10 +492,12 @@ class BaseCommandProcessor(base.CommandProcessor):
                     tmp_cmdproc.get_property(command, prop, context=context)
                 except exceptions.SoftboxenError:
                     context['path'] = current_path
+                    self.set_prompt_end_pos(context=context)
                     raise exceptions.CommandExecutionError(template='invalid_property',
                                                            template_scopes=('login', 'base', 'syntax_errors'),
                                                            command=None)
                 context['path'] = current_path
+                self.set_prompt_end_pos(context=context)
             else:
                 try:
                     self.get_property(command, args[0], context=context)
@@ -525,10 +529,12 @@ class BaseCommandProcessor(base.CommandProcessor):
                 proc.set(command, *res, context=context)
             except exceptions.CommandExecutionError:
                     context['path'] = current_path
+                    self.set_prompt_end_pos(context=context)
                     raise exceptions.CommandExecutionError(template='syntax_error',
                                                            template_scopes=('login', 'base', 'syntax_errors'),
                                                            command=None)
             context['path'] = current_path
+            self.set_prompt_end_pos(context=context)
         elif args[0].count('/') == 0:
             self.set(command, *args, context=context)
 

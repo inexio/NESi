@@ -56,6 +56,12 @@ class Box(base.Resource):
     mgmt_address = base.Field('mgmt_address')
     """Management IP address"""
 
+    net_mask = base.Field('net_mask')
+    """Network Mask of the device"""
+
+    default_gateway = base.Field('default_gateway')
+    """Default network gateway of the device"""
+
     software_version = base.Field('software_version')
     """Software Version"""
 
@@ -74,6 +80,18 @@ class Box(base.Resource):
     def set_hostname(self, name):
         """Change the hostname value."""
         self.update(hostname=name)
+
+    def set_mgmt_address(self, ip):
+        """Change the mgmt_address value."""
+        self.update(mgmt_address=ip)
+
+    def set_net_mask(self, mask):
+        """Change the net_mask value."""
+        self.update(net_mask=mask)
+
+    def set_default_gateway(self, gateway):
+        """Change the default_gateway value."""
+        self.update(default_gateway=gateway)
 
     def set_last_login(self, time):
         """Change last_login value."""
