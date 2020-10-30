@@ -53,6 +53,8 @@ class Box(db.Model):
     description = db.Column(db.String())
     hostname = db.Column(db.String(64))
     mgmt_address = db.Column(db.String(32))
+    default_gateway = db.Column(db.String(32), default='0.0.0.0')
+    net_mask = db.Column(db.String(32), default='255.255.255.0')
     contact_person = db.Column(db.String(), default=None, nullable=True)
     isam_id = db.Column(db.String(), default=None, nullable=True)
     isam_location = db.Column(db.String(), default=None, nullable=True)
