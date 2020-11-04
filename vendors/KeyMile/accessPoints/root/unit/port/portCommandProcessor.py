@@ -198,7 +198,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_startquickloopbacktest(self, command, *args, context=None):
         card = self._model.get_card('name', self.component_name.split('/')[0])
-        if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
+        if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.board_name.startswith('SUI') \
                 and self.__name__ == 'port':
             try:
                 port = self.get_component()
