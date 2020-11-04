@@ -73,7 +73,7 @@ class KeyMilePortGroupPort(base.Resource):
         self.update(enterprise_profile=enterprise)
 
     def set_isdnport(self, enable, registerglobal, regdefault, layer1, sip, proxy, codec, isdn):
-        """Set the pstnport"""
+        """Set the isdnport"""
         self.update(enable=enable)
         self.update(register_as_global=registerglobal)
         self.update(register_default_number_only=regdefault)
