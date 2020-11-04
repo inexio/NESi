@@ -101,15 +101,15 @@ class PortCommandProcessor(BaseCommandProcessor):
             self._write(text)
         elif self._validate((args[0],), 'LineTestResults') and context['path'].split('/')[-1] == 'status'\
                 and 'SUP' in card.board_name and self.__name__ == 'port':
-            context['spacer1'] = self.create_spacers((67,), (port.linetest_state,))[0] * ' '
+            context['spacer'] = self.create_spacers((67,), (port.linetest_state,))[0] * ' '
             context['test_state'] = port.linetest_state
-            text = self._render('line_results', *scopes, context=context)
+            text = self._render('line_results_device', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'MeltResults') and context['path'].split('/')[-1] == 'status'\
                 and card.product != 'isdn' and self.__name__ == 'port':
-            context['spacer1'] = self.create_spacers((67,), (port.melttest_state,))[0] * ' '
+            context['spacer'] = self.create_spacers((67,), (port.melttest_state,))[0] * ' '
             context['test_state'] = port.melttest_state
-            text = self._render('melt_results', *scopes, context=context)
+            text = self._render('melt_results_device', *scopes, context=context)
             self._write(text)
         elif self._validate((args[0],), 'AdministrativeStatus') and context['path'].split('/')[-1] == 'main':
             self.map_states(port, 'port')
