@@ -95,7 +95,7 @@ class PortCommandProcessor(BaseCommandProcessor):
             self._write(text)
         elif self._validate((args[0],), 'QuickLoopbackTest') and context['path'].split('/')[-1] == 'status'\
                 and (card.product == 'isdn' or 'SUI' in card.board_name) and self.__name__ == 'port':
-            context['spacer1'] = self.create_spacers((67,), (port.loopbacktest_state,))[0] * ' '
+            context['spacer'] = self.create_spacers((67,), (port.loopbacktest_state,))[0] * ' '
             context['loopbacktest_state'] = port.loopbacktest_state
             text = self._render('quickloopbacktest', *scopes, context=context)
             self._write(text)
@@ -187,8 +187,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_lock(self, command, *args, context=None):
         card = self._model.get_card('name', self.component_name.split('/')[0])
-        if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
-                and self.__name__ == 'port':
+        if len(args) == 0 and context['path'].split('/')[-1] == 'status' and (card.board_name.startswith('SUP') or card.board_name.startswith('SUI')) and self.__name__ == 'port':
             try:
                 port = self.get_component()
                 port.lock_admin()
@@ -241,8 +240,7 @@ class PortCommandProcessor(BaseCommandProcessor):
 
     def do_unlock(self, command, *args, context=None):
         card = self._model.get_card('name', self.component_name.split('/')[0])
-        if len(args) == 0 and context['path'].split('/')[-1] == 'status' and card.product == 'isdn' \
-                and self.__name__ == 'port':
+        if len(args) == 0 and context['path'].split('/')[-1] == 'status' and (card.board_name.startswith('SUP') or card.board_name.startswith('SUI')) and self.__name__ == 'port':
             try:
                 port = self.get_component()
                 port.unlock_admin()
