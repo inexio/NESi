@@ -28,18 +28,14 @@ class KeyMileBox(Box):
     """
 
     currTemperature = base.Field("currTemperature")
-    backup_ip = base.Field("backup_ip")
-    login = base.Field("login")
-    password = base.Field("password")
-    backup_path = base.Field("backup_path")
+    ftp_server_ip = base.Field("backup_ip")
+    ftp_login = base.Field("login")
+    ftp_password = base.Field("password")
 
-    def set_backup(self, backup_ip, login, password):
-        self.update(backup_ip=backup_ip)
-        self.update(login=login)
-        self.update(password=password)
-
-    def set_path(self, path):
-        self.update(backup_path=path)
+    def set_ftp_data(self, ftp_server_ip, login, password):
+        self.update(ftp_server_ip=ftp_server_ip)
+        self.update(ftp_login=login)
+        self.update(ftp_password=password)
 
     @property
     def channels(self):
