@@ -10,6 +10,7 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
+from time import sleep
 from nesi import exceptions
 from nesi.softbox.cli import base
 import re
@@ -52,10 +53,12 @@ class BaseCommandProcessor(base.CommandProcessor):
                     command_proc._parse_and_execute_command(command, context=context)
                 except exceptions.SoftboxenError:
                     context['path'] = current_path
+                    self.set_prompt_end_pos(context=context)
                     raise exceptions.CommandExecutionError(template='invalid_management_function_error',
                                                            template_scopes=('login', 'base', 'execution_errors'),
                                                            command=None)
                 context['path'] = current_path
+                self.set_prompt_end_pos(context=context)
             else:
                 raise exceptions.CommandExecutionError(template='invalid_management_function_error',
                                                        template_scopes=('login', 'base', 'execution_errors'),
@@ -65,6 +68,23 @@ class BaseCommandProcessor(base.CommandProcessor):
                                                    template_scopes=('login', 'base', 'execution_errors'),
                                                    command=None)
 
+    def do_ftpserver(self, command, *args, context=None):
+        if self._validate(args, str, str, str):
+            ip, login, pw = self._dissect(args, str, str, str)
+            try:
+                self._model.set_ftp_data(ip, login, pw)
+            except exceptions.SoftboxenError:
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_upload(self, command, *args, context=None):
+        if self._validate(args, '/cfgm/configuration', str) and context['path'].split('/')[-1] != 'cfgm':
+            path,  = self._dissect(args, '/cfgm/configuration', str)
+            sleep(10)  # NOTE: as of now there is no ftp server mocking
+            # mechanism so the only way to simulate an upload is by doing a sleep
+        else:
+            raise exceptions.CommandSyntaxError(command=command)
 
     def map_states(self, object, type):
         if object.admin_state == '0':
