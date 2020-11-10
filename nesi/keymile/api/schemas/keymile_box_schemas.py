@@ -17,8 +17,8 @@ from nesi.softbox.api.schemas.box_schemas import *
 class KeyMileBoxSchema(BoxSchema):
     class Meta:
         model = Box
-        fields = BoxSchema.Meta.fields + ('channels', 'interfaces', 'currTemperature', 'logports', 'backup_ip', 'login',
-                                          'password', 'backup_path')
+        fields = BoxSchema.Meta.fields + ('channels', 'interfaces', 'currTemperature', 'logports', 'ftp_server_ip', 'ftp_login',
+                                          'ftp_password')
 
     interfaces = ma.Hyperlinks(
         {'_links': {
