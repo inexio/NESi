@@ -136,13 +136,16 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                 privacy = 'None'
                 index_end = 2
                 if args[2] != '{}':
-                    index_start = args.index('{')
-                    index_end = args.index('}')
-                    number = args[index_start + 1] if index_start + 1 < index_end else None
-                    username = args[index_start + 2] if index_start + 2 < index_end else ''
-                    password = args[index_start + 3] if index_start + 3 < index_end else ''
-                    displayname = args[index_start + 4] if index_start + 4 < index_end else ''
-                    privacy = args[index_start + 5] if index_start + 5 < index_end else 'None'
+                    if args[2].startswith('{') and args[2].endswith('}'):
+                        number = args[2][1:-1]
+                    else:
+                        index_start = args.index('{')
+                        index_end = args.index('}')
+                        number = args[index_start + 1] if index_start + 1 < index_end else None
+                        username = args[index_start + 2] if index_start + 2 < index_end else ''
+                        password = args[index_start + 3] if index_start + 3 < index_end else ''
+                        displayname = args[index_start + 4] if index_start + 4 < index_end else ''
+                        privacy = args[index_start + 5] if index_start + 5 < index_end else 'None'
 
                 register = True if args[index_end + 1].lower() == 'true' else False
 
