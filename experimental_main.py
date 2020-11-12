@@ -59,11 +59,8 @@ def main():
     else:
         x = input('Vendor ?\n')
         if x == 'alcatel':
-            from experimental.db_interfaces.alcatel_interface import AlcatelInterface
             from experimental.commandprocessors import main
-            alcatel = AlcatelInterface()
-
-            alcatel.create_box('alcatel', '7330', ['hi', 'ho'])
+            alcatel = create_alcatel_db()
 
             template_root = 'templates/Alcatel'
             cli = main.PreLoginCommandProcessor
@@ -76,7 +73,7 @@ def main():
 
                 try:
                     context = dict()
-                    context['login_banner'] = alcatel.get_box_by_id(1).vendor
+                    context['login_banner'] = alcatel.get_box().login_banner
                     command_processor.history_enabled = False
                     command_processor.loop(context=context)
                 except exceptions.TerminalExitError as exc:
@@ -88,6 +85,13 @@ def main():
                         raise exc
                     else:
                         return
+
+
+def create_alcatel_db():
+    from experimental.db_interfaces.alcatel_interface import AlcatelInterface
+    alcatel = AlcatelInterface(True)
+    alcatel.create_box('alcatel', '7330', ['hi', 'ho'])
+    return alcatel
 
 
 if __name__ == '__main__':

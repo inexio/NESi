@@ -1,4 +1,6 @@
 from .base_models import *
+from .base_base_models import Credentials
+
 
 class HuaweiBox(huawei_base):
     __tablename__ = 'huaweibox'

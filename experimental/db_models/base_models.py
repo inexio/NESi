@@ -8,3 +8,4 @@ huawei_base = db()
 alcatel_engine = create_engine('sqlite:///alcatel.db')
 huawei_engine = create_engine('sqlite:///huawei.db')
 Session = sessionmaker()
+

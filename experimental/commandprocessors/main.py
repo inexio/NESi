@@ -39,18 +39,14 @@ class PreLoginCommandProcessor(base.CommandProcessor):
 class LoginCommandProcessor(base.CommandProcessor):
 
     def on_unknown_command(self, command, *args, context=None):
-        #context['welcome_banner'] = self._model.welcome_banner
+        context['welcome_banner'] = self._model.get_box().welcome_banner
         username = context.pop('username')
         password = command
 
-        #for creds in self._model.credentials:
-        #    if creds.username == username and creds.password == password:
-        #        break
-
-        #else:
-         #   text = self._render('password', context=context)
-         #   self._write(text)
-         #   raise exceptions.TerminalExitError()
+        if not self._model.check_credentials(username, password):
+            text = self._render('password', context=context)
+            self._write(text)
+            raise exceptions.TerminalExitError()
 
         subprocessor = self._create_subprocessor(
             UserViewCommandProcessor, 'login', 'mainloop')
