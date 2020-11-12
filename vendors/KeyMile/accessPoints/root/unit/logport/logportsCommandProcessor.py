@@ -97,9 +97,5 @@ class LogportsCommandProcessor(BaseCommandProcessor):
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate(args, 'test', str):
-            name, = self._dissect(args, 'test', str)
-            #todo testcase
-            return
         else:
             raise exceptions.CommandSyntaxError(command=command)
