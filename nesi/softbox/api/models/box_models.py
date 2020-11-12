@@ -131,3 +131,4 @@ class Box(db.Model):
     ftp_server_ip = db.Column(db.String(), default='')
     ftp_login = db.Column(db.String(), default='')
     ftp_password = db.Column(db.String(), default='')
+    network_element_management_vlan_id = db.Column(db.Integer(), default=None)

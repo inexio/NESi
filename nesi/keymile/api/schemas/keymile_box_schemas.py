@@ -18,7 +18,7 @@ class KeyMileBoxSchema(BoxSchema):
     class Meta:
         model = Box
         fields = BoxSchema.Meta.fields + ('channels', 'interfaces', 'currTemperature', 'logports', 'ftp_server_ip', 'ftp_login',
-                                          'ftp_password')
+                                          'ftp_password', 'network_element_management_vlan_id')
 
     interfaces = ma.Hyperlinks(
         {'_links': {
