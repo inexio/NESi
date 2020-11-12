@@ -127,82 +127,60 @@ class PortgroupportCommandProcessor(PortCommandProcessor):
                 exc.template = 'syntax_error'
                 exc.template_scopes = ('login', 'base', 'syntax_errors')
                 raise exc
-            elif self._validate(args, 'pstnport', str, str, str, str, str, str, str, str, str) and \
-                    context['path'].split('/')[-1] == 'cfgm':
-                enable, subident, register, phone, sip, proxy, codec, pstn, enterprise = self._dissect(args, 'pstnport',
-                        str, str, str, str, str, str, str, str, str)
+            elif args[0] in ('pstnport', 'isdnport') and context['path'].split('/')[-1] == 'cfgm':
+                enable = True if args[1].lower() == 'true' else False
+                number = None
+                username = ''
+                password = ''
+                displayname = ''
+                privacy = 'None'
+                index_end = 2
+                if args[2] != '{}':
+                    index_start = args.index('{')
+                    index_end = args.index('}')
+                    number = args[index_start + 1] if index_start + 1 < index_end else None
+                    username = args[index_start + 2] if index_start + 2 < index_end else ''
+                    password = args[index_start + 3] if index_start + 3 < index_end else ''
+                    displayname = args[index_start + 4] if index_start + 4 < index_end else ''
+                    privacy = args[index_start + 5] if index_start + 5 < index_end else 'None'
+
+                register = True if args[index_end + 1].lower() == 'true' else False
+
                 try:
                     port = self.get_component()
-                    enable = True if enable.lower() == 'true' else False
-                    register = True if register.lower() == 'true' else False
-                    phone = True if phone.lower() == 'true' else False
-                    port.set_pstnport(enable, register, phone, sip, proxy, codec, pstn, enterprise)
-                except exceptions.SoftboxenError:
-                    raise exceptions.CommandExecutionError(command=command, template='invalid_property',
-                                                           template_scopes=('login', 'base', 'execution_errors'))
-            elif self._validate(args, 'pstnport', str, '{', str, str, str, str, str, '}', str, str, str, str, str, str,
-                                str) and context['path'].split('/')[-1] == 'cfgm':
-                enable, number, username, password, displayname, privacy, register, phone, sip, proxy, codec, pstn, enterprise = self._dissect(args, 'pstnport', str, '{', str, str, str, str, str, '}', str, str, str, str, str, str, str)
-                try:
-                    port = self.get_component()
-                    try:
-                        subscriber = self._model.get_subscriber('number', int(number))
-                        subscriber.set('autorisation_user_name', username)
-                        subscriber.set('autorisation_password', password)
-                        subscriber.set('display_name', displayname)
-                        subscriber.set('privacy', privacy)
-                    except exceptions.SoftboxenError:
-                        address = self.component_name
-                        subscriber = self._model.add_subscriber(number=int(number), autorisation_user_name=username,
-                                                                address=address, privacy=privacy, type='port',
-                                                                display_name=displayname, autorisation_password=password)
+                    if number is not None:
+                        try:
+                            subscriber = self._model.get_subscriber('number', int(number))
+                            if username is not None:
+                                subscriber.set('autorisation_user_name', username)
+                            if password is not None:
+                                subscriber.set('autorisation_password', password)
+                            if displayname is not None:
+                                subscriber.set('display_name', displayname)
+                            if privacy is not None:
+                                subscriber.set('privacy', privacy)
+                        except exceptions.SoftboxenError:
+                            address = self.component_name
+                            self._model.add_subscriber(number=int(number), autorisation_user_name=username,
+                                                       address=address, privacy=privacy, display_name=displayname,
+                                                       autorisation_password=password, portgroupport_id=port.id)
                         pass
-                    enable = True if enable.lower() == 'true' else False
-                    register = True if register.lower() == 'true' else False
-                    phone = True if phone.lower() == 'true' else False
-                    port.set_pstnport(enable, register, phone, sip, proxy, codec, pstn, enterprise)
-                except exceptions.SoftboxenError as exe:
-                    raise exceptions.CommandExecutionError(command=command, template='invalid_property',
-                                                           template_scopes=('login', 'base', 'execution_errors'))
-            elif self._validate(args, 'isdnport', str, '{', str, str, str, str, str, '}', str, str, str, str, str, str,
-                                str) and context['path'].split('/')[-1] == 'cfgm':
-                enable, number, username, password, displayname, privacy, register, regdefault, layer1, sip, proxy, codec, isdnba = self._dissect(args, 'isdnport', str, '{', str, str, str, str, str, '}', str, str, str, str, str, str, str)
-                try:
-                    port = self.get_component()
-                    try:
-                        subscriber = self._model.get_subscriber('number', int(number))
-                        assert subscriber.address == self.component_name
-                        subscriber.set('autorisation_user_name', username)
-                        subscriber.set('autorisation_password', password)
-                        subscriber.set('display_name', displayname)
-                        subscriber.set('privacy', privacy)
-                    except exceptions.SoftboxenError:
-                        address = self.component_name
-                        subscriber = self._model.add_subscriber(number=int(number), autorisation_user_name=username,
-                                                                address=address, privacy=privacy, type='port',
-                                                                display_name=displayname, autorisation_password=password)
-                        pass
-                    except AssertionError:
-                        raise exceptions.SoftboxenError()
-                    enable = True if enable.lower() == 'true' else False
-                    register = True if register.lower() == 'true' else False
-                    regdefault = True if regdefault.lower() == 'true' else False
-                    layer1 = True if layer1.lower() == 'true' else False
-                    port.set_isdnport(enable, register, regdefault, layer1, sip, proxy, codec, isdnba)
-                except exceptions.SoftboxenError as exe:
-                    raise exceptions.CommandExecutionError(command=command, template='invalid_property',
-                                                           template_scopes=('login', 'base', 'execution_errors'))
-            elif self._validate(args, 'isdnport', str, str, str, str, str, str, str, str, str) and \
-                    context['path'].split('/')[-1] == 'cfgm':
-                enable, subident, register, regdefault, layer1, sip, proxy, codec, isdnba = self._dissect(args, 'isdnport',
-                        str, str, str, str, str, str, str, str, str)
-                try:
-                    port = self.get_component()
-                    enable = True if enable.lower() == 'true' else False
-                    register = True if register.lower() == 'true' else False
-                    regdefault = True if regdefault.lower() == 'true' else False
-                    layer1 = True if layer1.lower() == 'true' else False
-                    port.set_isdnport(enable, register, regdefault, layer1, sip, proxy, codec, isdnba)
+                    if args[0] == 'isdnport':
+                        regdefault = True if args[index_end + 2].lower().lower() == 'true' else False
+                        layer1 = True if args[index_end + 3].lower() == 'true' else False
+                        sip = args[index_end + 4]
+                        proxy = args[index_end + 5]
+                        codec = args[index_end + 6]
+                        isdnba = args[index_end + 7]
+                        port.set_isdnport(enable, register, regdefault, layer1, sip, proxy, codec, isdnba)
+                    elif args[0] == 'pstnport':
+                        phone = True if args[index_end + 2].lower() == 'true' else False
+                        sip = args[index_end + 3]
+                        proxy = args[index_end + 4]
+                        codec = args[index_end + 5]
+                        pstn = args[index_end + 6]
+                        enterprise = args[index_end + 7]
+                        port.set_pstnport(enable, register, phone, sip, proxy, codec, pstn, enterprise)
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                            template_scopes=('login', 'base', 'execution_errors'))
