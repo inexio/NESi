@@ -70,10 +70,6 @@ class RootCommandProcessor(BaseCommandProcessor):
             self._model.set_mgmt_address(new_ip)
             self._model.set_net_mask(net_mask)
             self._model.set_default_gateway(gateway)
-        elif self._validate(args, 'test', str):
-            ip, = self._dissect(args, 'test', str)
-            #TODO test case
-            return
         else:
             raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                    template_scopes=('login', 'base', 'execution_errors'))

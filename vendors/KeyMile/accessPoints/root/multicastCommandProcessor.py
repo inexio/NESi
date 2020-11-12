@@ -31,9 +31,5 @@ class MulticastCommandProcessor(BaseCommandProcessor):
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate(args, 'test', str):
-            ip, = self._dissect(args, 'test', str)
-            #TODO test case
-            return
         else:
             raise exceptions.CommandSyntaxError(command=command)
