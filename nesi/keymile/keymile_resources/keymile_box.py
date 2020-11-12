@@ -31,6 +31,7 @@ class KeyMileBox(Box):
     ftp_server_ip = base.Field("backup_ip")
     ftp_login = base.Field("login")
     ftp_password = base.Field("password")
+    network_element_management_vlan_id = base.Field('network_element_management_vlan_id')
 
     def set_ftp_data(self, ftp_server_ip, login, password):
         self.update(ftp_server_ip=ftp_server_ip)
@@ -241,6 +242,10 @@ class KeyMileBox(Box):
                 self._conn,
                 os.path.join(self.path, 'srvcs'),
                 **fields)
+
+    def set_vlan_id(self, vlan_id):
+        """Change the network element management vlan."""
+        self.update(network_element_management_vlan_id=vlan_id)
 
 
 class KeyMileBoxCollection(BoxCollection):

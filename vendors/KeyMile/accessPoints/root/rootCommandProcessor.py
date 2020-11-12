@@ -64,7 +64,16 @@ class RootCommandProcessor(BaseCommandProcessor):
             exc.template = 'syntax_error'
             exc.template_scopes = ('login', 'base', 'syntax_errors')
             raise exc
-        elif self._validate(args, 'IP_Address', str, str, str):
+        elif self._validate(args, 'VlanId', str) and context['path'].split('/')[-1] == 'cfgm':
+            vlan_id, = self._dissect(args, 'VlanId', str)
+            vlan_id = int(vlan_id)
+            if not 1 < vlan_id < 4089:
+                raise exceptions.CommandExecutionError(template='syntax_error',
+                                                       template_scopes=('login', 'base', 'syntax_errors'),
+                                                       command=None)
+
+            self._model.set_vlan_id(vlan_id)
+        elif self._validate(args, 'IP_Address', str, str, str) and context['path'].split('/')[-1] == 'cfgm':
             new_ip, net_mask, gateway = self._dissect(args, 'IP_Address', str, str, str)
 
             self._model.set_mgmt_address(new_ip)
@@ -82,11 +91,11 @@ class RootCommandProcessor(BaseCommandProcessor):
 
     def get_property(self, command, *args, context=None):
         scopes = ('login', 'base', 'get')
-        if self._validate(args, "CurrTemperature"):
+        if self._validate(args, "CurrTemperature") and context['path'].split('/')[-1] == 'status':
             context['currTemperature'] = self._model.currTemperature
             context['spacer'] = self.create_spacers((67,), (context['currTemperature'],))[0] * ' '
             self._write(self._render('currTemperature', *scopes, context=context))
-        elif self._validate(args, 'IP_Address'):
+        elif self._validate(args, 'IP_Address') and context['path'].split('/')[-1] == 'cfgm':
             context['ip_address'] = self._model.mgmt_address
             context['spacer1'] = self.create_spacers((67,), (self._model.mgmt_address,))[0] * ' '
 
@@ -96,6 +105,10 @@ class RootCommandProcessor(BaseCommandProcessor):
             context['default_gateway'] = self._model.default_gateway
             context['spacer3'] = self.create_spacers((67,), (self._model.default_gateway,))[0] * ' '
             self._write(self._render('ip_address', *scopes, context=context))
+        elif self._validate(args, 'VlanId') and context['path'].split('/')[-1] == 'cfgm':
+            context['vlan_id'] = self._model.network_element_management_vlan_id
+            context['spacer'] = self.create_spacers((67,), (context['vlan_id'],))[0] * ' '
+            self._write(self._render('vlan_id', *scopes, context=context))
         else:
             raise exceptions.CommandExecutionError(command=command, template='invalid_property',
                                                    template_scopes=('login', 'base', 'execution_errors'))
