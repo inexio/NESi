@@ -1,3 +1,7 @@
 manager
 secret
+ftpserver 128.0.0.2 testuser testpass
+cd /cfgm
+save
+upload /cfgm/configuration /testtftp/backups/keymilebackup.conf
 exit
