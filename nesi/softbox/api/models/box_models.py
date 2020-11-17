@@ -47,9 +47,7 @@ class Box(db.Model):
     network_protocol = db.Column(db.Enum('telnet', 'ssh'), default='telnet')
     network_port = db.Column(db.Integer(), default=None)
     network_address = db.Column(db.String(), default=None)
-    uuid = db.Column(
-        db.String(36), nullable=False, unique=True,
-        default=lambda: str(uuid.uuid1()))
+    uuid = db.Column(db.String(36), nullable=False, unique=True, default=lambda: str(uuid.uuid1()))
     description = db.Column(db.String())
     hostname = db.Column(db.String(64))
     mgmt_address = db.Column(db.String(32))
@@ -60,10 +58,10 @@ class Box(db.Model):
     isam_location = db.Column(db.String(), default=None, nullable=True)
     login_banner = db.Column(db.String(), default="")
     welcome_banner = db.Column(db.String, default="")
+
     credentials = db.relationship('Credential', backref='Box', lazy='dynamic')
     credential_details = db.relationship('Credential', backref='credentials', lazy='dynamic')
     users = db.relationship('User', backref='Box', lazy='dynamic')
-
     subracks = db.relationship('Subrack', backref='Box', lazy='dynamic')
     subrack_details = db.relationship('Subrack', backref='subracks', lazy='dynamic')
     cards = db.relationship('Card', backref='Box', lazy='dynamic')
@@ -87,6 +85,7 @@ class Box(db.Model):
     portgroupports = db.relationship('PortGroupPort', backref='Box', lazy='dynamic')
     logports = db.relationship('LogPort', backref='Box', lazy='dynamic')
     srvcs = db.relationship('Srvc', backref='Box', lazy='dynamic')
+    # Huawei
     board_missing_reporting_logging = db.Column(db.Boolean(), default=False)
     board_instl_missing_reporting_logging = db.Column(db.Boolean(), default=False)
     board_init_reporting_logging = db.Column(db.Boolean(), default=False)

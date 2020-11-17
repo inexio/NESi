@@ -1,4 +1,4 @@
-from ..db_models.huawei_models import *
+from experimental.db_models.huawei.huawei_models import *
 from .base_interface import Interface
 
 

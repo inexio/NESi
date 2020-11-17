@@ -12,7 +12,7 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi.softbox.api import ma
-from experimental.db_models.alcatel_models import AlcatelBox
+from experimental.db_models.alcatel.alcatel_models import AlcatelBox
 
 
 class BoxSchema(ma.SQLAlchemyAutoSchema):

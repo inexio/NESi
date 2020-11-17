@@ -1,8 +1,8 @@
-from .base_models import *
+from experimental.db_models.base_models import *
 
 
-class Credentials(alcatel_base):
-    __tablename__ = 'credentials'
+class AlcatelCredentials(alcatel_base):
+    __tablename__ = 'alcatelcredentials'
     id = Column(Integer(), primary_key=True)
     username = Column(String(64), nullable=True)
     password = Column(String(32), nullable=True)

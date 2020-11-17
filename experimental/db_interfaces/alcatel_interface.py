@@ -1,4 +1,4 @@
-from ..db_models.alcatel_models import *
+from experimental.db_models.alcatel.alcatel_models import *
 from .base_interface import Interface
 
 
@@ -20,6 +20,6 @@ class AlcatelInterface(Interface):
             subrack = AlcatelSubrack(name=x)
             subracks.append(subrack)
         box.subrack = subracks
-        box.credentials = [Credentials(username='admin', password='secret')]
+        box.credentials = [AlcatelCredentials(username='admin', password='secret')]
         self.store(box)
         self.box_id = box.id
