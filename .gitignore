@@ -139,3 +139,6 @@ dmypy.json
 /test_cases/integration_tests/edgecore/output.txt
 /test_cases/integration_tests/pbn/output.txt
 /test_cases/integration_tests/zhone/output.txt
+
+# Databases
+.db
