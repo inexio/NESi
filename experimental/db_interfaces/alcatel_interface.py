@@ -23,4 +23,3 @@ class AlcatelInterface(Interface):
         box.credentials = [Credentials(username='admin', password='secret')]
         self.store(box)
         self.box_id = box.id
-

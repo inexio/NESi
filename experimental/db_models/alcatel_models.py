@@ -1,5 +1,6 @@
 from .base_models import *
 from .base_base_models import Credentials
+import json
 
 
 class AlcatelBox(alcatel_base):
@@ -13,7 +14,6 @@ class AlcatelBox(alcatel_base):
     model = Column(String(64), nullable=False)
     welcome_banner = Column(String)
     login_banner = Column(String)
-
 
     def __repr__(self):
         return "<AlcatelBox(vendor='%s', model='%s', credentials='%s' and subracks='%s')>" %\

@@ -55,43 +55,55 @@ def main():
     if args.snmp:
         return
     elif args.api:
+        from experimental.api_interface.views.alcatel_box_views import app
+        create_alcatel_db(recreate_db=False)
+
+        app.run(host=app.config.get('NESI_LISTEN_IP'), port=app.config.get('NESI_LISTEN_PORT'))
         return
     else:
         x = input('Vendor ?\n')
+        x = x.lower()
+        stdin = os.fdopen(sys.stdin.fileno(), 'rb', 0)
+        stdout = os.fdopen(sys.stdout.fileno(), 'wb', 0)
         if x == 'alcatel':
             from experimental.commandprocessors import main
-            alcatel = create_alcatel_db()
-
-            template_root = 'templates/Alcatel'
+            alcatel = create_alcatel_db(recreate_db=True)
             cli = main.PreLoginCommandProcessor
-            stdin = os.fdopen(sys.stdin.fileno(), 'rb', 0)
-            stdout = os.fdopen(sys.stdout.fileno(), 'wb', 0)
+            command_proc_loop(cli, alcatel, stdin, stdout, template_root='templates/Alcatel')
 
-            while True:
-                command_processor = cli(
-                    alcatel, stdin, stdout, (), template_root=template_root, daemon=False)
-
-                try:
-                    context = dict()
-                    context['login_banner'] = alcatel.get_box().login_banner
-                    command_processor.history_enabled = False
-                    command_processor.loop(context=context)
-                except exceptions.TerminalExitError as exc:
-                    if exc.return_to is not None and exc.return_to == 'sysexit':
-                        break
-                    elif exc.return_to is not None and exc.return_to == 'sysreboot':
-                        continue
-                    elif exc.return_to is not None and exc.return_to != 'sysexit':
-                        raise exc
-                    else:
-                        return
+        elif x == 'huawei':
+            from experimental.commandprocessors import main
+            alcatel = create_alcatel_db(recreate_db=True)
+            cli = main.PreLoginCommandProcessor
+            command_proc_loop(cli, alcatel, stdin, stdout, template_root='templates/Alcatel')
 
 
-def create_alcatel_db():
+def create_alcatel_db(recreate_db):
     from experimental.db_interfaces.alcatel_interface import AlcatelInterface
-    alcatel = AlcatelInterface(True)
+    alcatel = AlcatelInterface(recreate_db)
     alcatel.create_box('alcatel', '7330', ['hi', 'ho'])
     return alcatel
+
+
+def command_proc_loop(cli, model, stdin, stdout, template_root):
+    while True:
+        command_processor = cli(
+            model, stdin, stdout, (), template_root=template_root, daemon=False)
+
+        try:
+            context = dict()
+            context['login_banner'] = model.get_box().login_banner
+            command_processor.history_enabled = False
+            command_processor.loop(context=context)
+        except exceptions.TerminalExitError as exc:
+            if exc.return_to is not None and exc.return_to == 'sysexit':
+                break
+            elif exc.return_to is not None and exc.return_to == 'sysreboot':
+                continue
+            elif exc.return_to is not None and exc.return_to != 'sysexit':
+                raise exc
+            else:
+                return
 
 
 if __name__ == '__main__':

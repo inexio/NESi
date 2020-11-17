@@ -11,6 +11,9 @@ class Interface:
         self.session.add(objects)
         self.session.commit()
 
+    def close_session(self):
+        self.session.close()
+
     def create_box(self, vendor, model, subracknames):
         return None
 
