@@ -21,6 +21,7 @@ class Credentials(base.Resource):
     """Represent user credentials."""
 
     id = base.Field('id')
+    user_id = base.Field('user_id')
     protocol = base.Field('protocol')
     username = base.Field('username')
     password = base.Field('password')

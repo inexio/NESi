@@ -192,7 +192,7 @@ class TestHuawei(TestCore):
             assert True
 
     def test_user(self):
-        user = self.model.get_user("name", 'root')
+        user = self.model.get_user("name", 'Root')
         assert user.lock_status == 'Unlocked'
         user.lock()
         assert user.lock_status == 'Locked'

@@ -79,7 +79,7 @@ req='{
   "hostname": "KeyMileMG2500",
   "mgmt_address": "10.0.0.12",
   "software_version": "MG2500V800R016C00",
-  "network_protocol": "telnet",
+  "network_protocol": "ssh",
   "network_address": "127.0.0.1",
   "network_port": 9023,
   "uuid": "2500",
@@ -88,18 +88,9 @@ req='{
 
 box_id=$(create_resource "$req" $ENDPOINT/boxen) || exit 1
 
-# Sessionmanager credentials
-req='{
-  "username": "sessionmanager",
-  "password": "secret"
-}'
-
-sessionmanager_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
-
 # Sessionmanager user
 req='{
-  "name": "sessionmanager",
-  "credentials_id": '$sessionmanager_credential_id',
+  "name": "Session Manager",
   "level": "Super",
   "profile": "root",
   "append_info": "Sessionmanager",
@@ -108,18 +99,18 @@ req='{
 
 sessionmanager_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
 
-# Manager credentials
+# Sessionmanager credentials
 req='{
-  "username": "manager",
-  "password": "secret"
+  "username": "sessionmanager",
+  "password": "secret",
+  "user_id": '$sessionmanager_id'
 }'
 
-manager_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
+sessionmanager_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
 
 # Manager user
 req='{
-  "name": "manager",
-  "credentials_id": '$manager_credential_id',
+  "name": "Manager",
   "level": "Admin",
   "profile": "admin",
   "append_info": "Manager",
@@ -128,18 +119,18 @@ req='{
 
 manager_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
 
-# Maintenance credentials
+# Manager credentials
 req='{
-  "username": "maintenance",
-  "password": "secret"
+  "username": "manager",
+  "password": "secret",
+  "user_id": '$manager_id'
 }'
 
-maintenance_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
+manager_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
 
 # Manager user
 req='{
-  "name": "maintenance",
-  "credentials_id": '$maintenance_credential_id',
+  "name": "Maintenance",
   "level": "Operator",
   "profile": "operator",
   "append_info": "Maintenance",
@@ -148,18 +139,18 @@ req='{
 
 maintenance_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
 
-# Information credentials
+# Maintenance credentials
 req='{
-  "username": "information",
-  "password": "secret"
+  "username": "maintenance",
+  "password": "secret",
+  "user_id": '$maintenance_id'
 }'
 
-information_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
+maintenance_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
 
 # Manager user
 req='{
-  "name": "information",
-  "credentials_id": '$information_credential_id',
+  "name": "Information",
   "level": "User",
   "profile": "commonuser",
   "append_info": "Information",
@@ -167,6 +158,15 @@ req='{
 }'
 
 information_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
+
+# Information credentials
+req='{
+  "username": "information",
+  "password": "secret",
+  "user_id": '$information_id'
+}'
+
+information_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
 
 ### Nto1-Service-1 ###
 
