@@ -12,12 +12,15 @@
 
 from nesi.softbox.api import ma
 from ..models.user_models import User
+from ..schemas.credential_schemas import CredentialsSchema
 
 
 class UserSchema(ma.ModelSchema):
     class Meta:
         model = User
-        fields = ('id', 'box', 'box_id', 'credentials_id', 'name', '_links')
+        fields = ('id', 'box', 'box_id', 'credential_details', 'name', '_links')
+
+    credential_details = ma.Nested(CredentialsSchema.CredentialSchema, many=True)
 
     box = ma.Hyperlinks(
         {'_links': {
@@ -35,7 +38,7 @@ class UsersSchema(ma.ModelSchema):
     class UserSchema(ma.ModelSchema):
         class Meta:
             model = User
-            fields = ('id', 'name', '_links')
+            fields = ('id', 'name', 'status', '_links')
 
         _links = ma.Hyperlinks(
             {'self': ma.URLFor(

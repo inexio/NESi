@@ -12,6 +12,7 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 from nesi.softbox.api import db
 
+
 class MgmtPort(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64))

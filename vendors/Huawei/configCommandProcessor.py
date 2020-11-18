@@ -962,18 +962,14 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             info = self.user_input("  User's Appended Info(<=30 chars):", False, 30)
 
             box = self._model
-            box.add_credentials(username=login, password=password)
-            try:
-                creds = self._model.get_credentials('username', login)
-            except exceptions.SoftboxenError:
-                raise exceptions.CommandSyntaxError(command=command)
-
-            box.add_user(name=login, credentials_id=creds.id, level=lvl, profile=profile, reenter_num=reenter_num,
+            box.add_user(name=login, level=lvl, profile=profile, reenter_num=reenter_num,
                          reenter_num_temp=reenter_num, append_info=info, lock_status='Unlocked')
             try:
                 user = self._model.get_user('name', login)
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
+
+            box.add_credentials(username=login, password=password, user_id=user.id)
 
             text = self._render('user_created', context=context)
             self._write(text)

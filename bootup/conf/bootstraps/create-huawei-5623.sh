@@ -123,18 +123,9 @@ req='{
 
 box_id=$(create_resource "$req" $ENDPOINT/boxen) || exit 1
 
-# Super Admin credentials
-req='{
-  "username": "root",
-  "password": "secret"
-}'
-
-root_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
-
 # Super Admin user
 req='{
-  "name": "root",
-  "credentials_id": '$root_credential_id',
+  "name": "Root",
   "level": "Super",
   "profile": "root",
   "append_info": "Super Admin",
@@ -144,6 +135,15 @@ req='{
 }'
 
 root_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
+
+# Super Admin credentials
+req='{
+  "username": "root",
+  "password": "secret",
+  "user_id": '$root_id'
+}'
+
+root_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
 
 # Service Profile
 req='{

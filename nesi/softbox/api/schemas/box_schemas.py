@@ -17,6 +17,7 @@ from ..schemas.subrack_schemas import SubracksSchema
 from ..schemas.credential_schemas import CredentialsSchema
 from ..schemas.vlan_schemas import VlansSchema
 from ..schemas.portprofile_schemas import PortProfilesSchema
+from ..schemas.user_schemas import UsersSchema
 
 
 class RootSchema(ma.ModelSchema):
@@ -48,6 +49,8 @@ class BoxSchema(ma.ModelSchema):
     users = ma.Hyperlinks(
         {'_links': {
             'self': ma.URLFor('show_users', box_id='<id>')}})
+
+    user_details = ma.Nested(UsersSchema.UserSchema, many=True)
 
     subracks = ma.Hyperlinks(
         {'_links': {

@@ -62,7 +62,7 @@ class Box(db.Model):
     credentials = db.relationship('Credential', backref='Box', lazy='dynamic')
     credential_details = db.relationship('Credential', backref='credentials', lazy='dynamic')
     users = db.relationship('User', backref='Box', lazy='dynamic')
-
+    user_details = db.relationship('User', backref='users', lazy='dynamic')
     subracks = db.relationship('Subrack', backref='Box', lazy='dynamic')
     subrack_details = db.relationship('Subrack', backref='subracks', lazy='dynamic')
     cards = db.relationship('Card', backref='Box', lazy='dynamic')
