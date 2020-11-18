@@ -40,7 +40,9 @@ class MgmtCardsSchema(ma.ModelSchema):
     class MgmtCardSchema(ma.ModelSchema):
         class Meta:
             model = MgmtCard
-            fields = ('id', 'name', '_links')
+            fields = ('id', 'name', 'operational_state', 'mgmt_ports', '_links')
+
+        mgmt_ports = ma.Nested(MgmtPortsSchema.MgmtPortSchema, many=True)
 
         _links = ma.Hyperlinks(
             {'self': ma.URLFor(

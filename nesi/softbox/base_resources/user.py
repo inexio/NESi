@@ -20,7 +20,6 @@ class User(base.Resource):
     """Represents a logical User resource"""
     
     id = base.Field('id')
-    credentials_id = base.Field('credentials_id')
     name = base.Field('name')
     
     

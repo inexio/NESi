@@ -101,21 +101,21 @@ req='{
 
 box_id=$(create_resource "$req" $ENDPOINT/boxen) || exit 1
 
-# Create login credentials at the switch (admin operation)
-req='{
-  "username": "admin",
-  "password": "secret"
-}'
-
-admin_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
-
 # Admin user
 req='{
-  "name": "admin",
-  "credentials_id": '$admin_credential_id'
+  "name": "Admin"
 }'
 
 admin_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
+
+# Create login credentials at the switch (admin operation)
+req='{
+  "username": "admin",
+  "password": "secret",
+  "user_id": '$admin_id'
+}'
+
+admin_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
 
 # PortProfile 1
 req='{
