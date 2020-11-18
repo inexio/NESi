@@ -39,7 +39,7 @@ class PreLoginCommandProcessor(base.CommandProcessor):
 class LoginCommandProcessor(base.CommandProcessor):
 
     def on_unknown_command(self, command, *args, context=None):
-        context['welcome_banner'] = self._model.get_box().welcome_banner
+        context['welcome_banner'] = self._model.welcome_banner
         username = context.pop('username')
         password = command
 

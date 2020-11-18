@@ -25,10 +25,3 @@ class Interface:
         else:
             box = self.session.query(self.box).filter_by(id=self.box_id).first()
         return box
-
-    def check_credentials(self, username, password):
-        box = self.session.query(self.box).filter_by(id=self.box_id).one()
-        for cred in box.credentials:
-            if cred.username == username and cred.password == password:
-                return True
-        return False

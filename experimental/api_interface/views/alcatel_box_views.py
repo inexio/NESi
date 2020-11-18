@@ -1,17 +1,9 @@
 
-from flask import Flask
 import flask
 import json
-from nesi.softbox.api import config
-from experimental.db_interfaces.alcatel_interface import AlcatelInterface
 from nesi import exceptions
 from ..schemas.box_schemas import *
-
-
-app = Flask(__name__)
-app.config.from_object(config.DefaultConfig)
-PREFIX = '/nesi/v1'
-INTERFACE = AlcatelInterface(False)
+from experimental.api_interface.views import *
 
 
 @app.route(PREFIX + '/')

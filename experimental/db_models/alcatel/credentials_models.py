@@ -10,3 +10,4 @@ class AlcatelCredentials(alcatel_base):
 
     def __repr__(self):
         return "<Credentials(username='%s', pw='%s')>" % (self.username, self.password)
+

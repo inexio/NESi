@@ -13,6 +13,7 @@ class AlcatelBox(alcatel_base):
 
     vendor = Column(String(64), nullable=False)
     model = Column(String(64), nullable=False)
+    version = Column(String(64), nullable=False)
     welcome_banner = Column(String)
     login_banner = Column(String)
     software_version = Column(String(64), nullable=False, default="R5.5.02")
@@ -37,10 +38,25 @@ class AlcatelBox(alcatel_base):
     def set_fields(self):
         self.welcome_banner = "     ___       __        ______     ___   .___________. _______  __\r\n    /   \\     |  |      /      |   /   \\  |           ||   ____||  |\r\n   /  ^  \\    |  |     |  ,----`  /  ^  \\ `---|  |----`|  |__   |  |\r\n  /  /_\\  \\   |  |     |  |      /  /_\\  \\    |  |     |   __|  |  |\r\n /  _____  \\  |  `----.|  `----./  _____  \\   |  |     |  |____ |  `----.\r\n/__/     \\__\\ |_______| \\______/__/     \\__\\  |__|     |_______||_______|"
         self.login_banner = "Welcome to Alcatel_7360"
+        self.hostname = "Alcatel_7360"
+        self.version = "FX-4"
+        self.description = "Aclatel Switch"
+        self.hostname = "Alcatel_7360"
+        self.mgmt_address = "10.0.0.1"
+        self.network_protocol = "telnet"
+        self.network_address = "127.0.0.1"
+        self.network_port = 9023
+        self.software_version = "R5.5.02"
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.set_fields()
+
+    def check_credentials(self, username, password):
+        for credential in self.credentials:
+            if credential.username == username and credential.password == password:
+                return True
+        return False
 
 
 class AlcatelSubrack(alcatel_base):

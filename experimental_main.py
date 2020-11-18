@@ -69,13 +69,13 @@ def main():
             from experimental.commandprocessors import main
             alcatel = create_alcatel_db(recreate_db=True)
             cli = main.PreLoginCommandProcessor
-            command_proc_loop(cli, alcatel, stdin, stdout, template_root='templates/Alcatel')
+            command_proc_loop(cli, alcatel.get_box(), stdin, stdout, template_root='templates/Alcatel')
 
         elif x == 'huawei':
             from experimental.commandprocessors import main
             alcatel = create_alcatel_db(recreate_db=True)
             cli = main.PreLoginCommandProcessor
-            command_proc_loop(cli, alcatel, stdin, stdout, template_root='templates/Alcatel')
+            command_proc_loop(cli, alcatel.get_box(), stdin, stdout, template_root='templates/Alcatel')
 
 
 def create_alcatel_db(recreate_db):
@@ -92,7 +92,7 @@ def command_proc_loop(cli, model, stdin, stdout, template_root):
 
         try:
             context = dict()
-            context['login_banner'] = model.get_box().login_banner
+            context['login_banner'] = model.login_banner
             command_processor.history_enabled = False
             command_processor.loop(context=context)
         except exceptions.TerminalExitError as exc:
