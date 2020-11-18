@@ -9,6 +9,12 @@ from .ont_models import AlcatelOnt
 from .ontport_models import AlcatelOntPort
 from .mgmt_card_models import AlcatelMgmtCard
 from .mgmt_port_models import AlcatelMgmtPort
+from .user_models import AlcatelUser
+from .portprofile_models import AlcatelPortProfile
+from .vlan_models import AlcatelVlan
+from .route_models import AlcatelRoute
+from .service_port_models import AlcatelServicePort
+from .service_vlan_models import AlcatelServiceVlan
 import json
 import uuid
 
@@ -29,18 +35,14 @@ class AlcatelBox(alcatel_base):
     cpe_ports = relationship('AlcatelCpePort', backref='AlcatelBox')
     onts = relationship('AlcatelOnt', backref='AlcatelBox')
     ont_ports = relationship('AlcatelOntPort', backref='AlcatelBox')
-
-
-    #users
-    #serviceport
-    #servicevlan
-    #port_profiles = relationship('PortProfile', backref='Box', lazy='dynamic')
-    #port_profile_details = relationship('PortProfile', backref='port_profiles', lazy='dynamic')
-    #vlans = relationship('Vlan', backref='Box', lazy='dynamic')
-    #vlan_details = relationship('Vlan', backref='vlans', lazy='dynamic')
-    #vlan_interfaces = relationship('VlanInterface', backref='Box', lazy='dynamic')
-    #routes = relationship('Route', backref='Box', lazy='dynamic')
-    #srvcs = relationship('Srvc', backref='Box', lazy='dynamic')
+    users = relationship('AlcatelUser', backref='AlcatelBox')
+    serviceports = relationship('AlcatelServicePort', backref='AlcatelBox')
+    servicevlans =relationship('AlcatelServiceVlan', backref='AlcatelBox')
+    port_profiles = relationship('AlcatelPortProfile', backref='AlcatelBox')
+    port_profile_details = relationship('AlcatelPortProfile', backref='port_profiles')
+    vlans = relationship('AlcatelVlan', backref='AlcatelBox')
+    vlan_details = relationship('AlcatelVlan', backref='vlans')
+    routes = relationship('AlcatelRoute', backref='AlcatelBox')
 
     vendor = Column(String(64), nullable=False)
     model = Column(String(64), nullable=False)
