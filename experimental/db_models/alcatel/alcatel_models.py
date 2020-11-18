@@ -1,5 +1,14 @@
 from experimental.db_models.base_models import *
 from .credentials_models import AlcatelCredentials
+from .subrack_models import AlcatelSubrack
+from .card_models import AlcatelCard
+from .port_models import AlcatelPort
+from .cpe_models import AlcatelCpe
+from .cpeport_models import AlcatelCpePort
+from .ont_models import AlcatelOnt
+from .ontport_models import AlcatelOntPort
+from .mgmt_card_models import AlcatelMgmtCard
+from .mgmt_port_models import AlcatelMgmtPort
 import json
 import uuid
 
@@ -8,8 +17,30 @@ class AlcatelBox(alcatel_base):
     __tablename__ = 'alcatelbox'
 
     id = Column(Integer(), primary_key=True)
-    subrack = relationship("AlcatelSubrack", backref="AlcatelBox")
+    subracks = relationship("AlcatelSubrack", backref="AlcatelBox")
+    subrack_details = relationship('AlcatelSubrack', backref='subracks')
     credentials = relationship("AlcatelCredentials", backref="AlcatelBox")
+    credential_details = relationship('AlcatelCredentials', backref='credentials')
+    cards = relationship('AlcatelCard', backref='AlcatelBox')
+    mgmt_cards = relationship('AlcatelMgmtCard', backref='AlcatelBox')
+    ports = relationship('AlcatelPort', backref='AlcatelBox')
+    mgmt_ports = relationship('AlcatelMgmtPort', backref='AlcatelBox')
+    cpes = relationship('AlcatelCpe', backref='AlcatelBox')
+    cpe_ports = relationship('AlcatelCpePort', backref='AlcatelBox')
+    onts = relationship('AlcatelOnt', backref='AlcatelBox')
+    ont_ports = relationship('AlcatelOntPort', backref='AlcatelBox')
+
+
+    #users
+    #serviceport
+    #servicevlan
+    #port_profiles = relationship('PortProfile', backref='Box', lazy='dynamic')
+    #port_profile_details = relationship('PortProfile', backref='port_profiles', lazy='dynamic')
+    #vlans = relationship('Vlan', backref='Box', lazy='dynamic')
+    #vlan_details = relationship('Vlan', backref='vlans', lazy='dynamic')
+    #vlan_interfaces = relationship('VlanInterface', backref='Box', lazy='dynamic')
+    #routes = relationship('Route', backref='Box', lazy='dynamic')
+    #srvcs = relationship('Srvc', backref='Box', lazy='dynamic')
 
     vendor = Column(String(64), nullable=False)
     model = Column(String(64), nullable=False)
@@ -57,14 +88,3 @@ class AlcatelBox(alcatel_base):
             if credential.username == username and credential.password == password:
                 return True
         return False
-
-
-class AlcatelSubrack(alcatel_base):
-    __tablename__ = 'alcatelsubrack'
-    id = Column(Integer(), primary_key=True)
-    name = Column(String(64), nullable=False)
-    box_id = Column(Integer, ForeignKey('alcatelbox.id'))
-
-    def __repr__(self):
-        return "<Subrack(name='%s', box_id='%s')>" % (self.name, self.box_id)
-
