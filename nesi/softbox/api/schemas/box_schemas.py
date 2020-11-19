@@ -36,7 +36,7 @@ class BoxSchema(ma.ModelSchema):
                   'hostname', 'mgmt_address', 'credentials', 'credential_details', 'port_profiles', 'mgmt_ports',
                   'port_profile_details', 'vlans', 'service_vlans', 'vlan_details', 'subscribers', 'currTemperature',
                   'subracks', 'subrack_details', 'cards', 'ports', 'channels', 'service_ports', 'emus', 'onts',
-                  'cpe_ports', 'routes', 'login_banner', 'vlan_interfaces', 'users', 'portgroupports', 'mgmt_cards',
+                  'cpe_ports', 'routes', 'login_banner', 'vlan_interfaces', 'users', 'user_details', 'portgroupports', 'mgmt_cards',
                   'welcome_banner', 'last_login', 'last_logout', 'sntp_server_ip_address', 'timezone_offset',
                   'net_mask', 'default_gateway', '_links')
 
