@@ -15,11 +15,6 @@ class AlcatelInterface(Interface):
 
     def create_box(self, vendor, model, subracknames):
         box = AlcatelBox(vendor=vendor, model=model)
-        subracks = []
-        for x in subracknames:
-            subrack = AlcatelSubrack(name=x)
-            subracks.append(subrack)
-        box.subrack = subracks
         box.credentials = [AlcatelCredentials(username='admin', password='secret')]
         self.store(box)
         self.box_id = box.id

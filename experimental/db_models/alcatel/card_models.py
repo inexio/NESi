@@ -72,3 +72,46 @@ class AlcatelCard(alcatel_base):
     vect_fallback_fb_vplt_com_fail = Column(Boolean, default=False)
     vect_fallback_fb_cpe_cap_mism = Column(Boolean, default=False)
     vect_fallback_fb_conf_not_feas = Column(Boolean, default=False)
+
+    def __repr__(self):
+        return "<AlcatelCard(id='%s', name='%s', box_id='%s' and subrack_id='%s')>" %\
+               (self.id, self.name, self.box_id, self.subrack_id)
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.set_fields()
+        self.set_subcomponents()
+
+    def set_fields(self):
+        self.description = "Physical card " + self.name
+        self.planned_type = "rdlt-c"
+        self.actual_type = "rdlt-c"
+        self.operational_state = "1"
+        self.admin_state = "1"
+        self.err_state = "no-error"
+        self.availability = "available"
+        self.alarm_profile = "none"
+        self.capab_profile = "32port_xDSL"
+        self.manufacturer = "ALCL"
+        self.mnemonic = "RDLT-C"
+        self.pba_code = "3FE68863GGFL"
+        self.fpba_code = "3FE68863GGFL"
+        self.fpba_ics = "02"
+        self.clei_code = "VBIUAALBAB"
+        self.serial_no = "AA1815FSE1CG"
+        self.failed_test = "00:00:00:00"
+        self.lt_restart_time = "1970-01-01:00:00:00"
+        self.lt_restart_cause = "poweron"
+        self.lt_restart_num = 0
+        self.mgnt_entity_oamipaddr = "0.0.0.0"
+        self.mgnt_entity_pairnum = 0
+        self.dual_host_ip = "0.0.0.0"
+        self.dual_host_loc = "none"
+        self.product = "xdsl"
+
+    def set_subcomponents(self):
+        ports = []
+        for x in ('/1', '/2', '/3'):
+            port = AlcatelPort(name=self.name + x, box_id=self.box_id)
+            ports.append(port)
+        self.ports = ports

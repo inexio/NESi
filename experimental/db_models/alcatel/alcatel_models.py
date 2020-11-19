@@ -17,6 +17,7 @@ from .service_port_models import AlcatelServicePort
 from .service_vlan_models import AlcatelServiceVlan
 import json
 import uuid
+from nesi import exceptions
 
 
 class AlcatelBox(alcatel_base):
@@ -68,6 +69,12 @@ class AlcatelBox(alcatel_base):
         return "<AlcatelBox(vendor='%s', model='%s', credentials='%s' and subracks='%s')>" %\
                (self.vendor, self.model, self.credentials, self.subrack)
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.set_fields()
+        self.set_subcomponents()
+        self.collect_subcomponents()
+
     def set_fields(self):
         self.welcome_banner = "     ___       __        ______     ___   .___________. _______  __\r\n    /   \\     |  |      /      |   /   \\  |           ||   ____||  |\r\n   /  ^  \\    |  |     |  ,----`  /  ^  \\ `---|  |----`|  |__   |  |\r\n  /  /_\\  \\   |  |     |  |      /  /_\\  \\    |  |     |   __|  |  |\r\n /  _____  \\  |  `----.|  `----./  _____  \\   |  |     |  |____ |  `----.\r\n/__/     \\__\\ |_______| \\______/__/     \\__\\  |__|     |_______||_______|"
         self.login_banner = "Welcome to Alcatel_7360"
@@ -81,12 +88,40 @@ class AlcatelBox(alcatel_base):
         self.network_port = 9023
         self.software_version = "R5.5.02"
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.set_fields()
+    def set_subcomponents(self):
+        subracks = []
+        for x in ('1/1', '1/2', '1/3'):
+            subrack = AlcatelSubrack(name=x, box_id=self.id)
+            subracks.append(subrack)
+        self.subracks = subracks
+
+    def collect_subcomponents(self):
+        for subrack in self.subracks:
+            for card in subrack.cards:
+                self.cards.append(card)
+
+        for card in self.cards:
+            for port in card.ports:
+                self.ports.append(port)
 
     def check_credentials(self, username, password):
         for credential in self.credentials:
             if credential.username == username and credential.password == password:
                 return True
         return False
+
+    def get_port(self, field, value):
+        for port in self.ports:
+            if getattr(port, field) == value:
+                #print(port)
+                return port
+        else:
+          raise exceptions.SoftboxenError()
+
+    def get_card(self, field, value):
+        for card in self.cards:
+            if getattr(card, field) == value:
+                #print(card)
+                return card
+        else:
+          raise exceptions.SoftboxenError()

@@ -22,7 +22,7 @@ class AlcatelPort(alcatel_base):
     description = Column(String(), default='')
     onts = relationship('AlcatelOnt', backref='AlcatelPort')
     cpes = relationship('AlcatelCpe', backref='AlcatelPort')
-    box_id = Column(Integer, ForeignKey('alcatelbox.id'))
+    box_id = Column(Integer, ForeignKey('alcatelbox.id'), nullable=True)
     card_id = Column(Integer, ForeignKey('alcatelcard.id'))
 
     # Alcatel data
@@ -120,3 +120,25 @@ class AlcatelPort(alcatel_base):
     mfg_oui = Column(String(), default='000000')
     mfg_date = Column(String(), default='27/10/2016')
     egress_port = Column(Boolean(), default=False)
+    
+    def __repr__(self):
+        return "<AlcatelPort(id='%s', name='%s', box_id='%s' and card_id='%s')>" %\
+               (self.id, self.name, self.box_id, self.card_id)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.set_fields()
+        self.set_subcomponents()
+
+    def set_fields(self):
+        self.description = "Physical port " + self.name
+        self.operational_state = "up"
+        self.admin_state = "up"
+        self.upstream = 10000
+        self.downstream = 25000
+        self.upstream_max = "100000"
+        self.downstream_max = "100000"
+
+    def set_subcomponents(self):
+        return
+

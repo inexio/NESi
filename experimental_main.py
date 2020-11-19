@@ -50,7 +50,14 @@ def main():
         '--snmp', action='store_true',
         help='Run snmp')
 
+    parser.add_argument(
+        '--debug', action='store_true',
+        help='Run CLI instance in debug mode')
+
     args = parser.parse_args()
+
+    if args.debug:
+        pydevd_pycharm.settrace('localhost', port=3001, stdoutToServer=True, stderrToServer=True)
 
     if args.snmp:
         return
