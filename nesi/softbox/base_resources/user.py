@@ -21,6 +21,8 @@ class User(base.Resource):
     
     id = base.Field('id')
     name = base.Field('name')
+    status = base.Field('status')
+    lock_status = base.Field('lock_status')
     
     
 class UserCollection(base.ResourceCollection):

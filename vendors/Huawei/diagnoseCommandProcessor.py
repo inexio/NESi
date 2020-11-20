@@ -108,7 +108,7 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
 
     def do_switch(self, command, *args, context=None):
         if self._validate(args, 'vdsl', 'mode', 'to', str):
-            user = self._model.get_user('status', 'Online')
+            user = self._model.get_user('status', 'online')
             if user.level != 'Super':
                 raise exceptions.CommandSyntaxError(command=command)
 
@@ -166,7 +166,7 @@ class DiagnoseCommandProcessor(BaseCommandProcessor, BaseMixIn):
             self.on_cycle(context=context)
             time.sleep(10)
             self._model.set_last_logout(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
-            user = self._model.get_user('status', 'Online')
+            user = self._model.get_user('status', 'online')
             user.set_offline()
             exc = exceptions.TerminalExitError()
             exc.return_to = 'sysreboot'
