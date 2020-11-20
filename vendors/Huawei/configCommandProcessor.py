@@ -888,7 +888,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_terminal(self, command, *args, context=None):
-        creating_user = self._model.get_user('status', 'Online')
+        creating_user = self._model.get_user('status', 'online')
         if creating_user.level != 'Super' and creating_user.level != 'Admin':
             raise exceptions.CommandSyntaxError(command=command)
         if self._validate(args, 'user', 'name'):
@@ -963,7 +963,7 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
 
             box = self._model
             box.add_user(name=login, level=lvl, profile=profile, reenter_num=reenter_num,
-                         reenter_num_temp=reenter_num, append_info=info, lock_status='Unlocked')
+                         reenter_num_temp=reenter_num, append_info=info, lock_status='unlocked')
             try:
                 user = self._model.get_user('name', login)
             except exceptions.SoftboxenError:
@@ -991,11 +991,11 @@ class ConfigCommandProcessor(HuaweiBaseCommandProcessor, BaseMixIn):
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
 
-            if locked_user.lock_status == 'Locked':
+            if locked_user.lock_status == 'locked':
                 locked_user.set_reenter_num_temp(locked_user.reenter_num)
                 locked_user.unlock()
                 return
-            elif locked_user.lock_status == 'Unlocked':
+            elif locked_user.lock_status == 'unlocked':
                 text = self._render('user_already_unlocked', context=context)
                 self._write(text)
             else:

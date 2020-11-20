@@ -34,7 +34,7 @@ class BaseMixIn:
 
 
         try:
-            admin = self._model.get_user('status', 'Online')
+            admin = self._model.get_user('status', 'online')
             assert admin.level != 'User'
         except (exceptions.SoftboxenError, AssertionError):
             raise exceptions.CommandSyntaxError(command=command)
