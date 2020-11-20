@@ -131,7 +131,7 @@ req='{
   "append_info": "Super Admin",
   "reenter_num": 3,
   "reenter_num_temp": 3,
-  "lock_status": "Unlocked"
+  "lock_status": "unlocked"
 }'
 
 root_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)

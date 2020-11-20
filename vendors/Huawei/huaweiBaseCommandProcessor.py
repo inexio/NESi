@@ -587,7 +587,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
         user_counter = 0
 
         try:
-            exec_user = self._model.get_user('status', 'Online')
+            exec_user = self._model.get_user('status', 'online')
         except exceptions.SoftboxenError:
             raise exceptions.CommandSyntaxError(command=command)
 
@@ -610,6 +610,7 @@ class HuaweiBaseCommandProcessor(BaseCommandProcessor):
                 context['spacer4'] = self.create_spacers((1,), ('',))[0] * ' '
                 context['spacer5'] = self.create_spacers((16,), (user.profile,))[0] * ' '
 
+                user.status = user.status.capitalize()
                 text += self._render('display_terminal_user_all_middle', context=dict(context, user=user))
                 user_counter += 1
 

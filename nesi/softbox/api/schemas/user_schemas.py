@@ -18,7 +18,7 @@ from ..schemas.credential_schemas import CredentialsSchema
 class UserSchema(ma.ModelSchema):
     class Meta:
         model = User
-        fields = ('id', 'box', 'box_id', 'credential_details', 'name', '_links')
+        fields = ('id', 'box', 'box_id', 'credential_details', 'name', 'status', 'lock_status', '_links')
 
     credential_details = ma.Nested(CredentialsSchema.CredentialSchema, many=True)
 

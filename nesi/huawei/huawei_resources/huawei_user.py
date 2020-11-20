@@ -20,24 +20,22 @@ class HuaweiUser(User):
     """Represents a logical User resource"""
 
     level = base.Field('level')
-    status = base.Field('status')
     profile = base.Field('profile')
     append_info = base.Field('append_info')
     reenter_num = base.Field('reenter_num')
     reenter_num_temp = base.Field('reenter_num_temp')
-    lock_status = base.Field('lock_status')
 
     def set_online(self):
-        self.update(status='Online')
+        self.update(status='online')
 
     def set_offline(self):
-        self.update(status='Offline')
+        self.update(status='offline')
 
     def lock(self):
-        self.update(lock_status='Locked')
+        self.update(lock_status='locked')
 
     def unlock(self):
-        self.update(lock_status='Unlocked')
+        self.update(lock_status='unlocked')
 
     def set_reenter_num_temp(self, num):
         self.update(reenter_num_temp=num)

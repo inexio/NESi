@@ -79,7 +79,7 @@ req='{
   "hostname": "KeyMileMG2500",
   "mgmt_address": "10.0.0.12",
   "software_version": "MG2500V800R016C00",
-  "network_protocol": "ssh",
+  "network_protocol": "telnet",
   "network_address": "127.0.0.1",
   "network_port": 9023,
   "uuid": "2500",
@@ -94,7 +94,7 @@ req='{
   "level": "Super",
   "profile": "root",
   "append_info": "Sessionmanager",
-  "lock_status": "Unlocked"
+  "lock_status": "unlocked"
 }'
 
 sessionmanager_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
@@ -114,7 +114,7 @@ req='{
   "level": "Admin",
   "profile": "admin",
   "append_info": "Manager",
-  "lock_status": "Unlocked"
+  "lock_status": "unlocked"
 }'
 
 manager_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
@@ -134,7 +134,7 @@ req='{
   "level": "Operator",
   "profile": "operator",
   "append_info": "Maintenance",
-  "lock_status": "Unlocked"
+  "lock_status": "unlocked"
 }'
 
 maintenance_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
@@ -154,7 +154,7 @@ req='{
   "level": "User",
   "profile": "commonuser",
   "append_info": "Information",
-  "lock_status": "Unlocked"
+  "lock_status": "unlocked"
 }'
 
 information_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)

@@ -33,7 +33,7 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
             answer = self.user_input("Are you sure to log out? (y/n)[n]:", False, 1)
         if answer == "y":
             self._model.set_last_logout(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
-            user = self._model.get_user('status', 'Online')
+            user = self._model.get_user('status', 'online')
             user.set_offline()
             self._model.enable_smart()
             self._model.enable_interactive()
@@ -54,7 +54,7 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
         from .configCommandProcessor import ConfigCommandProcessor
 
         try:
-            admin = self._model.get_user('status', 'Online')
+            admin = self._model.get_user('status', 'online')
             assert admin.level != 'User'
         except (exceptions.SoftboxenError, AssertionError):
             raise exceptions.CommandSyntaxError(command=command)
@@ -250,7 +250,7 @@ class EnableCommandProcessor(HuaweiBaseCommandProcessor):
             self.on_cycle(context=context)
             time.sleep(10)
             self._model.set_last_logout(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
-            user = self._model.get_user('status', 'Online')
+            user = self._model.get_user('status', 'online')
             user.set_offline()
             exc = exceptions.TerminalExitError()
             exc.return_to = 'sysreboot'
