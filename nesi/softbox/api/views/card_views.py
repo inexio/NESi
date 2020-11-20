@@ -78,7 +78,7 @@ def new_card(box_id):
             else:
                 if vendor == 'Huawei':
                     req['name'] = "0"
-                if vendor == 'KeyMile':
+                elif vendor == 'KeyMile':
                     if box['version'] == '2500':
                         req['name'] = "1"
                     elif box['version'] == '2300':
