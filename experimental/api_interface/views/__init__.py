@@ -6,3 +6,6 @@ app = Flask(__name__)
 app.config.from_object(config.DefaultConfig)
 PREFIX = '/nesi/v1'
 INTERFACE = AlcatelInterface(False)
+
+from .subrack_views import *
+from .alcatel_box_views import *

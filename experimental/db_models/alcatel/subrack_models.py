@@ -14,7 +14,7 @@ from ..base_models import *
 from .card_models import AlcatelCard
 from .mgmt_card_models import AlcatelMgmtCard
 
-
+@add_subrackschema
 class AlcatelSubrack(alcatel_base):
     __tablename__ = 'alcatelsubrack'
     id = Column(Integer(), primary_key=True)

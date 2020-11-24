@@ -5,7 +5,6 @@ from nesi import exceptions
 from ..schemas.box_schemas import *
 from experimental.api_interface.views import *
 
-
 @app.route(PREFIX + '/')
 def show_root():
     response = {
@@ -29,8 +28,9 @@ def show_boxen():
     }
 
     schema = BoxenSchema()
+    response = schema.jsonify(response), 200
     INTERFACE.close_session()
-    return schema.jsonify(response), 200
+    return response
 
 
 @app.route(PREFIX + '/boxen/<id>', methods=['GET'])
@@ -40,9 +40,10 @@ def show_box(id):
     if not box:
         raise exceptions.SoftboxenError()
 
-    schema = BoxSchema()
+    schema = box.Schema()
+    response = schema.jsonify(box), 200
     INTERFACE.close_session()
-    return schema.jsonify(box), 200
+    return response
 
 @app.route(PREFIX + '/boxen', methods=['POST'])
 def new_box():
@@ -59,7 +60,7 @@ def new_box():
 
     box = INTERFACE.box(**box_data)
     INTERFACE.store(box)
-    schema = BoxSchema()
+    schema = box.Schema()
     response = schema.jsonify(box), 200
     INTERFACE.close_session()
     return response

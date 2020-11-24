@@ -62,7 +62,7 @@ def main():
     if args.snmp:
         return
     elif args.api:
-        from experimental.api_interface.views.alcatel_box_views import app
+        from experimental.api_interface.views import app
         create_alcatel_db(recreate_db=False)
 
         app.run(host=app.config.get('NESI_LISTEN_IP'), port=app.config.get('NESI_LISTEN_PORT'))

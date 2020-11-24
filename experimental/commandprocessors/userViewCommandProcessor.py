@@ -162,7 +162,6 @@ class UserViewCommandProcessor(BaseCommandProcessor, BaseMixIn):
 
             try:
                 ont_port = self._model.get_ont_port("name", port_identifier)
-                self.map_states(ont_port, 'ont_port')
                 ont = self._model.get_ont('id', ont_port.ont_id)
                 port = self._model.get_port('id', ont.port_id)
                 card = self._model.get_card('id', port.card_id)

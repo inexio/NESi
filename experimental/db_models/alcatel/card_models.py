@@ -37,8 +37,8 @@ class AlcatelCard(alcatel_base):
     dual_tag_mode = Column(Boolean(), default=False)
     actual_type = Column(Enum('rdlt-c', 'rant-a', 'nant-a', 'nrnt-a', 'fant-f', 'relt-a', 'nelt-b', 'fglt-b',
                                     'ngfc-f', 'empty'), default='empty')
-    admin_state = Column(Enum('0', '1'), default='0')  # Alcatel: 0 => disabled, 1 => unlock
-    operational_state = Column(Enum('0', '1'), default='0')  # Alcatel: 0 => disabled, 1 => enabled
+    admin_state = Column(Enum('disabled', 'unlock'), default='disabled')
+    operational_state = Column(Enum('disabled', 'enabled'), default='disabled')
     err_state = Column(Enum('no-error', 'error', 'type-mismatch'), default='no-error')
     availability = Column(Enum('available', 'unavailable', 'not-installed'), default='available')
     alarm_profile = Column(Enum('none'), default='none')
@@ -86,8 +86,8 @@ class AlcatelCard(alcatel_base):
         self.description = "Physical card " + self.name
         self.planned_type = "rdlt-c"
         self.actual_type = "rdlt-c"
-        self.operational_state = "1"
-        self.admin_state = "1"
+        self.operational_state = "enabled"
+        self.admin_state = "unlock"
         self.err_state = "no-error"
         self.availability = "available"
         self.alarm_profile = "none"

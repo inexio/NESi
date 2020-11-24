@@ -15,18 +15,16 @@ from nesi.softbox.api import ma
 from experimental.db_models.alcatel.alcatel_models import AlcatelBox
 
 
-class BoxSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = AlcatelBox
-
-
 class BoxenSchema(ma.ModelSchema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class BoxSchema(ma.SQLAlchemyAutoSchema):
+    class BoxSchema(ma.ModelSchema):
         class Meta:
             model = AlcatelBox
+            fields = (
+                'id', 'vendor', 'model', 'version', 'uuid',
+                '_links')
 
         _links = ma.Hyperlinks(
             {'self': ma.URLFor('show_box', id='<id>')})

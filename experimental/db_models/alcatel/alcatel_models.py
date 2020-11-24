@@ -20,6 +20,7 @@ import uuid
 from nesi import exceptions
 
 
+@add_boxenschema
 class AlcatelBox(alcatel_base):
     __tablename__ = 'alcatelbox'
 
@@ -38,7 +39,7 @@ class AlcatelBox(alcatel_base):
     ont_ports = relationship('AlcatelOntPort', backref='AlcatelBox')
     users = relationship('AlcatelUser', backref='AlcatelBox')
     serviceports = relationship('AlcatelServicePort', backref='AlcatelBox')
-    servicevlans =relationship('AlcatelServiceVlan', backref='AlcatelBox')
+    servicevlans = relationship('AlcatelServiceVlan', backref='AlcatelBox')
     port_profiles = relationship('AlcatelPortProfile', backref='AlcatelBox')
     port_profile_details = relationship('AlcatelPortProfile', backref='port_profiles')
     vlans = relationship('AlcatelVlan', backref='AlcatelBox')
@@ -54,7 +55,7 @@ class AlcatelBox(alcatel_base):
     network_protocol = Column(Enum('telnet', 'ssh'), default='telnet')
     network_port = Column(Integer(), default=None)
     network_address = Column(String(), default=None)
-    #uuid = Column(String(36), nullable=False, unique=True, default=lambda: str(uuid.uuid1()))
+    # uuid = Column(String(36), nullable=False, unique=True, default=lambda: str(uuid.uuid1()))
     description = Column(String())
     hostname = Column(String(64))
     mgmt_address = Column(String(32))
@@ -64,9 +65,8 @@ class AlcatelBox(alcatel_base):
     isam_id = Column(String(), default=None, nullable=True)
     isam_location = Column(String(), default=None, nullable=True)
 
-
     def __repr__(self):
-        return "<AlcatelBox(vendor='%s', model='%s', credentials='%s' and subracks='%s')>" %\
+        return "<AlcatelBox(vendor='%s', model='%s', credentials='%s' and subracks='%s')>" % \
                (self.vendor, self.model, self.credentials, self.subrack)
 
     def __init__(self, **kwargs):
@@ -113,15 +113,23 @@ class AlcatelBox(alcatel_base):
     def get_port(self, field, value):
         for port in self.ports:
             if getattr(port, field) == value:
-                #print(port)
+                # print(port)
                 return port
         else:
-          raise exceptions.SoftboxenError()
+            raise exceptions.SoftboxenError()
 
     def get_card(self, field, value):
         for card in self.cards:
             if getattr(card, field) == value:
-                #print(card)
+                # print(card)
                 return card
         else:
-          raise exceptions.SoftboxenError()
+            raise exceptions.SoftboxenError()
+
+    def get_subrack(self, field, value):
+        for subrack in self.subracks:
+            if getattr(subrack, field) == value:
+                # print(card)
+                return subrack
+        else:
+            raise exceptions.SoftboxenError()

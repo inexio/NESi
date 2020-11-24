@@ -67,7 +67,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
             port_identifier, = self._dissect(args, 'operational-data', 'line', str, 'detail')
 
             port = self.command_port_check(command, port_identifier)
-            self.map_states(port, 'port')
 
             context['spacer1'] = self.create_spacers((29,), (port.name, port.admin_state))[0] * ' '
             context['spacer2'] = self.create_spacers((28,), (port.operational_state, port.upstream))[0] * ' '
@@ -126,7 +125,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
 
             try:
                 subrack = self._model.get_subrack("name", subrack_id)
-                self.map_states(subrack, 'subrack')
 
             except exceptions.SoftboxenError:
                 raise exceptions.CommandSyntaxError(command=command)
@@ -141,7 +139,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
             if lt_identifier == 'nt-a' or lt_identifier == 'nt-b' or lt_identifier == 'acu:1/1':
                 try:
                     card = self._model.get_card('name', lt_identifier)
-                    self.map_states(card, 'card')
 
                 except exceptions.SoftboxenError:
                     raise exceptions.CommandSyntaxError(command=command)
@@ -173,7 +170,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
             text = self._render('equipment_slot_detail_head', context=context)
 
             for card in self._model.cards:
-                self.map_states(card, 'card')
                 if card.position == 'network:0':
                     context['spacer1'] = self.create_spacers((25,), (card.name, ))[0] * ' '
                 else:
@@ -337,7 +333,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
 
             counter = 0
             for subrack in self._model.subracks:
-                self.map_states(subrack, 'subrack')
                 context['subrack'] = subrack
                 context['spacer'] = self.create_spacers((25,), (subrack.actual_type,))[0] * ' '
                 text += self._render('equipment_shelf_detail_body', context=context)
@@ -472,7 +467,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
 
                     text = ''
                     for port in self._model.ports:
-                        self.map_states(port, 'port')
                         if port.card_id == card.id:
                             context['port_ident'] = port.name
                             context['spacer1'] = self.create_spacers((40,), (port.name,))[0] * ' '
@@ -497,7 +491,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
                     text = ''
                     card.product = 'ethernet'
                     for port in self._model.ports:
-                        self.map_states(port, 'port')
                         if port.card_id == card.id:
                             context['port_ident'] = port.name
                             context['spacer1'] = self.create_spacers((36,), (port.name,))[0] * ' '
@@ -522,7 +515,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
                         return
 
                     for component in self._model.ports:
-                        self.map_states(component, 'port')
                         if port.name in component.name:
                             try:
                                 card = self._model.get_card('id', component.card_id)
@@ -551,7 +543,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
                             text += self._render('interface_port_pipe_match_match_exact_port', context=context)
 
                     for component in self._model.service_ports:
-                        self.map_states(component, 'service_port')
                         if port.name in component.name:
                             if component.pvc:
                                 component_indent = 'atm-pvc:' + component.name
@@ -590,7 +581,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
             try:
                 port_type, port_identifier = port_identifier.split(':')
                 port = self._model.get_port("name", port_identifier)
-                self.map_states(port, 'port')
                 card = self._model.get_card("id", port.card_id)
                 if port_type == 'pon':
                     assert card.product == 'ftth-pon'
@@ -618,7 +608,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
             self._write(self._render('interface_port_top', context=context))
             context['count'] = 0
             for port in self._model.ports:
-                self.map_states(port, 'port')
                 card = self._model.get_card("id", port.card_id)
                 if card.product == 'ftth':
                     context['port_type'] = 'ethernet-line'
@@ -637,7 +626,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
                 context['count'] += 1
 
             for ont in self._model.onts:
-                self.map_states(ont, 'ont')
                 positions = (48, 61)
                 args = (ont.name, ont.admin_state, ont.operational_state)
                 spacers = self.create_spacers(positions, args)
@@ -712,7 +700,6 @@ class ShowCommandProcessor(BaseCommandProcessor, BaseMixIn):
 
             try:
                 service_port = self._model.get_service_port('name', port_identifier)
-                self.map_states(service_port, 'service_port')
             except exceptions.SoftboxenError:
                 text = self._render('instance_does_not_exist', context=context)
                 self._write(text)
