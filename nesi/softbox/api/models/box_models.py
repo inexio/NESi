@@ -33,6 +33,8 @@ from .subscriber_models import Subscriber
 from .logport_models import LogPort
 from .interface_models import Interface
 from .srvc_models import Srvc
+from .service_vlan_models import ServiceVlan
+from .service_port_models import ServicePort
 from .mgmt_card_models import MgmtCard
 from .mgmt_port_models import MgmtPort
 
@@ -85,6 +87,8 @@ class Box(db.Model):
     subscribers = db.relationship('Subscriber', backref='Box', lazy='dynamic')
     logports = db.relationship('LogPort', backref='Box', lazy='dynamic')
     srvcs = db.relationship('Srvc', backref='Box', lazy='dynamic')
+    service_vlans = db.relationship('ServiceVlan', backref='Box', lazy='dynamic')
+    service_ports = db.relationship('ServicePort', backref='Box', lazy='dynamic')
     board_missing_reporting_logging = db.Column(db.Boolean(), default=False)
     board_instl_missing_reporting_logging = db.Column(db.Boolean(), default=False)
     board_init_reporting_logging = db.Column(db.Boolean(), default=False)

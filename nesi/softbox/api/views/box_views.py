@@ -25,6 +25,7 @@ from ..models.ontport_models import OntPort
 from ..models.vlan_models import Vlan
 from ..models.portprofile_models import PortProfile
 from ..models.route_models import Route
+from ..models.user_models import User
 from ..schemas.box_schemas import *
 
 # KNAUP
@@ -185,7 +186,7 @@ def clone_box(id):
             component_mapping[component.id] = component_new.id
         return component_mapping
 
-    _ = clone_components(box.credentials, Credential)
+    clone_components(box.credentials, Credential)
     subrack_mapping = clone_components(box.subracks, Subrack)
     card_mapping = clone_components(box.cards, Card, 'subrack_id', subrack_mapping)
     port_mapping = clone_components(box.ports, Port, 'card_id', card_mapping)
@@ -194,6 +195,8 @@ def clone_box(id):
     cpe_mapping = clone_components(box.cpes, Cpe, 'port_id', port_mapping, 'ont_port_id', ont_port_mapping)
     clone_components(box.cpe_ports, CpePort, 'cpe_id', cpe_mapping)
     clone_components(box.vlans, Vlan)
+    user_mapping = clone_components(box.users, User)
+    clone_components(box.credentials, Credential, 'user_id', user_mapping)
 
     clone_components(box.port_profiles, PortProfile)
     clone_components(box.routes, Route)
@@ -237,21 +240,12 @@ def del_box(id):
         for component in component_collection:
             db.session.delete(component)
 
-    del_sub_components(box.credentials)
-    del_sub_components(box.subracks)
-    del_sub_components(box.cards)
-    del_sub_components(box.ports)
-    del_sub_components(box.cpes)
-    del_sub_components(box.cpe_ports)
-    del_sub_components(box.onts)
-    del_sub_components(box.ont_ports)
-    del_sub_components(box.vlans)
-    del_sub_components(box.port_profiles)
-    del_sub_components(box.routes)
-    del_sub_components(box.vlan_interfaces)
-    del_sub_components(box.emus)
-    del_sub_components(box.qos_interfaces)
-    del_sub_components(box.users)
+    for element in (box.credentials, box.subracks, box.cards, box.ports, box.cpes, box.cpe_ports,
+                    box.onts, box.ont_ports, box.vlans, box.port_profiles, box.routes, box.vlan_interfaces,
+                    box.emus, box.users, box.channels, box.interfaces, box.logports, box.mgmt_cards,
+                    box.mgmt_ports, box.portgroupports, box.srvcs, box.service_ports, box.service_vlans
+                    ):
+        del_sub_components(element)
 
     db.session.delete(box)
     db.session.commit()
