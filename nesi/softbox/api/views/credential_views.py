@@ -36,6 +36,10 @@ def show_credential(box_id, id):
 @app.route(PREFIX + '/boxen/<box_id>/credentials', methods=['POST'])
 def new_credential(box_id):
     req = flask.request.json
+    credentials = json.loads(show_components(CredentialsSchema(), Credential, {'user_id': req['user_id']}, box_id).data.decode('utf-8'))['members']
+    if len(credentials) >= 1:
+        return flask.Response(status=500)
+
     response = new_component(CredentialSchema(), Credential, req, box_id)
     return response, 201
 
