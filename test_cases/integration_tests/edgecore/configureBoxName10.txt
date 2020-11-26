@@ -1,0 +1,8 @@
+admin
+secret
+enable
+enable
+configure
+prompt name_prompt
+hostname test_device
+quit

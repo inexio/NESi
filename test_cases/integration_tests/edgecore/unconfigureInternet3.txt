@@ -1,0 +1,20 @@
+admin
+secret
+enable
+enable
+configure
+interface ethernet 1/1
+rate-limit input 1000000
+rate-limit output 1000000
+no rate-limit input
+no rate-limit output
+shutdown
+no description
+no switchport mode
+no switchport native vlan
+no switchport allowed vlan
+no pppoe intermediate-agent port-enable
+no pppoe intermediate-agent port-format-type circuit-id
+no ip dhcp snooping information option circuit-id tr101 no-vlan-field
+no ip dhcp snooping information option circuit-id
+quit

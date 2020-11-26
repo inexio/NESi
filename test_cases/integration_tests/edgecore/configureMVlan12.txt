@@ -1,0 +1,13 @@
+admin
+secret
+enable
+enable
+configure
+vlan database
+vlan 22 name scription media ethernet
+exit
+ip dhcp snooping
+ip dhcp snooping vlan 1
+ip dhcp snooping information option encode no-subtype
+ip dhcp snooping information option remote-id string test sub-option port-description
+quit

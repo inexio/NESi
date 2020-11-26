@@ -1,0 +1,6 @@
+admin
+secret
+enable
+enable
+show mac-address-table
+quit

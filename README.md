@@ -34,10 +34,10 @@ For more information on `softboxen` or `NESi` please refer to our local [documen
 ### Supported Vendors
  - Alcatel  (nearly feature complete)
  - Huawei   (nearly feature complete)
- - Edgecore (not implemented yet)
- - Keymile  (work in progress)
+ - Edgecore (nearly feature complete)
+ - Keymile  (nearly feature complete)
  - Pbn      (not implemented yet)
- - Zhone    (not implemented yet)
+ - Zhone    (work in progress)
 
 ### Supported network components
 
@@ -47,6 +47,7 @@ For more information on `softboxen` or `NESi` please refer to our local [documen
 - ONTs
 - CPEs
 - Vlans
+- Interfaces
 
 
 ## Download
