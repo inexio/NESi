@@ -38,10 +38,10 @@ Click [here](https://thola.io/posts/thola-fosdem/) for more information
 ### Supported Vendors
  - Alcatel  (nearly feature complete)
  - Huawei   (nearly feature complete)
- - Edgecore (not implemented yet)
- - Keymile  (work in progress)
+ - Edgecore (nearly feature complete)
+ - Keymile  (nearly feature complete)
  - Pbn      (not implemented yet)
- - Zhone    (not implemented yet)
+ - Zhone    (work in progress)
 
 ### Supported network components
 
@@ -51,6 +51,7 @@ Click [here](https://thola.io/posts/thola-fosdem/) for more information
 - ONTs
 - CPEs
 - Vlans
+- Interfaces
 
 
 ## Download

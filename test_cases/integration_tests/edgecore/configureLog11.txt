@@ -1,0 +1,8 @@
+admin
+secret
+enable
+enable
+configure
+logging host 10.218.23.2 port 514
+logging trap
+quit

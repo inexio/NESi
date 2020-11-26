@@ -284,8 +284,8 @@ class CommandProcessor:
         if self.case_sensitive is False:
             command = command.lower()
 
-        if command == self.negation:
-            command += "_" + args.pop(0)
+        #if command == self.negation:
+            #command += "_" + args.pop(0)
 
         command = command.replace('-', '_')
 

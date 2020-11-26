@@ -1,0 +1,8 @@
+admin
+secret
+enable
+enable
+configure
+interface ethernet 1/1
+shutdown
+quit

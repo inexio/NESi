@@ -144,3 +144,6 @@ class Card(db.Model):
     #digimap_domain_phone_context = db.Column(db.String(), default='')
     #digimap_prestrip = db.Column(db.Integer(), default=0)
     #digimap_prepend = db.Column(db.String(), default='')
+
+    #Edgecore
+    mac_address = db.Column(db.String(), default='A8-2B-B5-7F-E3-C0')

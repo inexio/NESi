@@ -331,3 +331,6 @@ class Port(db.Model):
     profile4_enable = db.Column(db.Boolean(), default=False)
     profile4_name = db.Column(db.String(), default='')
     profile_mode = db.Column(db.Enum('Priority', 'ElectricalLoopLength'), default=None)
+
+    #Edgecore
+    mac_address = db.Column(db.String(), default='A8-2B-B5-7F-E3-C0')
