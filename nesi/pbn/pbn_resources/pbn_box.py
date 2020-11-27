@@ -7,12 +7,12 @@
 # - Janis Groß <https://github.com/unkn0wn-user>
 # - Philip Konrath <https://github.com/Connyko65>
 # - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 from nesi.pbn.pbn_resources import *
 import logging
-from nesi.softbox.base_resources import credentials
-from nesi.softbox.base_resources import route
+from nesi.softbox.base_resources import credentials, base
 from nesi.softbox.base_resources.box import Box, BoxCollection
 
 LOG = logging.getLogger(__name__)
@@ -24,7 +24,63 @@ class PBNBox(Box):
     :param connection: A RestClient instance
     :param identity: The identity of the System resource
     """
-    # Define PBN Properties
+
+    @property
+    def credentials(self):
+        """Return `CredentialsCollection` object."""
+        return credentials.CredentialsCollection(
+            self._conn, base.get_sub_resource_path_by(
+                self, 'credentials'))
+
+    def get_credentials(self, field, value):
+        """Get specific user object."""
+        return credentials.CredentialsCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'credentials'),
+            params={field: value}).find_by_field_value(field, value)
+
+    @property
+    def users(self):
+        """Return `UserCollection` object."""
+        return pbn_user.PBNUserCollection(
+            self._conn, base.get_sub_resource_path_by(
+                self, 'users'))
+
+    def get_user(self, field, value):
+        """Get specific user object."""
+        return pbn_user.PBNUserCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'users'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_users(self, field, value):
+        """Get specific user objects."""
+        return pbn_user.PBNUserCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'users'),
+            params={field: value})
+
+    @property
+    def cards(self):
+        """Return `cardCollection` object."""
+        return pbn_card.PBNCardCollection(
+            self._conn, base.get_sub_resource_path_by(
+                self, 'cards'))
+
+    def get_card(self, field, value):
+        """Get specific card object."""
+        return pbn_card.PBNCardCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'cards'),
+            params={field: value}).find_by_field_value(field, value)
+
+    @property
+    def ports(self):
+        """Return `PortCollection` object."""
+        return pbn_port.PBNPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'ports'))
+
+    def get_port(self, field, value):
+        """Get specific port object."""
+        return pbn_port.PBNPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'ports'),
+            params={field: value}).find_by_field_value(field, value)
 
 
 class PBNBoxCollection(BoxCollection):

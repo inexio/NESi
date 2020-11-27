@@ -31,8 +31,8 @@ class Port(db.Model):
     type = db.Column(db.Enum('pon', 'ethernet-line'), default='pon')
     shutdown = db.Column(db.Boolean(), default=False)
     speed = db.Column(db.Enum('10M', '1G', '10G'), default='1G')
-    operational_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating
-    admin_state = db.Column(db.Enum('0', '1', '2', '3'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating; KeyMile:  0 => down, 1 => up, 2 => locked, 3 => unlocked
+    operational_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating; PBN: 0 => down, 1 => up
+    admin_state = db.Column(db.Enum('0', '1', '2', '3'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating; KeyMile:  0 => down, 1 => up, 2 => locked, 3 => unlocked; PBN: 0 => down, 1 => up
     upstream = db.Column(db.Integer(), default=0)
     downstream = db.Column(db.Integer(), default=0)
     upstream_max = db.Column(db.String(), default="100000")
