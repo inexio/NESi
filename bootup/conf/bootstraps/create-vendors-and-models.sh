@@ -184,3 +184,67 @@ req='{
 }'
 
 version_id=$(create_resource "$req" $ENDPOINT/versions)
+
+# ----------------------------------------------------------------------- PBN ----------------------------------------------------------------------- #
+
+req='{
+    "name": "PBN"
+}'
+
+vendor_id=$(create_resource "$req" $ENDPOINT/vendors)
+
+req='{
+    "name": "AOCM3608-2x10GE",
+    "vendor_id": '$vendor_id'
+}'
+
+model_id=$(create_resource "$req" $ENDPOINT/models)
+
+req='{
+    "name": "EPON OLT",
+    "model_id": '$model_id'
+}'
+
+version_id=$(create_resource "$req" $ENDPOINT/versions)
+
+req='{
+    "name": "AOCM3956",
+    "vendor_id": '$vendor_id'
+}'
+
+model_id=$(create_resource "$req" $ENDPOINT/models)
+
+req='{
+    "name": "Ethernet Switch",
+    "model_id": '$model_id'
+}'
+
+version_id=$(create_resource "$req" $ENDPOINT/versions)
+
+req='{
+    "name": "AOCM3924",
+    "vendor_id": '$vendor_id'
+}'
+
+model_id=$(create_resource "$req" $ENDPOINT/models)
+
+req='{
+    "name": "Ethernet Switch",
+    "model_id": '$model_id'
+}'
+
+version_id=$(create_resource "$req" $ENDPOINT/versions)
+
+req='{
+    "name": "AOCM3948",
+    "vendor_id": '$vendor_id'
+}'
+
+model_id=$(create_resource "$req" $ENDPOINT/models)
+
+req='{
+    "name": "Ethernet Switch",
+    "model_id": '$model_id'
+}'
+
+version_id=$(create_resource "$req" $ENDPOINT/versions)

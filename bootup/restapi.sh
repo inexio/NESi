@@ -181,7 +181,8 @@ if [ $recreate_db = "yes" ]; then
     #bash bootup/conf/bootstraps/create-box-port-vlan.sh
     #bash bootup/conf/bootstraps/create-alcatel-7360.sh
     #bash bootup/conf/bootstraps/create-huawei-5623.sh
-    bash bootup/conf/bootstraps/create-keymile-MG2500.sh
+    #bash bootup/conf/bootstraps/create-keymile-MG2500.sh
+    bash bootup/conf/bootstraps/create-pbn-AOCM3924.sh
 fi
 
 if [ $alcatel_api = "yes" ]; then
@@ -197,7 +198,7 @@ if [ $edgecore_api = "yes" ]; then
     bash bootup/conf/bootstraps/create-alcatel-7360.sh #work_in_progress
 fi
 if [ $pbn_api = "yes" ]; then
-    bash bootup/conf/bootstraps/create-alcatel-7360.sh #work_in_progress
+    bash bootup/conf/bootstraps/create-pbn-AOCM3924.sh #work_in_progress
 fi
 if [ $zhone_api = "yes" ]; then
     bash bootup/conf/bootstraps/create-alcatel-7360.sh #work_in_progress

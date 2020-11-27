@@ -1,0 +1,18 @@
+Building configuration...
+
+Current configuration:
+!
+interface GigaEthernet{{ context.port.name }}
+ description {{ context.port.description }}
+ no snmp trap link-status
+ switchport trunk vlan-allowed 3220,3273
+ switchport mode trunk
+ switchport pvid 3273
+ spanning-tree guard root
+ no pdp enable
+no lldp transmit
+ speed 1000
+ switchport block multicast
+ switchport rate-limit 625 ingress
+ switchport rate-limit 15
+
