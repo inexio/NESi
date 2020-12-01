@@ -34,6 +34,18 @@ class EnaCommandProcessor(BaseCommandProcessor):
             context['full_command'] = full_command
             raise exceptions.CommandSyntaxError(command=command)
 
+    def do_conf(self, command, *args, context=None):
+        from .confCommandProcessor import ConfCommandProcessor
+        if args == ():
+                subprocessor = self._create_subprocessor(ConfCommandProcessor, 'login', 'mainloop', 'ena', 'conf')
+                subprocessor.loop(context=context)
+        else:
+            full_command = command
+            for arg in args:
+                full_command += ' ' + arg
+            context['full_command'] = full_command
+            raise exceptions.CommandSyntaxError(command=command)
+
     def do_show(self, command, *args, context=None):
         if self._validate(args, 'interface', 'gigaEthernet', str):
             port_name, = self._dissect(args, 'interface', 'gigaEthernet', str)
