@@ -21,6 +21,10 @@ and automation.
 
 For more information on `softboxen` or `NESi` please refer to our local [documentation](https://github.com/inexio/NESi/tree/master/docs/source).
 
+## NESi at FOSDEM 2021 - Request for Papers
+The NESi team will organize a devroom for Network monitoring, discovery and inventory.
+Click [here](https://github.com/inexio/thola/blob/main/FOSDEM.md) for more information
+
 ## Features
 
 
