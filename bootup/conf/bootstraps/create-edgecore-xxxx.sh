@@ -43,7 +43,7 @@ req='{
   "hostname": "ed-ge-co-re-1",
   "mgmt_address": "10.0.0.12",
   "software_version": "MA5623V800R016C00",
-  "network_protocol": "telnet",
+  "network_protocol": "ssh",
   "network_address": "127.0.0.1",
   "network_port": 9023,
   "dsl_mode": "tr165",
