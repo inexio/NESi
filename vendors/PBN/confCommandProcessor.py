@@ -34,7 +34,51 @@ class ConfCommandProcessor(BaseCommandProcessor):
             context['full_command'] = full_command
             raise exceptions.CommandSyntaxError(command=command)
 
+    def do_write(self, command, *args, context=None):
+        if len(args) == 0:
+            pass       # TODO: Find functionality (could store previous values)
+        else:
+            full_command = command
+            for arg in args:
+                full_command += ' ' + arg
+            context['full_command'] = full_command
+            raise exceptions.CommandSyntaxError(command=command)
+
     def do_interface(self, command, *args, context=None):
+        if self._validate(args, str):
+            ident, = self._dissect(args, str)
+            if ident.startswith('GigaEthernet'):
+                port = ident[12:]
+                try:
+                    port = self._model.get_port('name', port)
+                except exceptions.SoftboxenError:
+                    full_command = command
+                    for arg in args:
+                        full_command += ' ' + arg
+                    context['full_command'] = full_command
+                    raise exceptions.CommandExecutionError(command=command, template='parameter_error', template_scopes=
+                    ('login', 'mainloop', 'ena', 'conf'))
+
+                from .interaceCommandProcessor import InterfaceCommandProcessor
+                subprocessor = self._create_subprocessor(InterfaceCommandProcessor, 'login', 'mainloop', 'ena', 'conf',
+                                                         'interface')
+                context['component'] = port
+                subprocessor.loop(context=context)
+
+            else:
+                full_command = command
+                for arg in args:
+                    full_command += ' ' + arg
+                context['full_command'] = full_command
+                raise exceptions.CommandSyntaxError(command=command)
+        else:
+            full_command = command
+            for arg in args:
+                full_command += ' ' + arg
+            context['full_command'] = full_command
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_no_interface(self, command, *args, context=None):
         if self._validate(args, str):
             ident, = self._dissect(args, str)
             if ident.startswith('GigaEthernet'):
