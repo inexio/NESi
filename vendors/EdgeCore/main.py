@@ -61,3 +61,12 @@ class LoginCommandProcessor(base.CommandProcessor):
             UserViewCommandProcessor, 'login', 'mainloop')
 
         subprocessor.loop(context=context)
+
+
+class PostLoginCommandProcessor(base.CommandProcessor):
+
+    def loop(self, context=None, return_to=None, command=None):
+        subprocessor = self._create_subprocessor(
+            UserViewCommandProcessor, 'login', 'mainloop')
+
+        subprocessor.loop(context=context)
