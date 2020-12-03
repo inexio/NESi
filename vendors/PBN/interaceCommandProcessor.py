@@ -42,6 +42,109 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
         if self._validate(command, '?'):
             text = self._render('?', context=context)
             self._write(text)
+        elif self._validate(command, '!'):
+            print('!')      # TODO: find functionality
+        else:
+            full_command = command
+            for arg in args:
+                full_command += ' ' + arg
+            context['full_command'] = full_command
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_no_shutdown(self, command, *args, context=None):
+        if len(args) == 0:
+            port = self.get_component(command, args, context=context)
+            port.admin_up()
+        else:
+            full_command = command
+            for arg in args:
+                full_command += ' ' + arg
+            context['full_command'] = full_command
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_shutdown(self, command, *args, context=None):
+        if len(args) == 0:
+            port = self.get_component(command, args, context=context)
+            port.admin_down()
+        else:
+            full_command = command
+            for arg in args:
+                full_command += ' ' + arg
+            context['full_command'] = full_command
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_description(self, command, *args, context=None): #TODO
+        if self._validate(args, str):
+            descr, = self._dissect(args, str)
+            port = self.get_component(command, args, context=context)
+            port.admin_down()
+        else:
+            full_command = command
+            for arg in args:
+                full_command += ' ' + arg
+            context['full_command'] = full_command
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_spanning_tree(self, command, *args, context=None): #TODO
+        if self._validate(args, 'guard', 'root'):
+            port = self.get_component(command, args, context=context)
+            port.admin_down()
+        else:
+            full_command = command
+            for arg in args:
+                full_command += ' ' + arg
+            context['full_command'] = full_command
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_switchport(self, command, *args, context=None): #TODO
+        if self._validate(args, str):
+            descr, = self._dissect(args, str)
+            port = self.get_component(command, args, context=context)
+            port.admin_down()
+        elif self._validate(args, str):
+            descr, = self._dissect(args, str)
+            port = self.get_component(command, args, context=context)
+            port.admin_down()
+        elif self._validate(args, str):
+            descr, = self._dissect(args, str)
+            port = self.get_component(command, args, context=context)
+            port.admin_down()
+        elif self._validate(args, str):
+            descr, = self._dissect(args, str)
+            port = self.get_component(command, args, context=context)
+            port.admin_down()
+        elif self._validate(args, str):
+            descr, = self._dissect(args, str)
+            port = self.get_component(command, args, context=context)
+            port.admin_down()
+        elif self._validate(args, str):
+            descr, = self._dissect(args, str)
+            port = self.get_component(command, args, context=context)
+            port.admin_down()
+        else:
+            full_command = command
+            for arg in args:
+                full_command += ' ' + arg
+            context['full_command'] = full_command
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_no_lldp(self, command, *args, context=None): #TODO
+        if self._validate(args, 'transmit'):
+            port = self.get_component(command, args, context=context)
+            port.admin_down()
+        else:
+            full_command = command
+            for arg in args:
+                full_command += ' ' + arg
+            context['full_command'] = full_command
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_speed(self, command, *args, context=None): #TODO
+        if self._validate(args, str):
+            limit, = self._dissect(args, str)
+            limit = int(limit)
+            port = self.get_component(command, args, context=context)
+            port.admin_down()
         else:
             full_command = command
             for arg in args:
