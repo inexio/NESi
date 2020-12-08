@@ -40,6 +40,7 @@ class UserViewCommandProcessor(BaseCommandProcessor):
             except (exceptions.SoftboxenError, AssertionError):
                 text = self._render('ena_error', context=context)
                 self._write(text)
+                self.hide_input = False
             else:
                 self.hide_input = False
                 subprocessor = self._create_subprocessor(EnaCommandProcessor, 'login', 'mainloop', 'ena')
