@@ -85,6 +85,18 @@ class ConfCommandProcessor(BaseCommandProcessor):
                 port = ident[12:]
                 try:
                     port = self._model.get_port('name', port)
+                    port.set('description', '')
+                    port.set('spanning_tree_guard_root', False)
+                    port.set('switchport_trunk_vlan_allowed', None)
+                    port.set('switchport_mode_trunk', False)
+                    port.set('switchport_pvid', None)
+                    port.set('no_lldp_transmit', False)
+                    port.set('pbn_speed', None)
+                    port.set('switchport_block_multicast', False)
+                    port.set('switchport_rate_limit_egress', None)
+                    port.set('switchport_rate_limit_ingress', None)
+                    port.set('exclamation_mark', False)
+                    port.admin_down()
                 except exceptions.SoftboxenError:
                     full_command = command
                     for arg in args:

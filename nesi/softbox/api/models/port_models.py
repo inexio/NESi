@@ -331,3 +331,17 @@ class Port(db.Model):
     profile4_enable = db.Column(db.Boolean(), default=False)
     profile4_name = db.Column(db.String(), default='')
     profile_mode = db.Column(db.Enum('Priority', 'ElectricalLoopLength'), default=None)
+
+    # PBN
+    spanning_tree_guard_root = db.Column(db.Boolean(), default=False)
+    switchport_trunk_vlan_allowed = db.Column(db.String(), default=None)
+    switchport_mode_trunk = db.Column(db.Boolean(), default=False)
+    switchport_pvid = db.Column(db.Integer(), default=None)
+    no_lldp_transmit = db.Column(db.Boolean(), default=False)
+    pbn_speed = db.Column(db.Integer(), default=None)
+    switchport_block_multicast = db.Column(db.Boolean(), default=False)
+    switchport_rate_limit_egress = db.Column(db.Integer(), default=None)
+    switchport_rate_limit_ingress = db.Column(db.Integer(), default=None)
+    no_pdp_enable = db.Column(db.Boolean(), default=False)
+    no_snmp_trap_link_status = db.Column(db.Boolean(), default=False)
+    exclamation_mark = db.Column(db.Boolean(), default=False)

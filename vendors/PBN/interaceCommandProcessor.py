@@ -43,7 +43,8 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             text = self._render('?', context=context)
             self._write(text)
         elif self._validate(command, '!'):
-            print('!')      # TODO: find functionality
+            port = self.get_component(command, args, context=context)
+            port.set('exclamation_mark', True)
         else:
             full_command = command
             for arg in args:
@@ -73,11 +74,11 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             context['full_command'] = full_command
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_description(self, command, *args, context=None): #TODO
+    def do_description(self, command, *args, context=None):
         if self._validate(args, str):
             descr, = self._dissect(args, str)
             port = self.get_component(command, args, context=context)
-            port.admin_down()
+            port.set('description', descr)
         else:
             full_command = command
             for arg in args:
@@ -85,10 +86,10 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             context['full_command'] = full_command
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_spanning_tree(self, command, *args, context=None): #TODO
+    def do_spanning_tree(self, command, *args, context=None):
         if self._validate(args, 'guard', 'root'):
             port = self.get_component(command, args, context=context)
-            port.admin_down()
+            port.set('spanning_tree_guard_root', True)
         else:
             full_command = command
             for arg in args:
@@ -96,31 +97,33 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             context['full_command'] = full_command
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_switchport(self, command, *args, context=None): #TODO
-        if self._validate(args, str):
-            descr, = self._dissect(args, str)
+    def do_switchport(self, command, *args, context=None):
+        if self._validate(args, 'trunk', 'vlan-allowed', str):#switchport_trunk_vlan_allowed
+            vlan, = self._dissect(args, 'trunk', 'vlan-allowed', str)
+            #TODO: Check if vlan_number exist
             port = self.get_component(command, args, context=context)
-            port.admin_down()
-        elif self._validate(args, str):
-            descr, = self._dissect(args, str)
+            port.set('switchport_trunk_vlan_allowed', vlan + ',')
+        elif self._validate(args, 'mode', 'trunk'):#switchport_mode_trunk
             port = self.get_component(command, args, context=context)
-            port.admin_down()
-        elif self._validate(args, str):
-            descr, = self._dissect(args, str)
+            port.set('switchport_mode_trunk', True)
+        elif self._validate(args, 'pvid', str):#switchport_pvid
+            pvid, = self._dissect(args, 'pvid', str)
+            pvid = int(pvid)
             port = self.get_component(command, args, context=context)
-            port.admin_down()
-        elif self._validate(args, str):
-            descr, = self._dissect(args, str)
+            port.set('switchport_pvid', pvid)
+        elif self._validate(args, 'block', 'multicast'):#switchport_block_multicast
             port = self.get_component(command, args, context=context)
-            port.admin_down()
-        elif self._validate(args, str):
-            descr, = self._dissect(args, str)
+            port.set('switchport_block_multicast', True)
+        elif self._validate(args, 'rate-limit', str, 'egress'):#switchport_rate_limit_egress
+            value, = self._dissect(args,  'rate-limit', str, 'egress')
+            value = int(value)
             port = self.get_component(command, args, context=context)
-            port.admin_down()
-        elif self._validate(args, str):
-            descr, = self._dissect(args, str)
+            port.set('switchport_rate_limit_egress', value)
+        elif self._validate(args, 'rate-limit', str, 'ingress'):#switchport_rate_limit_ingress
+            value, = self._dissect(args, 'rate-limit', str, 'ingress')
+            value = int(value)
             port = self.get_component(command, args, context=context)
-            port.admin_down()
+            port.set('switchport_rate_limit_ingress', value)
         else:
             full_command = command
             for arg in args:
@@ -128,10 +131,10 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             context['full_command'] = full_command
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_no_lldp(self, command, *args, context=None): #TODO
+    def do_no_lldp(self, command, *args, context=None):
         if self._validate(args, 'transmit'):
             port = self.get_component(command, args, context=context)
-            port.admin_down()
+            port.set('no_lldp_transmit', True)
         else:
             full_command = command
             for arg in args:
@@ -139,12 +142,12 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             context['full_command'] = full_command
             raise exceptions.CommandSyntaxError(command=command)
 
-    def do_speed(self, command, *args, context=None): #TODO
+    def do_speed(self, command, *args, context=None):
         if self._validate(args, str):
             limit, = self._dissect(args, str)
             limit = int(limit)
             port = self.get_component(command, args, context=context)
-            port.admin_down()
+            port.set('pbn_speed', limit)
         else:
             full_command = command
             for arg in args:
