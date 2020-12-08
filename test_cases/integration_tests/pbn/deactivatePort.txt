@@ -1,0 +1,7 @@
+admin
+secret
+ena
+ena-secret
+
+exit
+exit
