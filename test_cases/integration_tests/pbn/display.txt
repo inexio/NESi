@@ -2,6 +2,12 @@ admin
 secret
 ena
 ena-secret
-
+show interface gigaEthernet 0/1
+show running-config interface gigaEthernet 0/1
+show mac address-table interface gigaEthernet  0/1
+show interface ePON 0/1
+show mac address-table interface ePON 0/1
+show running-config interface ePON 0/1
+show epon interface ePON 0/1 onu port 1 state
 exit
 exit
