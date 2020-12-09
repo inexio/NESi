@@ -46,6 +46,28 @@ class EnaCommandProcessor(BaseCommandProcessor):
             context['full_command'] = full_command
             raise exceptions.CommandSyntaxError(command=command)
 
+    def do_wr(self, command, *args, context=None):
+        if args == ():
+            # TODO: Functionality
+            print('hi')
+        else:
+            full_command = command
+            for arg in args:
+                full_command += ' ' + arg
+            context['full_command'] = full_command
+            raise exceptions.CommandSyntaxError(command=command)
+
+    def do_copy(self, command, *args, context=None):
+        if self._validate(command, 'startup-config', str):
+            addr, = self._dissect(args, 'startup-config', str)
+            # TODO: Functionality
+        else:
+            full_command = command
+            for arg in args:
+                full_command += ' ' + arg
+            context['full_command'] = full_command
+            raise exceptions.CommandSyntaxError(command=command)
+
     def do_show(self, command, *args, context=None):
         if self._validate(args, 'interface', 'gigaEthernet', str):
             port_name, = self._dissect(args, 'interface', 'gigaEthernet', str)
