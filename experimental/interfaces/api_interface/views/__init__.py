@@ -1,5 +1,5 @@
 from nesi.softbox.api import config
-from experimental.db_interfaces.alcatel_interface import AlcatelInterface
+from experimental.interfaces.db_interfaces.alcatel_interface import AlcatelInterface
 from flask import Flask
 
 app = Flask(__name__)

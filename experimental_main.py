@@ -15,21 +15,11 @@ import argparse
 import logging
 import os
 import sys
-from urllib.parse import urlparse
-import importlib
 
-from nesi import __version__
 from nesi import exceptions
-from nesi.softbox.cli import rest_client
-from nesi.softbox.base_resources import root, base
-from bootup.sockets.telnet import TelnetSocket
-import pytest
 
-import subprocess
 from nesi.softbox.api.views import *  # noqa
 import pydevd_pycharm
-import time
-
 
 LOG = logging.getLogger(__name__)
 
@@ -62,7 +52,7 @@ def main():
     if args.snmp:
         return
     elif args.api:
-        from experimental.api_interface.views import app
+        from experimental.interfaces.api_interface.views import app
         create_alcatel_db(recreate_db=False)
 
         app.run(host=app.config.get('NESI_LISTEN_IP'), port=app.config.get('NESI_LISTEN_PORT'))
@@ -73,20 +63,20 @@ def main():
         stdin = os.fdopen(sys.stdin.fileno(), 'rb', 0)
         stdout = os.fdopen(sys.stdout.fileno(), 'wb', 0)
         if x == 'alcatel':
-            from experimental.commandprocessors import main
+            from experimental.vendors.Alcatel.commandprocessors import main
             alcatel = create_alcatel_db(recreate_db=True)
             cli = main.PreLoginCommandProcessor
             command_proc_loop(cli, alcatel.get_box(), stdin, stdout, template_root='templates/Alcatel')
 
         elif x == 'huawei':
-            from experimental.commandprocessors import main
+            from experimental.vendors.Alcatel.commandprocessors import main
             alcatel = create_alcatel_db(recreate_db=True)
             cli = main.PreLoginCommandProcessor
             command_proc_loop(cli, alcatel.get_box(), stdin, stdout, template_root='templates/Alcatel')
 
 
 def create_alcatel_db(recreate_db):
-    from experimental.db_interfaces.alcatel_interface import AlcatelInterface
+    from experimental.interfaces.db_interfaces.alcatel_interface import AlcatelInterface
     alcatel = AlcatelInterface(recreate_db)
     alcatel.create_box('alcatel', '7330', ['hi', 'ho'])
     return alcatel

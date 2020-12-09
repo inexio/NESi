@@ -1,4 +1,5 @@
-from experimental.db_models.base_models import *
+from experimental.db_models.config_models import *
+from experimental.db_models.base_models import BoxFunctionalities
 from .credentials_models import AlcatelCredentials
 from .subrack_models import AlcatelSubrack
 from .card_models import AlcatelCard
@@ -20,8 +21,8 @@ import uuid
 from nesi import exceptions
 
 
-@add_boxenschema
-class AlcatelBox(alcatel_base):
+@add_boxschema
+class AlcatelBox(alcatel_base, BoxFunctionalities):
     __tablename__ = 'alcatelbox'
 
     id = Column(Integer(), primary_key=True)
@@ -94,42 +95,3 @@ class AlcatelBox(alcatel_base):
             subrack = AlcatelSubrack(name=x, box_id=self.id)
             subracks.append(subrack)
         self.subracks = subracks
-
-    def collect_subcomponents(self):
-        for subrack in self.subracks:
-            for card in subrack.cards:
-                self.cards.append(card)
-
-        for card in self.cards:
-            for port in card.ports:
-                self.ports.append(port)
-
-    def check_credentials(self, username, password):
-        for credential in self.credentials:
-            if credential.username == username and credential.password == password:
-                return True
-        return False
-
-    def get_port(self, field, value):
-        for port in self.ports:
-            if getattr(port, field) == value:
-                # print(port)
-                return port
-        else:
-            raise exceptions.SoftboxenError()
-
-    def get_card(self, field, value):
-        for card in self.cards:
-            if getattr(card, field) == value:
-                # print(card)
-                return card
-        else:
-            raise exceptions.SoftboxenError()
-
-    def get_subrack(self, field, value):
-        for subrack in self.subracks:
-            if getattr(subrack, field) == value:
-                # print(card)
-                return subrack
-        else:
-            raise exceptions.SoftboxenError()

@@ -11,7 +11,7 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from experimental.db_models.base_models import *
+from experimental.db_models.config_models import *
 from .port_models import AlcatelPort
 
 

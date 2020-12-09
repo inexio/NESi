@@ -9,9 +9,7 @@
 # - Alexander Dincher <https://github.com/Dinker1996>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
-import flask
-from experimental.api_interface.schemas.subrack_schema import *
-from experimental.api_interface.views import *
+from experimental.interfaces.api_interface.views import *
 
 PREFIX = '/nesi/v1'
 

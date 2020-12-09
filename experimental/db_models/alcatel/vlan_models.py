@@ -12,7 +12,7 @@
 import uuid
 
 
-from experimental.db_models.base_models import *
+from experimental.db_models.config_models import *
 
 
 class AlcatelVlan(alcatel_base):

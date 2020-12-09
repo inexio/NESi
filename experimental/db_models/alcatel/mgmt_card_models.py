@@ -11,7 +11,7 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from ..base_models import *
+from ..config_models import *
 from .mgmt_port_models import AlcatelMgmtPort
 
 

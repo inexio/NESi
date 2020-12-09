@@ -1,9 +1,4 @@
-
-import flask
-import json
-from nesi import exceptions
-from ..schemas.box_schemas import *
-from experimental.api_interface.views import *
+from experimental.interfaces.api_interface.views import *
 
 @app.route(PREFIX + '/')
 def show_root():

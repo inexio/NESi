@@ -10,7 +10,7 @@
 # - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
-from ..base_models import *
+from ..config_models import *
 
 
 class AlcatelMgmtPort(alcatel_base):

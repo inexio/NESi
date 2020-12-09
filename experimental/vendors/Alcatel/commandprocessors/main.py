@@ -12,8 +12,7 @@
 
 from nesi.softbox.cli import base
 from nesi import exceptions
-from datetime import datetime
-from experimental.commandprocessors.userViewCommandProcessor import UserViewCommandProcessor
+from experimental.vendors.Alcatel.commandprocessors.userViewCommandProcessor import UserViewCommandProcessor
 
 
 class PreLoginCommandProcessor(base.CommandProcessor):

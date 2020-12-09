@@ -1,8 +1,10 @@
-from experimental.db_models.base_models import *
+from experimental.db_models.config_models import *
+from experimental.db_models.base_models import BoxFunctionalities
 from .credentials_models import HuaweiCredentials
 
 
-class HuaweiBox(huawei_base):
+@add_boxschema
+class HuaweiBox(huawei_base, BoxFunctionalities):
     __tablename__ = 'huaweibox'
     id = Column(Integer(), primary_key=True)
     vendor = Column(String(64), nullable=False)

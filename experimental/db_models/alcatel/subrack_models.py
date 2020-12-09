@@ -10,7 +10,7 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from ..base_models import *
+from ..config_models import *
 from .card_models import AlcatelCard
 from .mgmt_card_models import AlcatelMgmtCard
 
