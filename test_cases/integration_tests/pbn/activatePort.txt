@@ -2,6 +2,11 @@ admin
 secret
 ena
 ena-secret
-
+conf
+interface GigaEthernet0/1
+no shutdown
+!
+exit
+write
 exit
 exit
