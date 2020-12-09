@@ -11,3 +11,4 @@ show running-config interface ePON 0/1
 show epon interface ePON 0/1 onu port 1 state
 exit
 exit
+exit
