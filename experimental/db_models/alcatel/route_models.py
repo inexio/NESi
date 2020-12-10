@@ -23,4 +23,10 @@ class AlcatelRoute(alcatel_base):
     box_id = Column(Integer, ForeignKey('alcatelbox.id'))
     sub_mask = Column(Integer(), default=None)
 
+    def __repr__(self):
+        return "<AlcatelRoute(id='%s', name='%s'and box_id='%s')>" %\
+               (self.id, self.name, self.box_id)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 

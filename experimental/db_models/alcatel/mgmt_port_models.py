@@ -21,5 +21,12 @@ class AlcatelMgmtPort(alcatel_base):
     box_id = Column(Integer, ForeignKey('alcatelbox.id'))
     mgmt_card_id = Column(Integer, ForeignKey('alcatelmgmtcard.id'))
 
-    admin_state = Column(Enum('0', '1'), default='0')
-    operational_state = Column(Enum('0', '1'), default='0')
+    admin_state = Column(Enum('up', 'down'), default='down')
+    operational_state = Column(Enum('up', 'down'), default='down')
+
+    def __repr__(self):
+        return "<AlcatelMgmtPort(id='%s', name='%s', box_id='%s' and mgmt_card_id='%s')>" % \
+               (self.id, self.name, self.box_id, self.mgmt_card_id)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)

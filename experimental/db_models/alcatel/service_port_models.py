@@ -16,3 +16,10 @@ class AlcatelServicePort(alcatel_base):
     pvc = Column(Boolean(), default=False)
     admin_state = Column(Enum('down', 'up'), default='down')
     operational_state = Column(Enum('down', 'up'), default='down')
+
+    def __repr__(self):
+        return "<AlcatelServicePort(id='%s', name='%s', box_id='%s', connected_type=%s' and connected_id='%s')>" %\
+               (self.id, self.name, self.box_id, self.connected_type, self.connected_id)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)

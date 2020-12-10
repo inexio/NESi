@@ -6,8 +6,8 @@ from nesi.softbox.api import ma
 
 alcatel_base = db()
 huawei_base = db()
-alcatel_engine = create_engine('sqlite:///alcatel.db')
-huawei_engine = create_engine('sqlite:///huawei.db')
+alcatel_engine = create_engine('sqlite:///experimental/db_models/alcatel.db')
+huawei_engine = create_engine('sqlite:///experimental/db_models/huawei.db')
 Session = sessionmaker()
 
 

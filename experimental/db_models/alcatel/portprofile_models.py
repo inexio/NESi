@@ -28,3 +28,11 @@ class AlcatelPortProfile(alcatel_base):
     committed_info_rate = Column(Integer(), default=0, nullable=False)
     committed_burst_size = Column(Integer(), default=0, nullable=False)
     logical_flow_type = Column(Enum('generic'), default='generic')
+
+    def __repr__(self):
+        return "<AlcatelPortProfile(id='%s', name='%s'and box_id='%s')>" % \
+               (self.id, self.name, self.box_id)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+

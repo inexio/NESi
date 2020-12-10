@@ -55,4 +55,9 @@ class AlcatelVlan(alcatel_base):
     remote_id_dhcp = Column(String(32), default=None)
     mode = Column(Enum('residential-bridge', 'reserved'), default='residential-bridge')
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
+    def __repr__(self):
+        return "<AlcatelVlan(id='%s', name='%s', box_id='%s')>" %\
+               (self.id, self.name, self.box_id)

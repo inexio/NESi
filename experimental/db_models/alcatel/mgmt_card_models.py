@@ -24,8 +24,8 @@ class AlcatelMgmtCard(alcatel_base):
     box_id = Column(Integer, ForeignKey('alcatelbox.id'))
     subrack_id = Column(Integer, ForeignKey('alcatelsubrack.id'))
     
-    admin_state = Column(Enum('0', '1'), default='0')
-    operational_state = Column(Enum('0', '1'), default='0')
+    admin_state = Column(Enum('down', 'up'), default='down')
+    operational_state = Column(Enum('down', 'up'), default='down')
     board_name = Column(String(), default='')
     supplier_build_state = Column(Enum('R1G', 'R1D', 'R2B', 'R2A', 'R1K', 'R1H', 'R2B', 'R1E', 'R3D', 'R1C', 'R1A', ''),
                                   default='')
@@ -47,3 +47,18 @@ class AlcatelMgmtCard(alcatel_base):
     boot_loader = Column(String(), default='')
     processor = Column(String(), default='')
     product = Column(Enum('mgmt'), nullable=False, default='mgmt')
+
+    def __repr__(self):
+        return "<AlcatelMgmtCard(id='%s', name='%s', box_id='%s' and subrack_id='%s')>" % \
+               (self.id, self.name, self.box_id, self.subrack_id)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.set_subcomponents()
+
+    def set_subcomponents(self):
+        mgmt_ports = []
+        for x in ('/1', '/2', '/3'):
+            port = AlcatelMgmtPort(name=self.name + x, box_id=self.box_id, mgmt_card_id=self.id)
+            mgmt_ports.append(port)
+        self.mgmt_ports = mgmt_ports

@@ -15,3 +15,10 @@ class AlcatelServiceVlan(alcatel_base):
     tag = Column(Enum('single-tagged', 'untagged'), default='single-tagged')
 
     mode = Column(Enum('atm', 'ptm'), default='ptm')
+
+    def __repr__(self):
+        return "<AlcatelServiceVlan(id='%s', name='%s', box_id='%s', vlan_id=%s' and service_port_id='%s')>" %\
+               (self.id, self.name, self.box_id, self.vlan_id, self.service_port_id)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)

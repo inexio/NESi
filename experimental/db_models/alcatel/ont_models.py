@@ -112,3 +112,18 @@ class AlcatelOnt(alcatel_base):
     ont_voltage = Column(Float(), default=3.32)
     laser_bias_curr = Column(Float(), default=9950.0)
     olt_rx_sig_level = Column(Float(), default=-18.8)
+
+    def __repr__(self):
+        return "<AlcatelOnt(id='%s', name='%s', box_id='%s' and port_id='%s')>" % \
+               (self.id, self.name, self.box_id, self.port_id)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.set_subcomponents()
+
+    def set_subcomponents(self):
+        ont_ports = []
+        for x in ('/1', '/2', '/3'):
+            port = AlcatelOntPort(name=self.name + x, box_id=self.box_id)
+            ont_ports.append(port)
+        self.ont_ports = ont_ports

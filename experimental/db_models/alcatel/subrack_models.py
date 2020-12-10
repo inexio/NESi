@@ -37,6 +37,10 @@ class AlcatelSubrack(alcatel_base):
     variant = Column(String(), default='NOT_AVAILABLE')
     ics = Column(String(), default='NOT_AVAILABLE')
 
+    def __repr__(self):
+        return "<AlcatelSubrack(id='%s', name='%s', box_id='%s')>" %\
+               (self.id, self.name, self.box_id)
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.set_fields()
@@ -62,3 +66,8 @@ class AlcatelSubrack(alcatel_base):
             card = AlcatelCard(name=self.name + x, box_id=self.box_id)
             cards.append(card)
         self.cards = cards
+        mgmt_cards = []
+        for x in ('/1', '/2', '/3'):
+            card = AlcatelMgmtCard(name=self.name + x, box_id=self.box_id)
+            mgmt_cards.append(card)
+        self.mgmt_cards = mgmt_cards

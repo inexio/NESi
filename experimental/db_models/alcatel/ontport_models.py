@@ -11,6 +11,7 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from experimental.db_models.config_models import *
+from .cpe_models import AlcatelCpe
 
 
 class AlcatelOntPort(alcatel_base):
@@ -29,3 +30,17 @@ class AlcatelOntPort(alcatel_base):
     link_status = Column(Enum('up', 'down'), default='up')
     speed = Column(String(), default='1000')
 
+    def __repr__(self):
+        return "<AlcatelOntPort(id='%s', name='%s', box_id='%s' and ont_id='%s')>" % \
+               (self.id, self.name, self.box_id, self.ont_id)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.set_subcomponents()
+
+    def set_subcomponents(self):
+        cpes = []
+        for x in ('/1', '/2', '/3'):
+            port = AlcatelCpe(name=self.name + x, box_id=self.box_id)
+            cpes.append(port)
+        self.cpes = cpes

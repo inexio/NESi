@@ -28,3 +28,10 @@ class AlcatelUser(alcatel_base):
     reenter_num = Column(Integer(), default=3)
     reenter_num_temp = Column(Integer(), default=3)
     lock_status = Column(Enum('Locked', 'Unlocked'), default='Unlocked')
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def __repr__(self):
+        return "<AlcatelUser(id='%s', name='%s', box_id='%s')>" %\
+               (self.id, self.name, self.box_id)

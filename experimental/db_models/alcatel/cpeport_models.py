@@ -21,3 +21,10 @@ class AlcatelCpePort(alcatel_base):
 
     box_id = Column(Integer, ForeignKey('alcatelbox.id'))
     cpe_id = Column(Integer, ForeignKey('alcatelcpe.id'))
+
+    def __repr__(self):
+        return "<AlcatelCpePorts(id='%s', name='%s', box_id='%s' and description='%s')>" % \
+               (self.id, self.name, self.box_id, self.description)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)

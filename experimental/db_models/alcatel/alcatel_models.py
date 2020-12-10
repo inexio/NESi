@@ -65,6 +65,7 @@ class AlcatelBox(alcatel_base, BoxFunctionalities):
     contact_person = Column(String(), default=None, nullable=True)
     isam_id = Column(String(), default=None, nullable=True)
     isam_location = Column(String(), default=None, nullable=True)
+    disk_space = Column(Integer(), nullable=False, default=574423552)
 
     def __repr__(self):
         return "<AlcatelBox(vendor='%s', model='%s', credentials='%s' and subracks='%s')>" % \
