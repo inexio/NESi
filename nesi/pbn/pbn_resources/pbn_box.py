@@ -10,6 +10,7 @@
 # - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
+
 from nesi.pbn.pbn_resources import *
 import logging
 from nesi.softbox.base_resources import credentials, base
@@ -56,6 +57,48 @@ class PBNBox(Box):
         return pbn_user.PBNUserCollection(
             self._conn, base.get_sub_resource_path_by(self, 'users'),
             params={field: value})
+
+    @property
+    def vlans(self):
+        """Return `VlanCollection` object."""
+        return pbn_vlan.PBNVlanCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'vlans'))
+
+    def get_vlan(self, field, value):
+        """Get specific vlan object."""
+        return pbn_vlan.PBNVlanCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'vlans'),
+            params={field: value}).find_by_field_value(field, value)
+
+    @property
+    def service_ports(self):
+        """Return `ServicePortCollection` object."""
+        return pbn_service_port.PBNServicePortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'service_ports'))
+
+    def get_service_port(self, field, value):
+        """Get specific service-port object."""
+        return pbn_service_port.PBNServicePortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'service_ports'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_service_ports_by_values(self, params):
+        """Get a collection of service port objects."""
+        return pbn_service_port.PBNServicePortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'service_ports'),
+            params=params)
+
+    @property
+    def service_vlans(self):
+        """Return `ServiceVlanCollection` object."""
+        return pbn_service_vlan.PBNServiceVlanCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'service_vlans'))
+
+    def get_service_vlan(self, field, value):
+        """Get specific service-vlan object."""
+        return pbn_service_vlan.PBNServiceVlanCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'service_vlans'),
+            params={field: value}).find_by_field_value(field, value)
 
     @property
     def cards(self):
