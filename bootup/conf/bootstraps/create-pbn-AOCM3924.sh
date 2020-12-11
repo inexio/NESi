@@ -26,7 +26,7 @@ req='{
   "model": "AOCM3924",
   "version": "Ethernet Switch",
   "description": "PBN Switch",
-  "hostname": "PBN_TEST",
+  "hostname": "PBN_Switch",
   "mgmt_address": "10.0.0.1",
   "network_protocol": "telnet",
   "network_address": "127.0.0.1",
@@ -77,6 +77,19 @@ req='{
 
 ena_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
 
+### VLAN 3220 ###
+# Create a logical vlan at the network device
+req='{
+  "name": "3220",
+  "number": 3220,
+  "description": "Vlan 3220",
+  "role": "access",
+  "type": "DYNAMIC",
+  "mac_address": "bd9f.d3e4.9f18"
+}'
+
+vlan_3220_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/vlans)
+
 ### Subrack 0 ###
 
 # Create a physical subrack at the network device (admin operation)
@@ -110,3 +123,26 @@ req='{
 }'
 
 port_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### Serviceport 0/1 ###
+
+req='{
+  "name": "0/1",
+  "connected_id": '$port_0_1',
+  "connected_type": "port",
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+service_port_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
+
+### Service Vlan 3220 at ServicePort 0/1  ###
+
+req='{
+  "name": "3220",
+  "service_port_id": '$service_port_0_1',
+  "vlan_id": '$vlan_3220_id',
+  "card_id": '$card_0'
+}'
+
+service_vlan_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlans)
