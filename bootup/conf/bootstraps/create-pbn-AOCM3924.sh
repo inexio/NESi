@@ -146,3 +146,63 @@ req='{
 }'
 
 service_vlan_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlans)
+
+### Port 2 ###
+
+# Create a physical card at the network device (admin operation)
+req='{
+  "name": "0/2",
+  "card_id": '$card_0',
+  "description": "Port #2",
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_0_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### Card 1 ###
+
+# Create a physical card at the network device (admin operation)
+req='{
+  "product": "ftth-pon",
+  "subrack_id": '$subrack_id',
+  "description": "Card #1"
+}'
+
+card_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
+
+### Port 1 ###
+
+# Create a physical card at the network device (admin operation)
+req='{
+  "name": "1/1",
+  "card_id": '$card_1',
+  "description": "Port #1",
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+port_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+### Serviceport 1/1 ###
+
+req='{
+  "name": "1/1",
+  "connected_id": '$port_1_1',
+  "connected_type": "port",
+  "admin_state": "1",
+  "operational_state": "1"
+}'
+
+service_port_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_ports)
+
+### Service Vlan 3220 at ServicePort 1/1  ###
+
+req='{
+  "name": "3220",
+  "service_port_id": '$service_port_1_1',
+  "vlan_id": '$vlan_3220_id',
+  "card_id": '$card_1'
+}'
+
+service_vlan_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlans)
