@@ -1,4 +1,4 @@
-GigaEthernet{{ context.port.name }} is {{ context.port.admin_state }}, line protocol is {{ context.port.operational_state }}
+{{ context.port_name_prefix }}{{ context.port.name }} is {{ context.port.admin_state }}, line protocol is {{ context.port.operational_state }}
   Ifindex is {{ context.port_index }}, unique port number is {{ context.port_index }}
   Description: {{ context.port.description }}
   Hardware is Giga-FX-SFP, address is 0000.0000.0000 (bia 0000.0000.0000)
