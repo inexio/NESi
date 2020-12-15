@@ -14,7 +14,7 @@
 from experimental.db_models.config_models import *
 from .port_models import AlcatelPort
 
-
+@add_cardschema
 class AlcatelCard(alcatel_base):
     __tablename__ = 'alcatelcard'
     

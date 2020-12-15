@@ -12,11 +12,11 @@
 
 import os
 import threading
-
 from time import sleep
 from nesi import exceptions
 from .baseCommandProcessor import BaseCommandProcessor
 from .baseMixIn import BaseMixIn
+from experimental.interfaces.db_interfaces.alcatel_interface import AlcatelInterface
 
 
 class AdminCommandProcessor(BaseCommandProcessor, BaseMixIn):
@@ -36,10 +36,13 @@ class AdminCommandProcessor(BaseCommandProcessor, BaseMixIn):
             target_file, = self._dissect(args, 'database', 'upload', str)
 
             if target_file.startswith('actual-active:') and target_file.endswith('.tar'):
-                self._model.set_upload_progress('upload-ongoing')
-                self._model.upload_progress = 'upload-ongoing'
+                interface = AlcatelInterface(box_id=self._model.id)
+                box = interface.get_box()
+                box.upload_progress = 'upload-ongoing'
+                interface.store(box)
+                interface.close_session()
 
-                subprocess = threading.Thread(target=self.simulate_upload, args=(self._model,))
+                subprocess = threading.Thread(target=self.simulate_upload, args=(self._model.id,))
                 subprocess.start()
 
             else:
@@ -59,8 +62,11 @@ class AdminCommandProcessor(BaseCommandProcessor, BaseMixIn):
         else:
             raise exceptions.CommandSyntaxError(command=command)
 
-    def simulate_upload(self, box):
+    def simulate_upload(self, id):
         sleep(30)
-        box.set_upload_progress('upload-success')
+        interface = AlcatelInterface(box_id=id)
+        box = interface.get_box()
         box.upload_progress = 'upload-success'
+        interface.store(box)
+        interface.close_session()
         return

@@ -20,7 +20,7 @@ def add_boxschema(cls):
             {'_links': {
                 'self': ma.URLFor('show_subracks', box_id='<id>')}})
 
-        from experimental.interfaces.api_interface.schemas.subrack_schema import SubracksSchema
+        from experimental.interfaces.api_interface.schemas.subracks_schema import SubracksSchema
 
         subrack_details = ma.Nested(SubracksSchema.SubrackSchema, many=True)
 
@@ -29,6 +29,15 @@ def add_boxschema(cls):
 
 
 def add_subrackschema(cls):
+    class Schema(ma.SQLAlchemyAutoSchema):
+        class Meta:
+            model = cls
+
+    cls.Schema = Schema
+    return cls
+
+
+def add_cardschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls

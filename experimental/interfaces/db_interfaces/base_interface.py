@@ -14,7 +14,7 @@ class Interface:
     def close_session(self):
         self.session.close()
 
-    def create_box(self, vendor, model, subracknames):
+    def create_box(self, vendor, model):
         return None
 
     def get_box(self, value=None, multiple=False):

@@ -15,6 +15,8 @@ import argparse
 import logging
 import os
 import sys
+import threading
+import time
 
 from nesi import exceptions
 
@@ -44,42 +46,65 @@ def main():
         '--debug', action='store_true',
         help='Run CLI instance in debug mode')
 
+    parser.add_argument(
+        '--recreate-db', action='store_true',
+        help='Run CLI instance in debug mode')
+
     args = parser.parse_args()
 
     if args.debug:
         pydevd_pycharm.settrace('localhost', port=3001, stdoutToServer=True, stderrToServer=True)
 
+    if not args.snmp and not args.api:
+        args.cli = True
+
     if args.snmp:
         return
     elif args.api:
-        from experimental.interfaces.api_interface.views import app
-        create_alcatel_db(recreate_db=False)
-
-        app.run(host=app.config.get('NESI_LISTEN_IP'), port=app.config.get('NESI_LISTEN_PORT'))
-        return
-    else:
+        create_alcatel_db(recreate_db=args.recreate_db)
+        subprocess = threading.Thread(target=start_api, daemon=True)
+        subprocess.start()
+        if not args.cli:
+            while True:
+                time.sleep(1)
+    if args.cli:
+        time.sleep(0.5)
         x = input('Vendor ?\n')
         x = x.lower()
         stdin = os.fdopen(sys.stdin.fileno(), 'rb', 0)
         stdout = os.fdopen(sys.stdout.fileno(), 'wb', 0)
         if x == 'alcatel':
             from experimental.vendors.Alcatel.commandprocessors import main
-            alcatel = create_alcatel_db(recreate_db=True)
+            alcatel = create_alcatel_db(recreate_db=args.recreate_db)
             cli = main.PreLoginCommandProcessor
             command_proc_loop(cli, alcatel.get_box(), stdin, stdout, template_root='templates/Alcatel')
 
         elif x == 'huawei':
             from experimental.vendors.Alcatel.commandprocessors import main
-            alcatel = create_alcatel_db(recreate_db=True)
+            alcatel = create_alcatel_db(recreate_db=args.recreate_db)
             cli = main.PreLoginCommandProcessor
             command_proc_loop(cli, alcatel.get_box(), stdin, stdout, template_root='templates/Alcatel')
+        else:
+            print('Cant find Vendor', x)
+
+    if args.api:
+        print('Stopping API service too.')
 
 
 def create_alcatel_db(recreate_db):
     from experimental.interfaces.db_interfaces.alcatel_interface import AlcatelInterface
-    alcatel = AlcatelInterface(recreate_db)
-    alcatel.create_box('alcatel', '7330', ['hi', 'ho'])
+    alcatel = AlcatelInterface(dropall=recreate_db)
+    if recreate_db:
+        alcatel.create_box('alcatel', '7330')
     return alcatel
+
+
+def create_huawei_db(recreate_db):
+    from experimental.interfaces.db_interfaces.huawei_interface import HuaweiInterface
+    huawei = HuaweiInterface(dropall=recreate_db)
+    if recreate_db:
+        huawei.create_box('alcatel', '7330')
+    return huawei
 
 
 def command_proc_loop(cli, model, stdin, stdout, template_root):
@@ -101,6 +126,12 @@ def command_proc_loop(cli, model, stdin, stdout, template_root):
                 raise exc
             else:
                 return
+
+
+def start_api():
+    from experimental.interfaces.api_interface.views.config_views import app
+    app.run(host=app.config.get('NESI_LISTEN_IP'), port=app.config.get('NESI_LISTEN_PORT'))
+    return
 
 
 if __name__ == '__main__':

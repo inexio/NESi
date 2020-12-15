@@ -9,40 +9,27 @@
 # - Alexander Dincher <https://github.com/Dinker1996>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
-from experimental.interfaces.api_interface.views import *
 
-PREFIX = '/nesi/v1'
+from experimental.interfaces.api_interface.views.config_views import app, PREFIX, flask, json, exceptions, get_interface
+from experimental.interfaces.api_interface.schemas.subracks_schema import SubracksSchema
+from experimental.interfaces.api_interface.views.base_views import *
 
 
 @app.route(PREFIX + '/boxen/<box_id>/subracks', methods=['GET'])
 def show_subracks(box_id):
-    box = INTERFACE.get_box(box_id)
+    if flask.request.args is None:
+        req = {}
+    else:
+        req = flask.request.args
 
-    response = {
-        'members': box.subracks,
-        'count': len(box.subracks)
-    }
-
-    schema = SubracksSchema()
-    response = schema.jsonify(response), 200
-    INTERFACE.close_session()
-    return response
+    response = show_components(SubracksSchema(), 'subracks', req, box_id)
+    return response, 200
 
 
 @app.route(PREFIX + '/boxen/<box_id>/subracks/<id>', methods=['GET'])
 def show_subrack(box_id, id):
-    #TODO: fix SQLite thread
-    box = INTERFACE.get_box(box_id)
-
-    subrack = box.get_subrack('id', int(id))
-
-    if not subrack:
-        raise exceptions.NotFound('Subrack not found')
-
-    schema = subrack.Schema()
-    response = schema.jsonify(subrack), 200
-    INTERFACE.close_session()
-    return response
+    response = show_component('subracks', box_id, id)
+    return response, 200
 
 
 @app.route(PREFIX + '/boxen/<box_id>/subracks', methods=['POST'])

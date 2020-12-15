@@ -1,4 +1,5 @@
-from experimental.interfaces.api_interface.views import *
+from experimental.interfaces.api_interface.views.config_views import app, PREFIX, flask, json, exceptions, get_interface
+from experimental.interfaces.api_interface.schemas.boxen_schemas import BoxenSchema
 
 @app.route(PREFIX + '/')
 def show_root():
@@ -16,6 +17,7 @@ def show_root():
 
 @app.route(PREFIX + '/boxen', methods=['GET'])
 def show_boxen():
+    INTERFACE = get_interface()
     boxen = INTERFACE.get_box(multiple=True)
     response = {
         'members': boxen,
@@ -30,6 +32,7 @@ def show_boxen():
 
 @app.route(PREFIX + '/boxen/<id>', methods=['GET'])
 def show_box(id):
+    INTERFACE = get_interface()
     box = INTERFACE.get_box(id)
 
     if not box:
@@ -42,6 +45,7 @@ def show_box(id):
 
 @app.route(PREFIX + '/boxen', methods=['POST'])
 def new_box():
+    INTERFACE = get_interface()
     req = flask.request.json
 
     box_data = req.copy()
