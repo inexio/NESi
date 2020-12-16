@@ -65,8 +65,7 @@ def main():
         subprocess = threading.Thread(target=start_api, daemon=True)
         subprocess.start()
         if not args.cli:
-            while True:
-                time.sleep(1)
+            x = input('')
     if args.cli:
         time.sleep(0.5)
         x = input('Vendor ?\n')
@@ -88,7 +87,7 @@ def main():
             print('Cant find Vendor', x)
 
     if args.api:
-        print('Stopping API service too.')
+        print('Stopping API service.')
 
 
 def create_alcatel_db(recreate_db):

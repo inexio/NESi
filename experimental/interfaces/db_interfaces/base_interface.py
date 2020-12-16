@@ -11,6 +11,14 @@ class Interface:
         self.session.add(objects)
         self.session.commit()
 
+    def delete(self, box_id, objects):
+        self.session.delete(objects)
+        self.session.commit()
+        box = self.get_box(box_id)
+        box.collect_subcomponents()
+        self.session.add(box)
+        self.session.commit()
+
     def close_session(self):
         self.session.close()
 

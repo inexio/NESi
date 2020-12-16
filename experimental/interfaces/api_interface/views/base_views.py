@@ -15,7 +15,6 @@ from sqlalchemy import func
 #from nesi.softbox.api.models.box_models import Box
 from experimental.interfaces.api_interface.views.config_views import app, flask, json, get_interface
 from werkzeug import exceptions
-# important for other view classes
 from nesi.softbox.api import db
 
 
@@ -72,7 +71,7 @@ def show_component(model, box_id, id):
         if int(component.id) == int(id):
             break
     else:
-        raise exceptions.NotFound(model.__name__ + ' not found')
+        raise exceptions.NotFound(model + 'with id ' + id + ' not found')
 
     schema = component.Schema()
     response = schema.jsonify(component)
@@ -95,16 +94,15 @@ def show_components(schema, model, req, box_id):
     return response
 
 
-
 def update_component(model, req, box_id, id):
-    component = (
-        model
-        .query
-        .filter_by(box_id=box_id, id=id)
-        .first())
-
-    if not component:
-        raise exceptions.NotFound(str(model) + ' not found')
+    INTERFACE = get_interface()
+    box = INTERFACE.get_box(box_id)
+    components = getattr(box, model)
+    for component in components:
+        if int(component.id) == int(id):
+            break
+    else:
+        raise exceptions.NotFound(model.__name__ + ' not found')
 
     for field in req:
         prev_attr = getattr(component, field)
@@ -113,22 +111,22 @@ def update_component(model, req, box_id, id):
         else:
             raise exceptions.BadRequest('wrong datatype: ' + str(type(req[field])) + ' instead of ' + str(type(prev_attr)))
 
-    db.session.add(component)
-    db.session.commit()
+    INTERFACE.store(component)
+    INTERFACE.close_session()
 
 
 def del_component(model, box_id, id):
-    component = (
-        model
-        .query
-        .filter_by(box_id=box_id, id=id)
-        .first())
+    INTERFACE = get_interface()
+    box = INTERFACE.get_box(box_id)
+    components = getattr(box, model)
+    for component in components:
+        if int(component.id) == int(id):
+            break
+    else:
+        raise exceptions.NotFound(model.__name__ + ' not found')
 
-    if not component:
-        raise exceptions.NotFound(str(model) + ' not found')
-
-    db.session.delete(component)
-    db.session.commit()
+    INTERFACE.delete(box_id, component)
+    INTERFACE.close_session()
 
 
 def get_vendor_specific_schema(component):

@@ -258,10 +258,12 @@ class BoxFunctionalities:
 
     def collect_subcomponents(self):
         if hasattr(self, 'subracks') and hasattr(self, 'cards'):
+            self.cards = []
             for subrack in self.subracks:
                 for card in subrack.cards:
                     self.cards.append(card)
         if hasattr(self, 'cards') and hasattr(self, 'ports'):
+            self.ports = []
             for card in self.cards:
                 for port in card.ports:
                     self.ports.append(port)

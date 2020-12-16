@@ -10,7 +10,7 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from experimental.interfaces.api_interface.views.config_views import app, PREFIX, flask, json, exceptions, get_interface
+from experimental.interfaces.api_interface.views.config_views import app, PREFIX, flask
 from experimental.interfaces.api_interface.schemas.subracks_schema import SubracksSchema
 from experimental.interfaces.api_interface.views.base_views import *
 
@@ -41,36 +41,12 @@ def new_subrack(box_id):
 
 @app.route(PREFIX + '/boxen/<box_id>/subracks/<id>', methods=['PUT'])
 def update_subrack(box_id, id):
-    '''
-    #subrack = (Subrack.query.filter_by(box_id=box_id, id=id).first())
-
-    if not subrack:
-        raise exceptions.NotFound('Subrack not found')
-
     req = flask.request.json
-
-    for field in req:
-        setattr(subrack, field, req[field])
-
-    db.session.add(subrack)
-    db.session.commit()
-
-    return flask.Response(status=200)'''
+    update_component('subracks', req, box_id, id)
+    return flask.Response(status=200)
 
 
 @app.route(PREFIX + '/boxen/<box_id>/subracks/<id>', methods=['DELETE'])
 def del_subrack(box_id, id):
-    '''
-    subrack = (
-        Subrack
-        .query
-        .filter_by(box_id=box_id, id=id)
-        .first())
-
-    if not subrack:
-        raise exceptions.NotFound('Subrack not found')
-
-    db.session.delete(subrack)
-    db.session.commit()
-
-    return flask.Response(status=204)'''
+    del_component('subracks', box_id, id)
+    return flask.Response(status=204)

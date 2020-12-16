@@ -12,9 +12,8 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 import re
-
 from .box_views import show_box
-from experimental.interfaces.api_interface.views.config_views import app, PREFIX, flask, json, exceptions, get_interface
+from experimental.interfaces.api_interface.views.config_views import app, PREFIX, flask
 from experimental.interfaces.api_interface.schemas.cards_schemas import CardsSchema
 from experimental.interfaces.api_interface.views.base_views import *
 
@@ -96,12 +95,12 @@ def new_card(box_id):
 
 @app.route(PREFIX + '/boxen/<box_id>/cards/<id>', methods=['PUT'])
 def update_card(box_id, id):
-    '''req = flask.request.json
-    update_component(Card, req, box_id, id)'''
+    req = flask.request.json
+    update_component('cards', req, box_id, id)
     return flask.Response(status=200)
 
 
 @app.route(PREFIX + '/boxen/<box_id>/cards/<id>', methods=['DELETE'])
 def del_card(box_id, id):
-    '''del_component(Card, box_id, id)'''
+    del_component('cards', box_id, id)
     return flask.Response(status=204)
