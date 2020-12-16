@@ -15,6 +15,7 @@ from .ont_models import AlcatelOnt
 from .cpe_models import AlcatelCpe
 
 
+@add_portschema
 class AlcatelPort(alcatel_base):
     __tablename__ = 'alcatelport'
     id = Column(Integer(), primary_key=True)

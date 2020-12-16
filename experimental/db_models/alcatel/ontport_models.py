@@ -14,6 +14,7 @@ from experimental.db_models.config_models import *
 from .cpe_models import AlcatelCpe
 
 
+@add_ontportschema
 class AlcatelOntPort(alcatel_base):
     __tablename__ = 'alcatelontport'
     id = Column(Integer(), primary_key=True)

@@ -1,6 +1,7 @@
 from experimental.db_models.config_models import *
 
 
+@add_credentialschema
 class AlcatelCredentials(alcatel_base):
     __tablename__ = 'alcatelcredentials'
     id = Column(Integer(), primary_key=True)

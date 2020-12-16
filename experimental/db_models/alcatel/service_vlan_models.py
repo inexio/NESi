@@ -1,6 +1,7 @@
 from experimental.db_models.config_models import *
 
 
+@add_servicevlanschema
 class AlcatelServiceVlan(alcatel_base):
     __tablename__ = 'alcatelservicevlan'
     id = Column(Integer(), primary_key=True)

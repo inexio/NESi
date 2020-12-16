@@ -1,6 +1,7 @@
 from experimental.db_models.config_models import *
 
 
+@add_serviceportschema
 class AlcatelServicePort(alcatel_base):
     __tablename__ = 'alcatelserviceport'
     id = Column(Integer(), primary_key=True)

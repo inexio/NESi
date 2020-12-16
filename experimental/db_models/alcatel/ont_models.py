@@ -14,6 +14,7 @@ from experimental.db_models.config_models import *
 from .ontport_models import AlcatelOntPort
 
 
+@add_ontschema
 class AlcatelOnt(alcatel_base):
     __tablename__ = 'alcatelont'
     id = Column(Integer(), primary_key=True)

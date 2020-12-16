@@ -14,6 +14,7 @@ from ..config_models import *
 from .card_models import AlcatelCard
 from .mgmt_card_models import AlcatelMgmtCard
 
+
 @add_subrackschema
 class AlcatelSubrack(alcatel_base):
     __tablename__ = 'alcatelsubrack'

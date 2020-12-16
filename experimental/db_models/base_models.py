@@ -267,3 +267,13 @@ class BoxFunctionalities:
             for card in self.cards:
                 for port in card.ports:
                     self.ports.append(port)
+        if hasattr(self, 'subracks') and hasattr(self, 'mgmt_cards'):
+            self.mgmt_cards = []
+            for subrack in self.subracks:
+                for mcart in subrack.mgmt_cards:
+                    self.mgmt_cards.append(mcart)
+        if hasattr(self, 'mgmt_cards') and hasattr(self, 'mgmt_ports'):
+            self.mgmt_ports = []
+            for card in self.mgmt_cards:
+                for port in card.mgmt_ports:
+                    self.mgmt_ports.append(port)

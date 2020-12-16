@@ -13,6 +13,7 @@
 from experimental.db_models.config_models import *
 
 
+@add_cpeportschema
 class AlcatelCpePort(alcatel_base):
     __tablename__ = 'alcatelcpeport'
     id = Column(Integer(), primary_key=True)

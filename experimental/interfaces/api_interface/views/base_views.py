@@ -13,7 +13,7 @@
 
 from sqlalchemy import func
 #from nesi.softbox.api.models.box_models import Box
-from experimental.interfaces.api_interface.views.config_views import app, flask, json, get_interface
+from experimental.interfaces.api_interface.views.config_views import app, flask, json, get_interface, PREFIX
 from werkzeug import exceptions
 from nesi.softbox.api import db
 

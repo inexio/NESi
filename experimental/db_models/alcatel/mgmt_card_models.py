@@ -15,6 +15,7 @@ from ..config_models import *
 from .mgmt_port_models import AlcatelMgmtPort
 
 
+@add_mgmtcardschema
 class AlcatelMgmtCard(alcatel_base):
     __tablename__ = 'alcatelmgmtcard'
     id = Column(Integer(), primary_key=True)

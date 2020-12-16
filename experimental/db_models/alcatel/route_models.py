@@ -14,6 +14,7 @@ import uuid
 from experimental.db_models.config_models import *
 
 
+@add_routeschema
 class AlcatelRoute(alcatel_base):
     __tablename__ = 'alcatelroute'
     id = Column(Integer(), primary_key=True)

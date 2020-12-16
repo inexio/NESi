@@ -13,6 +13,7 @@
 from ..config_models import *
 
 
+@add_mgmtportschema
 class AlcatelMgmtPort(alcatel_base):
     __tablename__ = 'alcatelmgmtport'
     id = Column(Integer(), primary_key=True)

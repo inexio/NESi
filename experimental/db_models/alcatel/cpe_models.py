@@ -14,6 +14,7 @@ from experimental.db_models.config_models import *
 from .cpeport_models import AlcatelCpePort
 
 
+@add_cpeschema
 class AlcatelCpe(alcatel_base):
     __tablename__ = 'alcatelcpe'
     id = Column(Integer(), primary_key=True)

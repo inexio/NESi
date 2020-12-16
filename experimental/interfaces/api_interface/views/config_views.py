@@ -16,8 +16,9 @@ def get_interface():
 from .subrack_views import *
 from .box_views import *
 from .card_views import *
-#from .port_views import *
-
+from .port_views import *
+from .mgmt_card_views import *
+from .mgmt_port_views import *
 
 
 

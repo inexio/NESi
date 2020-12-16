@@ -13,6 +13,7 @@
 from experimental.db_models.config_models import *
 
 
+@add_portprofileschema
 class AlcatelPortProfile(alcatel_base):
     __tablename__ = 'alcatelportprofile'
     id = Column(Integer(), primary_key=True)

@@ -15,6 +15,7 @@ import uuid
 from experimental.db_models.config_models import *
 
 
+@add_vlanschema
 class AlcatelVlan(alcatel_base):
     __tablename__ = 'alcatelvlan'
     id = Column(Integer(), primary_key=True)

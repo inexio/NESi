@@ -14,6 +14,7 @@
 from experimental.db_models.config_models import *
 
 
+@add_userschema
 class AlcatelUser(alcatel_base):
     __tablename__ = 'alcatelusers'
     id = Column(Integer(), primary_key=True)
