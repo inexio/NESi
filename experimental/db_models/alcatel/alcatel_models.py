@@ -126,3 +126,7 @@ class AlcatelBox(alcatel_base, BoxFunctionalities):
             subrack = AlcatelSubrack(name=x, box_id=self.id)
             subracks.append(subrack)
         self.subracks = subracks
+        credential = AlcatelCredentials(username='admin', password='secret', box_id=self.id)
+        self.credentials = [credential]
+        #self.users = [AlcatelUser(name='admin')]
+

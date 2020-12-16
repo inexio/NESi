@@ -15,6 +15,5 @@ class AlcatelInterface(Interface):
 
     def create_box(self, vendor, model):
         box = AlcatelBox(vendor=vendor, model=model)
-        box.credentials = [AlcatelCredentials(username='admin', password='secret')]
         self.store(box)
         self.box_id = box.id

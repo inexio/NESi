@@ -277,3 +277,8 @@ class BoxFunctionalities:
             for card in self.mgmt_cards:
                 for port in card.mgmt_ports:
                     self.mgmt_ports.append(port)
+        if hasattr(self, 'credentials') and hasattr(self, 'users'):
+            self.users = []
+            for credential in self.credentials:
+                for usr in credential.user:
+                    self.users.append(usr)

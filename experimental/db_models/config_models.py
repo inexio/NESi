@@ -36,6 +36,7 @@ def add_subrackschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -58,6 +59,7 @@ def add_cardschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
     cls.Schema = Schema
     return cls
@@ -67,6 +69,7 @@ def add_portschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -93,6 +96,7 @@ def add_cpeschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -112,6 +116,7 @@ def add_cpeportschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -129,6 +134,7 @@ def add_credentialschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -138,6 +144,9 @@ def add_credentialschema(cls):
             {'self': ma.URLFor('show_credential', box_id='<box_id>', id='<id>'),
              'collection': ma.URLFor('show_credentials', box_id='<box_id>')})
 
+        from experimental.interfaces.api_interface.schemas.users_schemas import UsersSchema
+        user = ma.Nested(UsersSchema.UserSchema, many=True)
+
     cls.Schema = Schema
     return cls
 
@@ -146,6 +155,7 @@ def add_mgmtcardschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -166,6 +176,7 @@ def add_mgmtportschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -183,6 +194,7 @@ def add_ontschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -203,6 +215,7 @@ def add_ontportschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -223,6 +236,7 @@ def add_vlanschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -242,6 +256,7 @@ def add_portprofileschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         _links = ma.Hyperlinks({
             'self': ma.URLFor(
@@ -257,6 +272,7 @@ def add_routeschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -274,6 +290,7 @@ def add_serviceportschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -291,6 +308,7 @@ def add_servicevlanschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
@@ -308,6 +326,7 @@ def add_userschema(cls):
     class Schema(ma.SQLAlchemyAutoSchema):
         class Meta:
             model = cls
+            include_fk = True
 
         box = ma.Hyperlinks(
             {'_links': {
