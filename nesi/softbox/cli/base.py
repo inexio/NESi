@@ -177,15 +177,16 @@ class CommandProcessor:
         self._write('\033[' + str(self.cursor_pos) + 'C')  # move cursor to correct position
 
     def getline(self, tmp_boundary=None):
-        char = None
+        char = ''
         line = ''
         self.history_pos = len(self.history)
         self.cursor_pos = self.prompt_end_pos + 1
         self.cursor_boundary = self.prompt_end_pos + 1
 
-        while char != '\r':
+        while '\r' not in char:
             option, char = self.get()
             if char is None:
+                char = ''
                 continue
             elif char == '\r':
                 continue
@@ -282,8 +283,8 @@ class CommandProcessor:
     def _write(self, text):
         text = text.replace('\n', '\r\n')
         self._output.write(text.encode('utf-8'))
-        if self.daemon and self._model.network_protocol == 'ssh':
-            reactor.iterate()
+        #if self.daemon and self._model.network_protocol == 'ssh':
+        #    reactor.iterate()
 
     def _get_command_func(self, line):
         if line.startswith(self.comment):
@@ -380,7 +381,7 @@ class CommandProcessor:
                     exc.return_to = return_to
 
                 if not exc.return_to or exc.return_to == 'sysexit' or exc.return_to == 'sysreboot' or not isinstance(self, exc.return_to):
-                    if self.daemon and self._model.network_protocol == 'ssh':
+                    if self.daemon and self._model.network_protocol == 'ssh' and exc.return_to in ('sysexit', 'sysreboot'):
                         self._output.loseConnection()
                         reactor.iterate()
                         return

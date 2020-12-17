@@ -10,3 +10,6 @@ psutil
 pytest
 pyperclip
 twisted
+cryptography
+bcrypt
+pyasn1

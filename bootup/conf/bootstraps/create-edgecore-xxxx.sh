@@ -88,7 +88,7 @@ enable_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credential
 
 # backup user
 req='{
-  "name": "Backuo",
+  "name": "Backup",
   "profile": "backup"
 }'
 
