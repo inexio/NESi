@@ -90,6 +90,7 @@ class KeyMileBox(Box):
         return keymile_portgroupport.KeyMilePortGroupPortCollection(
             self._conn, base.get_sub_resource_path_by(self, 'portgrouports'))
 
+    @property
     def logports(self):
         """Return `LogPortCollection` object."""
         return keymile_logport.KeyMileLogPortCollection(
