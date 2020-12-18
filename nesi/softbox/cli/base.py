@@ -17,6 +17,8 @@ import pyperclip
 
 import jinja2
 
+from sys import platform
+
 from nesi import exceptions
 from twisted.internet import reactor
 
@@ -287,8 +289,8 @@ class CommandProcessor:
     def _write(self, text):
         text = text.replace('\n', '\r\n')
         self._output.write(text.encode('utf-8'))
-        #if self.daemon and self._model.network_protocol == 'ssh':
-        #    reactor.iterate()
+        if self.daemon and self._model.network_protocol == 'ssh' and platform == 'darwin': # check for correct os as reactor.iterate() is only needed for macOS
+            reactor.iterate()
 
     def _get_command_func(self, line):
         if line.startswith(self.comment):

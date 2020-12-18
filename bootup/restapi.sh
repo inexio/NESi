@@ -179,9 +179,9 @@ bash bootup/conf/bootstraps/create-vendors-and-models.sh
 
 if [ $recreate_db = "yes" ]; then
     #bash bootup/conf/bootstraps/create-box-port-vlan.sh
-    #bash bootup/conf/bootstraps/create-alcatel-7360.sh
-    #bash bootup/conf/bootstraps/create-huawei-5623.sh
-    #bash bootup/conf/bootstraps/create-keymile-MG2500.sh
+    bash bootup/conf/bootstraps/create-alcatel-7360.sh
+    bash bootup/conf/bootstraps/create-huawei-5623.sh
+    bash bootup/conf/bootstraps/create-keymile-MG2500.sh
     bash bootup/conf/bootstraps/create-edgecore-xxxx.sh
 fi
 
