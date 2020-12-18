@@ -17,7 +17,7 @@ from ..models.route_models import Route
 class RouteSchema(ma.ModelSchema):
     class Meta:
         model = Route
-        fields = ('id', 'dst', 'gw', 'metric', 'box', '_links')
+        fields = ('id', 'dst', 'gw', 'metric', 'box', 'box_id', '_links')
 
     box = ma.Hyperlinks(
         {'_links': {

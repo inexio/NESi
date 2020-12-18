@@ -43,8 +43,8 @@ class LoginCommandProcessor(base.CommandProcessor):
 
         for creds in self._model.credentials:
             if creds.username == username and creds.password == password:
-                user = self._model.get_user('credentials_id', creds.id)
-                if user.lock_status == 'Locked':
+                user = self._model.get_user('id', creds.user_id)
+                if user.lock_status == 'locked':
                     text = self._render('user_locked', context=context)
                     self._write(text)
                     raise exceptions.TerminalExitError()

@@ -17,7 +17,7 @@ from ..models.qos_interface_models import QosInterface
 class QosInterfaceSchema(ma.ModelSchema):
     class Meta:
         model = QosInterface
-        fields = ('id', 'name', 'description', 'box',
+        fields = ('id', 'name', 'description', 'box', 'box_id',
                   '_links')
 
     _links = ma.Hyperlinks({

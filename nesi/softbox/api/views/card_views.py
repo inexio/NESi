@@ -7,6 +7,7 @@
 # - Janis Groß <https://github.com/unkn0wn-user>
 # - Philip Konrath <https://github.com/Connyko65>
 # - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
@@ -42,49 +43,52 @@ def show_card(box_id, id):
 def new_card(box_id):
     req = flask.request.json
 
+    vendor = ''
     if 'name' not in req or req['name'] == "":
         subrack = json.loads(show_component(Subrack, box_id, req['subrack_id']).data.decode('utf-8'))
         box = json.loads(show_box(box_id)[0].data.decode('utf-8'))
+        vendor = box['vendor']
         if len(subrack['cards']) > 0:
             last_card = subrack['cards'][len(subrack['cards']) - 1]
-            if last_card['name'].startswith('nt-'):
+            if last_card['name'].startswith('nt-') and vendor == 'Alcatel':
                 if subrack['name'] != "":
-                    if box['vendor'] == 'Huawei':
-                        req['name'] = subrack['name'] + "/0"
-                    else:
-                        req['name'] = subrack['name'] + "/1"
+                    req['name'] = subrack['name'] + "/1"
                 else:
-                    if box['vendor'] == 'Huawei':
-                        req['name'] = "0"
-                    else:
-                        req['name'] = "1"
+                    req['name'] = "1"
             else:
-                p = re.compile('[0-9]+/([0-9]+(/)?([0-9]+)?)')
-                last_card_index = ''
-                check = p.match(last_card['name']).groups(1)
-                if len(check[0]) <= 2 and not check[0].endswith('/'):
-                    last_card_index = check[0]
-                elif len(check[0]) > 2:
-                    _, last_card_index = check[0].split('/', maxsplit=1)
-                else:
-                    return flask.Response(status=400)
+                p = re.compile('^([0-9]+)?/?([0-9]+)?/?([0-9]+)?$')
+                match_groups = p.match(last_card['name']).groups()
+                filtered_match_groups = [x for x in match_groups if x is not None]  # filter out None values
+                last_card_index = filtered_match_groups[len(filtered_match_groups) - 1]
                 if subrack['name'] != "":
                     req['name'] = subrack['name'] + "/" + str(int(last_card_index) + 1)
                 else:
+                    if vendor == 'KeyMile':
+                        if int(last_card_index) + 1 in (11, 13):
+                            return flask.Response(status=500)  # MgmtCard slots are reserved
+                        if (box['version'] == '2500' and int(last_card_index) + 1 > 21) or (box['version'] == '2300' and int(last_card_index) + 1 > 14) or (box['version'] == '2200' and int(last_card_index) + 1 > 12):
+                            return flask.Response(status=500)
                     req['name'] = str(int(last_card_index) + 1)
         else:
             if subrack['name'] != "":
-                if box['vendor'] == 'Huawei':
+                if vendor == 'Huawei':
                     req['name'] = subrack['name'] + "/0"
                 else:
                     req['name'] = subrack['name'] + "/1"
             else:
-                if box['vendor'] == 'Huawei':
+                if vendor == 'Huawei':
                     req['name'] = "0"
+                elif vendor == 'KeyMile':
+                    if box['version'] == '2500':
+                        req['name'] = "1"
+                    elif box['version'] == '2300':
+                        req['name'] = "7"
+                    elif box['version'] == '2200':
+                        req['name'] = "9"
                 else:
                     req['name'] = "1"
 
-    if 'position' not in req or req['position'] == "":
+    if 'position' not in req or req['position'] == "" and vendor == 'Alcatel':
         req['position'] = 'lt:' + req['name']
 
     response = new_component(CardSchema(), Card, req, box_id)

@@ -7,6 +7,7 @@
 # - Janis Groß <https://github.com/unkn0wn-user>
 # - Philip Konrath <https://github.com/Connyko65>
 # - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 import uuid
@@ -27,6 +28,16 @@ from .vlan_interface_models import VlanInterface
 from .route_models import Route
 from .emu_models import Emu
 from .user_models import User
+from .channel_models import Channel
+from .subscriber_models import Subscriber
+from .portgroupport_models import PortGroupPort
+from .logport_models import LogPort
+from .interface_models import Interface
+from .srvc_models import Srvc
+from .service_vlan_models import ServiceVlan
+from .service_port_models import ServicePort
+from .mgmt_card_models import MgmtCard
+from .mgmt_port_models import MgmtPort
 
 
 class Box(db.Model):
@@ -44,6 +55,8 @@ class Box(db.Model):
     description = db.Column(db.String())
     hostname = db.Column(db.String(64))
     mgmt_address = db.Column(db.String(32))
+    default_gateway = db.Column(db.String(32), default='0.0.0.0')
+    net_mask = db.Column(db.String(32), default='255.255.255.0')
     contact_person = db.Column(db.String(), default=None, nullable=True)
     isam_id = db.Column(db.String(), default=None, nullable=True)
     isam_location = db.Column(db.String(), default=None, nullable=True)
@@ -52,10 +65,15 @@ class Box(db.Model):
     credentials = db.relationship('Credential', backref='Box', lazy='dynamic')
     credential_details = db.relationship('Credential', backref='credentials', lazy='dynamic')
     users = db.relationship('User', backref='Box', lazy='dynamic')
+    user_details = db.relationship('User', backref='users', lazy='dynamic')
     subracks = db.relationship('Subrack', backref='Box', lazy='dynamic')
     subrack_details = db.relationship('Subrack', backref='subracks', lazy='dynamic')
     cards = db.relationship('Card', backref='Box', lazy='dynamic')
+    mgmt_cards = db.relationship('MgmtCard', backref='Box', lazy='dynamic')
     ports = db.relationship('Port', backref='Box', lazy='dynamic')
+    mgmt_ports = db.relationship('MgmtPort', backref='Box', lazy='dynamic')
+    channels = db.relationship('Channel', backref='Box', lazy='dynamic')
+    interfaces = db.relationship('Interface', backref='Box', lazy='dynamic')
     cpes = db.relationship('Cpe', backref='Box', lazy='dynamic')
     cpe_ports = db.relationship('CpePort', backref='Box', lazy='dynamic')
     onts = db.relationship('Ont', backref='Box', lazy='dynamic')
@@ -67,6 +85,12 @@ class Box(db.Model):
     vlan_interfaces = db.relationship('VlanInterface', backref='Box', lazy='dynamic')
     routes = db.relationship('Route', backref='Box', lazy='dynamic')
     emus = db.relationship('Emu', backref='Box', lazy='dynamic')
+    subscribers = db.relationship('Subscriber', backref='Box', lazy='dynamic')
+    portgroupports = db.relationship('PortGroupPort', backref='Box', lazy='dynamic')
+    logports = db.relationship('LogPort', backref='Box', lazy='dynamic')
+    srvcs = db.relationship('Srvc', backref='Box', lazy='dynamic')
+    service_vlans = db.relationship('ServiceVlan', backref='Box', lazy='dynamic')
+    service_ports = db.relationship('ServicePort', backref='Box', lazy='dynamic')
     board_missing_reporting_logging = db.Column(db.Boolean(), default=False)
     board_instl_missing_reporting_logging = db.Column(db.Boolean(), default=False)
     board_init_reporting_logging = db.Column(db.Boolean(), default=False)
@@ -109,3 +133,22 @@ class Box(db.Model):
     pitp_mode = db.Column(db.String(), default='')
     dsl_mode = db.Column(db.Enum('tr165', 'tr129'), default='tr165')
 
+    currTemperature = db.Column(db.Integer(), default=15)
+    ftp_server_ip = db.Column(db.String(), default='')
+    ftp_login = db.Column(db.String(), default='')
+    ftp_password = db.Column(db.String(), default='')
+    network_element_management_vlan_id = db.Column(db.Integer(), default=None)
+
+    #EdgeCore
+    management_start_address = db.Column(db.String(), default='')
+    management_end_address = db.Column(db.String(), default='')
+    logging_host = db.Column(db.String(), default='')
+    logging_port = db.Column(db.String(), default='')
+    logging_level = db.Column(db.Integer(), default=7)
+    loopback_detection_action = db.Column(db.String(), default='shutdown')
+    sntp_server_ip = db.Column(db.String(), default='None')
+    sntp_client = db.Column(db.Enum('Disabled', 'Enabled'), default='Disabled')
+    timezone_name = db.Column(db.String(), default='None')
+    timezone_time = db.Column(db.String(), default='None')
+    summer_time_name = db.Column(db.String(), default='')
+    summer_time_region = db.Column(db.String(), default='')

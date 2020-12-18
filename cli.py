@@ -23,6 +23,7 @@ from nesi import exceptions
 from nesi.softbox.cli import rest_client
 from nesi.softbox.base_resources import root, base
 from bootup.sockets.telnet import TelnetSocket
+from bootup.sockets.ssh import SshSocket
 import pytest
 
 import subprocess
@@ -184,8 +185,9 @@ def main():
                 telnet = TelnetSocket(cli, model, template_root, ip_address, int(port))
                 telnet.start()
             elif model.network_protocol == 'ssh':
-                ssh = None
-                # TODO: add ssh-socket daemon
+                cli = main.PostLoginCommandProcessor
+                ssh = SshSocket(cli, model, template_root, ip_address, int(port))
+                ssh.start()
 
         else:
             stdin = os.fdopen(sys.stdin.fileno(), 'rb', 0)

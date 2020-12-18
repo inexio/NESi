@@ -17,7 +17,7 @@ from ..models.emu_models import Emu
 class EmuSchema(ma.ModelSchema):
     class Meta:
         model = Emu
-        fields = ('id', 'name', 'box', '_links')
+        fields = ('id', 'name', 'box', 'box_id', '_links')
 
     box = ma.Hyperlinks(
         {'_links': {

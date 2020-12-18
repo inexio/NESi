@@ -18,7 +18,7 @@ class CredentialSchema(ma.ModelSchema):
     class Meta:
         model = Credential
         fields = ('id', 'protocol', 'credential', 'username', 'password',
-                  'box', '_links')
+                  'box', 'box_id', 'user_id', '_links')
 
     box = ma.Hyperlinks(
         {'_links': {

@@ -1,0 +1,9 @@
+  \ # [{{ context.i }}] #
+                                                                   \ # SubscriberId
+  "{{ context.subscriber.number }}"{{ context.spacer10 }}\ # SubscriberNumber
+  "{{ context.subscriber.autorisation_user_name }}"{{ context.spacer11 }}\ # AuthorisationUserName
+  "{{ context.subscriber.autorisation_password }}"{{ context.spacer12 }}\ # AuthorisationPassword
+  "{{ context.subscriber.display_name | safe }}"{{ context.spacer13 }}\ # DisplayName
+  {{ context.subscriber.privacy }}{{ context.spacer14 }}\ # privacy
+;                                                                  \
+

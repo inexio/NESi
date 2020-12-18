@@ -1,0 +1,8 @@
+admin
+secret
+enable
+enable
+configure
+vlan database
+vlan 1111 name scription media ethernet
+quit

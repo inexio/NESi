@@ -13,15 +13,17 @@
 from nesi.softbox.api import ma
 from ..models.subrack_models import Subrack
 from ..schemas.card_schemas import CardsSchema
+from ..schemas.mgmt_card_schemas import MgmtCardsSchema
 
 
 class SubrackSchema(ma.ModelSchema):
     class Meta:
         model = Subrack
-        fields = ('id', 'box_id', 'box', 'cards',
+        fields = ('id', 'box_id', 'box', 'cards', 'mgmt_cards',
                   'name', 'description', '_links')
 
     cards = ma.Nested(CardsSchema.CardSchema, many=True)
+    mgmt_cards = ma.Nested(MgmtCardsSchema.MgmtCardSchema, many=True)
 
     box = ma.Hyperlinks(
         {'_links': {

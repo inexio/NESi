@@ -19,6 +19,7 @@ class Vlan(db.Model):
     name = db.Column(db.String(64), nullable=False)
     number = db.Column(db.Integer(), nullable=False)
     description = db.Column(db.String())
+    mtu = db.Column(db.Integer(), default=1500)
     role = db.Column(
         db.Enum('access', 'trunk', 'native'),
         nullable=False, default='access')
@@ -29,7 +30,6 @@ class Vlan(db.Model):
     egress_port = db.Column(db.String(), default='')
     fdb_id = db.Column(db.Integer, default=2620)
     shutdown = db.Column(db.Boolean(), default=False)
-    mtu = db.Column(db.Integer(), default=1500)
     access_group_in = db.Column(db.String(64), default='')
     access_group_out = db.Column(db.String(64), default='')
     ip_redirect = db.Column(db.Boolean(), default=False)

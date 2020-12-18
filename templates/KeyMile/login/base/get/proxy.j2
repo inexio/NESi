@@ -1,0 +1,13 @@
+                                                                   \ # Proxy
+{{ context.card.proxy_mode }}{{ context.spacer1 }}\ # ProxyMode
+                                                                   \ # PrimaryProxy
+{{ context.card.proxy_address | safe }}{{ context.spacer2 }}\ # ProxyAddress
+{{ context.card.proxy_port }}{{ context.spacer3 }}\ # ProxyPort
+                                                                   \ # SecondaryProxy
+{{ context.card.proxy_address_sec | safe }}{{ context.spacer4 }}\ # ProxyAddress
+{{ context.card.proxy_port_sec }}{{ context.spacer5 }}\ # ProxyPort
+                                                                   \ # ProxyAvailabilityCheck
+{{ context.card.proxy_enable }}{{ context.spacer6 }}\ # Enabled
+{{ context.card.proxy_method }}{{ context.spacer7 }}\ # Method
+{{ context.card.proxy_interval }}{{ context.spacer8 }}\ # Interval
+

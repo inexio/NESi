@@ -192,12 +192,12 @@ class TestHuawei(TestCore):
             assert True
 
     def test_user(self):
-        user = self.model.get_user("name", 'root')
-        assert user.lock_status == 'Unlocked'
+        user = self.model.get_user("name", 'Root')
+        assert user.lock_status == 'unlocked'
         user.lock()
-        assert user.lock_status == 'Locked'
+        assert user.lock_status == 'locked'
         user.unlock()
-        assert user.lock_status == 'Unlocked'
+        assert user.lock_status == 'unlocked'
 
         assert user.reenter_num_temp == 3
         user.set_reenter_num_temp(1)
@@ -208,11 +208,11 @@ class TestHuawei(TestCore):
         except exceptions.SoftboxenError:
             assert True
 
-        assert user.status == 'Offline'
+        assert user.status == 'offline'
         user.set_online()
-        assert user.status == 'Online'
+        assert user.status == 'online'
         user.set_offline()
-        assert user.status == 'Offline'
+        assert user.status == 'offline'
 
     def test_vlan(self):
         vlan = self.model.get_vlan('number', 2620)

@@ -14,6 +14,8 @@ import uuid
 from nesi.softbox.api import db
 from .ont_models import Ont
 from .cpe_models import Cpe
+from .channel_models import Channel
+from .interface_models import Interface
 
 
 class Port(db.Model):
@@ -25,12 +27,12 @@ class Port(db.Model):
     cpes = db.relationship('Cpe', backref='Port', lazy='dynamic')
 
     # Alcatel data
-    description = db.Column(db.String())
+    description = db.Column(db.String(), default='')
     type = db.Column(db.Enum('pon', 'ethernet-line'), default='pon')
     shutdown = db.Column(db.Boolean(), default=False)
     speed = db.Column(db.Enum('10M', '1G', '10G'), default='1G')
     operational_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating
-    admin_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating
+    admin_state = db.Column(db.Enum('0', '1', '2', '3'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating; KeyMile:  0 => down, 1 => up, 2 => locked, 3 => unlocked
     upstream = db.Column(db.Integer(), default=0)
     downstream = db.Column(db.Integer(), default=0)
     upstream_max = db.Column(db.String(), default="100000")
@@ -305,3 +307,30 @@ class Port(db.Model):
     vectoring_group = db.Column(db.Integer(), default=None)
     vectoring_profile_id = db.Column(db.Integer(), default=None)
     template_name = db.Column(db.String(), default=None)
+
+    # KeyMile
+    channels = db.relationship('Channel', backref='Port', lazy='dynamic')
+    interfaces = db.relationship('Interface', backref='Port', lazy='dynamic')
+    label1 = db.Column(db.String(), default='""')
+    label2 = db.Column(db.String(), default='""')
+    loopbacktest_state = db.Column(db.Enum('Failed', 'Passed', 'Running', 'NoTestResult', 'Stopped', 'Interrupted'), default='NoTestResult')
+    melttest_state = db.Column(db.Enum('Failed', 'Passed', 'Running', 'NotTested'), default='NotTested')
+    linetest_state = db.Column(db.Enum('Failed', 'Passed', 'Running', 'NotTested'), default='NotTested')
+    mode = db.Column(db.String(), default='')
+    flow_control = db.Column(db.String(), default='')
+    # profiles
+    profile1_enable = db.Column(db.Boolean(), default=False)
+    profile1_name = db.Column(db.String(), default='')
+    profile1_elength = db.Column(db.Integer, default=0)
+    profile2_enable = db.Column(db.Boolean(), default=False)
+    profile2_name = db.Column(db.String(), default='')
+    profile2_elength = db.Column(db.Integer, default=0)
+    profile3_enable = db.Column(db.Boolean(), default=False)
+    profile3_name = db.Column(db.String(), default='')
+    profile3_elength = db.Column(db.Integer, default=0)
+    profile4_enable = db.Column(db.Boolean(), default=False)
+    profile4_name = db.Column(db.String(), default='')
+    profile_mode = db.Column(db.Enum('Priority', 'ElectricalLoopLength'), default=None)
+
+    #Edgecore
+    mac_address = db.Column(db.String(), default='A8-2B-B5-7F-E3-C0')

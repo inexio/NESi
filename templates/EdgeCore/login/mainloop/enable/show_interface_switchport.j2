@@ -1,0 +1,22 @@
+Information of Eth {{ context.interface.name }}
+ Broadcast Threshold : Enabled, 500 packets/second
+ Multicast Threshold : Disabled
+ Unknown Unicast Threshold : Disabled
+ LACP Status : Disabled
+ Ingress Rate Limit : {{ context.interface.ingress_state }}, {{ context.interface.ingress_rate }} kbits/second
+ Egress Rate Limit : {{ context.interface.egress_state }}, {{ context.interface.egress_rate }} kbits/second
+ VLAN Membership Mode : {{ context.interface.vlan_membership_mode }}
+ Ingress Rule : Disabled
+ Acceptable Frame Type : All frames
+ Native VLAN : {{ context.interface.native_vlan }}
+ Priority for Untagged Traffic : 0
+ GVRP Status : Disabled
+ Allowed VLAN : {{ context.interface.allowed_vlan }}
+ Forbidden VLAN :
+ 802.1Q Tunnel Status : Disabled
+ 802.1Q Tunnel Mode : Normal
+ 802.1Q Tunnel TPID : 8100 (Hex)
+ Broadcast Block : Disabled
+ Unknown Multicast Block : Disabled
+ Unknown Unicast Block : Disabled
+

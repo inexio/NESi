@@ -17,6 +17,7 @@ class Credential(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     protocol = db.Column(
         db.Enum('password'), nullable=False, default='password')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     username = db.Column(db.String(64), nullable=True)
     password = db.Column(db.String(32), nullable=True)
     box_id = db.Column(db.Integer, db.ForeignKey('box.id'))

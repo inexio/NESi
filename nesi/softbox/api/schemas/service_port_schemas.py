@@ -17,7 +17,7 @@ from ..models.service_port_models import ServicePort
 class ServicePortSchema(ma.ModelSchema):
     class Meta:
         model = ServicePort
-        fields = ('id', 'name', 'box', 'connected_id', 'connected_type', 'admin_state', 'operational_state',
+        fields = ('id', 'name', 'box', 'box_id', 'connected_id', 'connected_type', 'admin_state', 'operational_state',
                   '_links')
 
     box = ma.Hyperlinks(

@@ -18,6 +18,7 @@ import pyperclip
 import jinja2
 
 from nesi import exceptions
+from twisted.internet import reactor
 
 LOG = logging.getLogger(__name__)
 
@@ -45,11 +46,12 @@ class CommandProcessor:
     """
 
     def __init__(self, model, input_stream, output_stream, history,
-                 template_root=None, scopes=(), daemon=False):
+                 template_root=None, scopes=(), daemon=False, parent=None, case_sensitive=True):
         self._model = model
         self._input = input_stream
         self._output = output_stream
         self._scopes = scopes
+        self._parent = parent
         self._template_root = template_root
         self._template_dir = os.path.join(
             template_root, *scopes)
@@ -61,9 +63,12 @@ class CommandProcessor:
         self.daemon = daemon
 
         # CLI specific attributes
+        self.skipLogin = False
+        self.case_sensitive = case_sensitive
         self.line_buffer = []
         self.history_enabled = True
         self.hide_input = False
+        self.star_input = False
         self.history_pos = 0
         self.history = history
         self.prompt_end_pos = self.get_prompt_len() - 1
@@ -113,10 +118,22 @@ class CommandProcessor:
             self.cursor_pos += 1
 
     def get(self):
-        inkey = self._Getch()
+        inkey = None
+        if not self.daemon:
+            inkey = self._Getch()
         while (1):
-            k = inkey(self._input).decode('utf-8')
-            if k != '': break
+            if self.daemon:
+                k = self._input.receiveData().decode('utf-8')
+                if k == '\r\n' or k == '\n\r':
+                    k = '\r'
+                if '\r\n' in k or '\n\r' in k:
+                    k = k.replace('\n', '')
+                elif '\n' in k:
+                    k = k.replace('\n', '\r')
+            else:
+                k = inkey(self._input).decode('utf-8')
+            if k != '':
+                break
         if k == '\x1b[A':  # up-arrow
             if self.history_enabled:
                 return 'history', self.history_up()
@@ -138,7 +155,7 @@ class CommandProcessor:
                 return 'backspace', ''
             else:
                 return None, None
-        elif k == '[3':  # del-key
+        elif k == '[3' or k == '[3~':  # del-key
             return 'del', ''
         elif k == '':  # ctrl-v
             return 'paste', pyperclip.paste()
@@ -164,15 +181,16 @@ class CommandProcessor:
         self._write('\033[' + str(self.cursor_pos) + 'C')  # move cursor to correct position
 
     def getline(self, tmp_boundary=None):
-        char = None
+        char = ''
         line = ''
         self.history_pos = len(self.history)
         self.cursor_pos = self.prompt_end_pos + 1
         self.cursor_boundary = self.prompt_end_pos + 1
 
-        while char != '\r':
+        while '\r' not in char:
             option, char = self.get()
             if char is None:
+                char = ''
                 continue
             elif char == '\r':
                 continue
@@ -209,7 +227,10 @@ class CommandProcessor:
                 break
 
             if not self.hide_input:
-                self.updateline(line)
+                out = line
+                if self.star_input:
+                    out = len(line) * '*'
+                self.updateline(out)
 
         if line != '\r' and line != '' and self.history_enabled:
             self.history += (line.replace('\r', '').rstrip(),)
@@ -257,15 +278,17 @@ class CommandProcessor:
         self._write(text)
 
     def _read(self, tmp_boundary=None):
-        if self.daemon:
+        if self.daemon and self._model.network_protocol == 'telnet':
             line = self._input.readline().decode('utf-8')
         else:
             line = self.getline(tmp_boundary)
-
         return line
 
     def _write(self, text):
+        text = text.replace('\n', '\r\n')
         self._output.write(text.encode('utf-8'))
+        #if self.daemon and self._model.network_protocol == 'ssh':
+        #    reactor.iterate()
 
     def _get_command_func(self, line):
         if line.startswith(self.comment):
@@ -275,8 +298,11 @@ class CommandProcessor:
         command = args[0]
         args = args[1:]
 
-        if command == self.negation:
-            command += "_" + args.pop(0)
+        if self.case_sensitive is False:
+            command = command.lower()
+
+        #if command == self.negation:
+            #command += "_" + args.pop(0)
 
         command = command.replace('-', '_')
 
@@ -314,7 +340,7 @@ class CommandProcessor:
         return subprocessor(
             self._model, self._input, self._output, self.history,
             template_root=self._template_root,
-            scopes=scopes, daemon=self.daemon)
+            scopes=scopes, daemon=self.daemon, parent=self, case_sensitive=self.case_sensitive)
 
     def process_command(self, line, context):
         self._parse_and_execute_command(line, context)
@@ -339,6 +365,9 @@ class CommandProcessor:
                     self.line_buffer = line.split('\r\n')
                     continue
                 context['raw_line'] = line
+
+                #if self.daemon:
+                #    self._write(line)  # write line to stdout if box is in daemon mode
             else:
                 line = command
                 command = None
@@ -346,9 +375,9 @@ class CommandProcessor:
             try:
                 self.process_command(line, context)
 
-            except exceptions.CommandSyntaxError as exc:
-                self.line_buffer = []  # manually clear buffer in case of exception
-                self.on_error(dict(context, command=exc.command))
+            except (exceptions.CommandExecutionError, exceptions.CommandSyntaxError) as exc:
+                self.line_buffer = []
+                self.write_error_message(context, exc.template, *exc.template_scopes)
 
             except exceptions.TerminalExitError as exc:
                 self.line_buffer = []  # manually clear buffer in case of exception
@@ -356,15 +385,26 @@ class CommandProcessor:
                     exc.return_to = return_to
 
                 if not exc.return_to or exc.return_to == 'sysexit' or exc.return_to == 'sysreboot' or not isinstance(self, exc.return_to):
+                    if self.daemon and self._model.network_protocol == 'ssh' and exc.return_to in ('sysexit', 'sysreboot'):
+                        self._output.loseConnection()
+                        reactor.iterate()
+                        return
                     raise exc
                 # set prompt_len anew in case of prompt_len change in command-processor beneath
                 self.set_prompt_end_pos(context)
+
+                if exc.command is not None:
+                    command = exc.command
+                    continue
 
                 # This is the first instance of the desired
                 # CommandProcessor to unwind to, continuing
 
             self.on_cycle(context)
         self.on_exit(context)
+
+    def _terminate(self, command=None):
+        del self
 
     def get_prompt_len(self):
         text = self._render('on_cycle', context=dict(), ignore_errors=True)
@@ -382,7 +422,7 @@ class CommandProcessor:
     def set_prompt_end_pos(self, context):
         text = self._render('on_cycle', context=context, ignore_errors=True)
 
-        if len(text) == 0:
+        if text is None or len(text) == 0:
             text = self._render('on_enter', context=context, ignore_errors=True)
 
         self.prompt_end_pos = len(text.replace('\n', '')) - 1
@@ -407,6 +447,13 @@ class CommandProcessor:
         if text is not None:
             self._write(text)
 
+    def write_error_message(self, context, template, *scopes):
+        if template is None:
+            template = 'on_error'
+        text = self._render(template, context=context, *scopes, ignore_errors=True)
+        if text is not None:
+            self._write(text)
+
     @property
     def comment(self):
         return '!'
@@ -425,6 +472,11 @@ class CommandProcessor:
             except IndexError:
                 raise exceptions.CommandSyntaxError(command=' '.join(args))
 
+            if self.case_sensitive is False:
+                if not isinstance(token, type):
+                    arg = arg.lower()
+                    token = token.lower()
+
             if type(token) == type:
                 values.append(arg)
 
@@ -442,6 +494,11 @@ class CommandProcessor:
                 arg = args[idx]
             except IndexError:
                 return False
+
+            if self.case_sensitive is False:
+                if not isinstance(token, type):
+                    arg = arg.lower()
+                    token = token.lower()
 
             if arg != token and type(token) != type:
                 return False

@@ -9,6 +9,7 @@
 # - Alexander Dincher <https://github.com/Dinker1996>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
+from .credential_models import Credential
 
 
 from nesi.softbox.api import db
@@ -17,12 +18,12 @@ from nesi.softbox.api import db
 class User(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     box_id = db.Column(db.Integer(), db.ForeignKey('box.id'))
-    credentials_id = db.Column(db.Integer(), db.ForeignKey('credential.id'))
+    credential_details = db.relationship('Credential', backref='User', lazy='dynamic')
     name = db.Column(db.String(), default='user')
     level = db.Column(db.Enum('Super', 'Admin', 'Operator', 'User'), default='User')
-    status = db.Column(db.Enum('Online', 'Offline'), default='Offline')
-    profile = db.Column(db.Enum('root', 'admin', 'operator', 'commonuser'), default='commonuser')
+    status = db.Column(db.Enum('online', 'offline'), default='offline')
+    profile = db.Column(db.Enum('root', 'admin', 'operator', 'commonuser', 'enable', 'backup'), default='commonuser')
     append_info = db.Column(db.String(), default='-----')
     reenter_num = db.Column(db.Integer(), default=3)
     reenter_num_temp = db.Column(db.Integer(), default=3)
-    lock_status = db.Column(db.Enum('Locked', 'Unlocked'), default='Unlocked')
+    lock_status = db.Column(db.Enum('locked', 'unlocked'), default='unlocked')

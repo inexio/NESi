@@ -7,6 +7,7 @@
 # - Janis Groß <https://github.com/unkn0wn-user>
 # - Philip Konrath <https://github.com/Connyko65>
 # - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
@@ -19,6 +20,8 @@ from nesi.softbox.api.models.box_models import Box
 from nesi.softbox.api.schemas import *
 from nesi.alcatel.api.schemas import *
 from nesi.huawei.api.schemas import *
+from nesi.keymile.api.schemas import *
+from nesi.edgecore.api.schemas import *
 # important for other view classes
 from nesi.softbox.api import db
 

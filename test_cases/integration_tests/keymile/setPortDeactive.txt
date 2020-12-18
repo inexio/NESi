@@ -1,0 +1,11 @@
+manager
+secret
+cd /unit-1/port-1/main
+set AdministrativeStatus down
+cd /unit-5/port-1/main
+set AdministrativeStatus down
+cd /unit-7/port-1/main
+set AdministrativeStatus down
+cd /unit-2/logports/logport-2/main
+set AdministrativeStatus down
+exit
