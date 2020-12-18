@@ -123,7 +123,7 @@ class EnableCommandProcessor(BaseCommandProcessor):
     def do_copy(self, command, *args, context=None):
         if self._validate(args, 'startup-config', 'ftp'): # Work in progess
             ip = self.user_input("FTP server IP address: ", False, None)
-            user = self.user_input("User[anonymous]: ", False, None)
+            user = self.user_input("User [Anonymous]: ", False, None)
             self.hide_input = True
             pw = self.user_input("Password: ", False, None)
             self.hide_input = False

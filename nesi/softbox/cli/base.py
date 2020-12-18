@@ -124,8 +124,12 @@ class CommandProcessor:
         while (1):
             if self.daemon:
                 k = self._input.receiveData().decode('utf-8')
-                if k == '\r\n':
+                if k == '\r\n' or k == '\n\r':
                     k = '\r'
+                if '\r\n' in k or '\n\r' in k:
+                    k = k.replace('\n', '')
+                elif '\n' in k:
+                    k = k.replace('\n', '\r')
             else:
                 k = inkey(self._input).decode('utf-8')
             if k != '':
