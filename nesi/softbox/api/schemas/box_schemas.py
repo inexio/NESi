@@ -38,7 +38,7 @@ class BoxSchema(ma.ModelSchema):
                   'subracks', 'subrack_details', 'cards', 'ports', 'channels', 'service_ports', 'emus', 'onts',
                   'cpe_ports', 'routes', 'login_banner', 'vlan_interfaces', 'users', 'user_details', 'portgroupports', 'mgmt_cards',
                   'welcome_banner', 'last_login', 'last_logout', 'sntp_server_ip_address', 'timezone_offset',
-                  'net_mask', 'default_gateway', '_links')
+                  'net_mask', 'default_gateway', '_links', 'ont_ports', 'cpes')
 
     credentials = ma.Hyperlinks(
         {'_links': {
