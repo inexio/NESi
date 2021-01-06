@@ -27,7 +27,7 @@ class AlcatelCpe(alcatel_base):
 
     serial_no = Column(String(), default='ABCD123456EF')
     admin_state = Column(Enum('down', 'up'), default='down')
-    mac = Column(String(64), nullable=False)
+    mac = Column(String(64), default='00000000000', nullable=False)
 
     def __repr__(self):
         return "<AlcatelCpe(id='%s', name='%s', box_id='%s' and description='%s')>" % \
@@ -40,6 +40,6 @@ class AlcatelCpe(alcatel_base):
     def set_subcomponents(self):
         cpe_ports = []
         for x in ('/1', '/2', '/3'):
-            cpe_port = AlcatelCpePort(name=self.name + x, box_id=self.box_id, cpe_port=self.id)
+            cpe_port = AlcatelCpePort(name=self.name + x, box_id=self.box_id, cpe_id=self.id)
             cpe_ports.append(cpe_port)
         self.cpe_ports = cpe_ports

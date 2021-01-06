@@ -12,6 +12,7 @@
 
 from experimental.db_models.config_models import *
 from .cpe_models import AlcatelCpe
+from .service_port_models import AlcatelServicePort
 
 
 @add_ontportschema
@@ -21,6 +22,7 @@ class AlcatelOntPort(alcatel_base):
     name = Column(String(64))
     description = Column(String())
     cpes = relationship('AlcatelCpe', backref='AlcatelOntPort')
+    service_port = relationship('AlcatelServicePort', backref='AlcatelOntPort')
     box_id = Column(Integer, ForeignKey('alcatelbox.id'))
     ont_id = Column(Integer, ForeignKey('alcatelont.id'))
 
@@ -40,8 +42,12 @@ class AlcatelOntPort(alcatel_base):
         self.set_subcomponents()
 
     def set_subcomponents(self):
+        service_port = AlcatelServicePort(name=self.name, connected_type='ont', box_id=self.box_id)
+        self.service_port = [service_port]
+
         cpes = []
         for x in ('/1', '/2', '/3'):
             port = AlcatelCpe(name=self.name + x, box_id=self.box_id)
             cpes.append(port)
         self.cpes = cpes
+        return

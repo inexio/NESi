@@ -11,6 +11,7 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from experimental.db_models.config_models import *
+from .service_port_models import AlcatelServicePort
 
 
 @add_cpeportschema
@@ -19,7 +20,7 @@ class AlcatelCpePort(alcatel_base):
     id = Column(Integer(), primary_key=True)
     name = Column(String(64))
     description = Column(String())
-
+    service_port = relationship('AlcatelServicePort', backref='AlcatelCpePort')
     box_id = Column(Integer, ForeignKey('alcatelbox.id'))
     cpe_id = Column(Integer, ForeignKey('alcatelcpe.id'))
 
@@ -29,3 +30,10 @@ class AlcatelCpePort(alcatel_base):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.set_subcomponents()
+
+    def set_subcomponents(self):
+        service_port = AlcatelServicePort(name=self.name, connected_type='cpe', box_id=self.box_id)
+        self.service_port = [service_port]
+        return
+

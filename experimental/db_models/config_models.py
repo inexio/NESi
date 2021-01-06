@@ -16,16 +16,65 @@ def add_boxschema(cls):
         class Meta:
             model = cls
 
+        credentials = ma.Hyperlinks(
+            {'_links': {
+                'self': ma.URLFor('show_credentials', box_id='<id>')}})
+        users = ma.Hyperlinks(
+            {'_links': {
+                'self': ma.URLFor('show_users', box_id='<id>')}})
+
         subracks = ma.Hyperlinks(
             {'_links': {
                 'self': ma.URLFor('show_subracks', box_id='<id>')}})
-
         cards = ma.Hyperlinks(
             {'_links': {
                 'self': ma.URLFor('show_cards', box_id='<id>')}})
+        mgmt_cards = ma.Hyperlinks(
+            {'_links': {
+                'self': ma.URLFor('show_mgmt_cards', box_id='<id>')}})
+        ports = ma.Hyperlinks(
+            {'_links': {
+                'self': ma.URLFor('show_ports', box_id='<id>')}})
+        mgmt_ports = ma.Hyperlinks(
+            {'_links': {
+                'self': ma.URLFor('show_mgmt_ports', box_id='<id>')}})
+        onts = ma.Hyperlinks(
+            {'_links': {
+                'self': ma.URLFor('show_onts', box_id='<id>')}})
+        ont_ports = ma.Hyperlinks(
+            {'_links': {
+                'self': ma.URLFor('show_ont_ports', box_id='<id>')}})
+        cpes = ma.Hyperlinks({'_links': {
+            'self': ma.URLFor('show_cpes', box_id='<id>')}})
+        cpe_ports = ma.Hyperlinks({'_links': {
+            'self': ma.URLFor('show_cpe_ports', box_id='<id>')}})
+
+        service_ports = ma.Hyperlinks(
+            {'_links': {
+                'self': ma.URLFor('show_service_ports', box_id='<id>')}})
+        service_vlans = ma.Hyperlinks(
+            {'_links': {
+                'self': ma.URLFor('show_service_vlans', box_id='<id>')}})
+        vlans = ma.Hyperlinks(
+            {'_links': {
+                'self': ma.URLFor('show_vlans', box_id='<id>')}})
+        port_profiles = ma.Hyperlinks(
+            {'_links': {
+                'self': ma.URLFor('show_port_profiles', box_id='<id>')}})
+        routes = ma.Hyperlinks(
+            {'_links': {
+                'self': ma.URLFor('show_routes', box_id='<id>')}})
+
+        from experimental.interfaces.api_interface.schemas.credentials_schemas import CredentialsSchema
+        credential_details = ma.Nested(CredentialsSchema.CredentialSchema, many=True)
+
+        from experimental.interfaces.api_interface.schemas.portprofiles_schemas import PortProfilesSchema
+        port_profile_details = ma.Nested(PortProfilesSchema.PortProfileSchema, many=True)
+
+        from experimental.interfaces.api_interface.schemas.vlans_schemas import VlansSchema
+        vlan_details = ma.Nested(VlansSchema.VlanSchema, many=True)
 
         from experimental.interfaces.api_interface.schemas.subracks_schema import SubracksSchema
-
         subrack_details = ma.Nested(SubracksSchema.SubrackSchema, many=True)
 
     cls.Schema = Schema
@@ -88,6 +137,9 @@ def add_portschema(cls):
         #channels = ma.Nested(ChannelsSchema.ChannelSchema, many=True)
         #interfaces = ma.Nested(InterfacesSchema.InterfaceSchema, many=True)
 
+        from experimental.interfaces.api_interface.schemas.service_ports_schemas import ServicePortsSchema
+        service_vlans = ma.Nested(ServicePortsSchema.ServicePortSchema, many=True)
+
     cls.Schema = Schema
     return cls
 
@@ -125,6 +177,9 @@ def add_cpeportschema(cls):
         _links = ma.Hyperlinks(
             {'self': ma.URLFor('show_cpe_port', box_id='<box_id>', id='<id>'),
              'collection': ma.URLFor('show_cpe_ports', box_id='<box_id>')})
+
+        from experimental.interfaces.api_interface.schemas.service_ports_schemas import ServicePortsSchema
+        service_vlans = ma.Nested(ServicePortsSchema.ServicePortSchema, many=True)
 
     cls.Schema = Schema
     return cls
@@ -228,6 +283,9 @@ def add_ontportschema(cls):
         from experimental.interfaces.api_interface.schemas.cpes_schemas import CpesSchema
         cpes = ma.Nested(CpesSchema.CpeSchema, many=True)
 
+        from experimental.interfaces.api_interface.schemas.service_ports_schemas import ServicePortsSchema
+        service_vlans = ma.Nested(ServicePortsSchema.ServicePortSchema, many=True)
+
     cls.Schema = Schema
     return cls
 
@@ -299,6 +357,9 @@ def add_serviceportschema(cls):
         _links = ma.Hyperlinks(
             {'self': ma.URLFor('show_service_port', box_id='<box_id>', id='<id>'),
              'collection': ma.URLFor('show_service_ports', box_id='<box_id>')})
+
+        from experimental.interfaces.api_interface.schemas.service_vlans_schemas import ServiceVlansSchema
+        service_vlans = ma.Nested(ServiceVlansSchema.ServiceVlanSchema, many=True)
 
     cls.Schema = Schema
     return cls

@@ -282,3 +282,48 @@ class BoxFunctionalities:
             for credential in self.credentials:
                 for usr in credential.user:
                     self.users.append(usr)
+        if hasattr(self, 'ports') and hasattr(self, 'onts'):
+            self.onts = []
+            for port in self.ports:
+                for ont in port.onts:
+                    self.onts.append(ont)
+        if hasattr(self, 'onts') and hasattr(self, 'ont_ports'):
+            self.ont_ports = []
+            for ont in self.onts:
+                for ontp in ont.ont_ports:
+                    self.ont_ports.append(ontp)
+        if hasattr(self, 'cpes'):
+            self.cpes = []
+            if hasattr(self, 'ports'):
+                for port in self.ports:
+                    for cpe in port.cpes:
+                        self.cpes.append(cpe)
+            if hasattr(self, 'ont_ports'):
+                for oport in self.ont_ports:
+                    for cpe in oport.cpes:
+                        self.cpes.append(cpe)
+        if hasattr(self, 'cpes') and hasattr(self, 'cpe_ports'):
+            self.cpe_ports = []
+            for cpe in self.cpes:
+                for cpep in cpe.cpe_ports:
+                    self.cpe_ports.append(cpep)
+        if hasattr(self, 'serviceports'):
+            self.serviceports = []
+            if hasattr(self, 'ports'):
+                for port in self.ports:
+                    for sport in port.service_port:
+                        self.serviceports.append(sport)
+            if hasattr(self, 'cpe_ports'):
+                for cport in self.cpe_ports:
+                    for sport in cport.service_port:
+                        self.serviceports.append(sport)
+            if hasattr(self, 'ont_ports'):
+                for oport in self.ont_ports:
+                    for sport in oport.service_port:
+                        self.serviceports.append(sport)
+        if hasattr(self, 'serviceports') and hasattr(self, 'servicevlans'):
+            self.servicevlans = []
+            for sport in self.serviceports:
+                for svlan in sport.service_vlans:
+                    self.servicevlans.append(svlan)
+

@@ -9,7 +9,7 @@ class AlcatelServiceVlan(alcatel_base):
     service_port_id = Column(Integer, ForeignKey('alcatelserviceport.id'))
     box_id = Column(Integer, ForeignKey('alcatelbox.id'))
     card_id = Column(Integer, ForeignKey('alcatelcard.id'))
-    vlan_id = Column(Integer, ForeignKey('alcatelvlan.id'), nullable=False)
+    vlan_id = Column(Integer, ForeignKey('alcatelvlan.id'), nullable=True)
     qos_profile_id = Column(Integer(), default=None)
     l2fwder_vlan = Column(Integer(), default=None)
     scope = Column(Enum('local'), default='local')
@@ -23,3 +23,7 @@ class AlcatelServiceVlan(alcatel_base):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.set_fields()
+
+    def set_fields(self):
+        return

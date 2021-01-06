@@ -126,7 +126,21 @@ class AlcatelBox(alcatel_base, BoxFunctionalities):
             subrack = AlcatelSubrack(name=x, box_id=self.id)
             subracks.append(subrack)
         self.subracks = subracks
+
         credential = AlcatelCredentials(username='admin', password='secret', box_id=self.id)
         self.credentials = [credential]
-        #self.users = [AlcatelUser(name='admin')]
 
+        vlans = []
+        for x in (('PPPoE', 2620), ('CPE Management', 3320)):
+            vlan = AlcatelVlan(id=x[1], name=x[0], number=x[1], box_id=self.id)
+            vlans.append(vlan)
+        self.vlans = vlans
+
+        profiles = []
+        for x in (('TEST_DSL_16000', 'service'), ('PSD_036', 'spectrum'), ('VECT_US_DS', 'vect'), ('DPBO_3310', 'dpbo'), ('PSD_036', 'spectrum'), ('TEST_FTTH_500M', 'qos'), ('TEST_FTTH_1G', 'qos'), ('VDSL_VECT_FALLBACK', 'vect'), ('vce-default', 'vce')):
+            profile = AlcatelPortProfile(name=x[0], type=x[1], box_id=self.id)
+            profiles.append(profile)
+        for x in (('1G_CIR', 'policer', 1050000, 2560000), ('1M_CIR', 'policer', 1050, 256000), ('2M_CIR', 'policer', 2100, 256000), ('50M_CIR', 'policer', 52500, 256000), ('100M_CIR', 'policer', 105000, 256000), ('500M_CIR', 'policer', 550000, 312500)):
+            profile = AlcatelPortProfile(name=x[0], type=x[1], committed_info_rate=x[2], committed_burst_size=x[3], box_id=self.id)
+            profiles.append(profile)
+        self.port_profiles = profiles
