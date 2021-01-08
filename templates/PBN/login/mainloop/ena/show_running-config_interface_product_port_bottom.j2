@@ -1,9 +1,3 @@
-Building configuration...
-
-Current configuration:
-{% if context.port.exclamation_mark == True %}!
-{% endif %}
-interface GigaEthernet{{ context.port.name }}
  {% if context.port.description != '' %} description {{ context.port.description }}
  {% endif %}
  {% if context.port.no_snmp_trap_link_status == True %} no snmp trap link-status
@@ -28,5 +22,6 @@ interface GigaEthernet{{ context.port.name }}
  {% endif %}
  {% if context.port.switchport_rate_limit_egress != None %} switchport rate-limit {{ context.port.switchport_rate_limit_egress }}
  {% endif %}
-
+ {% if context.port.switchport_protected != None %} switchport protected {{ context.port.switchport_protected }}
+ {% endif %}
 

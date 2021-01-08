@@ -30,6 +30,7 @@ class PBNPort(Port):
     no_pdp_enable = base.Field('no_pdp_enable')
     no_snmp_trap_link_status = base.Field('no_snmp_trap_link_status')
     exclamation_mark = base.Field('exclamation_mark')
+    switchport_protected = base.Field('switchport_protected')
 
     def set(self, field, value):
         mapping = {field: value}

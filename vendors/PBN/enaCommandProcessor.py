@@ -108,13 +108,25 @@ class EnaCommandProcessor(BaseCommandProcessor):
             text = self._render('show_interface_product_port', context=dict(context, port=port))
             self._write(text)
 
-        elif self._validate(args, 'running-config', 'interface', 'gigaEthernet', str):
-            port_name, = self._dissect(args, 'running-config', 'interface', 'gigaEthernet', str)
+        elif self._validate(args, 'running-config', 'interface', str, str):
+            ftth_version, port_name = self._dissect(args, 'running-config', 'interface', str, str)
+            if ftth_version == 'ePON':
+                expected_product = 'ftth-pon'
+                context['port_name_prefix'] = 'EPON'
+            elif ftth_version == 'gigaEthernet':
+                expected_product = 'ftth'
+                context['port_name_prefix'] = 'GigaEthernet'
+            else:
+                full_command = command
+                for arg in args:
+                    full_command += ' ' + arg
+                context['full_command'] = full_command
+                raise exceptions.CommandSyntaxError(command=command)
 
             try:
                 port = self._model.get_port('name', port_name)
                 card = self._model.get_card('id', port.card_id)
-                assert card.product == 'ftth'
+                assert card.product == expected_product
             except exceptions.SoftboxenError:
                 full_command = command
                 for arg in args:
@@ -129,7 +141,28 @@ class EnaCommandProcessor(BaseCommandProcessor):
                 context['full_command'] = full_command
                 raise exceptions.CommandSyntaxError(command=command)
 
-            text = self._render('show_running-config_interface_gigaEthernet_port', context=dict(context, port=port))
+            text = self._render('show_running-config_interface_product_port_top', context=dict(context, port=port))
+
+            mid_text = ''
+            if expected_product == "ftth-pon":
+                try:
+                    _ = self._model.get_ont("port_id", port.id)
+                except exceptions.SoftboxenError:
+                    pass
+                else:
+                    counter = 1
+                    onts = self._model.get_onts("port_id", port.id)
+                    for ont in onts:
+                        if counter > 32:
+                            mid_text = ''
+                            break
+                        context['counter'] = counter
+                        mid_text = self._render('show_running-config_interface_product_port_mid',
+                                                context=dict(context, ont=ont))
+                        counter += 1
+
+            text += mid_text
+            text += self._render('show_running-config_interface_product_port_bottom', context=dict(context, port=port))
             self._write(text)
 
         elif self._validate(args, 'mac', 'address-table', 'interface', str, str):
