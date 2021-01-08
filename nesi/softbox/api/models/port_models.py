@@ -345,3 +345,4 @@ class Port(db.Model):
     no_pdp_enable = db.Column(db.Boolean(), default=False)
     no_snmp_trap_link_status = db.Column(db.Boolean(), default=False)
     exclamation_mark = db.Column(db.Boolean(), default=False)
+    switchport_protected = db.Column(db.Integer(), default=None)

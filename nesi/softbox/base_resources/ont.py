@@ -11,6 +11,7 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi.softbox.base_resources import base
+import logging
 
 
 class Ont(base.Resource):

@@ -119,7 +119,19 @@ req='{
   "card_id": '$card_0',
   "description": "Port #1",
   "admin_state": "1",
-  "operational_state": "1"
+  "operational_state": "1",
+  "spanning_tree_guard_root": true,
+  "switchport_trunk_vlan_allowed": "3220",
+  "switchport_mode_trunk": true,
+  "switchport_pvid": 3220,
+  "no_lldp_transmit": true,
+  "pbn_speed": 3,
+  "switchport_block_multicast": true,
+  "switchport_rate_limit_egress": 3,
+  "switchport_rate_limit_ingress": 5,
+  "no_pdp_enable": true,
+  "no_snmp_trap_link_status": true,
+  "exclamation_mark": true
 }'
 
 port_0_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
@@ -179,7 +191,20 @@ req='{
   "card_id": '$card_1',
   "description": "Port #1",
   "admin_state": "1",
-  "operational_state": "1"
+  "operational_state": "1",
+  "spanning_tree_guard_root": true,
+  "switchport_trunk_vlan_allowed": "3220",
+  "switchport_mode_trunk": true,
+  "switchport_pvid": 3220,
+  "no_lldp_transmit": true,
+  "pbn_speed": 3,
+  "switchport_block_multicast": true,
+  "switchport_rate_limit_egress": 3,
+  "switchport_rate_limit_ingress": 5,
+  "no_pdp_enable": true,
+  "no_snmp_trap_link_status": true,
+  "exclamation_mark": true,
+  "switchport_protected": 3
 }'
 
 port_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
@@ -206,3 +231,15 @@ req='{
 }'
 
 service_vlan_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlans)
+
+### Ont 1/1/1 ###
+
+req='{
+  "name": "1/1/1",
+  "description": "Ont 1/1/1",
+  "admin_state": "1",
+  "operational_state": "1",
+  "port_id": '$port_1_1',
+  "mac_address": "ea03.6cc5.7488"
+}'
+ont_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)

@@ -20,6 +20,6 @@ class PBNPortSchema(PortSchema):
                                            'switchport_mode_trunk', 'switchport_pvid', 'no_lldp_transmit', 'pbn_speed',
                                            'switchport_block_multicast', 'switchport_rate_limit_egress',
                                            'switchport_rate_limit_ingress', 'no_pdp_enable', 'no_snmp_trap_link_status',
-                                           'exclamation_mark')
+                                           'exclamation_mark', 'switchport_protected')
 
     channels = ma.Nested(CpesSchema.CpeSchema, many=True)
