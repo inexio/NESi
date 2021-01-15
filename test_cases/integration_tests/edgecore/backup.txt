@@ -1,0 +1,10 @@
+admin
+secret
+enable
+enable
+copy startup-config ftp
+1.1.1.1
+backup
+backup
+/example.txt
+quit

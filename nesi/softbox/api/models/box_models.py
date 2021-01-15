@@ -138,3 +138,17 @@ class Box(db.Model):
     ftp_login = db.Column(db.String(), default='')
     ftp_password = db.Column(db.String(), default='')
     network_element_management_vlan_id = db.Column(db.Integer(), default=None)
+
+    #EdgeCore
+    management_start_address = db.Column(db.String(), default='')
+    management_end_address = db.Column(db.String(), default='')
+    logging_host = db.Column(db.String(), default='')
+    logging_port = db.Column(db.String(), default='')
+    logging_level = db.Column(db.Integer(), default=7)
+    loopback_detection_action = db.Column(db.String(), default='shutdown')
+    sntp_server_ip = db.Column(db.String(), default='None')
+    sntp_client = db.Column(db.Enum('Disabled', 'Enabled'), default='Disabled')
+    timezone_name = db.Column(db.String(), default='None')
+    timezone_time = db.Column(db.String(), default='None')
+    summer_time_name = db.Column(db.String(), default='')
+    summer_time_region = db.Column(db.String(), default='')

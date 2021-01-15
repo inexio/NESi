@@ -9,3 +9,7 @@ pydevd-pycharm~=201.7846.77
 psutil
 pytest
 pyperclip
+twisted
+cryptography
+bcrypt
+pyasn1

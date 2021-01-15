@@ -1,0 +1,13 @@
+admin
+secret
+enable
+enable
+configure
+interface ethernet 1/1
+pppoe intermediate-agent port-enable
+pppoe intermediate-agent trust
+ip dhcp snooping trust
+pppoe intermediate-agent port-format-type circuit-id 1/1
+ip dhcp snooping information option circuit-id tr101 node-identifier ip
+ip dhcp snooping information option circuit-id tr101 no-vlan-field
+quit

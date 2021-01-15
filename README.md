@@ -21,6 +21,10 @@ and automation.
 
 For more information on `softboxen` or `NESi` please refer to our local [documentation](https://github.com/inexio/NESi/tree/master/docs/source).
 
+## NESi at FOSDEM 2021 - Request for Papers
+The NESi team will organize a devroom for Network monitoring, discovery and inventory.
+Click [here](https://thola.io/posts/thola-fosdem/) for more information
+
 ## Features
 
 
@@ -34,10 +38,10 @@ For more information on `softboxen` or `NESi` please refer to our local [documen
 ### Supported Vendors
  - Alcatel  (nearly feature complete)
  - Huawei   (nearly feature complete)
- - Edgecore (not implemented yet)
- - Keymile  (work in progress)
+ - Edgecore (nearly feature complete)
+ - Keymile  (nearly feature complete)
  - Pbn      (not implemented yet)
- - Zhone    (not implemented yet)
+ - Zhone    (work in progress)
 
 ### Supported network components
 
@@ -47,6 +51,7 @@ For more information on `softboxen` or `NESi` please refer to our local [documen
 - ONTs
 - CPEs
 - Vlans
+- Interfaces
 
 
 ## Download

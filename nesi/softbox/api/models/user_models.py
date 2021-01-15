@@ -22,7 +22,7 @@ class User(db.Model):
     name = db.Column(db.String(), default='user')
     level = db.Column(db.Enum('Super', 'Admin', 'Operator', 'User'), default='User')
     status = db.Column(db.Enum('online', 'offline'), default='offline')
-    profile = db.Column(db.Enum('root', 'admin', 'operator', 'commonuser'), default='commonuser')
+    profile = db.Column(db.Enum('root', 'admin', 'operator', 'commonuser', 'enable', 'backup'), default='commonuser')
     append_info = db.Column(db.String(), default='-----')
     reenter_num = db.Column(db.Integer(), default=3)
     reenter_num_temp = db.Column(db.Integer(), default=3)

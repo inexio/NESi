@@ -1,0 +1,10 @@
+admin
+secret
+enable
+enable
+configure
+sntp server 77.244.98.1
+sntp client
+clock timezone gmt hours 1 minute 0
+clock summer-time MESZ predefined europe
+quit

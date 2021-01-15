@@ -179,10 +179,10 @@ bash bootup/conf/bootstraps/create-vendors-and-models.sh
 
 if [ $recreate_db = "yes" ]; then
     #bash bootup/conf/bootstraps/create-box-port-vlan.sh
-    #bash bootup/conf/bootstraps/create-alcatel-7360.sh
-    #bash bootup/conf/bootstraps/create-huawei-5623.sh
-    #bash bootup/conf/bootstraps/create-keymile-MG2500.sh
-    bash bootup/conf/bootstraps/create-zhone.sh
+    bash bootup/conf/bootstraps/create-alcatel-7360.sh
+    bash bootup/conf/bootstraps/create-huawei-5623.sh
+    bash bootup/conf/bootstraps/create-keymile-MG2500.sh
+    bash bootup/conf/bootstraps/create-edgecore-xxxx.sh
 fi
 
 if [ $alcatel_api = "yes" ]; then
@@ -195,7 +195,7 @@ if [ $keymile_api = "yes" ]; then
     bash bootup/conf/bootstraps/create-keymile-MG2500.sh
 fi
 if [ $edgecore_api = "yes" ]; then
-    bash bootup/conf/bootstraps/create-alcatel-7360.sh #work_in_progress
+    bash bootup/conf/bootstraps/create-edgecore-xxxx.sh
 fi
 if [ $pbn_api = "yes" ]; then
     bash bootup/conf/bootstraps/create-alcatel-7360.sh #work_in_progress

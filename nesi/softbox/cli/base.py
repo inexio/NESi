@@ -17,7 +17,10 @@ import pyperclip
 
 import jinja2
 
+from sys import platform
+
 from nesi import exceptions
+from twisted.internet import reactor
 
 LOG = logging.getLogger(__name__)
 
@@ -62,6 +65,7 @@ class CommandProcessor:
         self.daemon = daemon
 
         # CLI specific attributes
+        self.skipLogin = False
         self.case_sensitive = case_sensitive
         self.line_buffer = []
         self.history_enabled = True
@@ -116,10 +120,22 @@ class CommandProcessor:
             self.cursor_pos += 1
 
     def get(self):
-        inkey = self._Getch()
+        inkey = None
+        if not self.daemon:
+            inkey = self._Getch()
         while (1):
-            k = inkey(self._input).decode('utf-8')
-            if k != '': break
+            if self.daemon:
+                k = self._input.receiveData().decode('utf-8')
+                if k == '\r\n' or k == '\n\r':
+                    k = '\r'
+                if '\r\n' in k or '\n\r' in k:
+                    k = k.replace('\n', '')
+                elif '\n' in k:
+                    k = k.replace('\n', '\r')
+            else:
+                k = inkey(self._input).decode('utf-8')
+            if k != '':
+                break
         if k == '\x1b[A':  # up-arrow
             if self.history_enabled:
                 return 'history', self.history_up()
@@ -141,7 +157,7 @@ class CommandProcessor:
                 return 'backspace', ''
             else:
                 return None, None
-        elif k == '[3':  # del-key
+        elif k == '[3' or k == '[3~':  # del-key
             return 'del', ''
         elif k == '':  # ctrl-v
             return 'paste', pyperclip.paste()
@@ -169,15 +185,16 @@ class CommandProcessor:
             self._write('\033[' + str(self.cursor_pos) + 'C')  # move cursor to correct position
 
     def getline(self, tmp_boundary=None):
-        char = None
+        char = ''
         line = ''
         self.history_pos = len(self.history)
         self.cursor_pos = self.prompt_end_pos + 1
         self.cursor_boundary = self.prompt_end_pos + 1
 
-        while char != '\r':
+        while '\r' not in char:
             option, char = self.get()
             if char is None:
+                char = ''
                 continue
             elif char == '\r':
                 continue
@@ -265,15 +282,17 @@ class CommandProcessor:
         self._write(text)
 
     def _read(self, tmp_boundary=None):
-        if self.daemon:
+        if self.daemon and self._model.network_protocol == 'telnet':
             line = self._input.readline().decode('utf-8')
         else:
             line = self.getline(tmp_boundary)
-
         return line
 
     def _write(self, text):
+        text = text.replace('\n', '\r\n')
         self._output.write(text.encode('utf-8'))
+        if self.daemon and self._model.network_protocol == 'ssh' and platform == 'darwin': # check for correct os as reactor.iterate() is only needed for macOS
+            reactor.iterate()
 
     def _get_command_func(self, line):
         if line.startswith(self.comment):
@@ -286,8 +305,8 @@ class CommandProcessor:
         if self.case_sensitive is False:
             command = command.lower()
 
-        if command == self.negation:
-            command += "_" + args.pop(0)
+        #if command == self.negation:
+            #command += "_" + args.pop(0)
 
         command = command.replace('-', '_')
 
@@ -367,6 +386,10 @@ class CommandProcessor:
                     exc.return_to = return_to
 
                 if not exc.return_to or exc.return_to == 'sysexit' or exc.return_to == 'sysreboot' or not isinstance(self, exc.return_to):
+                    if self.daemon and self._model.network_protocol == 'ssh' and exc.return_to in ('sysexit', 'sysreboot'):
+                        self._output.loseConnection()
+                        reactor.iterate()
+                        return
                     raise exc
                 # set prompt_len anew in case of prompt_len change in command-processor beneath
                 self.set_prompt_end_pos(context)

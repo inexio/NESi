@@ -1,0 +1,29 @@
+Information of Eth {{ context.port.name }}
+ Basic Information:
+  Port Type : 1000BASE SFP
+  MAC Address : {{ context.port.mac_address }}
+Configuration:
+ Name : {{ context.port.description }}
+ Port Admin : {{ context.port.admin_state }}
+ Speed-duplex : Auto
+ Capabilities : 1000full
+ Broadcast Storm : Disabled
+ Broadcast Storm Limit : 500 packets/second
+ Multicast Storm : Disabled
+ Multicast Storm Limit : 262143 packets/second
+ Unknown Unicast Storm : Disabled
+ Unknown Unicast Storm Limit : 262143 packets/second
+ Flow Control : Disabled
+ VLAN Trunking : Disabled
+ LACP : Disabled
+ MAC Learning : Enabled
+ Link-up-down Trap : Enabled
+ Media Type : None
+ MTU : 1518
+Current Status:
+ Link Status : {{ context.port.operational_state }}
+ Operation Speed-duplex : 1000full
+ Flow Control Type : None
+ Max Frame Size : 1518 bytes (1522 bytes for tagged frames)
+ MAC Learning Status : Enabled
+

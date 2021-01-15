@@ -1,0 +1,8 @@
+admin
+secret
+enable
+enable
+show interfaces status ethernet 1/1
+show interfaces switchport ethernet 1/1
+show interfaces transceiver ethernet 1/1
+quit
