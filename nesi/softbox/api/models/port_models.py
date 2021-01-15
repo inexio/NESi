@@ -331,9 +331,3 @@ class Port(db.Model):
     profile4_enable = db.Column(db.Boolean(), default=False)
     profile4_name = db.Column(db.String(), default='')
     profile_mode = db.Column(db.Enum('Priority', 'ElectricalLoopLength'), default=None)
-
-    #Zhone
-    upLineRate = db.Column(db.Integer(), default=0)
-    downLineRate = db.Column(db.Integer(), default=0)
-    maxUpLineRate = db.Column(db.Integer(), default=0)
-    maxDownLineRate = db.Column(db.Integer(), default=0)

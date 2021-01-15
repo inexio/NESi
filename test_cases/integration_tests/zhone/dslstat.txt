@@ -1,0 +1,4 @@
+admin
+secret
+dslstat 1/1/1/0/vdsl
+exit

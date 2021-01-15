@@ -11,5 +11,5 @@ from nesi.softbox.api.schemas.port_schemas import *
 class ZhonePortSchema(PortSchema):
     class Meta:
         model = Port
-        fields = PortSchema.Meta.fields + ('upLineRate', 'downLineRate', 'maxUpLineRate', 'maxDownLineRate')
+        fields = PortSchema.Meta.fields
 

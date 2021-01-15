@@ -21,10 +21,6 @@ class HuaweiPort(Port):
 
     cpes = base.Field('cpes')
     description = base.Field('description')
-    upstream = base.Field('upstream')
-    downstream = base.Field('downstream')
-    upstream_max = base.Field('upstream_max')
-    downstream_max = base.Field('downstream_max')
     loopback = base.Field('loopback')
     line_template = base.Field('line_template')
     alarm_template = base.Field('alarm_template')

@@ -2,10 +2,10 @@ General Stats:
 -------------
 AdminStatus..................................{{ context.port.admin_state }}
 LineStatus...................................{{ context.port.operational_state }}
-DslUpLineRate (bitsPerSec)...................{{ context.port.upLineRate }}
-DslDownLineRate (bitsPerSec).................{{ context.port.downLineRate }}
-DslMaxAttainableUpLineRate (bitsPerSec)......{{ context.port.maxUpLineRate }}
-DslMaxAttainableDownLineRate (bitsPerSec)....{{ context.port.maxDownLineRate }}
+DslUpLineRate (bitsPerSec)...................{{ context.port.upstream }}
+DslDownLineRate (bitsPerSec).................{{ context.port.downstream }}
+DslMaxAttainableUpLineRate (bitsPerSec)......{{ context.port.upstream_max }}
+DslMaxAttainableDownLineRate (bitsPerSec)....{{ context.port.downstream_max }}
 In Octets....................................0
 In Pkts/Cells/Frags..........................0
 In Discards..................................0

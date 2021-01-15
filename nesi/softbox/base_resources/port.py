@@ -27,6 +27,10 @@ class Port(base.Resource):
     description = base.Field('description')
     admin_state = base.Field('admin_state')
     operational_state = base.Field('operational_state')
+    upstream = base.Field('upstream')
+    downstream = base.Field('downstream')
+    upstream_max = base.Field('upstream_max')
+    downstream_max = base.Field('downstream_max')
 
     def admin_up(self):
         """Set the admin port state to up"""

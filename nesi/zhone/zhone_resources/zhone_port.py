@@ -18,13 +18,7 @@ LOG = logging.getLogger(__name__)
 
 class ZhonePort(Port):
 
-    upLineRate = base.Field("upLineRate")
-    downLineRate = base.Field("downLineRate")
-    maxUpLineRate = base.Field("maxUpLineRate")
-    maxDownLineRate = base.Field("maxDownLineRate")
-
     """Represent physical port resource."""
-
 
 
 class ZhonePortCollection(PortCollection):

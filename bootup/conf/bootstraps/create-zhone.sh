@@ -78,10 +78,10 @@ req='{
   "description": "Network Port 1",
   "admin_state": "1",
   "operational_state": "1",
-  "upLineRate": 5555,
-  "downLineRate": 4444,
-  "maxUpLineRate": 3333,
-  "maxDownLineRate": 2222
+  "upstream": 4023,
+  "downstream": 13232,
+  "upstream_max": 8000,
+  "downstream_max": 16000
 }'
 
 port_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
@@ -93,10 +93,10 @@ req='{
   "description": "Network Port 2",
   "admin_state": "0",
   "operational_state": "0",
-  "upLineRate": 5555,
-  "downLineRate": 4444,
-  "maxUpLineRate": 3333,
-  "maxDownLineRate": 2222
+  "upstream": 4023,
+  "downstream": 13232,
+  "upstream_max": 8000,
+  "downstream_max": 16000
 }'
 
 port_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)

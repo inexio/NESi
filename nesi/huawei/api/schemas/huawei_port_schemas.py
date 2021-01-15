@@ -16,8 +16,7 @@ from nesi.softbox.api.schemas.port_schemas import *
 class HuaweiPortSchema(PortSchema):
     class Meta:
         model = Port
-        fields = PortSchema.Meta.fields + ('upstream', 'downstream', 'upstream_max', 'downstream_max',
-                                           'line_template', 'loopback', 'sos_profile', 'sos_profile_num',
+        fields = PortSchema.Meta.fields + ('line_template', 'loopback', 'sos_profile', 'sos_profile_num',
                                            'alarm_template', 'dynamic_profile_index', 'dynamic_profile_name',
                                            'hardware', 'last_up_time', 'last_down_time', 'show_time',
                                            'nte_power_status', 'current_operational_mode', 'cpes', 'description',
