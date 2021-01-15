@@ -8,6 +8,7 @@
 # - Janis Groß <https://github.com/unkn0wn-user>
 # - Philip Konrath <https://github.com/Connyko65>
 # - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 #
@@ -31,7 +32,7 @@ req='{
   "network_protocol": "telnet",
   "network_address": "127.0.0.1",
   "network_port": 9023,
-  "software_version": "?",
+  "software_version": "",
   "uuid": "pbn"
 }'
 
@@ -232,14 +233,29 @@ req='{
 
 service_vlan_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/service_vlans)
 
-### Ont 1/1/1 ###
+### Ont 1/1:1 ###
 
 req='{
   "name": "1/1/1",
-  "description": "Ont 1/1/1",
+  "description": "Ont 1/1:1",
   "admin_state": "1",
   "operational_state": "1",
   "port_id": '$port_1_1',
   "mac_address": "ea03.6cc5.7488"
 }'
 ont_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/onts)
+
+### Ont Port 1/1:1/1 ###
+
+req='{
+  "name": "1/1/1/1",
+  "description": "OntPort 1/1:1/1",
+  "ont_id": '$ont_1_1_1',
+  "operational_state": "0",
+  "admin_state": "0",
+  "flow_control": "Disable",
+  "duplex": "Auto-Duplex",
+  "speed": "Auto-Speed",
+  "storm_control": "Disable"
+}'
+ont_port_1_1_1_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ont_ports)
