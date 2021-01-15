@@ -51,3 +51,5 @@ class SubracksSchema(ma.ModelSchema):
 
     _links = ma.Hyperlinks(
         {'self': ma.URLFor('show_subracks', box_id='<box_id>')})
+
+

@@ -201,7 +201,7 @@ if [ $pbn_api = "yes" ]; then
     bash bootup/conf/bootstraps/create-alcatel-7360.sh #work_in_progress
 fi
 if [ $zhone_api = "yes" ]; then
-    bash bootup/conf/bootstraps/create-alcatel-7360.sh #work_in_progress
+    bash bootup/conf/bootstraps/create-zhone.sh #work_in_progress
 fi
 
 

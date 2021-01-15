@@ -1,9 +1,10 @@
 # This file is part of the NESi software.
 #
 # Copyright (c) 2020, inexio <https://github.com/inexio>
-# Janis Groß <https://github.com/unkn0wn-user>
-# Philip Konrath <https://github.com/Connyko65>
-# Alexander Dincher <https://github.com/Dinker1996>
+# - Janis Groß <https://github.com/unkn0wn-user>
+# - Philip Konrath <https://github.com/Connyko65>
+# - Alexander Dincher <https://github.com/Dinker1996>
+# - Philipp-Noah Groß <https://github.com/pngross>
 #
 # Ilya Etingof <etingof@gmail.com>
 #

@@ -22,6 +22,7 @@ from nesi.alcatel.api.schemas import *
 from nesi.huawei.api.schemas import *
 from nesi.keymile.api.schemas import *
 from nesi.edgecore.api.schemas import *
+from nesi.zhone.api.schemas import *
 # important for other view classes
 from nesi.softbox.api import db
 

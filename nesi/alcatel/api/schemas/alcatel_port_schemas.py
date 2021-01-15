@@ -16,8 +16,7 @@ from nesi.softbox.api.schemas.port_schemas import *
 class AlcatelPortSchema(PortSchema):
     class Meta:
         model = Port
-        fields = PortSchema.Meta.fields + ('shutdown', 'speed', 'upstream', 'downstream', 'upstream_max',
-                                           'downstream_max', 'noise_margin_up', 'noise_margin_down',
+        fields = PortSchema.Meta.fields + ('shutdown', 'speed', 'noise_margin_up', 'noise_margin_down',
                                            'tgt_noise_margin_up', 'tgt_noise_margin_down', 'attenuation_up',
                                            'attenuation_down', 'attained_upstream', 'attained_downstream',
                                            'threshold_upstream', 'threshold_downstream', 'max_delay_upstream',

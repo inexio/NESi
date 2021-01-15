@@ -22,7 +22,7 @@ class PortSchema(ma.ModelSchema):
     class Meta:
         model = Port
         fields = ('id', 'box_id', 'box', 'card_id', 'cpes', 'onts', 'channels', 'loopback', 'name', 'interfaces',
-                  'description', 'admin_state', 'operational_state', '_links')
+                  'description', 'admin_state', 'operational_state', 'upstream', 'upstream_max', 'downstream', 'downstream_max', '_links')
 
     cpes = ma.Nested(CpesSchema.CpeSchema, many=True)
 

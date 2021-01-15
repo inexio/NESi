@@ -14,7 +14,6 @@
 from nesi import exceptions
 from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 
-
 class RootCommandProcessor(BaseCommandProcessor):
     __name__ = 'root'
     management_functions = {'main', 'cfgm', 'fm', 'status'}
@@ -24,6 +23,12 @@ class RootCommandProcessor(BaseCommandProcessor):
     from .rootManagementFunctions import cfgm
     from .rootManagementFunctions import fm
     from .rootManagementFunctions import status
+
+    def do_get(self, command, *args, context=None):
+        if self._validate(args, "CurrTemperature"):
+            context['currTemperature'] = self._model.currTemperature
+            context['spacer'] = self.create_spacers((67,), (context['currTemperature'],))[0] * ' '
+            self._write(self._render('currTemperature', 'login', 'base', 'get', context=context))
 
     def _init_access_points(self, context=None):
         self.access_points = ('eoam', 'fan', 'multicast', 'services', 'tdmConnections')
