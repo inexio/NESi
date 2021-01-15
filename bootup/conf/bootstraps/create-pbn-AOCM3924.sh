@@ -27,7 +27,7 @@ req='{
   "model": "AOCM3924",
   "version": "Ethernet Switch",
   "description": "PBN Switch",
-  "hostname": "PBN_Switch",
+  "hostname": "pbn_switch",
   "mgmt_address": "10.0.0.1",
   "network_protocol": "telnet",
   "network_address": "127.0.0.1",
