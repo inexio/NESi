@@ -19,15 +19,63 @@ class RootCommandProcessor(BaseCommandProcessor):
                                                template_scopes=('login', 'base', 'execution_errors'))
 
     def do_dslstat(self, command, *args, context=None):
-
         if self._validate(args, *()):
             self._write(self._render('dslstatEmptyArg', 'login', 'base', context=context))
-        elif self._validate(args, "1/1/1/0/vdsl"):
+        elif self._validate(args, str):
+            identifier, = self._dissect(args, str)
+            identifier_components = identifier.split('/')
+            if len(identifier_components) != 5 or identifier_components[3] != '0' or identifier_components[4] != 'vdsl':
+                context['identifier'] = identifier
+                self._write(self._render('dslstatInvalidArg', 'login', 'base', context=context))
+                return
+            port = self._model.get_port('name', "/".join(identifier_components[:3]))
 
-            port = self._model.get_port('name', '1/1/1/0')
+            self.map_states(port, 'port')
 
             context['port'] = port
 
-            self._write(self._render('dslstatTemplate', 'login', 'base', context=context))
+            if self.daemon and self._model.network_protocol == 'ssh':
+                output = self._render('dslstatTemplate', 'login', 'base', context=context).split("\n")
+                pointer = 0
+                buff_size = 19
+                prompt_end = self.prompt_end_pos
+                while True:
+                    self.cursor_pos = 0
+                    self._write("\n".join(output[pointer:pointer + buff_size]))
+                    self._write("\n")
+                    pointer += buff_size
+
+                    if pointer >= len(output):
+                        break
+
+                    option_string = '<SPACE> for next page, <CR> for next line, A for all, Q to quit'
+                    self.cursor_pos = len(option_string) + 1
+                    self.prompt_end_pos = 0
+                    self.updateline(option_string)
+
+                    character = None
+
+                    while character not in ('\r', 'a', 'q', ' '):
+                        _, character = self.get()
+
+                    self.cursor_pos = 0
+                    self.updateline('')
+
+                    if character == '\r':
+                        buff_size = 1
+                        continue
+                    elif character == 'a':
+                        buff_size = len(output) - pointer
+                        continue
+                    elif character == 'q':
+                        break
+                    elif character == ' ':
+                        buff_size = 19
+                        continue
+                self.cursor_pos = 0
+                self.prompt_end_pos = prompt_end
+            else:
+                output = self._render('dslstatTemplate', 'login', 'base', context=context) + "\n"
+                self._write(output)
         else:
             self._write(self._render('dslstatInvalidArg', 'login', 'base', context=context))

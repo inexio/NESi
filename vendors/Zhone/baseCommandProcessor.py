@@ -16,6 +16,27 @@ class BaseCommandProcessor(base.CommandProcessor):
         exc.return_to = 'sysexit'
         raise exc
 
+    def map_states(self, object, type):
+        if object.admin_state == '0':
+            if type == 'port':
+                object.admin_state = 'DOWN'
+        elif object.admin_state == '1':
+            if type == 'port':
+                object.admin_state = 'UP'
+        elif object.admin_state == '2':
+            if type == 'port':
+                object.admin_state = 'ERR'
+
+        if object.operational_state == '0':
+            if type == 'port':
+                object.operational_state = 'DOWN'
+        elif object.operational_state == '1':
+            if type == 'port':
+                object.operational_state = 'DATA'
+        elif object.operational_state == '2':
+            if type == 'port':
+                object.operational_state = 'HANDSHAKE'
+
     def create_spacers(self, positions, args):
         spacers = []
         previous_pos = 0

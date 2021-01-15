@@ -36,10 +36,18 @@ req='{
 
 box_id=$(create_resource "$req" $ENDPOINT/boxen) || exit 1
 
-# Sessionmanager credentials
+# Admin user
+req='{
+  "name": "Admin"
+}'
+
+admin_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/users)
+
+# Admin credentials
 req='{
   "username": "admin",
-  "password": "secret"
+  "password": "secret",
+  "user_id": '$admin_id'
 }'
 
 admin_credential_id=$(create_resource "$req" $ENDPOINT/boxen/$box_id/credentials)
@@ -57,7 +65,6 @@ subrack_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/subracks)
 
 req='{
   "subrack_id": '$subrack_1',
-  "name": "1/1",
   "product": "vdsl",
   "description": "Karte von Juan"
 }'
@@ -68,8 +75,7 @@ card_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/cards)
 
 req='{
   "card_id": '$card_1',
-  "name": "1/1/1/0",
-  "description": "Port von Juan",
+  "description": "Network Port 1",
   "admin_state": "1",
   "operational_state": "1",
   "upLineRate": 5555,
@@ -79,3 +85,18 @@ req='{
 }'
 
 port_1=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)
+
+# create a Port
+
+req='{
+  "card_id": '$card_1',
+  "description": "Network Port 2",
+  "admin_state": "0",
+  "operational_state": "0",
+  "upLineRate": 5555,
+  "downLineRate": 4444,
+  "maxUpLineRate": 3333,
+  "maxDownLineRate": 2222
+}'
+
+port_2=$(create_resource "$req" $ENDPOINT/boxen/$box_id/ports)

@@ -21,7 +21,7 @@ class PreLoginCommandProcessor(base.CommandProcessor):
 
         try:
             subprocessor.history_enabled = False
-            subprocessor.star_input = True
+            subprocessor.hide_input = True
             subprocessor.loop(context=context)
         except exceptions.TerminalExitError as exc:
             if exc.return_to is not None and exc.return_to != 'sysexit':

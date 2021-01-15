@@ -1,7 +1,7 @@
 General Stats:
 -------------
-AdminStatus..................................UP
-LineStatus...................................HANDSHAKE
+AdminStatus..................................{{ context.port.admin_state }}
+LineStatus...................................{{ context.port.operational_state }}
 DslUpLineRate (bitsPerSec)...................{{ context.port.upLineRate }}
 DslDownLineRate (bitsPerSec).................{{ context.port.downLineRate }}
 DslMaxAttainableUpLineRate (bitsPerSec)......{{ context.port.maxUpLineRate }}
@@ -13,10 +13,6 @@ In Errors....................................0
 Out Octets...................................0
 Out Pkts/Cells/Frags.........................0
 Out Discards.................................0
-Out Errors...................................0
-
-DSL Physical Stats:
-------------------
 Out Errors...................................0
 
 DSL Physical Stats:
@@ -40,11 +36,6 @@ Severely Errored Seconds.....................32170614
 Unavailable Seconds..........................32170614
 
 far-end statstics:
-Loss of Link Seconds.........................32170614
-Severely Errored Seconds.....................32170614
-Unavailable Seconds..........................32170614
-
-far-end statstics:
 -----------------
 Loss of Frame Seconds........................0
 Loss of Signal Seconds.......................32170614
@@ -63,4 +54,3 @@ Vtur PhyRActive..............................FALSE
 Vtur Retransmitted codewords.................0
 Vtur Corrected Retransmitted codewords.......0
 Vtur UnCorrectable Retransmitted codewords...0
-

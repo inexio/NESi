@@ -160,11 +160,13 @@ class CommandProcessor:
 
     def updateline(self, line):
         self._write('\r')  # reset cursor to start of line
-        self._write('\033[' + str(self.prompt_end_pos + 1) + 'C')  # move cursor to end of prompt
+        if self.prompt_end_pos != 0:
+            self._write('\033[' + str(self.prompt_end_pos + 1) + 'C')  # move cursor to end of prompt
         self._write('\033[K')  # clear rest of line
         self._write(line)  # insert new line contents
         self._write('\r')  # reset cursor to start of line
-        self._write('\033[' + str(self.cursor_pos) + 'C')  # move cursor to correct position
+        if self.cursor_pos != 0:
+            self._write('\033[' + str(self.cursor_pos) + 'C')  # move cursor to correct position
 
     def getline(self, tmp_boundary=None):
         char = None
@@ -348,9 +350,6 @@ class CommandProcessor:
                     self.line_buffer = line.split('\r\n')
                     continue
                 context['raw_line'] = line
-
-                if self.daemon:
-                    self._write(line)  # write line to stdout if box is in daemon mode
             else:
                 line = command
                 command = None
