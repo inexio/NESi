@@ -143,6 +143,24 @@ class PBNBox(Box):
             self._conn, base.get_sub_resource_path_by(self, 'onts'),
             params={field: value})
 
+    @property
+    def ont_ports(self):
+        """Return `OntPortCollection` object."""
+        return pbn_ont_port.PBNOntPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'ont_ports'))
+
+    def get_ont_port(self, field, value):
+        """Get specific ont_port object."""
+        return pbn_ont_port.PBNOntPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'ont_ports'),
+            params={field: value}).find_by_field_value(field, value)
+
+    def get_ont_ports(self, field, value):
+        """Get specific ont_port object."""
+        return pbn_ont_port.PBNOntPortCollection(
+            self._conn, base.get_sub_resource_path_by(self, 'ont_ports'),
+            params={field: value})
+
 
 class PBNBoxCollection(BoxCollection):
     """Represent a collection of boxen.

@@ -62,13 +62,21 @@ class BaseCommandProcessor(base.CommandProcessor):
         if object.admin_state == '0':
             if type == 'port':
                 object.admin_state = 'down'
+            elif type == 'ont_port':
+                object.admin_state = 'Down'
         elif object.admin_state == '1':
             if type == 'port':
                 object.admin_state = 'up'
+            elif type == 'ont_port':
+                object.admin_state = 'Up'
 
         if object.operational_state == '0':
             if type == 'port':
                 object.operational_state = 'down'
+            elif type == 'ont_port':
+                object.operational_state = 'Link-Down'
         elif object.operational_state == '1':
             if type == 'port':
                 object.operational_state = 'up'
+            elif type == 'ont_port':
+                object.operational_state = 'Link-Up'

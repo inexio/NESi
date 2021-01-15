@@ -18,8 +18,8 @@ class OntPort(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64))
     description = db.Column(db.String())
-    operational_state = db.Column(db.Enum('0', '1'), default='0')  # Alcatel: 0 => down, 1 => up; Huawei: 0 => offline, 1 => online
-    admin_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => offline, 1 => online
+    operational_state = db.Column(db.Enum('0', '1'), default='0')  # Alcatel: 0 => down, 1 => up; Huawei: 0 => offline, 1 => online; PBN: 0 => Link-Down, 1 => Link-Up
+    admin_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => offline, 1 => online; PBN: 0 => Down, 1 => Up
     # pon
     uni_idx = db.Column(db.String(64))
     config_indicator = db.Column(db.String(), default='100baset-fd')
@@ -33,7 +33,7 @@ class OntPort(db.Model):
     # Huawei data
     ont_port_index = db.Column(db.Integer())
     ont_port_type = db.Column(db.Enum('GE', 'ETH', 'POTS', 'VDSL', 'TDM', 'MOCA', 'CATV'), default='GE')
-    duplex = db.Column(db.Enum('full', 'auto_full', 'auto'), default='full')
+    duplex = db.Column(db.Enum('full', 'auto_full', 'auto', 'Auto-Duplex'), default='full')
     link_state = db.Column(db.Enum('up', 'down'), default='down')
     ring_status = db.Column(db.String(), default='-')
 
@@ -58,3 +58,7 @@ class OntPort(db.Model):
     max_mac_count = db.Column(db.String(), default='-')
 
     vlan_id = db.Column(db.Integer, db.ForeignKey('vlan.id'))
+
+    # PBN data
+    flow_control = db.Column(db.Enum('Disable', 'Enable'), default='Disable')
+    storm_control = db.Column(db.Enum('Disable', 'Enable'), default='Disable')

@@ -37,8 +37,8 @@ class EnaCommandProcessor(BaseCommandProcessor):
     def do_conf(self, command, *args, context=None):
         from .confCommandProcessor import ConfCommandProcessor
         if args == ():
-                subprocessor = self._create_subprocessor(ConfCommandProcessor, 'login', 'mainloop', 'ena', 'conf')
-                subprocessor.loop(context=context)
+            subprocessor = self._create_subprocessor(ConfCommandProcessor, 'login', 'mainloop', 'ena', 'conf')
+            subprocessor.loop(context=context)
         else:
             full_command = command
             for arg in args:
@@ -220,6 +220,40 @@ class EnaCommandProcessor(BaseCommandProcessor):
                 text = self._render('show_mac_address_table_interface_product_port_top', context=context)
                 text += bottom_text
 
+            self._write(text)
+
+        elif self._validate(args, 'epon', 'interface', 'ePON', str, 'onu', 'port', str, 'state'):
+            ont_name, ont_port_num = self._dissect(args, 'epon', 'interface', 'ePON', str, 'onu', 'port',
+                                                   str, 'state')
+            ont_name = ont_name.replace(':', '/', 1)
+            ont_port_name = ont_name + '/' + ont_port_num
+            try:
+                ont = self._model.get_ont('name', ont_name)
+            except exceptions.SoftboxenError:
+                full_command = command
+                for arg in args:
+                    full_command += ' ' + arg
+                context['full_command'] = full_command
+                raise exceptions.CommandExecutionError(command=command, template='parameter_error', template_scopes=
+                ('login', 'mainloop', 'ena'))
+
+            ont_ports = self._model.get_ont_ports('ont_id', ont.id)
+            if ont_ports is None:
+                raise exceptions.CommandExecutionError(command=command, template='uni_port_error', template_scopes=
+                ('login', 'mainloop', 'ena'))
+
+            try:
+                ont_port = self._model.get_ont_port('name', ont_port_name)
+            except exceptions.SoftboxenError:
+                full_command = command
+                for arg in args:
+                    full_command += ' ' + arg
+                context['full_command'] = full_command
+                raise exceptions.CommandExecutionError(command=command, template='parameter_error', template_scopes=
+                ('login', 'mainloop', 'ena'))
+            self.map_states(ont_port, 'ont_port')
+            text = self._render('show_epon_interface_epon_ont_onu_port_ontport_state',
+                                context=dict(context, ont_port=ont_port))
             self._write(text)
 
         else:
