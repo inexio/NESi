@@ -58,8 +58,9 @@ class EnaCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_copy(self, command, *args, context=None):
-        if self._validate(command, 'startup-config', str):
+        if self._validate(args, 'startup-config', str):
             addr, = self._dissect(args, 'startup-config', str)
+            print(addr)
             # TODO: Functionality
         else:
             full_command = command

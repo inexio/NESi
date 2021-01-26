@@ -75,8 +75,11 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_description(self, command, *args, context=None):
-        if self._validate(args, 'Cust:', str):
-            descr, = self._dissect(args, 'Cust:', str)
+        if len(args) > 0:
+            descr = ''
+            for x in args:
+                descr += (x + ' ')
+            descr = descr[:-1]
             port = self.get_component(command, args, context=context)
             port.set('description', descr)
         else:
