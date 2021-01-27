@@ -209,9 +209,8 @@ def start_api_with_vendor(vendor):
     #time.sleep(2)
     p = subprocess.Popen(['python3', 'api.py', '--config', config, '--recreate-db'])
 
-    time.sleep(2)
+    time.sleep(1)
     os.system("./bootup/conf/bootstraps/create-vendors-and-models.sh")
-    time.sleep(2)
     if vendor == 'Alcatel':
         os.system("./bootup/conf/bootstraps/create-alcatel-7360.sh")
     elif vendor == 'Huawei':

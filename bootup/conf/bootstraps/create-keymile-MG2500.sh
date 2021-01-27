@@ -82,7 +82,7 @@ req='{
   "network_protocol": "telnet",
   "network_address": "127.0.0.1",
   "network_port": 9023,
-  "uuid": "2500",
+  "uuid": "keymile",
   "currTemperature": 15
 }'
 

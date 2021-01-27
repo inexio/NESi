@@ -118,7 +118,7 @@ req='{
   "network_address": "127.0.0.1",
   "network_port": 9023,
   "dsl_mode": "tr165",
-  "uuid": "5623"
+  "uuid": "huawei"
 }'
 
 box_id=$(create_resource "$req" $ENDPOINT/boxen) || exit 1

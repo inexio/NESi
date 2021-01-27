@@ -30,7 +30,7 @@ req='{
   "network_protocol": "telnet",
   "network_address": "127.0.0.1",
   "network_port": 9023,
-  "uuid": "7777",
+  "uuid": "zhone",
   "software_version": "juan"
   }'
 
