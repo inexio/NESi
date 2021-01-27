@@ -86,7 +86,6 @@ def main():
     if args.recreate_db:
         db.drop_all()
         db.create_all()
-        return 0
 
     app.run(host=app.config.get('NESI_LISTEN_IP'),
             port=app.config.get('NESI_LISTEN_PORT'))

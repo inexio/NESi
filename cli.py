@@ -45,13 +45,9 @@ def main():
         version='%(prog)s ' + __version__)
 
     parser.add_argument(
-        '--service-root', metavar='<URL>', type=str,
+        '--service-root', metavar='<URL>', type=str, default='http://127.0.0.1:5000/nesi/v1',
         help='URL of NESi REST API service root. '
              'Example: https://example.com/nesi/v1/root.json')
-
-    parser.add_argument(
-        '--insecure', action='store_true',
-        help='Disable TLS X.509 validation.')
 
     parser.add_argument(
         '--list-boxen', action='store_true',
@@ -83,60 +79,49 @@ def main():
         help='Run CLI instance with test cases')
 
     parser.add_argument(
-        '--standalone', action='store_true',
+        '--standalone', metavar='<VENDOR>', type=str,
         help='Run Cli without starting api')
 
     args = parser.parse_args()
 
-    if args.standalone:
-        config = os.path.abspath(os.getcwd()) + '/bootup/conf/nesi.conf'
-        subprocess.run(['python3', 'api.py', '--config', config, '--recreate-db'])
-        p = subprocess.Popen(['python3', 'api.py', '--config', config])
-
-        time.sleep(2)
-        os.system("./bootup/conf/bootstraps/create-vendors-and-models.sh")
-        os.system("./bootup/conf/bootstraps/create-alcatel-7360.sh")
-
     try:
-
         if args.debug:
             pydevd_pycharm.settrace('localhost', port=3001, stdoutToServer=True, stderrToServer=True)
 
-        if args.test == 'Alcatel':
-            pytest.main(['--pyargs', 'test_cases.unit_tests.alcatel', '-rA', '--disable-warnings'])
-            return
-        elif args.test == 'Huawei':
-            pytest.main(['--pyargs', 'test_cases.unit_tests.huawei', '-rA', '--disable-warnings'])
-            return
-        elif args.test == 'Edgecore':
-            pytest.main(['--pyargs', 'test_cases.unit_tests.edgecore', '-rA', '--disable-warnings'])
-            return
-        elif args.test == 'Keymile':
-            pytest.main(['--pyargs', 'test_cases.unit_tests.keymile', '-rA', '--disable-warnings'])
-            return
-        elif args.test == 'Pbn':
-            pytest.main(['--pyargs', 'test_cases.unit_tests.pbn', '-rA', '--disable-warnings'])
-            return
-        elif args.test == 'Zhone':
-            pytest.main(['--pyargs', 'test_cases.unit_tests.zhone', '-rA', '--disable-warnings'])
-            return
-        elif args.test is not None:
-            parser.error('--test has invalid argument')
+        if args.standalone in ('Alcatel', 'Huawei', 'Edgecore', 'Keymile', 'Pbn', 'Zhone'):
+            p = start_api_with_vendor(args.standalone)
+        elif args.standalone is not None:
+            parser.error('--standalone has invalid argument')
             return
 
-        if not args.service_root:
-            parser.error('--service-root is required')
+        if args.test in ('Alcatel', 'Huawei', 'Edgecore', 'Keymile', 'Pbn', 'Zhone'):
+            p = start_api_with_vendor(args.test)
+            if args.test == 'Alcatel':
+                pytest.main(['--pyargs', 'test_cases.unit_tests.alcatel', '-rA', '--disable-warnings'])
+                return
+            elif args.test == 'Huawei':
+                pytest.main(['--pyargs', 'test_cases.unit_tests.huawei', '-rA', '--disable-warnings'])
+                return
+            elif args.test == 'Edgecore':
+                pytest.main(['--pyargs', 'test_cases.unit_tests.edgecore', '-rA', '--disable-warnings'])
+                return
+            elif args.test == 'Keymile':
+                pytest.main(['--pyargs', 'test_cases.unit_tests.keymile', '-rA', '--disable-warnings'])
+                return
+            elif args.test == 'Pbn':
+                pytest.main(['--pyargs', 'test_cases.unit_tests.pbn', '-rA', '--disable-warnings'])
+                return
+            elif args.test == 'Zhone':
+                pytest.main(['--pyargs', 'test_cases.unit_tests.zhone', '-rA', '--disable-warnings'])
+                return
+        elif args.test is not None:
+            parser.error('--test has invalid argument')
             return
 
         service_root = urlparse(args.service_root)
         prefix = os.path.dirname(service_root.path)
         filename = os.path.basename(service_root.path)
-
-        conn = rest_client.RestClient(
-            '%s://%s%s/' % (service_root.scheme, service_root.netloc, prefix),
-            verify=not args.insecure,
-        )
-
+        conn = rest_client.RestClient('%s://%s%s/' % (service_root.scheme, service_root.netloc, prefix))
         root_resource = root.Root(conn, path=filename)
 
         if args.list_boxen:
@@ -213,9 +198,33 @@ def main():
                     else:
                         return
     finally:
-        if args.standalone:
+        if args.standalone or args.test:
             p.terminate()
             p.kill()
+
+
+def start_api_with_vendor(vendor):
+    config = os.path.abspath(os.getcwd()) + '/bootup/conf/nesi.conf'
+    #subprocess.call(['python3', 'api.py', '--config', config, '--recreate-db'])
+    #time.sleep(2)
+    p = subprocess.Popen(['python3', 'api.py', '--config', config, '--recreate-db'])
+
+    time.sleep(2)
+    os.system("./bootup/conf/bootstraps/create-vendors-and-models.sh")
+    time.sleep(2)
+    if vendor == 'Alcatel':
+        os.system("./bootup/conf/bootstraps/create-alcatel-7360.sh")
+    elif vendor == 'Huawei':
+        os.system("./bootup/conf/bootstraps/create-huawei-5623.sh")
+    elif vendor == 'Keymile':
+        os.system("./bootup/conf/bootstraps/create-keymile-MG2500.sh")
+    elif vendor == 'Edgecore':
+        os.system("./bootup/conf/bootstraps/create-edgecore-xxxx.sh")
+    elif vendor == 'Pbn':
+        os.system("./bootup/conf/bootstraps/create-pbn-AOCM3924.sh")
+    elif vendor == 'Zhone':
+        os.system("./bootup/conf/bootstraps/create-zhone.sh")
+    return p
 
 
 if __name__ == '__main__':
