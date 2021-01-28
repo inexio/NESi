@@ -204,7 +204,6 @@ def main():
 
 
 def start_api_with_vendor(vendor):
-    config = os.path.abspath(os.getcwd()) + '/bootup/conf/nesi.conf'
     p = subprocess.Popen(['python3', 'nesi_api.py', '--recreate-db', '--load-model', vendor])
     time.sleep(10)
     return p
