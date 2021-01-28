@@ -205,24 +205,8 @@ def main():
 
 def start_api_with_vendor(vendor):
     config = os.path.abspath(os.getcwd()) + '/bootup/conf/nesi.conf'
-    #subprocess.call(['python3', 'api.py', '--config', config, '--recreate-db'])
-    #time.sleep(2)
-    p = subprocess.Popen(['python3', 'api.py', '--config', config, '--recreate-db'])
-
-    time.sleep(1)
-    os.system("./bootup/conf/bootstraps/create-vendors-and-models.sh")
-    if vendor == 'Alcatel':
-        os.system("./bootup/conf/bootstraps/create-alcatel-7360.sh")
-    elif vendor == 'Huawei':
-        os.system("./bootup/conf/bootstraps/create-huawei-5623.sh")
-    elif vendor == 'Keymile':
-        os.system("./bootup/conf/bootstraps/create-keymile-MG2500.sh")
-    elif vendor == 'Edgecore':
-        os.system("./bootup/conf/bootstraps/create-edgecore-xxxx.sh")
-    elif vendor == 'Pbn':
-        os.system("./bootup/conf/bootstraps/create-pbn-AOCM3924.sh")
-    elif vendor == 'Zhone':
-        os.system("./bootup/conf/bootstraps/create-zhone.sh")
+    p = subprocess.Popen(['python3', 'nesi_api.py', '--recreate-db', '--load-model', vendor])
+    time.sleep(10)
     return p
 
 

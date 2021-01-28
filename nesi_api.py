@@ -13,11 +13,13 @@
 import argparse
 import os
 import sys
+import time
 
 from nesi.softbox.api import app
 from nesi.softbox.api import db
 from nesi.softbox.api.views import *  # noqa
 import pydevd_pycharm
+import subprocess
 
 DESCRIPTION = """\
 Network Equipment Simulator REST API.
@@ -60,6 +62,11 @@ def parse_args():
         '--debug', action='store_true',
         help='Run CLI instance in debug mode')
 
+    parser.add_argument(
+        '--load-model', metavar='<VENDOR>', type=str,
+        help='Config file path. Can also be set via environment variable '
+             'NESI_CONFIG.')
+
     return parser.parse_args()
 
 
@@ -72,6 +79,8 @@ def main():
 
     if args.config:
         os.environ['NESI_CONFIG'] = args.config
+    else:
+        os.environ['NESI_CONFIG'] = os.path.abspath(os.getcwd()) + '/bootup/conf/nesi.conf'
 
     config_file = os.environ.get('NESI_CONFIG')
     if config_file:
@@ -87,10 +96,29 @@ def main():
         db.drop_all()
         db.create_all()
 
-    app.run(host=app.config.get('NESI_LISTEN_IP'),
-            port=app.config.get('NESI_LISTEN_PORT'))
+    try:
+        if args.load_model in ('Alcatel', 'Huawei', 'Edgecore', 'Keymile', 'Pbn', 'Zhone'):
+            if args.load_model == 'Alcatel':
+                p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-alcatel-7360.sh", shell=True)
+            elif args.load_model == 'Huawei':
+                p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-huawei-5623.sh", shell=True)
+            elif args.load_model == 'Edgecore':
+                p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-edgecore-xxxx.sh", shell=True)
+            elif args.load_model == 'Keymile':
+                p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-keymile-MG2500.sh", shell=True)
+            elif args.load_model == 'Pbn':
+                p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-pbn-AOCM3924.sh", shell=True)
+            elif args.load_model == 'Zhone':
+                p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-zhone.sh", shell=True)
+        elif args.load_model is not None:
+            args.error('--load-model has invalid argument')
+            return
 
-    return 0
+        app.run(host=app.config.get('NESI_LISTEN_IP'), port=app.config.get('NESI_LISTEN_PORT'))
+
+    finally:
+        p.terminate()
+        p.kill()
 
 
 if __name__ == '__main__':

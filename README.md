@@ -79,20 +79,20 @@ the underlying DB, and another that simulates the devices Command Line Interface
 
 REST API terminal:
 
-    $ ./bootup/restapi.sh --keep-running [--recreate-db]
+    $ python3 nesi_api.py [--recreate-db] [--load-model <VENDOR>]
 
 
 CLI terminal:
 
 First we collect the uuid´s of all boxes
 
-    % python3 cli.py --list-boxen
+    % python3 nesi_cli.py --list-boxen
 
     Vendor Alcatel, model 7360, version FX-4, uuid d8da2c00-ed28-11ea-9cc7-8c8590d3240c
     
 Second we connect to one box with the specific uuid
 
-    % python3 cli.py --box-uuid d8da2c00-ed28-11ea-9cc7-8c8590d3240c
+    % python3 nesi_cli.py --box-uuid d8da2c00-ed28-11ea-9cc7-8c8590d3240c
 
           _   _ ______  _____ _ 
          | \ | |  ____|/ ____(_)
@@ -102,7 +102,7 @@ Second we connect to one box with the specific uuid
          |_| \_|______|_____/|_|
     
     
-    Hint: login credentials: admin/secret
+    Hint: login credentials: admin/secret (Huawei: root/secret)
     
     login:admin
     Password:secret
@@ -120,17 +120,15 @@ First we configure a debugger in our IDE. Therefore we add a Python Debug Server
 
 After that we first start our debuger and add the argument '--debug' in our CLI terminal:
 
-    % python3 cli.py --box-uuid <box-uuid> --debug
+    % python3 nesi_cli.py --box-uuid <box-uuid> --debug
 
 ### How to start tests 
 
 Tests can be started with the following command structure:
 
-    python3 cli.py --test Alcatel 
+    python3 nesi_cli.py --test Alcatel 
 
-For other vendors replace 'Alcatel' with your desired vendor, or use:
-
-    % ./bootup/restapi.sh --help
+For other vendors replace 'Alcatel' with your desired vendor.
 
 
 For more information see [test_structure.rst](https://github.com/inexio/NESi/blob/master/docs/source/test_structure.rst)
