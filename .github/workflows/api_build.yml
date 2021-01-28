@@ -34,19 +34,19 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Start alcatel-api
       run: |
-        ./bootup/restapi.sh --alcatel-api-build
+        python3 nesi_api.py --recreate-db --load-model Alcatel
     - name: Start huawei-api
       run: |
-        ./bootup/restapi.sh --huawei-api-build
+        python3 nesi_api.py --recreate-db --load-model Huawei
     - name: Start keymile-api
       run: |
-        ./bootup/restapi.sh --keymile-api-build
+        python3 nesi_api.py --recreate-db --load-model Keymile
     - name: Start edgecore-api
       run: |
-        ./bootup/restapi.sh --edgecore-api-build
+        python3 nesi_api.py --recreate-db --load-model Edgecore
     - name: Start pbn-api
       run: |
-        ./bootup/restapi.sh --pbn-api-build
+        python3 nesi_api.py --recreate-db --load-model Pbn
     - name: Start zhone-api
       run: |
-        ./bootup/restapi.sh --zhone-api-build
+        python3 nesi_api.py --recreate-db --load-model Zhone
