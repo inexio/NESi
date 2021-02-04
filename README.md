@@ -36,12 +36,16 @@ Click [here](https://thola.io/posts/thola-fosdem/) for more information
 [![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_zhone/master?label=zhone_tests)]()
 
 ### Supported Vendors
- - Alcatel  (nearly feature complete)
- - Huawei   (nearly feature complete)
- - Edgecore (nearly feature complete)
- - Keymile  (nearly feature complete)
- - Pbn      (not implemented yet)
- - Zhone    (work in progress)
+ - Alcatel
+ - Huawei
+ - Edgecore
+ - Keymile
+ - Zhone
+ 
+### Upcoming Vendors
+ - Pbn
+ - Juniper
+ - Cisco
 
 ### Supported network components
 
@@ -135,7 +139,64 @@ For other vendors replace 'alcatel' with your desired vendor, or use:
 
 For more information see [test_structure.rst](https://github.com/inexio/NESi/blob/master/docs/source/test_structure.rst)
 
- 
+### Available Flags
+
+#### restapi.sh
+
+`--recreate-db`
+
+Recreate the underlying SQLite Database
+
+`--keep-running`
+
+Keeps the API process alife
+
+`--debug`
+
+Launches the API in debug mode
+
+`--<vendor>-api-build`
+
+Launches the API and fills the database with vendorspecific data
+
+`--test-<vendor>-commands`
+
+Launches the API and runs vendorspecific command tests
+
+`--help`
+
+Displays help for available flags
+
+
+
+
+#### box.sh
+
+`--list_boxen`
+
+Lists all available devices that were created in the database
+
+`--box-uuid`
+
+Launches the device with the given uuid
+
+`--daemon`
+
+Launches the device in daemon mode
+
+`--standalone`
+
+Launches the device without having to launch the API in a seperate window first
+
+`--debug`
+
+Launches the device in debug mode
+
+`--help`
+
+Displays help for available flags
+
+
 ### How to add new simulated CLI
 
 For more information on this matter, please refer to the
