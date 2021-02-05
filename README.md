@@ -196,6 +196,17 @@ Launches the device in debug mode
 
 Displays help for available flags
 
+### Docker
+
+For people using Docker we included a dockerfile. 
+
+You can build nesi using docker with the command
+    
+    % docker build . -t nesi
+
+After building you can start the container via
+
+    % docker run -(d)it nesi
 
 ### How to add new simulated CLI
 
