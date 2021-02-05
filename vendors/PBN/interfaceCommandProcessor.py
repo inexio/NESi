@@ -101,28 +101,35 @@ class InterfaceCommandProcessor(BaseCommandProcessor):
             raise exceptions.CommandSyntaxError(command=command)
 
     def do_switchport(self, command, *args, context=None):
-        if self._validate(args, 'trunk', 'vlan-allowed', str):#switchport_trunk_vlan_allowed
+        if self._validate(args, 'trunk', 'vlan-allowed', str):          # switchport_trunk_vlan_allowed
             vlan, = self._dissect(args, 'trunk', 'vlan-allowed', str)
-            #TODO: Check if vlan_number exist
+            try:
+                _ = self._model.get_vlan('number', vlan)
+            except:
+                full_command = command
+                for arg in args:
+                    full_command += ' ' + arg
+                context['full_command'] = full_command
+                raise exceptions.CommandSyntaxError(command=command)
             port = self.get_component(command, args, context=context)
             port.set('switchport_trunk_vlan_allowed', vlan + ',')
-        elif self._validate(args, 'mode', 'trunk'):#switchport_mode_trunk
+        elif self._validate(args, 'mode', 'trunk'):         # switchport_mode_trunk
             port = self.get_component(command, args, context=context)
             port.set('switchport_mode_trunk', True)
-        elif self._validate(args, 'pvid', str):#switchport_pvid
+        elif self._validate(args, 'pvid', str):             # switchport_pvid
             pvid, = self._dissect(args, 'pvid', str)
             pvid = int(pvid)
             port = self.get_component(command, args, context=context)
             port.set('switchport_pvid', pvid)
-        elif self._validate(args, 'block', 'multicast'):#switchport_block_multicast
+        elif self._validate(args, 'block', 'multicast'):    # switchport_block_multicast
             port = self.get_component(command, args, context=context)
             port.set('switchport_block_multicast', True)
-        elif self._validate(args, 'rate-limit', str, 'egress'):#switchport_rate_limit_egress
+        elif self._validate(args, 'rate-limit', str, 'egress'):     # switchport_rate_limit_egress
             value, = self._dissect(args,  'rate-limit', str, 'egress')
             value = int(value)
             port = self.get_component(command, args, context=context)
             port.set('switchport_rate_limit_egress', value)
-        elif self._validate(args, 'rate-limit', str, 'ingress'):#switchport_rate_limit_ingress
+        elif self._validate(args, 'rate-limit', str, 'ingress'):    # switchport_rate_limit_ingress
             value, = self._dissect(args, 'rate-limit', str, 'ingress')
             value = int(value)
             port = self.get_component(command, args, context=context)
