@@ -36,7 +36,8 @@ class ConfCommandProcessor(BaseCommandProcessor):
 
     def do_write(self, command, *args, context=None):
         if len(args) == 0:
-            pass       # TODO: Find functionality (could store previous values)
+            # Does nothing
+            pass
         else:
             full_command = command
             for arg in args:
@@ -48,6 +49,7 @@ class ConfCommandProcessor(BaseCommandProcessor):
         if self._validate(args, str):
             ident, = self._dissect(args, str)
             if ident.startswith('GigaEthernet'):
+                context['ftth_prefix'] = 'g'
                 port = ident[12:]
                 try:
                     port = self._model.get_port('name', port)
@@ -59,11 +61,30 @@ class ConfCommandProcessor(BaseCommandProcessor):
                     raise exceptions.CommandExecutionError(command=command, template='parameter_error', template_scopes=
                     ('login', 'mainloop', 'ena', 'conf'))
 
-                from .interaceCommandProcessor import InterfaceCommandProcessor
+                from .interfaceCommandProcessor import InterfaceCommandProcessor
                 subprocessor = self._create_subprocessor(InterfaceCommandProcessor, 'login', 'mainloop', 'ena', 'conf',
                                                          'interface')
                 context['component'] = port
-                subprocessor.loop(context=context)
+                subprocessor.loop(context=dict(context, port=port))
+
+            elif ident.startswith('ePon'):
+                context['ftth_prefix'] = 'epon'
+                port = ident[4:]
+                try:
+                    port = self._model.get_port('name', port)
+                except exceptions.SoftboxenError:
+                    full_command = command
+                    for arg in args:
+                        full_command += ' ' + arg
+                    context['full_command'] = full_command
+                    raise exceptions.CommandExecutionError(command=command, template='parameter_error', template_scopes=
+                    ('login', 'mainloop', 'ena', 'conf'))
+
+                from .interfaceCommandProcessor import InterfaceCommandProcessor
+                subprocessor = self._create_subprocessor(InterfaceCommandProcessor, 'login', 'mainloop', 'ena', 'conf',
+                                                         'interface')
+                context['component'] = port
+                subprocessor.loop(context=dict(context, port=port))
 
             else:
                 full_command = command
@@ -82,6 +103,7 @@ class ConfCommandProcessor(BaseCommandProcessor):
         if self._validate(args, str):
             ident, = self._dissect(args, str)
             if ident.startswith('GigaEthernet'):
+                context['ftth_prefix'] = 'g'
                 port = ident[12:]
                 try:
                     port = self._model.get_port('name', port)
@@ -105,11 +127,11 @@ class ConfCommandProcessor(BaseCommandProcessor):
                     raise exceptions.CommandExecutionError(command=command, template='parameter_error', template_scopes=
                     ('login', 'mainloop', 'ena', 'conf'))
 
-                from .interaceCommandProcessor import InterfaceCommandProcessor
+                from .interfaceCommandProcessor import InterfaceCommandProcessor
                 subprocessor = self._create_subprocessor(InterfaceCommandProcessor, 'login', 'mainloop', 'ena', 'conf',
                                                          'interface')
                 context['component'] = port
-                subprocessor.loop(context=context)
+                subprocessor.loop(context=dict(context, port=port))
 
             else:
                 full_command = command

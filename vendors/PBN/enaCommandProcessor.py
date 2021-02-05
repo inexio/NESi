@@ -10,6 +10,7 @@
 # - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
+import time
 
 from nesi import exceptions
 from .baseCommandProcessor import BaseCommandProcessor
@@ -48,8 +49,8 @@ class EnaCommandProcessor(BaseCommandProcessor):
 
     def do_wr(self, command, *args, context=None):
         if args == ():
-            # TODO: Functionality
-            print('hi')
+            # Does nothing
+            pass
         else:
             full_command = command
             for arg in args:
@@ -60,8 +61,9 @@ class EnaCommandProcessor(BaseCommandProcessor):
     def do_copy(self, command, *args, context=None):
         if self._validate(args, 'startup-config', str):
             addr, = self._dissect(args, 'startup-config', str)
-            print(addr)
-            # TODO: Functionality
+            # Does nothing, because we can't do back-ups
+            time.sleep(10)
+            pass
         else:
             full_command = command
             for arg in args:
