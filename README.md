@@ -66,6 +66,8 @@ Furthermore the previous `softboxen` project is freely available as a GitHub [re
 
 ## Installation
 
+### Basic
+
 Either clone the repository with the following command:
 ```shell script
 $ git clone git@github.com:inexio/NESi.git
@@ -73,6 +75,63 @@ $ git clone git@github.com:inexio/NESi.git
 After that, make sure you have installed the required python packages found in the requirements.txt. An easy way to do this is with the following command:
 ```shell script
 $ pip install -r requirements.txt
+```
+
+### Systemd Setup
+
+Add a nesi user to your system
+
+```shell script
+$ sudo adduser nesi
+```
+
+Add a folder for nesi to /opt and change access rights
+
+```shell script
+$ cd /opt
+$ mkdir nesi
+$ chown nesi:nesi -R nesi/
+```
+
+Add a 'var' and 'etc' folder
+
+```shell script
+$ cd nesi/
+$ mkdir var/ etc/
+```
+
+Add a new venv via python
+
+```shell script
+$ python3 -m venv venv
+```
+
+Clone NESi into the venv and install requirements
+
+```shell script
+$ cd venv
+$ git clone https://github.com/inexio/NESi.git
+$ source bin/activate
+$ python3 -m pip install -r NESi/requirements.txt
+$ deactivate
+```
+
+Copy the service template to /etc/systemd/system
+
+```shell script
+$ cp NESi/bootup/conf/systemd/nesi-gunicorn.service /etc/systemd/system
+```
+
+Copy nesi.conf to /opt/nesi/etc and make according changes
+
+```shell script
+$ cp NESi/bootup/conf/nesi.conf /opt/nesi/etc/
+```
+
+Start systemd process
+```shell script
+$ systemctl daemon-reload
+$ systemctl start nesi-gunicorn.service
 ```
 
 ## How to use NESi
