@@ -178,6 +178,30 @@ Second we connect to one box with the specific uuid
 
 Interactive menus will guide you through the implemented commands.
 
+### SSH and Telnet Daemon
+
+NESi comes with SSH and Telnet socket Daemons built into the boxes itself. 
+
+To use either telnet or ssh you have to specify one of them in the setup-script of a box or set it via the rest-api.
+
+```shell script
+req='{
+  ...
+  "network_protocol": "ssh",
+  "network_address": "127.0.0.1",
+  ...
+}'
+```
+
+After setting the network_protocol of a device you can launch the 'box.sh' script with the --daemon flag to start the device in either telnet or ssh socket mode.
+
+```shell script
+$ ./bootup/box.sh --box-uuid <devices uuid> --daemon
+```
+
+The network_adress field is used as the host adress for the socket, so set this option accordingly.
+
+After the socket has started you can connect to your device with the chosen protocol.
 
 ### How to use debug mode
 
