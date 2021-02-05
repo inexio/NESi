@@ -85,12 +85,11 @@ Add a nesi user to your system
 $ sudo adduser nesi
 ```
 
-Add a folder for nesi to /opt and change access rights
+Add a folder for nesi to /opt
 
 ```shell script
 $ cd /opt
 $ mkdir nesi
-$ chown nesi:nesi -R nesi/
 ```
 
 Add a 'var' and 'etc' folder
@@ -114,6 +113,12 @@ $ git clone https://github.com/inexio/NESi.git
 $ source bin/activate
 $ python3 -m pip install -r NESi/requirements.txt
 $ deactivate
+```
+
+Change access rights
+
+```shell script
+$ chown nesi:nesi -R /opt/nesi/
 ```
 
 Copy the service template to /etc/systemd/system
