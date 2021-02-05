@@ -2,6 +2,8 @@ FROM python:3.7
 
 COPY . nesi
 WORKDIR nesi
-RUN python -m pip install requirements.txt
+RUN python3 -m pip install -r requirements.txt
 
-ENTRYPOINT ["./restapi.sh", "--keep-running", "--recreate-db"]
+RUN chmod +x ./bootup/restapi.sh
+
+ENTRYPOINT ["./bootup/restapi.sh", "--keep-running", "--recreate-db"]

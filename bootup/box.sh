@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # This file is part of the NESi software.
 #
 # Copyright (c) 2020

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # This file is part of the NESi software.
 #
 # Copyright (c) 2020
@@ -10,7 +12,6 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-#!/bin/bash
 #
 # Invoke CLI simulator REST API server and issue a series of REST API
 # calls to create an example network device (box).
