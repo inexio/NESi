@@ -18,8 +18,10 @@ import time
 from nesi.softbox.api import app
 from nesi.softbox.api import db
 from nesi.softbox.api.views import *  # noqa
+from nesi.softbox.api import config
 import pydevd_pycharm
 import subprocess
+from pathlib import Path
 
 DESCRIPTION = """\
 Network Equipment Simulator REST API.
@@ -79,12 +81,12 @@ def main():
 
     if args.config:
         os.environ['NESI_CONFIG'] = args.config
+        config_file = os.environ.get('NESI_CONFIG')
     else:
-        os.environ['NESI_CONFIG'] = os.path.abspath(os.getcwd()) + '/bootup/conf/nesi.conf'
+        config_file = config.DefaultConfig()
 
-    config_file = os.environ.get('NESI_CONFIG')
     if config_file:
-        app.config.from_pyfile(config_file)
+        app.config.from_object(config_file)
 
     if args.interface:
         app.config['NESI_LISTEN_IP'] = args.interface

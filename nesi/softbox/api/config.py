@@ -12,9 +12,10 @@
 
 
 class DefaultConfig(object):
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/nesi-restapi.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
+    SECRET_KEY = '\xaf\x24\x5f\xa1@i\xd1>V\x70\xab\x8fb\x16#Z\x0b\x81\xeb\x16'
 
     DEBUG = False
 
