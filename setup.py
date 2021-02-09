@@ -24,17 +24,13 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     keywords='NESi, Network, Simulator, Device, Alcatel, Huawei, KeyMile',
     install_requires=requires,
-    scripts=[
-        'nesi_api.py',
-        'nesi_cli.py'
-    ],
     entry_points={
         'console_scripts': [
             'nesi-cli = nesi_cli:main',
             'nesi-api = nesi_api:main',
         ]
     },
-    package_data={'bootup': ['conf/*.conf', 'conf/bootstraps/*.sh', 'conf/ssh/*.pub', 'conf/ssh/*.txt'],
+    package_data={'bootup': ['conf/*.conf', 'conf/bootstraps/*.sh', 'conf/ssh/*.pub', 'conf/ssh/id_rsa'],
                   'test_cases': ['integration_tests/alcatel/*.txt', 'integration_tests/edgecore/*.txt',
                                  'integration_tests/huawei/*.txt', 'integration_tests/keymile/*.txt',
                                  'integration_tests/zhone/*.txt', 'integration_tests/pbn/*.txt'],

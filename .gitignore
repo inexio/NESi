@@ -10,6 +10,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
+deb_dist/
 dist/
 downloads/
 eggs/
@@ -131,6 +132,9 @@ dmypy.json
 # Pycharm
 .idea/
 .DS_Store
+
+# Archives
+.gz
 
 # Tests
 /test_cases/integration_tests/alcatel/output.txt

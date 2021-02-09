@@ -101,7 +101,7 @@ def main():
     try:
         if args.load_model in ('Alcatel', 'Huawei', 'Edgecore', 'Keymile', 'Pbn', 'Zhone'):
             if args.load_model == 'Alcatel':
-                p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-alcatel-7360.sh", shell=True)
+                p = subprocess.Popen("./create-vendors-and-models.sh; create-vendors-and-models.sh", shell=True)
             elif args.load_model == 'Huawei':
                 p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-huawei-5623.sh", shell=True)
             elif args.load_model == 'Edgecore':
@@ -119,8 +119,9 @@ def main():
         app.run(host=app.config.get('NESI_LISTEN_IP'), port=app.config.get('NESI_LISTEN_PORT'))
 
     finally:
-        p.terminate()
-        p.kill()
+        if args.load_model:
+            p.terminate()
+            p.kill()
 
 
 if __name__ == '__main__':
