@@ -237,7 +237,7 @@ Recreate the underlying SQLite Database
 
 `--keep-running`
 
-Keeps the API process alife
+Keeps the API process alive
 
 `--debug`
 
