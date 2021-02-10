@@ -21,6 +21,7 @@ from nesi.softbox.api.views import *  # noqa
 from nesi.softbox.api import config
 import pydevd_pycharm
 import subprocess
+import threading
 from pathlib import Path
 
 DESCRIPTION = """\
@@ -98,30 +99,37 @@ def main():
         db.drop_all()
         db.create_all()
 
-    try:
-        if args.load_model in ('Alcatel', 'Huawei', 'Edgecore', 'Keymile', 'Pbn', 'Zhone'):
-            if args.load_model == 'Alcatel':
-                p = subprocess.Popen("./create-vendors-and-models.sh; create-vendors-and-models.sh", shell=True)
-            elif args.load_model == 'Huawei':
-                p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-huawei-5623.sh", shell=True)
-            elif args.load_model == 'Edgecore':
-                p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-edgecore-xxxx.sh", shell=True)
-            elif args.load_model == 'Keymile':
-                p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-keymile-MG2500.sh", shell=True)
-            elif args.load_model == 'Pbn':
-                p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-pbn-AOCM3924.sh", shell=True)
-            elif args.load_model == 'Zhone':
-                p = subprocess.Popen("./bootup/conf/bootstraps/create-vendors-and-models.sh; ./bootup/conf/bootstraps/create-zhone.sh", shell=True)
-        elif args.load_model is not None:
-            args.error('--load-model has invalid argument')
-            return
+    if args.load_model in ('Alcatel', 'Huawei', 'Edgecore', 'Keymile', 'Pbn', 'Zhone'):
+        if args.load_model == 'Alcatel':
+            from bootup.conf.bootstraps.create_alcatel_7360 import create_alcatel
+            p = threading.Thread(target=create_alcatel, daemon=True)
+            p.start()
+        elif args.load_model == 'Huawei':
+            from bootup.conf.bootstraps.create_alcatel_7360 import create_alcatel
+            p = threading.Thread(target=create_alcatel, daemon=True)
+            p.start()
+        elif args.load_model == 'Edgecore':
+            from bootup.conf.bootstraps.create_alcatel_7360 import create_alcatel
+            p = threading.Thread(target=create_alcatel, daemon=True)
+            p.start()
+        elif args.load_model == 'Keymile':
+            from bootup.conf.bootstraps.create_alcatel_7360 import create_alcatel
+            p = threading.Thread(target=create_alcatel, daemon=True)
+            p.start()
+        elif args.load_model == 'Pbn':
+            from bootup.conf.bootstraps.create_alcatel_7360 import create_alcatel
+            p = threading.Thread(target=create_alcatel, daemon=True)
+            p.start()
+        elif args.load_model == 'Zhone':
+            from bootup.conf.bootstraps.create_alcatel_7360 import create_alcatel
+            p = threading.Thread(target=create_alcatel, daemon=True)
+            p.start()
+    elif args.load_model is not None:
+        args.error('--load-model has invalid argument')
+        return
 
-        app.run(host=app.config.get('NESI_LISTEN_IP'), port=app.config.get('NESI_LISTEN_PORT'))
+    app.run(host=app.config.get('NESI_LISTEN_IP'), port=app.config.get('NESI_LISTEN_PORT'))
 
-    finally:
-        if args.load_model:
-            p.terminate()
-            p.kill()
 
 
 if __name__ == '__main__':

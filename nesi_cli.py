@@ -85,6 +85,10 @@ def main():
     args = parser.parse_args()
 
     try:
+        from bootup.conf.bootstraps import create_alcatel_7360
+
+        create_alcatel_7360.create_alcatel()
+
         if args.debug:
             pydevd_pycharm.settrace('localhost', port=3001, stdoutToServer=True, stderrToServer=True)
 
