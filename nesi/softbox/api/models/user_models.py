@@ -20,7 +20,7 @@ class User(db.Model):
     box_id = db.Column(db.Integer(), db.ForeignKey('box.id'))
     credential_details = db.relationship('Credential', backref='User', lazy='dynamic')
     name = db.Column(db.String(), default='user')
-    level = db.Column(db.Enum('Super', 'Admin', 'Operator', 'User'), default='User')
+    level = db.Column(db.Enum('Super', 'Admin', 'Operator', 'User', 'Enable'), default='User')
     status = db.Column(db.Enum('online', 'offline'), default='offline')
     profile = db.Column(db.Enum('root', 'admin', 'operator', 'commonuser', 'enable', 'backup'), default='commonuser')
     append_info = db.Column(db.String(), default='-----')

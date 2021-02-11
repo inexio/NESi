@@ -140,7 +140,7 @@ def create_alcatel():
         "name": "DPBO_3310",
         "description": "PortProfile #4",
         "type": "dpbo"
-        }
+    }
     dpbo_3310_profile = create_resource(req, (endpoint + '/boxen/' + box_id + '/port_profiles'))
 
     # PortProfile 5
@@ -183,14 +183,14 @@ def create_alcatel():
 
     # Policer 1
     req = {
-    "name": "1G_CIR",
-    "description": "Policer #1",
-    "type": "policer",
-    "committed_info_rate": 1050000,
-    "committed_burst_size": 2560000
+        "name": "1G_CIR",
+        "description": "Policer #1",
+        "type": "policer",
+        "committed_info_rate": 1050000,
+        "committed_burst_size": 2560000
     }
     _1g_cir_profile = create_resource(req, (endpoint + '/boxen/' + box_id + '/port_profiles'))
-    
+
     # Policer 2
     req = {
         "name": "1M_CIR",
@@ -200,7 +200,7 @@ def create_alcatel():
         "committed_burst_size": 256000
     }
     _1m_cir_profile = create_resource(req, (endpoint + '/boxen/' + box_id + '/port_profiles'))
-    
+
     # Policer 3
     req = {
         "name": "2M_CIR",
@@ -210,7 +210,7 @@ def create_alcatel():
         "committed_burst_size": 256000
     }
     _2m_cir_profile = create_resource(req, (endpoint + '/boxen/' + box_id + '/port_profiles'))
-    
+
     # Policer 4
     req = {
         "name": "50M_CIR",
@@ -220,7 +220,7 @@ def create_alcatel():
         "committed_burst_size": 256000
     }
     _50m_cir_profile = create_resource(req, (endpoint + '/boxen/' + box_id + '/port_profiles'))
-    
+
     # Policer 5
     req = {
         "name": "100M_CIR",
@@ -230,7 +230,7 @@ def create_alcatel():
         "committed_burst_size": 256000
     }
     _100m_cir_profile = create_resource(req, (endpoint + '/boxen/' + box_id + '/port_profiles'))
-    
+
     # Policer 6
     req = {
         "name": "500M_CIR",
@@ -270,7 +270,7 @@ def create_alcatel():
         "dhcp_opt82_ext": "disable"
     }
     vlan_pppoe = create_resource(req, (endpoint + '/boxen/' + box_id + '/vlans'))
-    
+
     ### CPE Management Vlan ###
     req = {
         "number": 3320,
@@ -306,2535 +306,2535 @@ def create_alcatel():
     ### Subrack 1/1 ###
     # Create a physical subrack at the network device (admin operation)
     req = {
-    "name": "1/1",
-    "description": "Physical subrack #1",
-    "planned_type": "rvxs-a",
-    "actual_type": "rvxs-a",
-    "operational_state": "1",
-    "admin_state": "1",
-    "err_state": "no-error",
-    "availability": "available",
-    "mode": "no-extended-lt-slots",
-    "subrack_class": "main-ethernet",
-    "serial_no": "CN1646MAGDGF",
-    "variant": "3FE68313CDCDE",
-    "ics": "04"
+        "name": "1/1",
+        "description": "Physical subrack #1",
+        "planned_type": "rvxs-a",
+        "actual_type": "rvxs-a",
+        "operational_state": "1",
+        "admin_state": "1",
+        "err_state": "no-error",
+        "availability": "available",
+        "mode": "no-extended-lt-slots",
+        "subrack_class": "main-ethernet",
+        "serial_no": "CN1646MAGDGF",
+        "variant": "3FE68313CDCDE",
+        "ics": "04"
     }
-    subrack_id =create_resource(req, (endpoint + '/boxen/' + box_id + '/subracks'))
-    
+    subrack_id = create_resource(req, (endpoint + '/boxen/' + box_id + '/subracks'))
+
     ### Management Card ###
-    
+
     # Create a physical card at the network device (admin operation)
-    
+
     req = {
-    "name": "nt-a",
-    "position": "network:0",
-    "subrack_id": subrack_id,
-    "description": "Physical Management card",
-    "planned_type": "rant-a",
-    "actual_type": "rant-a",
-    "operational_state": "1",
-    "err_state": "no-error",
-    "availability": "available",
-    "alarm_profile": "none",
-    "capab_profile": "not_applicable",
-    "manufacturer": "ALCL",
-    "mnemonic": "RANT-A",
-    "pba_code": "3FE68863GGFL",
-    "fpba_code": "3FE68863GGFL",
-    "fpba_ics": "03",
-    "clei_code": "VAUCAMZKAA",
-    "serial_no": "YP1819F4025",
-    "failed_test": "00:00:00:00",
-    "lt_restart_time": "1970-01-01:00:00:00",
-    "lt_restart_cause": "other",
-    "lt_restart_num": 0,
-    "mgnt_entity_oamipaddr": "0.0.0.0",
-    "mgnt_entity_pairnum": 0,
-    "dual_host_ip": "0.0.0.0",
-    "dual_host_loc": "none",
-    "product": "mgnt"
+        "name": "nt-a",
+        "position": "network:0",
+        "subrack_id": subrack_id,
+        "description": "Physical Management card",
+        "planned_type": "rant-a",
+        "actual_type": "rant-a",
+        "operational_state": "1",
+        "err_state": "no-error",
+        "availability": "available",
+        "alarm_profile": "none",
+        "capab_profile": "not_applicable",
+        "manufacturer": "ALCL",
+        "mnemonic": "RANT-A",
+        "pba_code": "3FE68863GGFL",
+        "fpba_code": "3FE68863GGFL",
+        "fpba_ics": "03",
+        "clei_code": "VAUCAMZKAA",
+        "serial_no": "YP1819F4025",
+        "failed_test": "00:00:00:00",
+        "lt_restart_time": "1970-01-01:00:00:00",
+        "lt_restart_cause": "other",
+        "lt_restart_num": 0,
+        "mgnt_entity_oamipaddr": "0.0.0.0",
+        "mgnt_entity_pairnum": 0,
+        "dual_host_ip": "0.0.0.0",
+        "dual_host_loc": "none",
+        "product": "mgnt"
     }
     card_nt_a = create_resource(req, (endpoint + '/boxen/' + box_id + '/cards'))
-    
+
     ### Management Port 1 ###
     # Create a physical port at the network device (admin operation)
     req = {
-    "card_id": card_nt_a,
-    "name": "nt-a:xfp:1",
-    "position": "nt-a:xfp:1",
-    "description": "Management port #1",
-    "operational_state": "1",
-    "admin_state": "1",
-    "upstream": 0,
-    "downstream": 0,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_nt_a,
+        "name": "nt-a:xfp:1",
+        "position": "nt-a:xfp:1",
+        "description": "Management port #1",
+        "operational_state": "1",
+        "admin_state": "1",
+        "upstream": 0,
+        "downstream": 0,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_mgmt = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort nt-a:xfp:1 ####
     req = {
-    "connected_id": port_mgmt,
-    "connected_type": "port",
-    "name": "nt-a:xfp:1",
-    "admin_state": "1",
-    "operational_state": "1"
+        "connected_id": port_mgmt,
+        "connected_type": "port",
+        "name": "nt-a:xfp:1",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Card 1/1/1 ###
     # Create a physical card at the network device (admin operation)
     req = {
-    "subrack_id": subrack_id,
-    "description": "Physical card 1/1/1",
-    "planned_type": "rdlt-c",
-    "actual_type": "rdlt-c",
-    "operational_state": "1",
-    "admin_state": "1",
-    "err_state": "no-error",
-    "availability": "available",
-    "alarm_profile": "none",
-    "capab_profile": "32port_xDSL",
-    "manufacturer": "ALCL",
-    "mnemonic": "RDLT-C",
-    "pba_code": "3FE68863GGFL",
-    "fpba_code": "3FE68863GGFL",
-    "fpba_ics": "02",
-    "clei_code": "VBIUAALBAB",
-    "serial_no": "AA1815FSE1CG",
-    "failed_test": "00:00:00:00",
-    "lt_restart_time": "1970-01-01:00:00:00",
-    "lt_restart_cause": "poweron",
-    "lt_restart_num": 0,
-    "mgnt_entity_oamipaddr": "0.0.0.0",
-    "mgnt_entity_pairnum": 0,
-    "dual_host_ip": "0.0.0.0",
-    "dual_host_loc": "none",
-    "product": "xdsl"
+        "subrack_id": subrack_id,
+        "description": "Physical card 1/1/1",
+        "planned_type": "rdlt-c",
+        "actual_type": "rdlt-c",
+        "operational_state": "1",
+        "admin_state": "1",
+        "err_state": "no-error",
+        "availability": "available",
+        "alarm_profile": "none",
+        "capab_profile": "32port_xDSL",
+        "manufacturer": "ALCL",
+        "mnemonic": "RDLT-C",
+        "pba_code": "3FE68863GGFL",
+        "fpba_code": "3FE68863GGFL",
+        "fpba_ics": "02",
+        "clei_code": "VBIUAALBAB",
+        "serial_no": "AA1815FSE1CG",
+        "failed_test": "00:00:00:00",
+        "lt_restart_time": "1970-01-01:00:00:00",
+        "lt_restart_cause": "poweron",
+        "lt_restart_num": 0,
+        "mgnt_entity_oamipaddr": "0.0.0.0",
+        "mgnt_entity_pairnum": 0,
+        "dual_host_ip": "0.0.0.0",
+        "dual_host_loc": "none",
+        "product": "xdsl"
     }
     card_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cards'))
-    
+
     ### Port 1/1/1/1 ###
     # Create a physical port at the network device (admin operation)
     req = {
-    "card_id": card_1_1_1,
-    "description": "Physical port 1/1/1/1",
-    "operational_state": "1",
-    "admin_state": "1",
-    "upstream": 10000,
-    "downstream": 25000,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_1,
+        "description": "Physical port 1/1/1/1",
+        "operational_state": "1",
+        "admin_state": "1",
+        "upstream": 10000,
+        "downstream": 25000,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/1/1 ####
     req = {
-    "connected_id": port_1_1_1_1,
-    "connected_type": "port",
-    "name": "1/1/1/1",
-    "admin_state": "1",
-    "operational_state": "1"
+        "connected_id": port_1_1_1_1,
+        "connected_type": "port",
+        "name": "1/1/1/1",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/1/1  ###
     req = {
-    "name": "2620",
-    "service_port_id": service_port_1_1_1_1,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_1
+        "name": "2620",
+        "service_port_id": service_port_1_1_1_1,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_1
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/1/1  ###
     req = {
-    "name": "3320",
-    "service_port_id": service_port_1_1_1_1,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_1
+        "name": "3320",
+        "service_port_id": service_port_1_1_1_1,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_1
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### ServicePort 1/1/1/1:1:32 ####
     req = {
-    "name": "1/1/1/1:1:32",
-    "connected_id": port_1_1_1_1,
-    "connected_type": "port",
-    "admin_state": "1",
-    "operational_state": "1"
+        "name": "1/1/1/1:1:32",
+        "connected_id": port_1_1_1_1,
+        "connected_type": "port",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_1_1_1_32 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/1/1:1:32  ###
     req = {
-    "name": "2620",
-    "service_port_id": service_port_1_1_1_1_1_32,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_1
+        "name": "2620",
+        "service_port_id": service_port_1_1_1_1_1_32,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_1
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Cpe 1/1/1/1/1 ###
     # Create a physical cpe at the ont-port (admin operation)
     req = {
-    "port_id": port_1_1_1_1,
-    "description": "Cpe 1/1/1/1/1",
-    "serial_no": "ABCD123456EF",
-    "admin_state": "1",
-    "mac": "8f:db:82:ef:ea:17"
+        "port_id": port_1_1_1_1,
+        "description": "Cpe 1/1/1/1/1",
+        "serial_no": "ABCD123456EF",
+        "admin_state": "1",
+        "mac": "8f:db:82:ef:ea:17"
     }
     cpe_1_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpes'))
-    
+
     ### CpePort 1/1/1/1/1/1 ###
     # Create a physical cpe-port at the cpe (admin operation)
     req = {
-    "cpe_id": cpe_1_1_1_1_1,
-    "description": "CpePort 1/1/1/1/1/1"
+        "cpe_id": cpe_1_1_1_1_1,
+        "description": "CpePort 1/1/1/1/1/1"
     }
     cpe_port_1_1_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpe_ports'))
-    
+
     ### ServicePort 1/1/1/1/1/1 ####
     req = {
-    "connected_id": cpe_port_1_1_1_1_1_1,
-    "connected_type": "cpe",
-    "name": "1/1/1/1/1/1",
-    "admin_state": "1",
-    "operational_state": "1"
+        "connected_id": cpe_port_1_1_1_1_1_1,
+        "connected_type": "cpe",
+        "name": "1/1/1/1/1/1",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/1/1/1/1  ###
     req = {
-    "name": "2620",
-    "service_port_id": service_port_1_1_1_1_1_1,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_1
+        "name": "2620",
+        "service_port_id": service_port_1_1_1_1_1_1,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_1
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/1/1/1/1  ###
     req = {
-    "name": "3320",
-    "service_port_id": service_port_1_1_1_1_1_1,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_1
+        "name": "3320",
+        "service_port_id": service_port_1_1_1_1_1_1,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_1
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
 
     ### Port 1/1/1/2 ###
     # Create a physical port at the network device (admin operation)
     req = {
-    "card_id": card_1_1_1,
-    "description": "Physical port 1/1/1/2",
-    "operational_state": "0",
-    "admin_state": "1",
-    "upstream": 0,
-    "downstream": 0,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_1,
+        "description": "Physical port 1/1/1/2",
+        "operational_state": "0",
+        "admin_state": "1",
+        "upstream": 0,
+        "downstream": 0,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_1_2 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/1/2 ####
     req = {
-    "connected_id": port_1_1_1_2,
-    "connected_type": "port",
-    "name": "1/1/1/1",
-    "admin_state": "1",
-    "operational_state": "0"
+        "connected_id": port_1_1_1_2,
+        "connected_type": "port",
+        "name": "1/1/1/1",
+        "admin_state": "1",
+        "operational_state": "0"
     }
     service_port_1_1_1_2 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/1/2  ###
     req = {
-    "name": "2620",
-    "service_port_id": service_port_1_1_1_2,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_1
+        "name": "2620",
+        "service_port_id": service_port_1_1_1_2,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_1
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/1/2  ###
     req = {
-    "name": "3320",
-    "service_port_id": service_port_1_1_1_2,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_1
+        "name": "3320",
+        "service_port_id": service_port_1_1_1_2,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_1
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Cpe 1/1/1/2/1 ###
     # Create a physical cpe at the ont-port (admin operation)
     req = {
-    "port_id": port_1_1_1_2,
-    "description": "Cpe 1/1/1/2/1",
-    "serial_no": "ABCD654321FE",
-    "admin_state": "0",
-    "mac": "8d:dc:81:ea:fe:12"
+        "port_id": port_1_1_1_2,
+        "description": "Cpe 1/1/1/2/1",
+        "serial_no": "ABCD654321FE",
+        "admin_state": "0",
+        "mac": "8d:dc:81:ea:fe:12"
     }
     cpe_1_1_1_2_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpes'))
-    
+
     ### CpePort 1/1/1/1/2/1 ###
     # Create a physical cpe-port at the cpe (admin operation)
     req = {
-    "cpe_id": cpe_1_1_1_2_1,
-    "description": "CpePort 1/1/1/2/1/1"
+        "cpe_id": cpe_1_1_1_2_1,
+        "description": "CpePort 1/1/1/2/1/1"
     }
     cpe_port_1_1_1_2_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpe_ports'))
-    
+
     ### Port 1/1/1/3 ###
     # Create a physical port at the network device (admin operation)
     req = {
-    "card_id": card_1_1_1,
-    "description": "Physical port 1/1/1/3",
-    "operational_state": "0",
-    "admin_state": "0",
-    "upstream": 0,
-    "downstream": 0,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_1,
+        "description": "Physical port 1/1/1/3",
+        "operational_state": "0",
+        "admin_state": "0",
+        "upstream": 0,
+        "downstream": 0,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_1_3 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/1/3 ####
     req = {
-    "connected_id": port_1_1_1_3,
-    "connected_type": "port",
-    "name": "1/1/1/3",
-    "admin_state": "0",
-    "operational_state": "0"
+        "connected_id": port_1_1_1_3,
+        "connected_type": "port",
+        "name": "1/1/1/3",
+        "admin_state": "0",
+        "operational_state": "0"
     }
     service_port_1_1_1_3 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/1/3 ###
     req = {
-    "name": "2620",
-    "service_port_id": service_port_1_1_1_3,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_1
+        "name": "2620",
+        "service_port_id": service_port_1_1_1_3,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_1
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/1/3 ###
     req = {
-          "name": "3320",
-    "service_port_id": service_port_1_1_1_3,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_1
+        "name": "3320",
+        "service_port_id": service_port_1_1_1_3,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_1
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Card 1/1/2 ###
     # Create a physical card at the network device (admin operation)
     req = {
-    "subrack_id": subrack_id,
-    "description": "Physical card 1/1/2",
-    "planned_type": "rdlt-c",
-    "actual_type": "rdlt-c",
-    "operational_state": "1",
-    "admin_state": "1",
-    "err_state": "no-error",
-    "availability": "available",
-    "alarm_profile": "none",
-    "capab_profile": "32port_xDSL",
-    "manufacturer": "ALCL",
-    "mnemonic": "FANT-F",
-    "pba_code": "3FE68863GGFL",
-    "fpba_code": "3FE68863GGFL",
-    "fpba_ics": "02",
-    "clei_code": "VBIUAALBAB",
-    "serial_no": "AA1815FSE1CG",
-    "failed_test": "00:00:00:00",
-    "lt_restart_time": "1970-01-01:00:00:00",
-    "lt_restart_cause": "poweron",
-    "lt_restart_num": 0,
-    "mgnt_entity_oamipaddr": "0.0.0.0",
-    "mgnt_entity_pairnum": 0,
-    "dual_host_ip": "0.0.0.0",
-    "dual_host_loc": "none",
-    "product": "vdsl"
+        "subrack_id": subrack_id,
+        "description": "Physical card 1/1/2",
+        "planned_type": "rdlt-c",
+        "actual_type": "rdlt-c",
+        "operational_state": "1",
+        "admin_state": "1",
+        "err_state": "no-error",
+        "availability": "available",
+        "alarm_profile": "none",
+        "capab_profile": "32port_xDSL",
+        "manufacturer": "ALCL",
+        "mnemonic": "FANT-F",
+        "pba_code": "3FE68863GGFL",
+        "fpba_code": "3FE68863GGFL",
+        "fpba_ics": "02",
+        "clei_code": "VBIUAALBAB",
+        "serial_no": "AA1815FSE1CG",
+        "failed_test": "00:00:00:00",
+        "lt_restart_time": "1970-01-01:00:00:00",
+        "lt_restart_cause": "poweron",
+        "lt_restart_num": 0,
+        "mgnt_entity_oamipaddr": "0.0.0.0",
+        "mgnt_entity_pairnum": 0,
+        "dual_host_ip": "0.0.0.0",
+        "dual_host_loc": "none",
+        "product": "vdsl"
     }
-    
+
     card_1_1_2 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cards'))
-    
+
     ### Port 1/1/2/1 ###
     # Create a physical port at the network device (admin operation)
     req = {
-    "card_id": card_1_1_2,
-    "description": "Physical port 1/1/2/1",
-    "operational_state": "1",
-    "admin_state": "1",
-    "upstream": 10000,
-    "downstream": 25000,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_2,
+        "description": "Physical port 1/1/2/1",
+        "operational_state": "1",
+        "admin_state": "1",
+        "upstream": 10000,
+        "downstream": 25000,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_2_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/2/1 ####
     req = {
-    "connected_id": port_1_1_2_1,
-    "connected_type": "port",
-    "name": "1/1/2/1",
-    "admin_state": "1",
-    "operational_state": "1"
+        "connected_id": port_1_1_2_1,
+        "connected_type": "port",
+        "name": "1/1/2/1",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_2_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/2/1 ###
     req = {
-    "name": "2620",
-    "service_port_id": service_port_1_1_2_1,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_2
+        "name": "2620",
+        "service_port_id": service_port_1_1_2_1,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_2
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/2/1 ###
     req = {
-    "name": "3320",
-    "service_port_id": service_port_1_1_2_1,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_2
+        "name": "3320",
+        "service_port_id": service_port_1_1_2_1,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_2
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Cpe 1/1/2/1/1 ###
     # Create a physical cpe at the ont-port (admin operation)
     req = {
-          "port_id": port_1_1_2_1,
-                     "description": "Cpe 1/1/2/1/1",
-    "serial_no": "GFED123456BA",
-    "admin_state": "1",
-    "mac": "2a:87:19:09:ae:2f"
+        "port_id": port_1_1_2_1,
+        "description": "Cpe 1/1/2/1/1",
+        "serial_no": "GFED123456BA",
+        "admin_state": "1",
+        "mac": "2a:87:19:09:ae:2f"
     }
     cpe_1_1_2_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpes'))
-    
+
     ### CpePort 1/1/2/1/1/1 ##
     # Create a physical cpe-port at the cpe (admin operation)
     req = {
-          "cpe_id": cpe_1_1_2_1_1,
-                    "description": "CpePort 1/1/2/1/1/1"
+        "cpe_id": cpe_1_1_2_1_1,
+        "description": "CpePort 1/1/2/1/1/1"
     }
     cpe_port_1_1_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpe_ports'))
-    
+
     ### Port 1/1/2/2 ###
     # Create a physical port at the network device (admin operation)
     req = {
-          "card_id": card_1_1_2,
-                     "description": "Physical port 1/1/2/2",
-    "operational_state": "0",
-    "admin_state": "1",
-    "upstream": 0,
-    "downstream": 0,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_2,
+        "description": "Physical port 1/1/2/2",
+        "operational_state": "0",
+        "admin_state": "1",
+        "upstream": 0,
+        "downstream": 0,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_2_2 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/2/2 ####
     req = {
-          "connected_id": port_1_1_2_2,
-                          "connected_type": "port",
-    "name": "1/1/2/1",
-    "admin_state": "1",
-    "operational_state": "0"
+        "connected_id": port_1_1_2_2,
+        "connected_type": "port",
+        "name": "1/1/2/1",
+        "admin_state": "1",
+        "operational_state": "0"
     }
     service_port_1_1_2_2 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/2/2 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_2_2,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_2
+        "name": "2620",
+        "service_port_id": service_port_1_1_2_2,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_2
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/2/2 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_2_2,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_2
+        "name": "3320",
+        "service_port_id": service_port_1_1_2_2,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_2
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Cpe 1/1/2/2/1 ###
     # Create a physical cpe at the ont-port (admin operation)
     req = {
-          "port_id": port_1_1_2_2,
-                     "description": "Cpe 1/1/2/2/1",
-    "serial_no": "DEFG654321AB",
-    "admin_state": "0",
-    "mac": "2e:78:09:e6:dc:4e"
+        "port_id": port_1_1_2_2,
+        "description": "Cpe 1/1/2/2/1",
+        "serial_no": "DEFG654321AB",
+        "admin_state": "0",
+        "mac": "2e:78:09:e6:dc:4e"
     }
     cpe_1_1_2_2_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpes'))
-    
+
     ### CpePort 1/1/2/2/1/1 ###
     # Create a physical cpe-port at the cpe (admin operation)
     req = {
-          "cpe_id": cpe_1_1_2_2_1,
-                    "description": "CpePort 1/1/2/2/1/1"
+        "cpe_id": cpe_1_1_2_2_1,
+        "description": "CpePort 1/1/2/2/1/1"
     }
     cpe_port_1_1_2_2_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpe_ports'))
-    
+
     ### Port 1/1/2/3 ###
     # Create a physical port at the network device (admin operation)
     req = {
-          "card_id": card_1_1_2,
-                     "description": "Physical port 1/1/2/3",
-    "operational_state": "0",
-    "admin_state": "0",
-    "upstream": 0,
-    "downstream": 0,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_2,
+        "description": "Physical port 1/1/2/3",
+        "operational_state": "0",
+        "admin_state": "0",
+        "upstream": 0,
+        "downstream": 0,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_2_3 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/2/3 ####
     req = {
-          "connected_id": port_1_1_2_3,
-                          "connected_type": "port",
-    "name": "1/1/2/3",
-    "admin_state": "0",
-    "operational_state": "0"
+        "connected_id": port_1_1_2_3,
+        "connected_type": "port",
+        "name": "1/1/2/3",
+        "admin_state": "0",
+        "operational_state": "0"
     }
     service_port_1_1_2_3 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/2/3 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_2_3,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_2
+        "name": "2620",
+        "service_port_id": service_port_1_1_2_3,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_2
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/2/3 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_2_3,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_2
+        "name": "3320",
+        "service_port_id": service_port_1_1_2_3,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_2
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Card 1/1/3 ###
     # Create a physical card at the network device (admin operation)
     req = {
-          "subrack_id": subrack_id,
-                        "description": "Physical card 1/1/3",
-    "planned_type": "nant-a",
-    "actual_type": "nant-a",
-    "operational_state": "1",
-    "admin_state": "1",
-    "err_state": "no-error",
-    "availability": "available",
-    "alarm_profile": "none",
-    "capab_profile": "32port_xDSL",
-    "manufacturer": "ALCL",
-    "mnemonic": "FANT-F",
-    "pba_code": "3FE68863GGFL",
-    "fpba_code": "3FE68863GGFL",
-    "fpba_ics": "02",
-    "clei_code": "VBIUAALBAB",
-    "serial_no": "AA1815FSE1CG",
-    "failed_test": "00:00:00:00",
-    "lt_restart_time": "1970-01-01:00:00:00",
-    "lt_restart_cause": "poweron",
-    "lt_restart_num": 0,
-    "mgnt_entity_oamipaddr": "0.0.0.0",
-    "mgnt_entity_pairnum": 0,
-    "dual_host_ip": "0.0.0.0",
-    "dual_host_loc": "none",
-    "product": "adsl"
+        "subrack_id": subrack_id,
+        "description": "Physical card 1/1/3",
+        "planned_type": "nant-a",
+        "actual_type": "nant-a",
+        "operational_state": "1",
+        "admin_state": "1",
+        "err_state": "no-error",
+        "availability": "available",
+        "alarm_profile": "none",
+        "capab_profile": "32port_xDSL",
+        "manufacturer": "ALCL",
+        "mnemonic": "FANT-F",
+        "pba_code": "3FE68863GGFL",
+        "fpba_code": "3FE68863GGFL",
+        "fpba_ics": "02",
+        "clei_code": "VBIUAALBAB",
+        "serial_no": "AA1815FSE1CG",
+        "failed_test": "00:00:00:00",
+        "lt_restart_time": "1970-01-01:00:00:00",
+        "lt_restart_cause": "poweron",
+        "lt_restart_num": 0,
+        "mgnt_entity_oamipaddr": "0.0.0.0",
+        "mgnt_entity_pairnum": 0,
+        "dual_host_ip": "0.0.0.0",
+        "dual_host_loc": "none",
+        "product": "adsl"
     }
     card_1_1_3 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cards'))
-    
+
     ### Port 1/1/3/1 ###
     # Create a physical port at the network device (admin operation)
     req = {
-          "card_id": card_1_1_3,
-                     "description": "Physical port 1/1/3/1",
-    "operational_state": "1",
-    "admin_state": "1",
-    "upstream": 10000,
-    "downstream": 25000,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_3,
+        "description": "Physical port 1/1/3/1",
+        "operational_state": "1",
+        "admin_state": "1",
+        "upstream": 10000,
+        "downstream": 25000,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_3_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/3/1 ####
     req = {
-          "connected_id": port_1_1_3_1,
-                          "connected_type": "port",
-    "name": "1/1/3/1",
-    "admin_state": "1",
-    "operational_state": "1"
+        "connected_id": port_1_1_3_1,
+        "connected_type": "port",
+        "name": "1/1/3/1",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_3_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/3/1 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_3_1,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_3
+        "name": "2620",
+        "service_port_id": service_port_1_1_3_1,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_3
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/3/1 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_3_1,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_3
+        "name": "3320",
+        "service_port_id": service_port_1_1_3_1,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_3
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Cpe 1/1/3/1/1 ###
     # Create a physical cpe at the ont-port (admin operation)
     req = {
-          "port_id": port_1_1_3_1,
-                     "description": "Cpe 1/1/3/1/1",
-    "serial_no": "WXYZ123456BA",
-    "admin_state": "1",
-    "mac": "fd:28:2e:25:a2:99"
+        "port_id": port_1_1_3_1,
+        "description": "Cpe 1/1/3/1/1",
+        "serial_no": "WXYZ123456BA",
+        "admin_state": "1",
+        "mac": "fd:28:2e:25:a2:99"
     }
     cpe_1_1_3_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpes'))
-    
+
     ### CpePort 1/1/3/1/1/1 ###
     # Create a physical cpe-port at the cpe (admin operation)
     req = {
-          "cpe_id": cpe_1_1_3_1_1,
-                    "description": "CpePort 1/1/3/1/1/1"
+        "cpe_id": cpe_1_1_3_1_1,
+        "description": "CpePort 1/1/3/1/1/1"
     }
     cpe_port_1_1_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpe_ports'))
-    
+
     ### Port 1/1/3/2 ###
     # Create a physical port at the network device (admin operation)
     req = {
-          "card_id": card_1_1_3,
-                     "description": "Physical port 1/1/3/2",
-    "operational_state": "0",
-    "admin_state": "1",
-    "upstream": 0,
-    "downstream": 0,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_3,
+        "description": "Physical port 1/1/3/2",
+        "operational_state": "0",
+        "admin_state": "1",
+        "upstream": 0,
+        "downstream": 0,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_3_2 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/3/2 ####
     req = {
-          "connected_id": port_1_1_3_2,
-                          "connected_type": "port",
-    "name": "1/1/3/2",
-    "admin_state": "1",
-    "operational_state": "0"
+        "connected_id": port_1_1_3_2,
+        "connected_type": "port",
+        "name": "1/1/3/2",
+        "admin_state": "1",
+        "operational_state": "0"
     }
     service_port_1_1_3_2 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/3/2 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_3_2,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_3
+        "name": "2620",
+        "service_port_id": service_port_1_1_3_2,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_3
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/3/2 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_3_2,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_3
+        "name": "3320",
+        "service_port_id": service_port_1_1_3_2,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_3
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Cpe 1/1/3/2/1 ###
     # Create a physical cpe at the ont-port (admin operation)
     req = {
-          "port_id": port_1_1_3_2,
-                     "description": "Cpe 1/1/3/2/1",
-    "serial_no": "DEFG654321AB",
-    "admin_state": "0",
-    "mac": "c3:3e:81:30:3d:10"
+        "port_id": port_1_1_3_2,
+        "description": "Cpe 1/1/3/2/1",
+        "serial_no": "DEFG654321AB",
+        "admin_state": "0",
+        "mac": "c3:3e:81:30:3d:10"
     }
     cpe_1_1_3_2_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpes'))
-    
+
     ### CpePort 1/1/3/2/1/1 ###
     # Create a physical cpe-port at the cpe (admin operation)
     req = {
-          "cpe_id": cpe_1_1_3_2_1,
-                    "description": "CpePort 1/1/3/2/1/1"
+        "cpe_id": cpe_1_1_3_2_1,
+        "description": "CpePort 1/1/3/2/1/1"
     }
     cpe_port_1_1_3_2_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpe_ports'))
-    
+
     ### Port 1/1/3/3 ###
     # Create a physical port at the network device (admin operation)
     req = {
-          "card_id": card_1_1_3,
-                     "description": "Physical port 1/1/3/3",
-    "operational_state": "0",
-    "admin_state": "0",
-    "upstream": 0,
-    "downstream": 0,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_3,
+        "description": "Physical port 1/1/3/3",
+        "operational_state": "0",
+        "admin_state": "0",
+        "upstream": 0,
+        "downstream": 0,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_3_3 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/3/3 ####
     req = {
-          "connected_id": port_1_1_3_3,
-                          "connected_type": "port",
-    "name": "1/1/3/3",
-    "admin_state": "0",
-    "operational_state": "0"
+        "connected_id": port_1_1_3_3,
+        "connected_type": "port",
+        "name": "1/1/3/3",
+        "admin_state": "0",
+        "operational_state": "0"
     }
     service_port_1_1_3_3 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/3/3 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_3_3,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_3
+        "name": "2620",
+        "service_port_id": service_port_1_1_3_3,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_3
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/3/3 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_3_3,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_3
+        "name": "3320",
+        "service_port_id": service_port_1_1_3_3,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_3
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Card 1/1/4 ###
     # Create a physical card at the network device (admin operation)
     req = {
-          "subrack_id": subrack_id,
-                        "description": "Physical card 1/1/4",
-    "planned_type": "relt-a",
-    "actual_type": "relt-a",
-    "operational_state": "1",
-    "admin_state": "1",
-    "err_state": "no-error",
-    "availability": "available",
-    "alarm_profile": "none",
-    "capab_profile": "32port_xDSL",
-    "manufacturer": "ALCL",
-    "mnemonic": "RDLT-C",
-    "pba_code": "3FE68863GGFL",
-    "fpba_code": "3FE68863GGFL",
-    "fpba_ics": "02",
-    "clei_code": "VBIUAALBAB",
-    "serial_no": "AA1815FSE1CG",
-    "failed_test": "00:00:00:00",
-    "lt_restart_time": "1970-01-01:00:00:00",
-    "lt_restart_cause": "poweron",
-    "lt_restart_num": 0,
-    "mgnt_entity_oamipaddr": "0.0.0.0",
-    "mgnt_entity_pairnum": 0,
-    "dual_host_ip": "0.0.0.0",
-    "dual_host_loc": "none",
-    "product": "ftth"
+        "subrack_id": subrack_id,
+        "description": "Physical card 1/1/4",
+        "planned_type": "relt-a",
+        "actual_type": "relt-a",
+        "operational_state": "1",
+        "admin_state": "1",
+        "err_state": "no-error",
+        "availability": "available",
+        "alarm_profile": "none",
+        "capab_profile": "32port_xDSL",
+        "manufacturer": "ALCL",
+        "mnemonic": "RDLT-C",
+        "pba_code": "3FE68863GGFL",
+        "fpba_code": "3FE68863GGFL",
+        "fpba_ics": "02",
+        "clei_code": "VBIUAALBAB",
+        "serial_no": "AA1815FSE1CG",
+        "failed_test": "00:00:00:00",
+        "lt_restart_time": "1970-01-01:00:00:00",
+        "lt_restart_cause": "poweron",
+        "lt_restart_num": 0,
+        "mgnt_entity_oamipaddr": "0.0.0.0",
+        "mgnt_entity_pairnum": 0,
+        "dual_host_ip": "0.0.0.0",
+        "dual_host_loc": "none",
+        "product": "ftth"
     }
     card_1_1_4 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cards'))
-    
+
     ### Port 1/1/4/1 ###
     # Create a physical port at the network device (admin operation)
     req = {
-          "card_id": card_1_1_4,
-                     "description": "Physical port 1/1/4/1",
-    "operational_state": "1",
-    "admin_state": "1",
-    "upstream": 10000,
-    "downstream": 25000,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_4,
+        "description": "Physical port 1/1/4/1",
+        "operational_state": "1",
+        "admin_state": "1",
+        "upstream": 10000,
+        "downstream": 25000,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_4_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/4/1 ####
     req = {
-          "connected_id": port_1_1_4_1,
-                          "connected_type": "port",
-    "name": "1/1/4/1",
-    "admin_state": "1",
-    "operational_state": "1"
+        "connected_id": port_1_1_4_1,
+        "connected_type": "port",
+        "name": "1/1/4/1",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_4_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/4/1 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_4_1,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_4
+        "name": "2620",
+        "service_port_id": service_port_1_1_4_1,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_4
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/4/1 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_4_1,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_4
+        "name": "3320",
+        "service_port_id": service_port_1_1_4_1,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_4
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Ont 1/1/4/1/1 ###
     # Create a physical ont at the network device (admin operation)
     req = {
-          "port_id":port_1_1_4_1,
-                    "description": "Ont 1/1/4/1/1",
-    "admin_state": "1",
-    "index": 1,
-    "type": "10gbaselr",
-    "basebx10d": "yes",
-    "media_available": "available",
-    "jabber_state": "jabber",
-    "b100basefxfd": "no",
-    "b100baselx10": "no",
-    "b100basebx10d": "no",
-    "b100basebx10u": "yes",
-    "b100basetxfd": "yes",
-    "b1000basetfd": "no",
-    "b10gbasetfd": "yes",
-    "b1000basesxfd": "no",
-    "b1000baselx10": "no",
-    "b1000baselxfd": "yes",
-    "b1000basebx10u": "yes",
-    "b1000basebx10d": "no",
-    "b10gbaser": "no",
-    "b10gbaselr": "yes",
-    "b10gbaseer": "no",
-    "b2500basex": "no",
-    "cap100base_tfd": "no",
-    "cap1000base_xfd": "yes",
-    "cap1000base_tfd": "yes",
-    "cap10gbase_tfd": "no",
-    "act_num_data_ports": 1,
-    "act_num_voice_ports": 0,
-    "actual_card_type": "ethernet",
-    "actual_ont_integ": "integrated",
-    "actual_serial_num": "0168FC3C",
-    "actual_version_num": "G2110V1D0",
-    "actual_vendorid": "GNXS",
-    "actual_cardid": "FiberTwist-G2110",
-    "state": "enabled",
-    "sernum": "ALCLB140677C"
+        "port_id": port_1_1_4_1,
+        "description": "Ont 1/1/4/1/1",
+        "admin_state": "1",
+        "index": 1,
+        "type": "10gbaselr",
+        "basebx10d": "yes",
+        "media_available": "available",
+        "jabber_state": "jabber",
+        "b100basefxfd": "no",
+        "b100baselx10": "no",
+        "b100basebx10d": "no",
+        "b100basebx10u": "yes",
+        "b100basetxfd": "yes",
+        "b1000basetfd": "no",
+        "b10gbasetfd": "yes",
+        "b1000basesxfd": "no",
+        "b1000baselx10": "no",
+        "b1000baselxfd": "yes",
+        "b1000basebx10u": "yes",
+        "b1000basebx10d": "no",
+        "b10gbaser": "no",
+        "b10gbaselr": "yes",
+        "b10gbaseer": "no",
+        "b2500basex": "no",
+        "cap100base_tfd": "no",
+        "cap1000base_xfd": "yes",
+        "cap1000base_tfd": "yes",
+        "cap10gbase_tfd": "no",
+        "act_num_data_ports": 1,
+        "act_num_voice_ports": 0,
+        "actual_card_type": "ethernet",
+        "actual_ont_integ": "integrated",
+        "actual_serial_num": "0168FC3C",
+        "actual_version_num": "G2110V1D0",
+        "actual_vendorid": "GNXS",
+        "actual_cardid": "FiberTwist-G2110",
+        "state": "enabled",
+        "sernum": "ALCLB140677C"
     }
     ont_1_1_4_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/onts'))
-    
+
     ### OntPort 1/1/4/1/1/1/1 ###
     # Create a physical ont-port at the ont (admin operation)
     req = {
-          "ont_id": ont_1_1_4_1_1,
-                    "description": "OntPort 1/1/4/1/1/1/1",
-    "admin_state": "1"
+        "ont_id": ont_1_1_4_1_1,
+        "description": "OntPort 1/1/4/1/1/1/1",
+        "admin_state": "1"
     }
     ont_port_1_1_4_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ont_ports'))
-    
+
     ### ServicePort 1/1/4/1/1/1/1 ####
     req = {
-          "connected_id": ont_port_1_1_4_1_1_1_1,
-                          "connected_type": "port",
-    "name": "1/1/4/1/1/1/1",
-    "admin_state": "1",
-    "operational_state": "1"
+        "connected_id": ont_port_1_1_4_1_1_1_1,
+        "connected_type": "port",
+        "name": "1/1/4/1/1/1/1",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_4_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/4/1/1/1/1 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_4_1_1_1_1,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_4
+        "name": "2620",
+        "service_port_id": service_port_1_1_4_1_1_1_1,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_4
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/4/1/1/1/1 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_4_1_1_1_1,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_4
+        "name": "3320",
+        "service_port_id": service_port_1_1_4_1_1_1_1,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_4
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Cpe 1/1/4/1/1/1/1/1 ###
     # Create a physical cpe at the ont-port (admin operation)
     req = {
-          "ont_port_id": ont_port_1_1_4_1_1_1_1,
-                         "description": "Cpe 1/1/4/1/1/1/1/1",
-    "serial_no": "GFED123456XY",
-    "admin_state": "1",
-    "mac": "a4:c9:21:bd:11:c3"
+        "ont_port_id": ont_port_1_1_4_1_1_1_1,
+        "description": "Cpe 1/1/4/1/1/1/1/1",
+        "serial_no": "GFED123456XY",
+        "admin_state": "1",
+        "mac": "a4:c9:21:bd:11:c3"
     }
     cpe_1_1_4_1_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpes'))
-    
+
     ### CpePort 1/1/4/1/1/1 ###
     # Create a physical cpe-port at the cpe (admin operation)
     req = {
-          "cpe_id": cpe_1_1_4_1_1_1_1_1,
-                    "description": "CpePort 1/1/4/1/1/1/1/1/1"
+        "cpe_id": cpe_1_1_4_1_1_1_1_1,
+        "description": "CpePort 1/1/4/1/1/1/1/1/1"
     }
     cpe_port_1_1_4_1_1_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpe_ports'))
-    
+
     ### Port 1/1/4/2 ###
     # Create a physical port at the network device (admin operation)
     req = {
-          "card_id": card_1_1_4,
-                     "description": "Physical port 1/1/4/2",
-    "operational_state": "0",
-    "admin_state": "1",
-    "upstream": 0,
-    "downstream": 0,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_4,
+        "description": "Physical port 1/1/4/2",
+        "operational_state": "0",
+        "admin_state": "1",
+        "upstream": 0,
+        "downstream": 0,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_4_2 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/4/2 ####
     req = {
-          "connected_id": port_1_1_4_2,
-                          "connected_type": "port",
-    "name": "1/1/4/2",
-    "admin_state": "1",
-    "operational_state": "0"
+        "connected_id": port_1_1_4_2,
+        "connected_type": "port",
+        "name": "1/1/4/2",
+        "admin_state": "1",
+        "operational_state": "0"
     }
     service_port_1_1_4_2 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/4/2 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_4_2,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_4
+        "name": "2620",
+        "service_port_id": service_port_1_1_4_2,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_4
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/4/2 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_4_2,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_4
+        "name": "3320",
+        "service_port_id": service_port_1_1_4_2,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_4
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Ont 1/1/4/2/1 ###
     # Create a physical ont at the network device (admin operation)
     req = {
-          "port_id":port_1_1_4_2,
-                    "description": "Ont 1/1/4/2/1",
-    "admin_state": "1",
-    "index": 1,
-    "type": "10gbaselr",
-    "basebx10d": "yes",
-    "media_available": "available",
-    "jabber_state": "jabber",
-    "b100basefxfd": "no",
-    "b100baselx10": "no",
-    "b100basebx10d": "no",
-    "b100basebx10u": "yes",
-    "b100basetxfd": "yes",
-    "b1000basetfd": "no",
-    "b10gbasetfd": "yes",
-    "b1000basesxfd": "no",
-    "b1000baselx10": "no",
-    "b1000baselxfd": "yes",
-    "b1000basebx10u": "yes",
-    "b1000basebx10d": "no",
-    "b10gbaser": "no",
-    "b10gbaselr": "yes",
-    "b10gbaseer": "no",
-    "b2500basex": "no",
-    "auto_neg_supported": True,
-    "auto_neg_status": "complete",
-    "cap100base_tfd": "no",
-    "cap1000base_xfd": "yes",
-    "cap1000base_tfd": "yes",
-    "cap10gbase_tfd": "no",
-    "act_num_data_ports": 1,
-    "act_num_voice_ports": 0,
-    "actual_card_type": "ethernet",
-    "actual_ont_integ": "integrated",
-    "actual_serial_num": "0168FC3C",
-    "actual_version_num": "G2110V1D0",
-    "actual_vendorid": "GNXS",
-    "actual_cardid": "FiberTwist-G2110",
-    "state": "enabled",
-    "sernum": "ALCLB140677C"
+        "port_id": port_1_1_4_2,
+        "description": "Ont 1/1/4/2/1",
+        "admin_state": "1",
+        "index": 1,
+        "type": "10gbaselr",
+        "basebx10d": "yes",
+        "media_available": "available",
+        "jabber_state": "jabber",
+        "b100basefxfd": "no",
+        "b100baselx10": "no",
+        "b100basebx10d": "no",
+        "b100basebx10u": "yes",
+        "b100basetxfd": "yes",
+        "b1000basetfd": "no",
+        "b10gbasetfd": "yes",
+        "b1000basesxfd": "no",
+        "b1000baselx10": "no",
+        "b1000baselxfd": "yes",
+        "b1000basebx10u": "yes",
+        "b1000basebx10d": "no",
+        "b10gbaser": "no",
+        "b10gbaselr": "yes",
+        "b10gbaseer": "no",
+        "b2500basex": "no",
+        "auto_neg_supported": True,
+        "auto_neg_status": "complete",
+        "cap100base_tfd": "no",
+        "cap1000base_xfd": "yes",
+        "cap1000base_tfd": "yes",
+        "cap10gbase_tfd": "no",
+        "act_num_data_ports": 1,
+        "act_num_voice_ports": 0,
+        "actual_card_type": "ethernet",
+        "actual_ont_integ": "integrated",
+        "actual_serial_num": "0168FC3C",
+        "actual_version_num": "G2110V1D0",
+        "actual_vendorid": "GNXS",
+        "actual_cardid": "FiberTwist-G2110",
+        "state": "enabled",
+        "sernum": "ALCLB140677C"
     }
     ont_1_1_4_2_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/onts'))
-    
+
     ### OntPort 1/1/4/2/1/1/1 ###
     # Create a physical ont-port at the ont (admin operation)
     req = {
-          "ont_id": ont_1_1_4_2_1,
-                    "description": "OntPort 1/1/4/2/1/1/1",
-    "admin_state": "0"
+        "ont_id": ont_1_1_4_2_1,
+        "description": "OntPort 1/1/4/2/1/1/1",
+        "admin_state": "0"
     }
     ont_port_1_1_4_2_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ont_ports'))
-    
+
     ### ServicePort 1/1/4/2/1/1/1 ####
     req = {
-          "connected_id": ont_port_1_1_4_2_1_1_1,
-                          "connected_type": "port",
-    "name": "1/1/4/2/1/1/1",
-    "admin_state": "1",
-    "operational_state": "1"
+        "connected_id": ont_port_1_1_4_2_1_1_1,
+        "connected_type": "port",
+        "name": "1/1/4/2/1/1/1",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_4_2_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/4/2/1/1/1 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_4_2_1_1_1,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_4
+        "name": "2620",
+        "service_port_id": service_port_1_1_4_2_1_1_1,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_4
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/4/2/1/1/1 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_4_2_1_1_1,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_4
+        "name": "3320",
+        "service_port_id": service_port_1_1_4_2_1_1_1,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_4
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Cpe 1/1/4/2/1/1/1/1 ###
     # Create a physical cpe at the ont-port (admin operation)
     req = {
-          "ont_port_id": ont_port_1_1_4_2_1_1_1,
-                         "description": "Cpe 1/1/4/2/1/1/1/1",
-    "serial_no": "GFED123456YZ",
-    "admin_state": "0",
-    "mac": "04:1f:1a:14:fc:35"
+        "ont_port_id": ont_port_1_1_4_2_1_1_1,
+        "description": "Cpe 1/1/4/2/1/1/1/1",
+        "serial_no": "GFED123456YZ",
+        "admin_state": "0",
+        "mac": "04:1f:1a:14:fc:35"
     }
     cpe_1_1_4_2_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpes'))
-    
+
     ### CpePort 1/1/4/2/1/1 ###
     # Create a physical cpe-port at the cpe (admin operation)
     req = {
-          "cpe_id": cpe_1_1_4_2_1_1_1_1,
-                    "description": "CpePort 1/1/4/2/1/1/1/1/1"
+        "cpe_id": cpe_1_1_4_2_1_1_1_1,
+        "description": "CpePort 1/1/4/2/1/1/1/1/1"
     }
     cpe_port_1_1_4_2_1_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpe_ports'))
-    
+
     ### Port 1/1/4/3 ###
     # Create a physical port at the network device (admin operation)
     req = {
-          "card_id": card_1_1_4,
-                     "description": "Physical port 1/1/4/3",
-    "operational_state": "0",
-    "admin_state": "0",
-    "upstream": 0,
-    "downstream": 0,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_4,
+        "description": "Physical port 1/1/4/3",
+        "operational_state": "0",
+        "admin_state": "0",
+        "upstream": 0,
+        "downstream": 0,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_4_3 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/4/3 ####
     req = {
-          "connected_id": port_1_1_4_3,
-                          "connected_type": "port",
-    "name": "1/1/4/2",
-    "admin_state": "0",
-    "operational_state": "0"
+        "connected_id": port_1_1_4_3,
+        "connected_type": "port",
+        "name": "1/1/4/2",
+        "admin_state": "0",
+        "operational_state": "0"
     }
     service_port_1_1_4_3 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/4/3 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_4_3,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_4
+        "name": "2620",
+        "service_port_id": service_port_1_1_4_3,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_4
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/4/3 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_4_3,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_4
+        "name": "3320",
+        "service_port_id": service_port_1_1_4_3,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_4
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Ont 1/1/4/3/1 ###
     # Create a physical ont at the network device (admin operation)
     req = {
-          "port_id":port_1_1_4_3,
-                    "description": "Ont 1/1/4/3/1",
-    "admin_state": "0",
-    "index": 1,
-    "type": "10gbaselr",
-    "basebx10d": "yes",
-    "media_available": "available",
-    "jabber_state": "jabber",
-    "b100basefxfd": "no",
-    "b100baselx10": "no",
-    "b100basebx10d": "no",
-    "b100basebx10u": "yes",
-    "b100basetxfd": "yes",
-    "b1000basetfd": "no",
-    "b10gbasetfd": "yes",
-    "b1000basesxfd": "no",
-    "b1000baselx10": "no",
-    "b1000baselxfd": "yes",
-    "b1000basebx10u": "yes",
-    "b1000basebx10d": "no",
-    "b10gbaser": "no",
-    "b10gbaselr": "yes",
-    "b10gbaseer": "no",
-    "b2500basex": "no",
-    "auto_neg_supported": True,
-    "auto_neg_status": "complete",
-    "cap100base_tfd": "no",
-    "cap1000base_xfd": "yes",
-    "cap1000base_tfd": "yes",
-    "cap10gbase_tfd": "no",
-    "act_num_data_ports": 1,
-    "act_num_voice_ports": 0,
-    "actual_card_type": "ethernet",
-    "actual_ont_integ": "integrated",
-    "actual_serial_num": "0168FC3C",
-    "actual_version_num": "G2110V1D0",
-    "actual_vendorid": "GNXS",
-    "actual_cardid": "FiberTwist-G2110",
-    "state": "enabled",
-    "sernum": "ALCLB140677C"
+        "port_id": port_1_1_4_3,
+        "description": "Ont 1/1/4/3/1",
+        "admin_state": "0",
+        "index": 1,
+        "type": "10gbaselr",
+        "basebx10d": "yes",
+        "media_available": "available",
+        "jabber_state": "jabber",
+        "b100basefxfd": "no",
+        "b100baselx10": "no",
+        "b100basebx10d": "no",
+        "b100basebx10u": "yes",
+        "b100basetxfd": "yes",
+        "b1000basetfd": "no",
+        "b10gbasetfd": "yes",
+        "b1000basesxfd": "no",
+        "b1000baselx10": "no",
+        "b1000baselxfd": "yes",
+        "b1000basebx10u": "yes",
+        "b1000basebx10d": "no",
+        "b10gbaser": "no",
+        "b10gbaselr": "yes",
+        "b10gbaseer": "no",
+        "b2500basex": "no",
+        "auto_neg_supported": True,
+        "auto_neg_status": "complete",
+        "cap100base_tfd": "no",
+        "cap1000base_xfd": "yes",
+        "cap1000base_tfd": "yes",
+        "cap10gbase_tfd": "no",
+        "act_num_data_ports": 1,
+        "act_num_voice_ports": 0,
+        "actual_card_type": "ethernet",
+        "actual_ont_integ": "integrated",
+        "actual_serial_num": "0168FC3C",
+        "actual_version_num": "G2110V1D0",
+        "actual_vendorid": "GNXS",
+        "actual_cardid": "FiberTwist-G2110",
+        "state": "enabled",
+        "sernum": "ALCLB140677C"
     }
     ont_1_1_4_3_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/onts'))
-    
+
     ### OntPort 1/1/4/3/1/1/1 ###
     # Create a physical ont-port at the ont (admin operation)
     req = {
-          "ont_id": ont_1_1_4_3_1,
-                    "description": "OntPort 1/1/4/3/1/1/1",
-    "admin_state": "0"
+        "ont_id": ont_1_1_4_3_1,
+        "description": "OntPort 1/1/4/3/1/1/1",
+        "admin_state": "0"
     }
     ont_port_1_1_4_3_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ont_ports'))
-    
+
     ### ServicePort 1/1/4/3/1/1/1 ####
     req = {
-          "connected_id": ont_port_1_1_4_3_1_1_1,
-                          "connected_type": "port",
-    "name": "1/1/4/3/1/1/1",
-    "admin_state": "0",
-    "operational_state": "0"
+        "connected_id": ont_port_1_1_4_3_1_1_1,
+        "connected_type": "port",
+        "name": "1/1/4/3/1/1/1",
+        "admin_state": "0",
+        "operational_state": "0"
     }
     service_port_1_1_4_3_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/4/3/1/1/1 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_4_3_1_1_1,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_4
+        "name": "2620",
+        "service_port_id": service_port_1_1_4_3_1_1_1,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_4
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/4/3/1/1/1 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_4_3_1_1_1,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_4
+        "name": "3320",
+        "service_port_id": service_port_1_1_4_3_1_1_1,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_4
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Cpe 1/1/4/3/1/1/1/1 ###
     # Create a physical cpe at the ont-port (admin operation)
     req = {
-          "ont_port_id": ont_port_1_1_4_3_1_1_1,
-                         "description": "Cpe 1/1/4/3/1/1/1/1",
-    "serial_no": "GFED123456WQ",
-    "admin_state": "0",
-    "mac": "5b:8a:36:50:d4:8b"
+        "ont_port_id": ont_port_1_1_4_3_1_1_1,
+        "description": "Cpe 1/1/4/3/1/1/1/1",
+        "serial_no": "GFED123456WQ",
+        "admin_state": "0",
+        "mac": "5b:8a:36:50:d4:8b"
     }
     cpe_1_1_4_3_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpes'))
-    
+
     ### CpePort 1/1/4/3/1/1 ###
     # Create a physical cpe-port at the cpe (admin operation)
     req = {
-          "cpe_id": cpe_1_1_4_3_1_1_1_1,
-                    "description": "CpePort 1/1/4/3/1/1/1/1/1"
+        "cpe_id": cpe_1_1_4_3_1_1_1_1,
+        "description": "CpePort 1/1/4/3/1/1/1/1/1"
     }
     cpe_port_1_1_4_3_1_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpe_ports'))
-    
+
     ### Card 1/1/5 ###
     # Create a physical card at the network device (admin operation)
     req = {
-          "subrack_id": subrack_id,
-                        "description": "Physical card 1/1/5",
-    "planned_type": "fant-f",
-    "actual_type": "fant-f",
-    "operational_state": "1",
-    "admin_state": "1",
-    "err_state": "no-error",
-    "availability": "available",
-    "alarm_profile": "none",
-    "capab_profile": "32port_xDSL",
-    "manufacturer": "ALCL",
-    "mnemonic": "RDLT-C",
-    "pba_code": "3FE68863GGFL",
-    "fpba_code": "3FE68863GGFL",
-    "fpba_ics": "02",
-    "clei_code": "VBIUAALBAB",
-    "serial_no": "AA1815FSE1CG",
-    "failed_test": "00:00:00:00",
-    "lt_restart_time": "1970-01-01:00:00:00",
-    "lt_restart_cause": "poweron",
-    "lt_restart_num": 0,
-    "mgnt_entity_oamipaddr": "0.0.0.0",
-    "mgnt_entity_pairnum": 0,
-    "dual_host_ip": "0.0.0.0",
-    "dual_host_loc": "none",
-    "product": "ftth-pon"
+        "subrack_id": subrack_id,
+        "description": "Physical card 1/1/5",
+        "planned_type": "fant-f",
+        "actual_type": "fant-f",
+        "operational_state": "1",
+        "admin_state": "1",
+        "err_state": "no-error",
+        "availability": "available",
+        "alarm_profile": "none",
+        "capab_profile": "32port_xDSL",
+        "manufacturer": "ALCL",
+        "mnemonic": "RDLT-C",
+        "pba_code": "3FE68863GGFL",
+        "fpba_code": "3FE68863GGFL",
+        "fpba_ics": "02",
+        "clei_code": "VBIUAALBAB",
+        "serial_no": "AA1815FSE1CG",
+        "failed_test": "00:00:00:00",
+        "lt_restart_time": "1970-01-01:00:00:00",
+        "lt_restart_cause": "poweron",
+        "lt_restart_num": 0,
+        "mgnt_entity_oamipaddr": "0.0.0.0",
+        "mgnt_entity_pairnum": 0,
+        "dual_host_ip": "0.0.0.0",
+        "dual_host_loc": "none",
+        "product": "ftth-pon"
     }
     card_1_1_5 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cards'))
-    
+
     ### Port 1/1/5/1 ###
     # Create a physical port at the network device (admin operation)
     req = {
-          "card_id": card_1_1_5,
-                     "description": "Physical port 1/1/5/1",
-    "operational_state": "1",
-    "admin_state": "1",
-    "upstream": 10000,
-    "downstream": 25000,
-    "upstream_max": "100000",
-    "downstream_max": "100000",
-    "noise_margin_up": 0,
-    "noise_margin_down": 0,
-    "tgt_noise_margin_up": 0,
-    "tgt_noise_margin_down": 0,
-    "attenuation_up": 0,
-    "attenuation_down": 0,
-    "attained_upstream": 0,
-    "attained_downstream": 0,
-    "threshold_upstream": 0,
-    "threshold_downstream": 0,
-    "max_delay_upstream": 0,
-    "max_delay_downsteam": 0,
-    "if_index": 94502912,
-    "type": "ethernet-line",
-    "high_speed": 0,
-    "connector_present": "not-applicable",
-    "media": 0.0,
-    "largest_pkt_size": 0,
-    "curr_bandwith": 1244000000,
-    "phy_addr": " ",
-    "last_chg_opr_stat": "352-02:55:19",
-    "pkts_unknown_proto": 0,
-    "in_octets": 0,
-    "out_octets": 0,
-    "in_ucast_pkts": 0,
-    "out_ucast_pkts": 0,
-    "in_mcast_pkts": 0,
-    "out_mcast_pkts": 0,
-    "in_broadcast_pkts": 0,
-    "out_broadcast_pkts": 0,
-    "in_discard_pkts": 0,
-    "out_discard_pkts": 0,
-    "in_err_pkts": 0,
-    "out_err_pkts": 0,
-    "in_octets_hc": 0,
-    "out_octets_hc": 0,
-    "in_ucast_pkts_hc": 0,
-    "out_ucast_pkts_hc": 0,
-    "in_mcast_pkts_hc": 0,
-    "out_mcast_pkts_hc": 0,
-    "in_broadcast_pkts_hc": 0,
-    "out_broadcast_pkts_hc": 0,
-    "diag_avail_status": "no-error",
-    "los": "not-available",
-    "tx_fault": "no-tx-fault",
-    "tx_power": "3.85 dBm",
-    "rx_power": "not-available",
-    "tx_bias_current": "16.17 mA",
-    "supply_voltage": "3.23 VDC",
-    "temperature": "57.39 degrees Celsius",
-    "temperature_tca": "normal-value",
-    "voltage_tca": "normal-value",
-    "bias_current_tca": "normal-value",
-    "tx_power_tca": "normal-value",
-    "rx_power_tca": "normal-value",
-    "rssi_profile_id": 65535,
-    "rssi_state": "enable",
-    "inp_up": 0,
-    "inp_dn": 0,
-    "interl_us": 0,
-    "interl_dn": 0,
-    "cur_op_mode": "default",
-    "rinit_1d": 0,
-    "actual_tps_tc_mode": "ptm",
-    "rtx_mode_up": "unknown",
-    "rtx_mode_dn": "unknown",
-    "total_reset_attempt": 0,
-    "success_reset_attempt": 0,
-    "cur_init_state": "down",
-    "shutdown": False,
-    "speed": "1G",
-    "auto_negotiation": True,
-    "mtu": 1495
+        "card_id": card_1_1_5,
+        "description": "Physical port 1/1/5/1",
+        "operational_state": "1",
+        "admin_state": "1",
+        "upstream": 10000,
+        "downstream": 25000,
+        "upstream_max": "100000",
+        "downstream_max": "100000",
+        "noise_margin_up": 0,
+        "noise_margin_down": 0,
+        "tgt_noise_margin_up": 0,
+        "tgt_noise_margin_down": 0,
+        "attenuation_up": 0,
+        "attenuation_down": 0,
+        "attained_upstream": 0,
+        "attained_downstream": 0,
+        "threshold_upstream": 0,
+        "threshold_downstream": 0,
+        "max_delay_upstream": 0,
+        "max_delay_downsteam": 0,
+        "if_index": 94502912,
+        "type": "ethernet-line",
+        "high_speed": 0,
+        "connector_present": "not-applicable",
+        "media": 0.0,
+        "largest_pkt_size": 0,
+        "curr_bandwith": 1244000000,
+        "phy_addr": " ",
+        "last_chg_opr_stat": "352-02:55:19",
+        "pkts_unknown_proto": 0,
+        "in_octets": 0,
+        "out_octets": 0,
+        "in_ucast_pkts": 0,
+        "out_ucast_pkts": 0,
+        "in_mcast_pkts": 0,
+        "out_mcast_pkts": 0,
+        "in_broadcast_pkts": 0,
+        "out_broadcast_pkts": 0,
+        "in_discard_pkts": 0,
+        "out_discard_pkts": 0,
+        "in_err_pkts": 0,
+        "out_err_pkts": 0,
+        "in_octets_hc": 0,
+        "out_octets_hc": 0,
+        "in_ucast_pkts_hc": 0,
+        "out_ucast_pkts_hc": 0,
+        "in_mcast_pkts_hc": 0,
+        "out_mcast_pkts_hc": 0,
+        "in_broadcast_pkts_hc": 0,
+        "out_broadcast_pkts_hc": 0,
+        "diag_avail_status": "no-error",
+        "los": "not-available",
+        "tx_fault": "no-tx-fault",
+        "tx_power": "3.85 dBm",
+        "rx_power": "not-available",
+        "tx_bias_current": "16.17 mA",
+        "supply_voltage": "3.23 VDC",
+        "temperature": "57.39 degrees Celsius",
+        "temperature_tca": "normal-value",
+        "voltage_tca": "normal-value",
+        "bias_current_tca": "normal-value",
+        "tx_power_tca": "normal-value",
+        "rx_power_tca": "normal-value",
+        "rssi_profile_id": 65535,
+        "rssi_state": "enable",
+        "inp_up": 0,
+        "inp_dn": 0,
+        "interl_us": 0,
+        "interl_dn": 0,
+        "cur_op_mode": "default",
+        "rinit_1d": 0,
+        "actual_tps_tc_mode": "ptm",
+        "rtx_mode_up": "unknown",
+        "rtx_mode_dn": "unknown",
+        "total_reset_attempt": 0,
+        "success_reset_attempt": 0,
+        "cur_init_state": "down",
+        "shutdown": False,
+        "speed": "1G",
+        "auto_negotiation": True,
+        "mtu": 1495
     }
     port_1_1_5_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ports'))
-    
+
     ### ServicePort 1/1/5/1 ####
     req = {
-          "connected_id": port_1_1_5_1,
-                          "connected_type": "port",
-    "name": "1/1/5/1",
-    "admin_state": "1",
-    "operational_state": "1"
+        "connected_id": port_1_1_5_1,
+        "connected_type": "port",
+        "name": "1/1/5/1",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_5_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/5/1 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_5_1,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_5
+        "name": "2620",
+        "service_port_id": service_port_1_1_5_1,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_5
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/5/1 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_5_1,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_5
+        "name": "3320",
+        "service_port_id": service_port_1_1_5_1,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_5
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Ont 1/1/5/1/1 ###
     # Create a physical ont at the network device (admin operation)
     req = {
-          "port_id":port_1_1_5_1,
-                    "description": "Ont 1/1/5/1/1",
-    "admin_state": "1",
-    "index": 1,
-    "type": "10gbaselr",
-    "basebx10d": "yes",
-    "media_available": "available",
-    "jabber_state": "jabber",
-    "b100basefxfd": "no",
-    "b100baselx10": "no",
-    "b100basebx10d": "no",
-    "b100basebx10u": "yes",
-    "b100basetxfd": "yes",
-    "b1000basetfd": "no",
-    "b10gbasetfd": "yes",
-    "b1000basesxfd": "no",
-    "b1000baselx10": "no",
-    "b1000baselxfd": "yes",
-    "b1000basebx10u": "yes",
-    "b1000basebx10d": "no",
-    "b10gbaser": "no",
-    "b10gbaselr": "yes",
-    "b10gbaseer": "no",
-    "b2500basex": "no",
-    "auto_neg_supported": True,
-    "auto_neg_status": "complete",
-    "cap100base_tfd": "no",
-    "cap1000base_xfd": "yes",
-    "cap1000base_tfd": "yes",
-    "cap10gbase_tfd": "no",
-    "act_num_data_ports": 1,
-    "act_num_voice_ports": 0,
-    "actual_card_type": "pon",
-    "actual_ont_integ": "integrated",
-    "actual_serial_num": "0168FC3C",
-    "actual_version_num": "G2110V1D0",
-    "actual_vendorid": "GNXS",
-    "actual_cardid": "FiberTwist-G2110",
-    "state": "enabled",
-    "sernum": "ALCLB140677C"
+        "port_id": port_1_1_5_1,
+        "description": "Ont 1/1/5/1/1",
+        "admin_state": "1",
+        "index": 1,
+        "type": "10gbaselr",
+        "basebx10d": "yes",
+        "media_available": "available",
+        "jabber_state": "jabber",
+        "b100basefxfd": "no",
+        "b100baselx10": "no",
+        "b100basebx10d": "no",
+        "b100basebx10u": "yes",
+        "b100basetxfd": "yes",
+        "b1000basetfd": "no",
+        "b10gbasetfd": "yes",
+        "b1000basesxfd": "no",
+        "b1000baselx10": "no",
+        "b1000baselxfd": "yes",
+        "b1000basebx10u": "yes",
+        "b1000basebx10d": "no",
+        "b10gbaser": "no",
+        "b10gbaselr": "yes",
+        "b10gbaseer": "no",
+        "b2500basex": "no",
+        "auto_neg_supported": True,
+        "auto_neg_status": "complete",
+        "cap100base_tfd": "no",
+        "cap1000base_xfd": "yes",
+        "cap1000base_tfd": "yes",
+        "cap10gbase_tfd": "no",
+        "act_num_data_ports": 1,
+        "act_num_voice_ports": 0,
+        "actual_card_type": "pon",
+        "actual_ont_integ": "integrated",
+        "actual_serial_num": "0168FC3C",
+        "actual_version_num": "G2110V1D0",
+        "actual_vendorid": "GNXS",
+        "actual_cardid": "FiberTwist-G2110",
+        "state": "enabled",
+        "sernum": "ALCLB140677C"
     }
     ont_1_1_5_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/onts'))
-    
+
     ### OntPort 1/1/5/1/1/1/1 ###
     # Create a physical ont-port at the ont (admin operation)
     req = {
-          "ont_id": ont_1_1_5_1_1,
-                    "description": "OntPort 1/1/5/1/1/1/1",
-    "admin_state": "1",
-    "operational_state": "1"
+        "ont_id": ont_1_1_5_1_1,
+        "description": "OntPort 1/1/5/1/1/1/1",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     ont_port_1_1_5_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ont_ports'))
-    
+
     ### ServicePort 1/1/5/1/1/1/1 ####
     req = {
-          "connected_id": ont_port_1_1_5_1_1_1_1,
-                          "connected_type": "ont",
-    "name": "1/1/5/1/1/1/1",
-    "admin_state": "1",
-    "operational_state": "1"
+        "connected_id": ont_port_1_1_5_1_1_1_1,
+        "connected_type": "ont",
+        "name": "1/1/5/1/1/1/1",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_5_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/5/1/1/1/1 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_5_1_1_1_1,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_5
+        "name": "2620",
+        "service_port_id": service_port_1_1_5_1_1_1_1,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_5
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/5/1/1/1/1 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_5_1_1_1_1,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_5
+        "name": "3320",
+        "service_port_id": service_port_1_1_5_1_1_1_1,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_5
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Cpe 1/1/5/1/1/1/1/1 ###
     # Create a physical cpe at the ont-port (admin operation)
     req = {
-          "ont_port_id": ont_port_1_1_5_1_1_1_1,
-                         "description": "Cpe 1/1/5/1/1/1/1/1",
-    "serial_no": "GFED135790XY",
-    "admin_state": "1",
-    "mac": "29:62:57:a6:60:69"
+        "ont_port_id": ont_port_1_1_5_1_1_1_1,
+        "description": "Cpe 1/1/5/1/1/1/1/1",
+        "serial_no": "GFED135790XY",
+        "admin_state": "1",
+        "mac": "29:62:57:a6:60:69"
     }
     cpe_1_1_5_1_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpes'))
-    
+
     ### CpePort 1/1/5/1/1/1 ###
     # Create a physical cpe-port at the cpe (admin operation)
     req = {
-          "cpe_id": cpe_1_1_5_1_1_1_1_1,
-                    "description": "CpePort 1/1/5/1/1/1/1/1/1"
+        "cpe_id": cpe_1_1_5_1_1_1_1_1,
+        "description": "CpePort 1/1/5/1/1/1/1/1/1"
     }
     cpe_port_1_1_5_1_1_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpe_ports'))
-    
+
     ### Ont 1/1/5/1/2 ###
     # Create a physical ont at the network device (admin operation)
     req = {
-          "port_id":port_1_1_5_1,
-                    "description": "Ont 1/1/5/1/2",
-    "admin_state": "1",
-    "index": 1,
-    "type": "10gbaselr",
-    "basebx10d": "yes",
-    "media_available": "available",
-    "jabber_state": "jabber",
-    "b100basefxfd": "no",
-    "b100baselx10": "no",
-    "b100basebx10d": "no",
-    "b100basebx10u": "yes",
-    "b100basetxfd": "yes",
-    "b1000basetfd": "no",
-    "b10gbasetfd": "yes",
-    "b1000basesxfd": "no",
-    "b1000baselx10": "no",
-    "b1000baselxfd": "yes",
-    "b1000basebx10u": "yes",
-    "b1000basebx10d": "no",
-    "b10gbaser": "no",
-    "b10gbaselr": "yes",
-    "b10gbaseer": "no",
-    "b2500basex": "no",
-    "auto_neg_supported": True,
-    "auto_neg_status": "complete",
-    "cap100base_tfd": "no",
-    "cap1000base_xfd": "yes",
-    "cap1000base_tfd": "yes",
-    "cap10gbase_tfd": "no",
-    "act_num_data_ports": 1,
-    "act_num_voice_ports": 0,
-    "actual_card_type": "pon",
-    "actual_ont_integ": "integrated",
-    "actual_serial_num": "0168FC3C",
-    "actual_version_num": "G2110V1D0",
-    "actual_vendorid": "GNXS",
-    "actual_cardid": "FiberTwist-G2110",
-    "state": "enabled",
-    "sernum": "ALCLB140677C"
+        "port_id": port_1_1_5_1,
+        "description": "Ont 1/1/5/1/2",
+        "admin_state": "1",
+        "index": 1,
+        "type": "10gbaselr",
+        "basebx10d": "yes",
+        "media_available": "available",
+        "jabber_state": "jabber",
+        "b100basefxfd": "no",
+        "b100baselx10": "no",
+        "b100basebx10d": "no",
+        "b100basebx10u": "yes",
+        "b100basetxfd": "yes",
+        "b1000basetfd": "no",
+        "b10gbasetfd": "yes",
+        "b1000basesxfd": "no",
+        "b1000baselx10": "no",
+        "b1000baselxfd": "yes",
+        "b1000basebx10u": "yes",
+        "b1000basebx10d": "no",
+        "b10gbaser": "no",
+        "b10gbaselr": "yes",
+        "b10gbaseer": "no",
+        "b2500basex": "no",
+        "auto_neg_supported": True,
+        "auto_neg_status": "complete",
+        "cap100base_tfd": "no",
+        "cap1000base_xfd": "yes",
+        "cap1000base_tfd": "yes",
+        "cap10gbase_tfd": "no",
+        "act_num_data_ports": 1,
+        "act_num_voice_ports": 0,
+        "actual_card_type": "pon",
+        "actual_ont_integ": "integrated",
+        "actual_serial_num": "0168FC3C",
+        "actual_version_num": "G2110V1D0",
+        "actual_vendorid": "GNXS",
+        "actual_cardid": "FiberTwist-G2110",
+        "state": "enabled",
+        "sernum": "ALCLB140677C"
     }
     ont_1_1_5_1_2 = create_resource(req, (endpoint + '/boxen/' + box_id + '/onts'))
-    
+
     ### OntPort 1/1/5/1/2/1/1 ###
     # Create a physical ont-port at the ont (admin operation)
     req = {
-          "ont_id": ont_1_1_5_1_2,
-                    "description": "OntPort 1/1/5/1/2/1/1",
-    "admin_state": "1"
+        "ont_id": ont_1_1_5_1_2,
+        "description": "OntPort 1/1/5/1/2/1/1",
+        "admin_state": "1"
     }
     ont_port_1_1_5_1_2_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ont_ports'))
-    
+
     ### ServicePort 1/1/5/1/2/1/1 ####
     req = {
-          "connected_id": ont_port_1_1_5_1_2_1_1,
-                          "connected_type": "ont",
-    "name": "1/1/5/1/2/1/1",
-    "admin_state": "1",
-    "operational_state": "1"
+        "connected_id": ont_port_1_1_5_1_2_1_1,
+        "connected_type": "ont",
+        "name": "1/1/5/1/2/1/1",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_5_1_2_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/5/1/2/1/1 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_5_1_2_1_1,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_5
+        "name": "2620",
+        "service_port_id": service_port_1_1_5_1_2_1_1,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_5
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/5/1/2/1/1 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_5_1_2_1_1,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_5
+        "name": "3320",
+        "service_port_id": service_port_1_1_5_1_2_1_1,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_5
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Cpe 1/1/5/1/2/1/1/1 ###
     # Create a physical cpe at the ont-port (admin operation)
     req = {
-          "ont_port_id": ont_port_1_1_5_1_2_1_1,
-                         "description": "Cpe 1/1/5/1/2/1/1/1",
-    "serial_no": "GFED132546XY",
-    "admin_state": "1",
-    "mac": "08:97:dc:ca:07:8e"
+        "ont_port_id": ont_port_1_1_5_1_2_1_1,
+        "description": "Cpe 1/1/5/1/2/1/1/1",
+        "serial_no": "GFED132546XY",
+        "admin_state": "1",
+        "mac": "08:97:dc:ca:07:8e"
     }
     cpe_1_1_5_1_2_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpes'))
-    
+
     ### CpePort 1/1/5/1/2/1 ###
     # Create a physical cpe-port at the cpe (admin operation)
     req = {
-          "cpe_id": cpe_1_1_5_1_2_1_1_1,
-                    "description": "CpePort 1/1/5/1/2/1/1/1/1"
+        "cpe_id": cpe_1_1_5_1_2_1_1_1,
+        "description": "CpePort 1/1/5/1/2/1/1/1/1"
     }
     cpe_port_1_1_5_1_2_1_1_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpe_ports'))
-    
+
     ### OntPort 1/1/5/1/2/1/2 ###
     # Create a physical ont-port at the ont (admin operation)
     req = {
-          "ont_id": ont_1_1_5_1_2,
-                    "description": "OntPort 1/1/5/1/2/1/2",
-    "admin_state": "1"
+        "ont_id": ont_1_1_5_1_2,
+        "description": "OntPort 1/1/5/1/2/1/2",
+        "admin_state": "1"
     }
     ont_port_1_1_5_1_2_1_2 = create_resource(req, (endpoint + '/boxen/' + box_id + '/ont_ports'))
-    
+
     ### ServicePort 1/1/5/1/1/1/1 ####
     req = {
-          "connected_id": ont_port_1_1_5_1_2_1_2,
-                          "connected_type": "ont",
-    "name": "1/1/5/1/2/1/2",
-    "admin_state": "1",
-    "operational_state": "1"
+        "connected_id": ont_port_1_1_5_1_2_1_2,
+        "connected_type": "ont",
+        "name": "1/1/5/1/2/1/2",
+        "admin_state": "1",
+        "operational_state": "1"
     }
     service_port_1_1_5_1_2_1_2 = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_ports'))
-    
+
     ### Service PPPoE Vlan at ServicePort 1/1/5/1/2/1/2 ###
     req = {
-          "name": "2620",
-                  "service_port_id": service_port_1_1_5_1_2_1_2,
-    "vlan_id": vlan_pppoe,
-    "card_id": card_1_1_5
+        "name": "2620",
+        "service_port_id": service_port_1_1_5_1_2_1_2,
+        "vlan_id": vlan_pppoe,
+        "card_id": card_1_1_5
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Service CPE Management Vlan at ServicePort 1/1/5/1/2/1/2 ###
     req = {
-          "name": "3320",
-                  "service_port_id": service_port_1_1_5_1_2_1_2,
-    "vlan_id": vlan_cpem,
-    "card_id": card_1_1_5
+        "name": "3320",
+        "service_port_id": service_port_1_1_5_1_2_1_2,
+        "vlan_id": vlan_cpem,
+        "card_id": card_1_1_5
     }
     service_vlan_ = create_resource(req, (endpoint + '/boxen/' + box_id + '/service_vlans'))
-    
+
     ### Cpe 1/1/5/1/2/1/2/1 ###
     # Create a physical cpe at the ont-port (admin operation)
     req = {
-          "ont_port_id": ont_port_1_1_5_1_2_1_2,
-                         "description": "Cpe 1/1/5/1/2/1/2/1",
-    "serial_no": "GFED213465XY",
-    "admin_state": "1",
-    "mac": "6f:4a:1e:b4:51:f5"
+        "ont_port_id": ont_port_1_1_5_1_2_1_2,
+        "description": "Cpe 1/1/5/1/2/1/2/1",
+        "serial_no": "GFED213465XY",
+        "admin_state": "1",
+        "mac": "6f:4a:1e:b4:51:f5"
     }
     cpe_1_1_5_1_2_1_2_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpes'))
-    
+
     ### CpePort 1/1/5/1/2/1 ###
     # Create a physical cpe-port at the cpe (admin operation)
     req = {
-          "cpe_id": cpe_1_1_5_1_2_1_2_1,
-                    "description": "CpePort 1/1/5/1/2/1/2/1/1"
+        "cpe_id": cpe_1_1_5_1_2_1_2_1,
+        "description": "CpePort 1/1/5/1/2/1/2/1/1"
     }
     cpe_port_1_1_5_1_2_1_2_1_1 = create_resource(req, (endpoint + '/boxen/' + box_id + '/cpe_ports'))
     return
