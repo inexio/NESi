@@ -1,0 +1,360 @@
+
+>>User name:root
+>>User password:secret
+
+  Huawei Integrated Access Software (MA5623).
+  Copyright(C) Huawei Technologies Co., Ltd. 2002-2015. All rights reserved.
+
+  -----------------------------------------------------------------------------
+  User last login information:
+  -----------------------------------------------------------------------------
+  Access Type : telnet
+  IP-Address  : 10.0.0.12
+  Login  Time : 11/20/2020 09:29:10
+  Logout Time : 11/20/2020 09:29:10
+  -----------------------------------------------------------------------------
+
+test>display board 0/0
+  ---------------------------------------
+  Board Name          : HS22CCVW
+  Board Status        : Active_normal
+  ---------------------------------------
+
+  ------------------------------------------------------------------------------
+  Port Port COMBO    Optic    MDI    Speed      Duplex    Flow- Active   Link
+       Type Mode     Status          (Mbps)               Ctrl  State
+  ------------------------------------------------------------------------------
+     0 GE   -        normal   -      auto_1000  auto_full off   active   online
+     1 GE   -        normal   -      auto_1000  auto_full off   active   online
+  ------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
+  Port  15Min   15Min    24Hour  24Hour
+        AlmProf WarnProf AlmProf WarnProf
+  ------------------------------------------------------------------------------
+     0        -        -       -        -
+     1        -        -       -        -
+  ------------------------------------------------------------------------------
+  Note: For a 1000 M, electrical port in the full-duplex mode, setting MDI to
+        any value is invalid
+
+test>enable
+
+test#display board 0/0
+  ---------------------------------------
+  Board Name          : HS22CCVW
+  Board Status        : Active_normal
+  ---------------------------------------
+
+  ------------------------------------------------------------------------------
+  Port Port COMBO    Optic    MDI    Speed      Duplex    Flow- Active   Link
+       Type Mode     Status          (Mbps)               Ctrl  State
+  ------------------------------------------------------------------------------
+     0 GE   -        normal   -      auto_1000  auto_full off   active   online
+     1 GE   -        normal   -      auto_1000  auto_full off   active   online
+  ------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
+  Port  15Min   15Min    24Hour  24Hour
+        AlmProf WarnProf AlmProf WarnProf
+  ------------------------------------------------------------------------------
+     0        -        -       -        -
+     1        -        -       -        -
+  ------------------------------------------------------------------------------
+  Note: For a 1000 M, electrical port in the full-duplex mode, setting MDI to
+        any value is invalid
+
+test#config
+
+test(config)#display board 0/0
+  ---------------------------------------
+  Board Name          : HS22CCVW
+  Board Status        : Active_normal
+  ---------------------------------------
+
+  ------------------------------------------------------------------------------
+  Port Port COMBO    Optic    MDI    Speed      Duplex    Flow- Active   Link
+       Type Mode     Status          (Mbps)               Ctrl  State
+  ------------------------------------------------------------------------------
+     0 GE   -        normal   -      auto_1000  auto_full off   active   online
+     1 GE   -        normal   -      auto_1000  auto_full off   active   online
+  ------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
+  Port  15Min   15Min    24Hour  24Hour
+        AlmProf WarnProf AlmProf WarnProf
+  ------------------------------------------------------------------------------
+     0        -        -       -        -
+     1        -        -       -        -
+  ------------------------------------------------------------------------------
+  Note: For a 1000 M, electrical port in the full-duplex mode, setting MDI to
+        any value is invalid
+
+test(config)#return
+
+test#quit
+  Check whether system data has been changed. Please save data before logout.
+Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to log on
+----------------------
+
+  ------------------------------------------------------------------------------
+  In port 0/3/4, the total of ONTs are: 1, online: 1
+  ------------------------------------------------------------------------------
+  ONT  Run     Last                Last                Last
+  ID   State   UpTime              DownTime            DownCause
+  ------------------------------------------------------------------------------
+  0    online  2020-11-12 00:00:00 2020-11-11 00:00:00 dying-gasp
+  ------------------------------------------------------------------------------
+  ONT        SN        Type          Distance Rx/Tx power  Description
+  ID                                    (m)      (dBm)
+  ------------------------------------------------------------------------------
+  0   485754433AD3209C 010H             7742  -21.87/1.59  Ont 0/3/4 0
+  ------------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------------
+  In port 0/4/0, the total of ONTs are: 2, online: 1
+  ------------------------------------------------------------------------------
+  ONT  Run     Last                Last                Last
+  ID   State   UpTime              DownTime            DownCause
+  ------------------------------------------------------------------------------
+  1    online  2020-11-01 00:00:00 2020-10-31 00:00:00 dying-gasp
+  2    offline  2020-10-28 00:00:00 2020-10-29 00:00:00 dying-gasp
+  ------------------------------------------------------------------------------
+  ONT        SN        Type          Distance Rx/Tx power  Description
+  ID                                    (m)      (dBm)
+  ------------------------------------------------------------------------------
+  1   485754433AD3209C 010H             6229  -18.32/1.06  Ont 0/4/0 1
+  2   485754433AD3209C 010H             6586  -23.33/2.23  This is a new ont
+  ------------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------------
+  In port 0/5/0, the total of ONTs are: 1, online: 1
+  ------------------------------------------------------------------------------
+  ONT  Run     Last                Last                Last
+  ID   State   UpTime              DownTime            DownCause
+  ------------------------------------------------------------------------------
+  0    online  2020-10-28 00:00:00 2020-10-27 00:00:00 dying-gasp
+  ------------------------------------------------------------------------------
+  ONT        SN        Type          Distance Rx/Tx power  Description
+  ID                                    (m)      (dBm)
+  ------------------------------------------------------------------------------
+  0   485754433AD3209C 010H             4373  -24.18/1.13  Ont 0/5/0 0
+  ------------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------------
+  In port 0/5/1, the total of ONTs are: 1, online: 1
+  ------------------------------------------------------------------------------
+  ONT  Run     Last                Last                Last
+  ID   State   UpTime              DownTime            DownCause
+  ------------------------------------------------------------------------------
+  0    online  2020-11-09 00:00:00 2020-11-08 00:00:00 dying-gasp
+  ------------------------------------------------------------------------------
+  ONT        SN        Type          Distance Rx/Tx power  Description
+  ID                                    (m)      (dBm)
+  ------------------------------------------------------------------------------
+  0   485754433AD3209C 010H             1415  -18.23/2.18  Ont 0/5/1 0
+  ------------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------------
+  In port 0/5/2, the total of ONTs are: 1, online: 0
+  ------------------------------------------------------------------------------
+  ONT  Run     Last                Last                Last
+  ID   State   UpTime              DownTime            DownCause
+  ------------------------------------------------------------------------------
+  0    offline  2020-11-09 00:00:00 2020-11-10 00:00:00 dying-gasp
+  ------------------------------------------------------------------------------
+  ONT        SN        Type          Distance Rx/Tx power  Description
+  ID                                    (m)      (dBm)
+  ------------------------------------------------------------------------------
+  0   485754433AD3209C 010H             4937  -22.67/2.57  Ont 0/5/2 0
+  ------------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------------
+  In port 0/5/3, the total of ONTs are: 1, online: 1
+  ------------------------------------------------------------------------------
+  ONT  Run     Last                Last                Last
+  ID   State   UpTime              DownTime            DownCause
+  ------------------------------------------------------------------------------
+  0    online  2020-10-25 00:00:00 2020-10-24 00:00:00 dying-gasp
+  ------------------------------------------------------------------------------
+  ONT        SN        Type          Distance Rx/Tx power  Description
+  ID                                    (m)      (dBm)
+  ------------------------------------------------------------------------------
+  0   485754433AD3209C 010H             7895  -22.41/2.4  Ont 0/5/3 0
+  ------------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------------
+  In port 0/5/4, the total of ONTs are: 1, online: 1
+  ------------------------------------------------------------------------------
+  ONT  Run     Last                Last                Last
+  ID   State   UpTime              DownTime            DownCause
+  ------------------------------------------------------------------------------
+  0    online  2020-10-25 00:00:00 2020-10-24 00:00:00 dying-gasp
+  ------------------------------------------------------------------------------
+  ONT        SN        Type          Distance Rx/Tx power  Description
+  ID                                    (m)      (dBm)
+  ------------------------------------------------------------------------------
+  0   485754433AD3209C 010H             2533  -15.04/1.07  Ont 0/5/4 0
+  ------------------------------------------------------------------------------
+
+
+test(config)#return
+
+test#quit
+  Check whether system data has been changed. Please save data before logout.
+Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to log on
+e quickmodify 1001 g.993.2-profile 7 mode-specific enable 1 1001		 
+
+test(config)#xdsl line-spectrum-profile quickmodify 1001 g.993.2-profile 7 us0-psd-mask 19		 
+
+test(config)#xdsl line-spectrum-profile quickmodify 1001 transmode 6		 
+
+test(config)#xdsl line-spectrum-profile quickadd 1002 l0-time 255 l2-time 30 l3-time 255 max-transmite-power-reduction 3 total-max-power-reduction 31 bit-swap-ds 1 bit-swap-us 1 overhead-datarate-us 4000 overhead-datarate-ds 4000		 
+
+test(config)#xdsl line-spectrum-profile quickmodify 1002 allow-transitions-to-idle 2 allow-transitions-to-lowpower 2 reference-clock freeRun cyclic-extension-flag 1 force-inp-ds 1 force-inp-us 1 desc VDSL_NO_ADSL		 
+
+test(config)#xdsl line-spectrum-profile quickmodify 1002 g.993.2-profile 7 mode-specific enable 1 1001		 
+
+test(config)#xdsl line-spectrum-profile quickmodify 1002 g.993.2-profile 7 us0-psd-mask 19		 
+
+test(config)#xdsl line-spectrum-profile quickmodify 1002 transmode 6		 
+
+test(config)#xdsl line-spectrum-profile quickmodify 1002 vdsltoneblackout enable 0-511
+
+test(config)#return
+
+test#quit
+  Check whether system data has been changed. Please save data before logout.
+Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to log on
+        : PASS
+  Transmission mode capability     :
+    G.992.1(Annex B)                 G.992.3(Annex B/J)
+    G.992.5(Annex B/J)               G.993.2(Annex A/B/C)
+    G.993.5
+  ------------------------------------------------------------------------
+
+test(config-if-adsl-0/2)#return
+
+test#config
+
+test(config)#interface gpon 0/4
+
+test(config-if-gpon-0/4)#display port state 0
+  ----------------------------------------------------------------------------
+  Port Information
+  ----------------------------------------------------------------------------
+  F/S/P                        0/4/0
+  Port state                   Online
+  Last down cause              LOS
+  Last up time                 2019-09-17 11:46:10+01:00
+  Last down time               2019-09-17 11:45:24+01:00
+  Port energy-saving flag      No
+  xPON MAC chipset state       Normal
+  Signal detect                Normal
+  Available bandwidth(Kbps)    1202323
+  Illegal rogue ONT            Inexistent
+  ----------------------------------------------------------------------------
+  Optical Module State
+  ----------------------------------------------------------------------------
+  Optical Module status        Online
+  Laser state                  Normal
+  TX fault                     Normal
+  Temperature(C)               61.0
+  TX Bias current(mA)          28.0
+  Supply Voltage(V)            3.2
+  TX power(dBm)                3.67
+  ----------------------------------------------------------------------------
+  Optical Module Manufacturer Information
+  ----------------------------------------------------------------------------
+  Vendor name                  Hisense
+  Vendor rev                   1.0
+  Vendor OUI                   Unspecified
+  Vendor PN                    LTE3680M-BC+
+  Vendor SN                    M5071013838
+  Date Code                    17-01-12
+  Vendor specific              00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  ----------------------------------------------------------------------------
+  Optical Module Static Information
+  ----------------------------------------------------------------------------
+  Module type                  GPON
+  Module sub-type              CLASS B+
+  Used type                    OLT
+  Encapsulation Type           SFP
+  SFF-8472 Compliance          Includes functionality described in Rev 9.5
+  Max Distance(Km)             30
+  Max rate(Kbps)               2500000
+  Rate Identifier              Unspecified(0x0)
+  Wave length(nm)              1490
+  Fiber type                   Single Mode
+  Identifier                   SFP or SFP Plus
+  Ext.Identifier               GBIC/SFP function is defined by two-wire interface ID only
+  Connector                    SC
+  Encoding                     NRZ
+  Length(9um)(km)              40.0
+  Length(50um)(m)              -
+  Length(62.5um)(m)            -
+  Length(copper)(m)            -
+  Length(50um,OM3)(m)          -
+  BR,max                       Unspecified
+  BR,min                       Unspecified
+  Diagnostic Monitoring Type   Digital diagnostic monitoring
+                               Externally Calibrated
+                               Power measurement type: Average Power
+  Options                      TX_DISABLE,and disables the serial output
+                               TX_FAULT
+                               LOS(signal inverted from standard definition)
+  Enhanced Options             Alarm/warning flags
+                               TX_DISABLE control and monitoring
+                               TX_FAULT monitoring
+  OTDR capability              Not support
+  Cc_base                      0x4d(Correct)
+  CC_EXT                       0xb3(Correct)
+  ----------------------------------------------------------------------------
+  Optical Module Threshold Parameter
+  ----------------------------------------------------------------------------
+  Rx power warning
+  threshold(dBm)               [-29.2,-8.0]
+
+  Rx power alarm
+  threshold(dBm)               [-30.0,-7.0]
+
+  Tx power warning
+  threshold(dBm)               [1.0,5.0]
+
+  Tx power alarm
+  threshold(dBm)               [0.6,5.6]
+
+  Tx bias warning
+  threshold(mA)                [0.000,70.000]
+
+  Tx bias alarm
+  threshold(mA)                [0.000,90.000]
+
+  Supply voltage warning
+  threshold(V)                 [3.100,3.500]
+
+  Supply voltage alarm
+  threshold(V)                 [3.000,3.600]
+
+  Temperature warning
+  threshold(C)                 [-8,75]
+
+  Temperature alarm
+  threshold(C)                 [-13,80]
+  ----------------------------------------------------------------------------
+
+test(config-if-gpon-0/4)#return
+
+test#config
+
+test(config)#interface eth 0/3
+
+test(config-if-eth-0/3)#display port ddm-info 0
+{ <cr>|sort-by<K>||<K> }:  Temperature(C)                       : 61.50505
+  Supply voltage(V)                    : 3.200002
+  TX bias current(mA)                  : 28.000023
+  TX power(dBm)                        : 3.670001
+  RX power(dBm)                        : -12.68
+
+test(config-if-eth-0/3)#return
+
+test#quit
+  Check whether system data has been changed. Please save data before logout.
+Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to log on

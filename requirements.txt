@@ -10,6 +10,6 @@ psutil
 pytest
 pyperclip
 twisted
-cryptography
+cryptography==2.2.2
 bcrypt
 pyasn1

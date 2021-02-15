@@ -1,0 +1,463 @@
+
+     ___       __        ______     ___   .___________. _______  __
+    /   \     |  |      /      |   /   \  |           ||   ____||  |
+   /  ^  \    |  |     |  ,----`  /  ^  \ `---|  |----`|  |__   |  |
+  /  /_\  \   |  |     |  |      /  /_\  \    |  |     |   __|  |  |
+ /  _____  \  |  `----.|  `----./  _____  \   |  |     |  |____ |  `----.
+/__/     \__\ |_______| \______/__/     \__\  |__|     |_______||_______|
+
+login:admin
+password:secret
+Welcome to Alcatel_7360
+last login : /
+Alcatel_7360>#show xdsl operational-data line 1/1/1/1 detail
+================================================================================
+line table (detailed)
+================================================================================
+
+--------------------------------------------------------------------------------
+line
+--------------------------------------------------------------------------------
+              if-index : 1/1/1/1                      adm-state : up
+  opr-state/tx-rate-ds : up                          tx-rate/us : 10000
+            tx-rate/ds : 25000                   max-tx-rate-us : 100000
+        max-tx-rate-ds : 100000                          inp-up : 0
+                inp-dn : 0                            interl-us : 0
+             interl-ds : 0                          cur-op-mode : default
+              rinit-1d : 0                   actual-tps-tc-mode : ptm
+           rtx-mode-up : unknown                    rtx-mode-dn : unknown
+   total-reset-attempt : 0                success-reset-attempt : 0
+        cur-init-state : down
+================================================================================
+Alcatel_7360>show#info configure xdsl line 1/1/1/1
+configure xdsl
+#-------------------------------------------------------------------------------
+echo "xdsl"
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+Alcatel_7360>#show xdsl linkup-record 1/1/1/1 detail
+================================================================================
+linkup-record table (detailed)
+================================================================================
+--------------------------------------------------------------------------------
+linkup-record
+--------------------------------------------------------------------------------
+                  line : 1/1/1/1
+   link-timestamp-down : 1970-01-01:00:00:00
+     link-timestamp-up : 1970-01-01:00:00:00
+        act-bitrate-up : 10000                act-bitrate-down : 25000
+   act-noise-margin-up : 0               act-noise-margin-down : 0
+        attenuation-up : 0                    attenuation-down : 0
+   attained-bitrate-up : 0               attained-bitrate-down : 0
+        max-bitrate-up : 100000               max-bitrate-down : 100000
+  threshold-bitrate-up : 0              threshold-bitrate-down : 0
+          max-delay-up : 0                      max-delay-down : 0
+   tgt-noise-margin-up : 0               tgt-noise-margin-down : 0
+
+================================================================================
+Alcatel_7360>show#info configure xdsl line 1/1/1/1 detail
+configure xdsl
+#-------------------------------------------------------------------------------
+echo "xdsl"
+#-------------------------------------------------------------------------------
+line 1/1/1/1
+    no service-profile 1
+    no spectrum-profile # value=none
+    no dpbo-profile # value=none
+    no rtx-profile # value=none
+    no vect-profile # value=none
+    no sos-profile # value=none
+    no ghs-profile # value=none
+    no ansi-t1413
+    no etsi-dts
+    no g992-1-a
+    no g992-1-b
+    no g992-2-a
+    no g992-3-a
+    no g992-3-b
+    no g992-3-aj
+    no g992-3-l1
+    no g992-3-l2
+    no g992-3-am
+    no g992-5-a
+    no g992-5-b
+    no ansi-t1.424
+    no etsi-ts
+    no itu-g993-1
+    no ieee-802.3ah
+    no g992-5-aj
+    no g992-5-am
+    no g993-2-8a
+    no g993-2-8b
+    no g993-2-8c
+    no g993-2-8d
+    no g993-2-12a
+    no g993-2-12b
+    no g993-2-17a
+    no g993-2-30a
+    no g993-2-35b
+    no carrier-data-mode # value=off
+    admin-up
+    no transfer-mode # value=system-default
+    no imp-noise-sensor
+    no vect-qln-mode # value=without-cancel
+    no auto-switch
+    no vect-fallback # value=auto
+    no gf-tdd-profile # value=none
+    no gf-dsrate-profile # value=none
+    no gf-usrate-profile # value=none
+    no gf-spec-profile # value=none
+    no gf-upbo-profile # value=none
+    no gf-rfi-profile # value=none
+    no gf-snrm-profile # value=none
+    no gf-fra-profile # value=none
+    no gf-rtx-profile # value=none
+    no gf-reinit-profile # value=none
+    no gf-vect-profile # value=none
+    no gf-lcvect-profile # value=none
+    gf-testmode
+        no rtx-ds
+        no rtx-us
+        no tps-ds
+        no tps-us
+        no dra-ds
+        no dra-us
+    exit
+    tca-line-threshold
+        no enable
+        no es-nearend # value=0
+        no ses-nearend # value=0
+        no uas-nearend # value=0
+        no leftr-nearend # value=0
+        no leftr-day-nearend # value=0
+        no es-day-nearend # value=0
+        no ses-day-nearend # value=0
+        no uas-day-nearend # value=0
+        no es-farend # value=0
+        no ses-farend # value=0
+        no uas-farend # value=0
+        no es-day-farend # value=0
+        no ses-day-farend # value=0
+        no uas-day-farend # value=0
+        no leftr-farend # value=0
+        no leftr-day-farend # value=0
+    exit
+    service-profile-name TEST_DSL_16000
+    spectrum-profile-name 
+    dpbo-profile-name 
+    rtx-profile-name 
+    vect-profile-name 
+    overrule-state not-created
+    sos-profile-name 
+    ghs-profile-name 
+    gf-tdd-prof-name ""
+    gf-dsrate-prof-name ""
+    gf-usrate-prof-name ""
+    gf-spec-prof-name ""
+    gf-upbo-prof-name ""
+    gf-rfi-prof-name ""
+    gf-snrm-prof-name ""
+    gf-fra-prof-name ""
+    gf-rtx-prof-name ""
+    gf-reinit-prof-name ""
+    gf-vect-prof-name ""
+    gf-lcvect-prof-name ""
+exit
+#-------------------------------------------------------------------------------
+Alcatel_7360>#show vlan bridge-port-fdb 1/1/1/1:1:32 detail
+===================================================================================================================================================
+bridge-port-fdb table (detailed)
+===================================================================================================================================================
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+bridge-port-fdb
+---------------------------------------------------------------------------------------------------------------------------------------------------
+                  port : 1/1/1/1:1:32
+               vlan-id : 
+                   mac : 8f:db:82:ef:ea:17
+                fdb-id : 
+                status : up
+                  vmac : 00:00:00:00:00:00
+===================================================================================================================================================
+Alcatel_7360>show#show vlan bridge-port-fdb
+=================================================================================================
+bridge-port-fdb table
+=================================================================================================
+port               |vlan-id         |mac              |fdb-id          |status |vmac
+-------------------+----------------+-----------------+----------------+-------+-----------------
+1/1/1/1             2620             8f:db:82:ef:ea:17 1                learned 00:00:00:00:00:00
+1/1/1/1:1:32        2620             8f:db:82:ef:ea:17 1                learned 00:00:00:00:00:00
+1/1/1/1/1/1         2620             8f:db:82:ef:ea:17 1                learned 00:00:00:00:00:00
+1/1/1/1             2620             8d:dc:81:ea:fe:12 1                learned 00:00:00:00:00:00
+1/1/2/1             2620             2a:87:19:09:ae:2f 1                learned 00:00:00:00:00:00
+1/1/2/1             2620             2e:78:09:e6:dc:4e 1                learned 00:00:00:00:00:00
+1/1/3/1             2620             fd:28:2e:25:a2:99 1                learned 00:00:00:00:00:00
+1/1/3/2             2620             c3:3e:81:30:3d:10 1                learned 00:00:00:00:00:00
+1/1/4/2/1/1/1       2620             8f:db:82:ef:ea:17 1                learned 00:00:00:00:00:00
+1/1/4/3/1/1/1       2620             8d:dc:81:ea:fe:12 1                learned 00:00:00:00:00:00
+1/1/5/1/1/1/1       2620             29:62:57:a6:60:69 1                learned 00:00:00:00:00:00
+1/1/5/1/2/1/1       2620             08:97:dc:ca:07:8e 1                learned 00:00:00:00:00:00
+1/1/5/1/2/1/2       2620             6f:4a:1e:b4:51:f5 1                learned 00:00:00:00:00:00
+test_sport          2620             8f:db:82:ef:ea:17 1                learned 00:00:00:00:00:00
+-------------------------------------------------------------------------------------------------
+bridge-port-fdb count : 14
+=================================================================================================
+Alcatel_7360>show#show vlan bridge-port-fdb 1/1/1/1 detail
+===================================================================================================================================================
+bridge-port-fdb table (detailed)
+===================================================================================================================================================
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+bridge-port-fdb
+---------------------------------------------------------------------------------------------------------------------------------------------------
+                  port : 1/1/1/1
+               vlan-id : 2620
+                   mac : 8f:db:82:ef:ea:17
+                fdb-id : 1
+                status : up
+                  vmac : 00:00:00:00:00:00
+===================================================================================================================================================
+Alcatel_7360>show#show xdsl cpe-inventory 1/1/1/1 detail
+================================================================================
+cpe-inventory table (detailed)
+================================================================================
+--------------------------------------------------------------------------------
+cpe-inventory
+--------------------------------------------------------------------------------
+         if-index : 1/1/1/1
+  modem-vendor-id : B5004946544E590C
+    sys-serial-no : "F0B014F2EB3E F!Box7490 113.06.93"
+    sys-vendor-id : 040041564D000000
+   sys-version-no : 312E3130302E3133352E313820413600
+ self-test-result : 00000000
+================================================================================
+Alcatel_7360>show#show equipment slot lt:1/1/1 detail
+================================================================================
+slot table (detailed)
+================================================================================
+
+--------------------------------------------------------------------------------
+slot
+--------------------------------------------------------------------------------
+                 slot : lt:1/1/1                 planned-type : fant-f
+          actual-type : rdlt-c                    oper-status : 1
+         error-status : no-error
+         availability : available
+        alarm-profile : none
+        capab-profile : 32port_xDSL
+         manufacturer : ALCL
+             mnemonic : RDLT-C
+             pba-code : 3FE68863GGFL
+            fpba-code : 3FE68863GGFL
+             fpba-ics : 02
+            clei-code : VBIUAALBAB
+            serial-no : AA1815FSE1CG
+          failed-test : 00:00:00:00
+      lt-restart-time : 1970-01-01:00:00:00
+     lt-restart-cause : poweron
+       lt-restart-num : 0
+mgnt-entity-oamipaddr : 0.0.0.0
+  mgnt-entity-pairnum : 0
+         dual-host-ip : 0.0.0.0
+        dual-host-loc : none
+================================================================================
+Alcatel_7360>show#show interface port pon:1/1/5/1 detail
+================================================================================
+port table (detailed)
+================================================================================
+--------------------------------------------------------------------------------
+port
+--------------------------------------------------------------------------------
+                  port : 1/1/5/1
+              if-index : 94502912
+                  info : Physical port 1/1/5/1
+                  type : ethernet-line
+                  name : 1/1/5/1
+            high-speed : 0                   connector-present : not-applicable
+                 media : 0.0
+      largest-pkt-size : 0                   current-bandwidth : 1244000000
+              phy-addr :  
+          admin-status : up                         opr-status : up
+     last-chg-opr-stat : 352-02:55:19       pkts-unknown-proto : 0
+             in-octets : 0                          out-octets : 0
+         in-ucast-pkts : 0                      out-ucast-pkts : 0
+         in-mcast-pkts : 0                      out-mcast-pkts : 0
+     in-broadcast-pkts : 0                  out-broadcast-pkts : 0
+       in-discard-pkts : 0                    out-discard-pkts : 0
+           in-err-pkts : 0                        out-err-pkts : 0
+          in-octets-hc : 0
+         out-octets-hc : 0
+      in-ucast-pkts-hc : 0
+     out-ucast-pkts-hc : 0
+      in-mcast-pkts-hc : 0
+     out-mcast-pkts-hc : 0
+  in-broadcast-pkts-hc : 0
+ out-broadcast-pkts-hc : 0
+================================================================================
+Alcatel_7360>show#show equipment diagnostics sfp lt:1/1/5:sfp:1 detail
+================================================================================
+sfp table (detailed)
+================================================================================
+--------------------------------------------------------------------------------
+sfp
+--------------------------------------------------------------------------------
+            position : lt:1/1/5:sfp:1
+   diag-avail-status : no-error
+                 los : not-available                tx-fault : no-tx-fault
+            tx-power : 3.85 dBm
+            rx-power : not-available
+     tx-bias-current : 16.17 mA
+      supply-voltage : 3.23 VDC
+         temperature : 57.39 degrees Celsius
+     temperature-tca : normal-value
+         voltage-tca : normal-value
+    bias-current-tca : normal-value
+        tx-power-tca : normal-value
+        rx-power-tca : normal-value
+     rssi-profile-id : 65535                      rssi-state : enable
+================================================================================
+Alcatel_7360>show#show equipment slot lt:1/1/2 detail
+================================================================================
+slot table (detailed)
+================================================================================
+
+--------------------------------------------------------------------------------
+slot
+--------------------------------------------------------------------------------
+                 slot : lt:1/1/2                 planned-type : rdlt-c
+          actual-type : rdlt-c                    oper-status : 1
+         error-status : no-error
+         availability : available
+        alarm-profile : none
+        capab-profile : 32port_xDSL
+         manufacturer : ALCL
+             mnemonic : FANT-F
+             pba-code : 3FE68863GGFL
+            fpba-code : 3FE68863GGFL
+             fpba-ics : 02
+            clei-code : VBIUAALBAB
+            serial-no : AA1815FSE1CG
+          failed-test : 00:00:00:00
+      lt-restart-time : 1970-01-01:00:00:00
+     lt-restart-cause : poweron
+       lt-restart-num : 0
+mgnt-entity-oamipaddr : 0.0.0.0
+  mgnt-entity-pairnum : 0
+         dual-host-ip : 0.0.0.0
+        dual-host-loc : none
+================================================================================
+Alcatel_7360>show#show interface port ethernet-line:1/1/4/1 detail
+================================================================================
+port table (detailed)
+================================================================================
+--------------------------------------------------------------------------------
+port
+--------------------------------------------------------------------------------
+                  port : 1/1/4/1
+              if-index : 94502912
+                  info : Physical port 1/1/4/1
+                  type : ethernet-line
+                  name : 1/1/4/1
+            high-speed : 0                   connector-present : not-applicable
+                 media : 0.0
+      largest-pkt-size : 0                   current-bandwidth : 1244000000
+              phy-addr :  
+          admin-status : up                         opr-status : up
+     last-chg-opr-stat : 352-02:55:19       pkts-unknown-proto : 0
+             in-octets : 0                          out-octets : 0
+         in-ucast-pkts : 0                      out-ucast-pkts : 0
+         in-mcast-pkts : 0                      out-mcast-pkts : 0
+     in-broadcast-pkts : 0                  out-broadcast-pkts : 0
+       in-discard-pkts : 0                    out-discard-pkts : 0
+           in-err-pkts : 0                        out-err-pkts : 0
+          in-octets-hc : 0
+         out-octets-hc : 0
+      in-ucast-pkts-hc : 0
+     out-ucast-pkts-hc : 0
+      in-mcast-pkts-hc : 0
+     out-mcast-pkts-hc : 0
+  in-broadcast-pkts-hc : 0
+ out-broadcast-pkts-hc : 0
+================================================================================
+Alcatel_7360>show#info configure bridge port 1/1/1/1 detail
+configure bridge
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+echo "bridge"
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+port 1/1/1/1
+  no default-priority # value=0
+  no mac-learn-off
+  max-unicast-mac 1
+  qos-profile name:
+  no prio-regen-prof # value=none
+  no prio-regen-name # value=none
+  no max-committed-mac # value=65535
+  no mirror-mode # value=disable
+  no mirror-vlan # value=0
+  no outervlancapture # value=0
+  no direction # value=bidirection
+  no pvid-tagging-flag # value=onu
+  no ds-pbit-mode # value=auto
+  vlan-id 2620
+    l2fwder-vlan 1
+    vlan-scope local
+    no qos # value=profile:none
+    no qos-profile # value=none
+    no prior-best-effort
+    no prior-background
+    no prior-spare
+    no prior-exc-effort
+    no prior-ctrl-load
+    no prior-less-100ms
+    no prior-less-10ms
+    no prior-nw-ctrl
+    no in-qos-prof-name # value=name:Default_TC0
+    no max-up-qos-policy # value=0
+    no max-ip-antispoof # value=65535
+    no max-unicast-mac # value=65535
+    no max-ipv6-antispf # value=65535
+    no mac-learn-ctrl # value=3
+    no min-cvlan-id # value=1
+    no max-cvlan-id # value=4095
+    no ds-dedicated-q # value=disable
+    no inner-pbit-remark # value=untouched
+    no oltregenprofile # value=disabled
+    prio-regen-name none
+  exit
+  vlan-id 3320
+    tag single-tagged
+    vlan-scope local
+    no qos # value=profile:none
+    no qos-profile # value=none
+    no prior-best-effort
+    no prior-background
+    no prior-spare
+    no prior-exc-effort
+    no prior-ctrl-load
+    no prior-less-100ms
+    no prior-less-10ms
+    no prior-nw-ctrl
+    no in-qos-prof-name # value=name:Default_TC0
+    no max-up-qos-policy # value=0
+    no max-ip-antispoof # value=65535
+    no max-unicast-mac # value=65535
+    no max-ipv6-antispf # value=65535
+    no mac-learn-ctrl # value=3
+    no min-cvlan-id # value=1
+    no max-cvlan-id # value=4095
+    no ds-dedicated-q # value=disable
+    no inner-pbit-remark # value=untouched
+    no oltregenprofile # value=disabled
+    prio-regen-name none
+  exit
+  pvid 1
+exit
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Alcatel_7360>#show software-mngt version etsi detail
+================================================================================
+etsi table (detailed)
+================================================================================
+            isam-release : R5.5.02
+================================================================================
+Alcatel_7360>show#exit
+Alcatel_7360>#logout

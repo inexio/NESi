@@ -35,19 +35,19 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Start alcatel-api
       run: |
-        python3 nesi_api.py --recreate-db --load-model Alcatel
+        python3 api.py --recreate-db --load-model Alcatel
     - name: Start huawei-api
       run: |
-        python3 nesi_api.py --recreate-db --load-model Huawei
+        python3 api.py --recreate-db --load-model Huawei
     - name: Start keymile-api
       run: |
-        python3 nesi_api.py --recreate-db --load-model Keymile
+        python3 api.py --recreate-db --load-model Keymile
     - name: Start edgecore-api
       run: |
-        python3 nesi_api.py --recreate-db --load-model Edgecore
+        python3 api.py --recreate-db --load-model Edgecore
     - name: Start pbn-api
       run: |
-        python3 nesi_api.py --recreate-db --load-model Pbn
+        python3 api.py --recreate-db --load-model Pbn
     - name: Start zhone-api
       run: |
-        python3 nesi_api.py --recreate-db --load-model Zhone
+        python3 api.py --recreate-db --load-model Zhone

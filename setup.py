@@ -1,16 +1,17 @@
 import setuptools
 import os
-
+import re
+#import pydevd_pycharm
+#pydevd_pycharm.settrace('localhost', port=3001, stdoutToServer=True, stderrToServer=True)
 
 def package_files(directory):
     paths = []
     for (path, directories, filenames) in os.walk(directory):
         for filename in filenames:
-            paths.append(os.path.join(path, filename)[20:])
+            paths.append(re.match('.+(nesi/templates/.+$)', os.path.join(path, filename)).groups()[0])
     return paths
 
-
-extra_files = package_files('/opt/NESi/templates')
+extra_files = package_files(os.path.dirname(os.path.abspath(__file__)) + '/nesi/templates')
 
 with open('requirements.txt') as fl:
     requires = fl.read()
@@ -27,66 +28,67 @@ setuptools.setup(
     license='BSD-2-Clause License',
     entry_points={
         'console_scripts': [
-            'nesi-cli = nesi_cli:main',
-            'nesi-api = nesi_api:main',
+            'nesi-cli = cli:main',
+            'nesi-api = api:main',
         ]
     },
-    package_data={'bootup': ['conf/ssh/*.pub', 'conf/ssh/id_rsa'],
-                  'test_cases': ['integration_tests/alcatel/*.txt', 'integration_tests/edgecore/*.txt',
-                                 'integration_tests/huawei/*.txt', 'integration_tests/keymile/*.txt',
-                                 'integration_tests/zhone/*.txt', 'integration_tests/pbn/*.txt'],
-                  'templates': extra_files,
-                  '': ['requirements.txt']},
+    package_data={
+        '':
+            extra_files + ['nesi/bootup/conf/ssh/*.pub', 'nesi/bootup/conf/ssh/id_rsa', 'requirements.txt',
+            'nesi/test_cases/integration_tests/alcatel/*.txt', 'nesi/test_cases/integration_tests/edgecore/*.txt',
+            'nesi/test_cases/integration_tests/huawei/*.txt', 'nesi/test_cases/integration_tests/keymile/*.txt',
+            'nesi/test_cases/integration_tests/zhone/*.txt', 'nesi/test_cases/integration_tests/pbn/*.txt']
+    },
     packages=[
         '',
-        'bootup',
         'nesi',
-        'test_cases',
-        'templates',
-        'vendors',
-        'bootup.sockets',
-        'bootup.conf',
-        'bootup.conf.bootstraps',
-        'nesi.alcatel',
-        'nesi.edgecore',
-        'nesi.huawei',
-        'nesi.keymile',
-        'nesi.pbn',
-        'nesi.softbox',
-        'nesi.zhone',
-        'nesi.alcatel.alcatel_resources',
-        'nesi.alcatel.api',
-        'nesi.alcatel.api.schemas',
-        'nesi.edgecore.api',
-        'nesi.edgecore.edgecore_resources',
-        'nesi.edgecore.api.schemas',
-        'nesi.huawei.api',
-        'nesi.huawei.huawei_resources',
-        'nesi.huawei.api.schemas',
-        'nesi.keymile.api',
-        'nesi.keymile.keymile_resources',
-        'nesi.keymile.api.schemas',
-        'nesi.pbn.pbn_resources',
-        'nesi.softbox.api',
-        'nesi.softbox.base_resources',
-        'nesi.softbox.cli',
-        'nesi.softbox.api.models',
-        'nesi.softbox.api.schemas',
-        'nesi.softbox.api.views',
-        'nesi.zhone.api',
-        'nesi.zhone.zhone_resources',
-        'nesi.zhone.api.schemas',
-        'test_cases.unit_tests',
-        'test_cases.unit_tests.alcatel',
-        'test_cases.unit_tests.edgecore',
-        'test_cases.unit_tests.huawei',
-        'test_cases.unit_tests.keymile',
-        'test_cases.unit_tests.pbn',
-        'test_cases.unit_tests.zhone',
-        'vendors.Alcatel',
-        'vendors.EdgeCore',
-        'vendors.Huawei',
-        'vendors.KeyMile',
-        'vendors.Zhone'
+        'nesi.templates',
+        'nesi.bootup',
+        'nesi.bootup.sockets',
+        'nesi.bootup.conf',
+        'nesi.bootup.conf.bootstraps',
+        'nesi.devices.alcatel',
+        'nesi.devices.edgecore',
+        'nesi.devices.huawei',
+        'nesi.devices.keymile',
+        'nesi.devices.pbn',
+        'nesi.devices.softbox',
+        'nesi.devices.zhone',
+        'nesi.devices.alcatel.alcatel_resources',
+        'nesi.devices.alcatel.api',
+        'nesi.devices.alcatel.api.schemas',
+        'nesi.devices.edgecore.api',
+        'nesi.devices.edgecore.edgecore_resources',
+        'nesi.devices.edgecore.api.schemas',
+        'nesi.devices.huawei.api',
+        'nesi.devices.huawei.huawei_resources',
+        'nesi.devices.huawei.api.schemas',
+        'nesi.devices.keymile.api',
+        'nesi.devices.keymile.keymile_resources',
+        'nesi.devices.keymile.api.schemas',
+        'nesi.devices.pbn.pbn_resources',
+        'nesi.devices.softbox.api',
+        'nesi.devices.softbox.base_resources',
+        'nesi.devices.softbox.cli',
+        'nesi.devices.softbox.api.models',
+        'nesi.devices.softbox.api.schemas',
+        'nesi.devices.softbox.api.views',
+        'nesi.devices.zhone.api',
+        'nesi.devices.zhone.zhone_resources',
+        'nesi.devices.zhone.api.schemas',
+        'nesi.test_cases',
+        'nesi.test_cases.unit_tests',
+        'nesi.test_cases.unit_tests.alcatel',
+        'nesi.test_cases.unit_tests.edgecore',
+        'nesi.test_cases.unit_tests.huawei',
+        'nesi.test_cases.unit_tests.keymile',
+        'nesi.test_cases.unit_tests.pbn',
+        'nesi.test_cases.unit_tests.zhone',
+        'nesi.vendors',
+        'nesi.vendors.Alcatel',
+        'nesi.vendors.EdgeCore',
+        'nesi.vendors.Huawei',
+        'nesi.vendors.KeyMile',
+        'nesi.vendors.Zhone'
     ]
 )

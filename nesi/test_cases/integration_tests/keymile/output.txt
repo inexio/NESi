@@ -1,0 +1,264 @@
+login as: manager
+password: secret
+---===### CLI Release R2A20, Build 2014-01-31 ###===---
+/> cd /unit-19/port-1/main
+/unit-19/port-1/main> set AdministrativeStatus down
+/unit-19/port-1/main> Set Labels  "" "" ""
+/unit-19/port-1/main> cd /unit-19/portgroup-1/port-1/cfgm
+/unit-19/portgroup-1/port-1/cfgm> Set pstnport false {} true false none none none none none
+/unit-19/portgroup-1/port-1/cfgm> cd /unit-19/portgroup-1/port-1/main
+/unit-19/portgroup-1/port-1/main> Set Labels  "" "" ""
+/unit-19/portgroup-1/port-1/main> cd /unit-19/port-1/main
+/unit-19/port-1/main> set AdministrativeStatus down
+/unit-19/port-1/main> Set Labels  "" "" ""
+/unit-19/port-1/main> cd /unit-19/portgroup-2/port-1/cfgm
+/unit-19/portgroup-2/port-1/cfgm> Set isdnport false {} true false false none none none none
+/unit-19/portgroup-2/port-1/cfgm> cd /unit-19/portgroup-2/port-1/main
+/unit-19/portgroup-2/port-1/main> Set Labels  "" "" ""
+/unit-19/portgroup-2/port-1/main> 
+/unit-19/portgroup-2/port-1/main> 
+/unit-19/portgroup-2/port-1/main> 
+/unit-19/portgroup-2/port-1/main> 
+/unit-19/portgroup-2/port-1/main> 
+/unit-19/portgroup-2/port-1/main> 
+/unit-19/portgroup-2/port-1/main> 
+/unit-19/portgroup-2/port-1/main> exitSESSION CLOSED
+r
+  ""                                                               \ # AuthorisationUserName
+  ""                                                               \ # AuthorisationPassword
+  ""                                                               \ # DisplayName
+  None                                                             \ # privacy
+;                                                                  \
+}                                                                  \
+true                                                               \ # RegisterAsGlobal
+false                                                              \ # PayPhone
+none                                                               \ # SipProfile
+none                                                               \ # ProxyRegistrarProfile
+none                                                               \ # CodecSdpProfile
+none                                                               \ # PstnProfile
+none                                                               \ # EnterpriseProfile
+/unit-19/portgroup-1/port-1/cfgm> cd /unit-19/portgroup-2/port-1/cfgm
+/unit-19/portgroup-2/port-1/cfgm> get isdnport
+                                                                   \ # IsdnPort
+true                                                               \ # Enable
+{                                                                  \ # SubscriberIdentifications
+  \ # [0] #
+                                                                   \ # SubscriberId
+  "7653312"                                                        \ # SubscriberNumber
+  "Test User 2"                                                    \ # AuthorisationUserName
+  "topsecret"                                                      \ # AuthorisationPassword
+  "Mrs. Testuser"                                                  \ # DisplayName
+  None                                                             \ # privacy
+;                                                                  \
+  \ # [1] #
+                                                                   \ # SubscriberId
+  "1234567"                                                        \ # SubscriberNumber
+  "Test User 3"                                                    \ # AuthorisationUserName
+  "topsecret"                                                      \ # AuthorisationPassword
+  "Mr. & Mrs. Testuser"                                            \ # DisplayName
+  None                                                             \ # privacy
+;                                                                  \
+  \ # [2] #
+                                                                   \ # SubscriberId
+  "112"                                                            \ # SubscriberNumber
+  ""                                                               \ # AuthorisationUserName
+  ""                                                               \ # AuthorisationPassword
+  ""                                                               \ # DisplayName
+  None                                                             \ # privacy
+;                                                                  \
+}                                                                  \
+true                                                               \ # RegisterAsGlobal
+false                                                              \ # RegisterDefaultNumberOnly
+false                                                              \ # Layer1PermanentlyActivated
+none                                                               \ # SipProfile
+none                                                               \ # ProxyRegistrarProfile
+none                                                               \ # CodecSdpProfile
+none                                                               \ # IsdnBaProfile
+/unit-19/portgroup-2/port-1/cfgm> exitSESSION CLOSED
+                                                      \ # CustomerId
+""                                                                 \ # CustomerProductId
+"BLSU2_R1J01/CT40500"                                              \ # Bootloader
+"CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"                     \ # Processor
+/unit-19/main> cd /unit-1/port-1
+/unit-1/port-1> ls
+Infos of AP: /unit-1/port-1
+  Name                      : ADSL
+  Main Mode                 : 
+  Equipment State           : 
+  Alarm Severity            : Cleared
+  Propagated Alarm Severity : Major
+  User Label                :
+  Service Label             :
+  Description               :
+
+MF List:
+  main
+  cfgm
+  fm
+  pm
+  status
+
+AP List:
+  chan-1
+/unit-1/port-1> cd /unit-1/port-1/main
+/unit-1/port-1/main> get OperationalStatus
+                                                                   \ # OperationalStatus
+Up                                                                 \ # State
+/unit-1/port-1/main> exitSESSION CLOSED
+s rw
+  Prop: AlarmStatus r-
+AdminAndOperStatus
+  Prop: AdministrativeStatus rw
+  Prop: OperationalStatus r-
+/unit-2/port-1/main> cd /unit-2/port-1/status
+/unit-2/port-1/status> ls
+General
+  Prop: Standard r-
+  Prop: PowerMgmStatus r-
+  Prop: Vdsl2Parameters r-
+  Prop: EstUPBOElectricalLength r-
+  Prop: LineRate r-
+  Prop: LineSnrMargin r-
+  Prop: AttainableNetDataRate r-
+  Prop: AttainableRate r-
+  Prop: OutputPower r-
+  Prop: BandStatus r-
+statistics
+  Prop: counters r-
+  Prop: PolicingCounters r-
+  Cmd : ResetPortCounters 
+Nto1MacAccessDynamicList
+  Prop: UnicastList r-
+HostPortStatistics
+  GeneralCounters
+    Prop: GeneralList r-
+    Cmd : ResetGeneralCounters 
+  ProtocolCounters
+    IgmpCounters
+      Prop: IgmpProtocolList r-
+      Cmd : ResetIgmpCounters 
+    DhcpCounters
+      Prop: DhcpProtocolList r-
+      Cmd : ResetDhcpCounters 
+    ArpCounters
+      Prop: ArpProtocolList r-
+      Cmd : ResetArpCounters 
+    PPPoECounters
+      Prop: PPPoEProtocolList r-
+      Cmd : ResetPPPoECounters 
+    UnknownSourceMACCounters
+      Prop: UnknownSrcMACProtocolList r-
+      Cmd : ResetUnknownSrcMACCounters 
+TLSMacForwardingList
+  Prop: MacForwardingList r-
+  Cmd : FlushMacForwardingList 
+1to1MacForwardingList
+  Prop: One2OneMacForwardingList r-
+Qos
+  Prop: wfqueues r-
+Multicast
+  stream
+    Dynamic
+      Prop: ActiveStreams r-
+      Cmd : ClearActiveStreams 
+    Static
+      Prop: StaticStreams r-
+  Vlan
+    Prop: AttachedVlans r-
+  Preview
+    Cmd : ResetPreviewSettings 
+  Bandwidth
+    Prop: bandwidthStatus r-
+LineTest
+  MELT
+    Prop: MeltResults r-
+    Cmd : StartMeltMeasurement 
+  Delt
+    Prop: DeltMeasurementStatus r-
+    Prop: RecordedDeltMeasurements r-
+    Cmd : StartDeltMeasurement 
+  Selt
+    Prop: SeltMeasurementStatus r-
+    Prop: RecordedSeltMeasurements r-
+    Prop: CableType rw
+    Prop: BandplanProfile rw
+    Prop: TargetSnrm rw
+    Cmd : StartSeltMeasurement 
+Defects
+  Prop: Defects r-
+LineInventory
+  Prop: VendorId r-
+Maintenance
+  Prop: DslOperationStatus r-
+Subcarrier
+  Cmd : ShowBitAllocation 
+RfiBands
+  Prop: NotchStatus r-
+/unit-2/port-1/status> get LineActualState
+                                                                   \ # LinePayloadRate
+                                                                   \ # PayloadRate
+0                                                                  \ # ActualPayloadRate
+0                                                                  \ # MaxAttainablePayloadRate
+Auto                                                               \ # Tcpam
+/unit-2/port-1/status> get LineOperationState
+                                                                   \ # LineOperationalStatus
+WaitForG.Handshaking                                               \ # State
+/unit-2/port-1/status> cd /unit-2/logports/logport-2/status
+/unit-2/logports/logport-2/status> get ActualStatus
+                                                                   \ # OverallLinePayloadRate
+                                                                   \ # PayloadRate
+0                                                                  \ # CurrentOverallPayloadRate
+0                                                                  \ # AttainableOverallPayloadRate
+/unit-2/logports/logport-2/status> get OperationalWireState
+                                                                   \ # OperationalWireState
+NO-WIRE                                                            \ # CurrentState
+2wire                                                              \ # Attainable
+/unit-2/logports/logport-2/status> cd /unit-2/logports/logport-2/main
+/unit-2/logports/logport-2/main> get AdministrativeStatus
+                                                                   \ # AdministrativeStatus
+Down                                                               \ # State
+/unit-2/logports/logport-2/main> get OperationalStatus
+                                                                   \ # OperationalStatus
+Down                                                               \ # State
+/unit-2/logports/logport-2/main> cd /unit-2/logports/logport-2/cfgm
+/unit-2/logports/logport-2/cfgm> get SpanProfiles
+                                                                   \ # LogicalPort
+default                                                            \ # Name
+/unit-2/logports/logport-2/cfgm> cd /unit-2/logports/logport-2/interface-1/cfgm
+error: invalid management function
+/unit-2/logports/logport-2/cfgm> get configuredProfiles
+error: invalid property
+/unit-2/logports/logport-2/cfgm> get vlanProfile
+error: invalid property
+/unit-2/logports/logport-2/cfgm> cd /unit-2/logports/logport-2/interface-1/status
+error: invalid management function
+/unit-2/logports/logport-2/cfgm> get ServiceStatus
+error: invalid property
+/unit-2/logports/logport-2/cfgm> ls
+Multicast
+  Prop: MaxNumberOfMulticastStreams rw
+  Prop: EnableIgmpClassifier rw
+  Prop: AllowStaticStreams rw
+  Prop: EnableFastLeave rw
+  Prop: GroupManagement rw
+  Prop: Bandwidth rw
+  Cmd : GetGroupList 
+Traceability
+  Prop: AgentRemoteId rw
+Security
+  Prop: ServiceOptions rw
+  Prop: MaxNumberOfMac rw
+AccessControl
+  Prop: ClassificationKey rw
+  Prop: MAT rw
+RateLimiter
+  Prop: RateLimiting rw
+  Prop: RateLimitingCoS rw
+Qos
+  Prop: WfqProfile rw
+subinterface
+  Cmd : CreateInterface 
+  Cmd : DeleteInterface 
+Clock
+  Prop: Referenceclk rw
+/unit-2/logports/logport-2/cfgm> exitSESSION CLOSED
