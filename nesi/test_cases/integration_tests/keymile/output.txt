@@ -1,29 +1,12 @@
-login as: manager
-password: secret
----===### CLI Release R2A20, Build 2014-01-31 ###===---
-/> cd /unit-19/port-1/main
-/unit-19/port-1/main> set AdministrativeStatus down
-/unit-19/port-1/main> Set Labels  "" "" ""
-/unit-19/port-1/main> cd /unit-19/portgroup-1/port-1/cfgm
-/unit-19/portgroup-1/port-1/cfgm> Set pstnport false {} true false none none none none none
-/unit-19/portgroup-1/port-1/cfgm> cd /unit-19/portgroup-1/port-1/main
-/unit-19/portgroup-1/port-1/main> Set Labels  "" "" ""
-/unit-19/portgroup-1/port-1/main> cd /unit-19/port-1/main
-/unit-19/port-1/main> set AdministrativeStatus down
-/unit-19/port-1/main> Set Labels  "" "" ""
-/unit-19/port-1/main> cd /unit-19/portgroup-2/port-1/cfgm
-/unit-19/portgroup-2/port-1/cfgm> Set isdnport false {} true false false none none none none
-/unit-19/portgroup-2/port-1/cfgm> cd /unit-19/portgroup-2/port-1/main
-/unit-19/portgroup-2/port-1/main> Set Labels  "" "" ""
-/unit-19/portgroup-2/port-1/main> 
-/unit-19/portgroup-2/port-1/main> 
-/unit-19/portgroup-2/port-1/main> 
-/unit-19/portgroup-2/port-1/main> 
-/unit-19/portgroup-2/port-1/main> 
-/unit-19/portgroup-2/port-1/main> 
-/unit-19/portgroup-2/port-1/main> 
-/unit-19/portgroup-2/port-1/main> exitSESSION CLOSED
-r
+login as: password: ---===### CLI Release R2A20, Build 2014-01-31 ###===---
+/> /unit-19/port-1/main> /unit-19/port-1/main> /unit-19/port-1/main> /unit-19/portgroup-1/port-1/cfgm> /unit-19/portgroup-1/port-1/cfgm> /unit-19/portgroup-1/port-1/main> /unit-19/portgroup-1/port-1/main> /unit-19/port-1/main> /unit-19/port-1/main> /unit-19/port-1/main> /unit-19/portgroup-2/port-1/cfgm> /unit-19/portgroup-2/port-1/cfgm> /unit-19/portgroup-2/port-1/main> /unit-19/portgroup-2/port-1/main> /unit-19/portgroup-2/port-1/main> /unit-19/portgroup-2/port-1/main> /unit-19/portgroup-2/port-1/main> /unit-19/portgroup-2/port-1/main> /unit-19/portgroup-2/port-1/main> /unit-19/portgroup-2/port-1/main> /unit-19/portgroup-2/port-1/main> SESSION CLOSED
+er
+  "11"                                                             \ # SubscriberNumber
+  "Registered"                                                     \ # RegistrationStatus
+;                                                                  \
+}                                                                  \
+/unit-19/portgroup-1/port-1/status> SESSION CLOSED
+                                \ # SubscriberNumber
   ""                                                               \ # AuthorisationUserName
   ""                                                               \ # AuthorisationPassword
   ""                                                               \ # DisplayName
@@ -37,9 +20,7 @@ none                                                               \ # ProxyRegi
 none                                                               \ # CodecSdpProfile
 none                                                               \ # PstnProfile
 none                                                               \ # EnterpriseProfile
-/unit-19/portgroup-1/port-1/cfgm> cd /unit-19/portgroup-2/port-1/cfgm
-/unit-19/portgroup-2/port-1/cfgm> get isdnport
-                                                                   \ # IsdnPort
+/unit-19/portgroup-1/port-1/cfgm> /unit-19/portgroup-2/port-1/cfgm>                                                                    \ # IsdnPort
 true                                                               \ # Enable
 {                                                                  \ # SubscriberIdentifications
   \ # [0] #
@@ -74,14 +55,12 @@ none                                                               \ # SipProfil
 none                                                               \ # ProxyRegistrarProfile
 none                                                               \ # CodecSdpProfile
 none                                                               \ # IsdnBaProfile
-/unit-19/portgroup-2/port-1/cfgm> exitSESSION CLOSED
-                                                      \ # CustomerId
+/unit-19/portgroup-2/port-1/cfgm> SESSION CLOSED
+                                 \ # CustomerId
 ""                                                                 \ # CustomerProductId
 "BLSU2_R1J01/CT40500"                                              \ # Bootloader
 "CPU MPC852T/853T 50MHz, RAM 64MB, FLASH 32MB"                     \ # Processor
-/unit-19/main> cd /unit-1/port-1
-/unit-1/port-1> ls
-Infos of AP: /unit-1/port-1
+/unit-19/main> /unit-1/port-1> Infos of AP: /unit-1/port-1
   Name                      : ADSL
   Main Mode                 : 
   Equipment State           : 
@@ -100,35 +79,10 @@ MF List:
 
 AP List:
   chan-1
-/unit-1/port-1> cd /unit-1/port-1/main
-/unit-1/port-1/main> get OperationalStatus
-                                                                   \ # OperationalStatus
+/unit-1/port-1> /unit-1/port-1/main>                                                                    \ # OperationalStatus
 Up                                                                 \ # State
-/unit-1/port-1/main> exitSESSION CLOSED
-s rw
-  Prop: AlarmStatus r-
-AdminAndOperStatus
-  Prop: AdministrativeStatus rw
-  Prop: OperationalStatus r-
-/unit-2/port-1/main> cd /unit-2/port-1/status
-/unit-2/port-1/status> ls
-General
-  Prop: Standard r-
-  Prop: PowerMgmStatus r-
-  Prop: Vdsl2Parameters r-
-  Prop: EstUPBOElectricalLength r-
-  Prop: LineRate r-
-  Prop: LineSnrMargin r-
-  Prop: AttainableNetDataRate r-
-  Prop: AttainableRate r-
-  Prop: OutputPower r-
-  Prop: BandStatus r-
-statistics
-  Prop: counters r-
-  Prop: PolicingCounters r-
-  Cmd : ResetPortCounters 
-Nto1MacAccessDynamicList
-  Prop: UnicastList r-
+/unit-1/port-1/main> SESSION CLOSED
+p: UnicastList r-
 HostPortStatistics
   GeneralCounters
     Prop: GeneralList r-
@@ -194,39 +148,59 @@ Subcarrier
   Cmd : ShowBitAllocation 
 RfiBands
   Prop: NotchStatus r-
-/unit-2/port-1/status> get LineActualState
-                                                                   \ # LinePayloadRate
+/unit-2/port-1/status>                                                                    \ # LinePayloadRate
                                                                    \ # PayloadRate
 0                                                                  \ # ActualPayloadRate
 0                                                                  \ # MaxAttainablePayloadRate
 Auto                                                               \ # Tcpam
-/unit-2/port-1/status> get LineOperationState
-                                                                   \ # LineOperationalStatus
+/unit-2/port-1/status>                                                                    \ # LineOperationalStatus
 WaitForG.Handshaking                                               \ # State
-/unit-2/port-1/status> cd /unit-2/logports/logport-2/status
-/unit-2/logports/logport-2/status> get ActualStatus
-                                                                   \ # OverallLinePayloadRate
+/unit-2/port-1/status> /unit-2/logports/logport-2/status>                                                                    \ # OverallLinePayloadRate
                                                                    \ # PayloadRate
 0                                                                  \ # CurrentOverallPayloadRate
 0                                                                  \ # AttainableOverallPayloadRate
-/unit-2/logports/logport-2/status> get OperationalWireState
-                                                                   \ # OperationalWireState
+/unit-2/logports/logport-2/status>                                                                    \ # OperationalWireState
 NO-WIRE                                                            \ # CurrentState
 2wire                                                              \ # Attainable
-/unit-2/logports/logport-2/status> cd /unit-2/logports/logport-2/main
-/unit-2/logports/logport-2/main> get AdministrativeStatus
-                                                                   \ # AdministrativeStatus
+/unit-2/logports/logport-2/status> /unit-2/logports/logport-2/main>                                                                    \ # AdministrativeStatus
 Down                                                               \ # State
-/unit-2/logports/logport-2/main> get OperationalStatus
-                                                                   \ # OperationalStatus
+/unit-2/logports/logport-2/main>                                                                    \ # OperationalStatus
 Down                                                               \ # State
-/unit-2/logports/logport-2/main> cd /unit-2/logports/logport-2/cfgm
-/unit-2/logports/logport-2/cfgm> get SpanProfiles
-                                                                   \ # LogicalPort
+/unit-2/logports/logport-2/main> /unit-2/logports/logport-2/cfgm>                                                                    \ # LogicalPort
 default                                                            \ # Name
-/unit-2/logports/logport-2/cfgm> cd /unit-2/logports/logport-2/interface-1/cfgm
-error: invalid management function
-/unit-2/logports/logport-2/cfgm> get configuredProfiles
+/unit-2/logports/logport-2/cfgm> error: invalid management function
+/unit-2/logports/logport-2/cfgm> error: invalid property
+/unit-2/logports/logport-2/cfgm> error: invalid property
+/unit-2/logports/logport-2/cfgm> error: invalid management function
+/unit-2/logports/logport-2/cfgm> error: invalid property
+/unit-2/logports/logport-2/cfgm> Multicast
+  Prop: MaxNumberOfMulticastStreams rw
+  Prop: EnableIgmpClassifier rw
+  Prop: AllowStaticStreams rw
+  Prop: EnableFastLeave rw
+  Prop: GroupManagement rw
+  Prop: Bandwidth rw
+  Cmd : GetGroupList 
+Traceability
+  Prop: AgentRemoteId rw
+Security
+  Prop: ServiceOptions rw
+  Prop: MaxNumberOfMac rw
+AccessControl
+  Prop: ClassificationKey rw
+  Prop: MAT rw
+RateLimiter
+  Prop: RateLimiting rw
+  Prop: RateLimitingCoS rw
+Qos
+  Prop: WfqProfile rw
+subinterface
+  Cmd : CreateInterface 
+  Cmd : DeleteInterface 
+Clock
+  Prop: Referenceclk rw
+/unit-2/logports/logport-2/cfgm> SESSION CLOSED
+it-2/logports/logport-2/cfgm> get configuredProfiles
 error: invalid property
 /unit-2/logports/logport-2/cfgm> get vlanProfile
 error: invalid property

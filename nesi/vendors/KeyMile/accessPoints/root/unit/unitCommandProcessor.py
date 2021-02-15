@@ -12,7 +12,7 @@
 import time
 
 from nesi import exceptions
-from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
+from nesi.vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 
 
 class UnitCommandProcessor(BaseCommandProcessor):

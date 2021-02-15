@@ -1,7 +1,5 @@
 
->>User name:root
->>User password:secret
-
+>>User name:>>User password:
   Huawei Integrated Access Software (MA5623).
   Copyright(C) Huawei Technologies Co., Ltd. 2002-2015. All rights reserved.
 
@@ -10,12 +8,11 @@
   -----------------------------------------------------------------------------
   Access Type : telnet
   IP-Address  : 10.0.0.12
-  Login  Time : 11/20/2020 09:29:10
-  Logout Time : 11/20/2020 09:29:10
+  Login  Time : 02/15/2021 11:52:22
+  Logout Time : 02/15/2021 11:52:22
   -----------------------------------------------------------------------------
 
-test>display board 0/0
-  ---------------------------------------
+test>  ---------------------------------------
   Board Name          : HS22CCVW
   Board Status        : Active_normal
   ---------------------------------------
@@ -37,10 +34,8 @@ test>display board 0/0
   Note: For a 1000 M, electrical port in the full-duplex mode, setting MDI to
         any value is invalid
 
-test>enable
-
-test#display board 0/0
-  ---------------------------------------
+test>
+test#  ---------------------------------------
   Board Name          : HS22CCVW
   Board Status        : Active_normal
   ---------------------------------------
@@ -62,10 +57,8 @@ test#display board 0/0
   Note: For a 1000 M, electrical port in the full-duplex mode, setting MDI to
         any value is invalid
 
-test#config
-
-test(config)#display board 0/0
-  ---------------------------------------
+test#
+test(config)#  ---------------------------------------
   Board Name          : HS22CCVW
   Board Status        : Active_normal
   ---------------------------------------
@@ -87,12 +80,10 @@ test(config)#display board 0/0
   Note: For a 1000 M, electrical port in the full-duplex mode, setting MDI to
         any value is invalid
 
-test(config)#return
-
-test#quit
-  Check whether system data has been changed. Please save data before logout.
+test(config)#
+test#  Check whether system data has been changed. Please save data before logout.
 Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to log on
-----------------------
+-
 
   ------------------------------------------------------------------------------
   In port 0/3/4, the total of ONTs are: 1, online: 1
@@ -100,12 +91,12 @@ Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to 
   ONT  Run     Last                Last                Last
   ID   State   UpTime              DownTime            DownCause
   ------------------------------------------------------------------------------
-  0    online  2020-11-12 00:00:00 2020-11-11 00:00:00 dying-gasp
+  0    online  2021-02-04 00:00:00 2021-02-03 00:00:00 dying-gasp
   ------------------------------------------------------------------------------
   ONT        SN        Type          Distance Rx/Tx power  Description
   ID                                    (m)      (dBm)
   ------------------------------------------------------------------------------
-  0   485754433AD3209C 010H             7742  -21.87/1.59  Ont 0/3/4 0
+  0   485754433AD3209C 010H             6930  -21.49/2.1  Ont 0/3/4 0
   ------------------------------------------------------------------------------
 
   ------------------------------------------------------------------------------
@@ -114,14 +105,14 @@ Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to 
   ONT  Run     Last                Last                Last
   ID   State   UpTime              DownTime            DownCause
   ------------------------------------------------------------------------------
-  1    online  2020-11-01 00:00:00 2020-10-31 00:00:00 dying-gasp
-  2    offline  2020-10-28 00:00:00 2020-10-29 00:00:00 dying-gasp
+  1    online  2021-01-18 00:00:00 2021-01-17 00:00:00 dying-gasp
+  2    offline  2021-02-04 00:00:00 2021-02-05 00:00:00 dying-gasp
   ------------------------------------------------------------------------------
   ONT        SN        Type          Distance Rx/Tx power  Description
   ID                                    (m)      (dBm)
   ------------------------------------------------------------------------------
-  1   485754433AD3209C 010H             6229  -18.32/1.06  Ont 0/4/0 1
-  2   485754433AD3209C 010H             6586  -23.33/2.23  This is a new ont
+  1   485754433AD3209C 010H             5795  -24.82/2.86  Ont 0/4/0 1
+  2   485754433AD3209C 010H             5596  -23.24/2.58  This is a new ont
   ------------------------------------------------------------------------------
 
   ------------------------------------------------------------------------------
@@ -130,12 +121,12 @@ Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to 
   ONT  Run     Last                Last                Last
   ID   State   UpTime              DownTime            DownCause
   ------------------------------------------------------------------------------
-  0    online  2020-10-28 00:00:00 2020-10-27 00:00:00 dying-gasp
+  0    online  2021-01-25 00:00:00 2021-01-24 00:00:00 dying-gasp
   ------------------------------------------------------------------------------
   ONT        SN        Type          Distance Rx/Tx power  Description
   ID                                    (m)      (dBm)
   ------------------------------------------------------------------------------
-  0   485754433AD3209C 010H             4373  -24.18/1.13  Ont 0/5/0 0
+  0   485754433AD3209C 010H             3027  -17.07/2.68  Ont 0/5/0 0
   ------------------------------------------------------------------------------
 
   ------------------------------------------------------------------------------
@@ -144,12 +135,12 @@ Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to 
   ONT  Run     Last                Last                Last
   ID   State   UpTime              DownTime            DownCause
   ------------------------------------------------------------------------------
-  0    online  2020-11-09 00:00:00 2020-11-08 00:00:00 dying-gasp
+  0    online  2021-02-06 00:00:00 2021-02-05 00:00:00 dying-gasp
   ------------------------------------------------------------------------------
   ONT        SN        Type          Distance Rx/Tx power  Description
   ID                                    (m)      (dBm)
   ------------------------------------------------------------------------------
-  0   485754433AD3209C 010H             1415  -18.23/2.18  Ont 0/5/1 0
+  0   485754433AD3209C 010H             3524  -20.36/1.48  Ont 0/5/1 0
   ------------------------------------------------------------------------------
 
   ------------------------------------------------------------------------------
@@ -158,12 +149,12 @@ Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to 
   ONT  Run     Last                Last                Last
   ID   State   UpTime              DownTime            DownCause
   ------------------------------------------------------------------------------
-  0    offline  2020-11-09 00:00:00 2020-11-10 00:00:00 dying-gasp
+  0    offline  2021-01-21 00:00:00 2021-01-22 00:00:00 dying-gasp
   ------------------------------------------------------------------------------
   ONT        SN        Type          Distance Rx/Tx power  Description
   ID                                    (m)      (dBm)
   ------------------------------------------------------------------------------
-  0   485754433AD3209C 010H             4937  -22.67/2.57  Ont 0/5/2 0
+  0   485754433AD3209C 010H             1546  -16.93/1.24  Ont 0/5/2 0
   ------------------------------------------------------------------------------
 
   ------------------------------------------------------------------------------
@@ -172,12 +163,12 @@ Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to 
   ONT  Run     Last                Last                Last
   ID   State   UpTime              DownTime            DownCause
   ------------------------------------------------------------------------------
-  0    online  2020-10-25 00:00:00 2020-10-24 00:00:00 dying-gasp
+  0    online  2021-02-02 00:00:00 2021-02-01 00:00:00 dying-gasp
   ------------------------------------------------------------------------------
   ONT        SN        Type          Distance Rx/Tx power  Description
   ID                                    (m)      (dBm)
   ------------------------------------------------------------------------------
-  0   485754433AD3209C 010H             7895  -22.41/2.4  Ont 0/5/3 0
+  0   485754433AD3209C 010H             4702  -21.71/2.12  Ont 0/5/3 0
   ------------------------------------------------------------------------------
 
   ------------------------------------------------------------------------------
@@ -186,58 +177,51 @@ Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to 
   ONT  Run     Last                Last                Last
   ID   State   UpTime              DownTime            DownCause
   ------------------------------------------------------------------------------
-  0    online  2020-10-25 00:00:00 2020-10-24 00:00:00 dying-gasp
+  0    online  2021-02-05 00:00:00 2021-02-04 00:00:00 dying-gasp
   ------------------------------------------------------------------------------
   ONT        SN        Type          Distance Rx/Tx power  Description
   ID                                    (m)      (dBm)
   ------------------------------------------------------------------------------
-  0   485754433AD3209C 010H             2533  -15.04/1.07  Ont 0/5/4 0
+  0   485754433AD3209C 010H             2032  -22.99/2.44  Ont 0/5/4 0
   ------------------------------------------------------------------------------
 
 
-test(config)#return
-
-test#quit
-  Check whether system data has been changed. Please save data before logout.
+test(config)#
+test#  Check whether system data has been changed. Please save data before logout.
 Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to log on
-e quickmodify 1001 g.993.2-profile 7 mode-specific enable 1 1001		 
+PSD upstream(dBm/Hz)                : -
+  Total output power downstream(dBm)         : 10.8
+  Total output power upstream(dBm)           : -7.5
+  Coding Gain in downstream(dB)              : -
+  Coding Gain in upstream(dB)                : -
+  Power cut back downstream(dB)              : -
+ --------------------------------------------------------------------------------
 
-test(config)#xdsl line-spectrum-profile quickmodify 1001 g.993.2-profile 7 us0-psd-mask 19		 
-
-test(config)#xdsl line-spectrum-profile quickmodify 1001 transmode 6		 
-
-test(config)#xdsl line-spectrum-profile quickadd 1002 l0-time 255 l2-time 30 l3-time 255 max-transmite-power-reduction 3 total-max-power-reduction 31 bit-swap-ds 1 bit-swap-us 1 overhead-datarate-us 4000 overhead-datarate-ds 4000		 
-
-test(config)#xdsl line-spectrum-profile quickmodify 1002 allow-transitions-to-idle 2 allow-transitions-to-lowpower 2 reference-clock freeRun cyclic-extension-flag 1 force-inp-ds 1 force-inp-us 1 desc VDSL_NO_ADSL		 
-
-test(config)#xdsl line-spectrum-profile quickmodify 1002 g.993.2-profile 7 mode-specific enable 1 1001		 
-
-test(config)#xdsl line-spectrum-profile quickmodify 1002 g.993.2-profile 7 us0-psd-mask 19		 
-
-test(config)#xdsl line-spectrum-profile quickmodify 1002 transmode 6		 
-
-test(config)#xdsl line-spectrum-profile quickmodify 1002 vdsltoneblackout enable 0-511
-
-test(config)#return
-
-test#quit
-  Check whether system data has been changed. Please save data before logout.
-Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to log on
-        : PASS
+test#
+test(config)#
+test(config-if-adsl-0/2)# ------------------------------------------------------------------------
+  G.994.1 vendor ID                : 0xB5004946544E590C
+    G.994.1 country code           : 0xB500
+    G.994.1 provider code          : IFTN
+    G.994.1 vendor info            : 0x590C
+  System vendor ID                 : 0x040041564D000000
+    System country code            : 0x0400
+    System provider code           : AVM
+    System vendor info             : 0x0000
+  Version number                   : 1.180.129.93 AB
+  Version number(octet string)     : 0x312E3138302E3132392E393320414200
+  Vendor serial number             : 444E6DCD4770 F!Box7530 164.07.14
+  Self-test result                 : PASS
   Transmission mode capability     :
     G.992.1(Annex B)                 G.992.3(Annex B/J)
     G.992.5(Annex B/J)               G.993.2(Annex A/B/C)
     G.993.5
   ------------------------------------------------------------------------
 
-test(config-if-adsl-0/2)#return
-
-test#config
-
-test(config)#interface gpon 0/4
-
-test(config-if-gpon-0/4)#display port state 0
-  ----------------------------------------------------------------------------
+test(config-if-adsl-0/2)#
+test#
+test(config)#
+test(config-if-gpon-0/4)#  ----------------------------------------------------------------------------
   Port Information
   ----------------------------------------------------------------------------
   F/S/P                        0/4/0
@@ -340,21 +324,16 @@ test(config-if-gpon-0/4)#display port state 0
   threshold(C)                 [-13,80]
   ----------------------------------------------------------------------------
 
-test(config-if-gpon-0/4)#return
-
-test#config
-
-test(config)#interface eth 0/3
-
-test(config-if-eth-0/3)#display port ddm-info 0
-{ <cr>|sort-by<K>||<K> }:  Temperature(C)                       : 61.50505
+test(config-if-gpon-0/4)#
+test#
+test(config)#
+test(config-if-eth-0/3)#{ <cr>|sort-by<K>||<K> }:  Temperature(C)                       : 61.50505
   Supply voltage(V)                    : 3.200002
   TX bias current(mA)                  : 28.000023
   TX power(dBm)                        : 3.670001
   RX power(dBm)                        : -12.68
 
-test(config-if-eth-0/3)#return
-
-test#quit
-  Check whether system data has been changed. Please save data before logout.
+test(config-if-eth-0/3)#
+test#  Check whether system data has been changed. Please save data before logout.
 Are you sure to log out? (y/n)[n]:  Configuration console exit, please retry to log on
+og out? (y/n)[n]:  Configuration console exit, please retry to log on

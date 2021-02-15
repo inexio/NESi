@@ -12,7 +12,7 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi import exceptions
-from vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
+from nesi.vendors.KeyMile.baseCommandProcessor import BaseCommandProcessor
 
 class RootCommandProcessor(BaseCommandProcessor):
     __name__ = 'root'

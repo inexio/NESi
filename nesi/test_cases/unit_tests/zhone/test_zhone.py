@@ -10,7 +10,7 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from test_cases.unit_tests.test_core import TestCore
+from nesi.test_cases.unit_tests.test_core import TestCore
 import pytest
 from os import listdir
 from os.path import isfile, join
@@ -19,7 +19,7 @@ from os.path import isfile, join
 class TestZhone(TestCore):
     PATH = 'nesi/test_cases/integration_tests/zhone/'
     DATA = [f for f in listdir(PATH) if
-            isfile(join(PATH, f)) and f != 'output.txt']
+            isfile(join('nesi/test_cases/integration_tests/zhone/', f)) and f != 'output.txt']
 
     def test_portup_portdown(self):
         port = self.model.get_port("name", '1/1/1')

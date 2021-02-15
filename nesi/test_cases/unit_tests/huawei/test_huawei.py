@@ -10,7 +10,7 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from test_cases.unit_tests.test_core import TestCore
+from nesi.test_cases.unit_tests.test_core import TestCore
 from nesi import exceptions
 from os import listdir
 from os.path import isfile, join
@@ -20,7 +20,7 @@ import pytest
 class TestHuawei(TestCore):
     PATH = 'nesi/test_cases/integration_tests/huawei/'
     DATA = [f for f in listdir(PATH) if
-            isfile(join(PATH, f)) and f != 'output.txt']
+            isfile(join('nesi/test_cases/integration_tests/huawei/', f)) and f != 'output.txt']
 
     def test_portup_portdown(self):
         port = self.model.get_port("name", '0/0/0')

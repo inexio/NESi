@@ -84,6 +84,7 @@ def main():
 
     args = parser.parse_args()
 
+    p = None
     try:
         if args.debug:
             pydevd_pycharm.settrace('localhost', port=3001, stdoutToServer=True, stderrToServer=True)
@@ -97,22 +98,22 @@ def main():
         if args.test in ('Alcatel', 'Huawei', 'Edgecore', 'Keymile', 'Pbn', 'Zhone'):
             p = start_api_with_vendor(args.test)
             if args.test == 'Alcatel':
-                pytest.main(['--pyargs', 'test_cases.unit_tests.alcatel', '-rA', '--disable-warnings'])
+                pytest.main(['--pyargs', 'nesi.test_cases.unit_tests.alcatel', '-rA', '--disable-warnings'])
                 return
             elif args.test == 'Huawei':
-                pytest.main(['--pyargs', 'test_cases.unit_tests.huawei', '-rA', '--disable-warnings'])
+                pytest.main(['--pyargs', 'nesi.test_cases.unit_tests.huawei', '-rA', '--disable-warnings'])
                 return
             elif args.test == 'Edgecore':
-                pytest.main(['--pyargs', 'test_cases.unit_tests.edgecore', '-rA', '--disable-warnings'])
+                pytest.main(['--pyargs', 'nesi.test_cases.unit_tests.edgecore', '-rA', '--disable-warnings'])
                 return
             elif args.test == 'Keymile':
-                pytest.main(['--pyargs', 'test_cases.unit_tests.keymile', '-rA', '--disable-warnings'])
+                pytest.main(['--pyargs', 'nesi.test_cases.unit_tests.keymile', '-rA', '--disable-warnings'])
                 return
             elif args.test == 'Pbn':
-                pytest.main(['--pyargs', 'test_cases.unit_tests.pbn', '-rA', '--disable-warnings'])
+                pytest.main(['--pyargs', 'nesi.test_cases.unit_tests.pbn', '-rA', '--disable-warnings'])
                 return
             elif args.test == 'Zhone':
-                pytest.main(['--pyargs', 'test_cases.unit_tests.zhone', '-rA', '--disable-warnings'])
+                pytest.main(['--pyargs', 'nesi.test_cases.unit_tests.zhone', '-rA', '--disable-warnings'])
                 return
         elif args.test is not None:
             parser.error('--test has invalid argument')
@@ -205,6 +206,7 @@ def main():
 
 
 def start_api_with_vendor(vendor):
+    os.chdir(os.path.dirname(os.path.realpath(__file__)))
     p = subprocess.Popen(['python3', 'api.py', '--recreate-db', '--load-model', vendor])
     time.sleep(10)
     return p

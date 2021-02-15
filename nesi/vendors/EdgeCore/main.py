@@ -11,7 +11,7 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi.devices.softbox.cli import base
-from vendors.EdgeCore.userViewCommandProcessor import *
+from nesi.vendors.EdgeCore.userViewCommandProcessor import *
 from nesi import exceptions
 
 

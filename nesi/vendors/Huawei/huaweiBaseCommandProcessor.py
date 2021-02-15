@@ -10,7 +10,7 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from vendors.Huawei.baseCommandProcessor import BaseCommandProcessor
+from nesi.vendors.Huawei.baseCommandProcessor import BaseCommandProcessor
 from nesi import exceptions
 
 

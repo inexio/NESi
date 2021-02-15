@@ -7,7 +7,7 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi import exceptions
-from vendors.Zhone.baseCommandProcessor import BaseCommandProcessor
+from nesi.vendors.Zhone.baseCommandProcessor import BaseCommandProcessor
 
 class RootCommandProcessor(BaseCommandProcessor):
 

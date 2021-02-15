@@ -7,7 +7,7 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi.devices.softbox.cli import base
-from vendors.Zhone.rootCommandProcessor import RootCommandProcessor
+from nesi.vendors.Zhone.rootCommandProcessor import RootCommandProcessor
 from nesi import exceptions
 
 

@@ -23,7 +23,7 @@ class TestCore:
 
     def prep_cli(self):
         self.prep_model()
-        main = importlib.import_module('vendors.' + self.model.vendor + '.main')
+        main = importlib.import_module('nesi.vendors.' + self.model.vendor + '.main')
         cli = main.PreLoginCommandProcessor
         self.cli = cli
         return cli
@@ -66,7 +66,7 @@ class TestCore:
         stdin1 = os.fdopen(fd1, 'rb', 0)
 
         while True:
-            templ_root ='templates/' + str(self.model.vendor)
+            templ_root ='nesi/templates/' + str(self.model.vendor)
             command_processor = self.cli(self.model, stdin1, stdout1, (), template_root=templ_root, daemon=True)
             try:
                 context = dict()

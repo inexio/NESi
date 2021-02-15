@@ -11,7 +11,7 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi import exceptions
-from vendors.KeyMile.accessPoints.root.unit.port.portCommandProcessor import PortCommandProcessor
+from nesi.vendors.KeyMile.accessPoints.root.unit.port.portCommandProcessor import PortCommandProcessor
 
 
 class LogportCommandProcessor(PortCommandProcessor):

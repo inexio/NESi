@@ -10,7 +10,7 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from test_cases.unit_tests.test_core import TestCore
+from nesi.test_cases.unit_tests.test_core import TestCore
 
 
 class TestPbn(TestCore):

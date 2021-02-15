@@ -11,7 +11,7 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 from nesi.devices.softbox.cli import base
-from vendors.KeyMile.accessPoints.root.rootCommandProcessor import RootCommandProcessor
+from nesi.vendors.KeyMile.accessPoints.root.rootCommandProcessor import RootCommandProcessor
 from nesi import exceptions
 
 

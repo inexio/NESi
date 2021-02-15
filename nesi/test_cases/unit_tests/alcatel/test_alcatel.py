@@ -10,7 +10,7 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
-from test_cases.unit_tests.test_core import TestCore
+from nesi.test_cases.unit_tests.test_core import TestCore
 from os import listdir
 from os.path import isfile, join
 import pytest
@@ -20,7 +20,7 @@ from nesi import exceptions
 class TestAlcatel(TestCore):
     PATH = 'nesi/test_cases/integration_tests/alcatel/'
     DATA = [f for f in listdir(PATH) if
-            isfile(join(PATH, f)) and f != 'output.txt']
+            isfile(join('nesi/test_cases/integration_tests/alcatel/', f)) and f != 'output.txt']
 
     def test_ontportup_portdown(self):
         port = self.model.get_ont_port("name", '1/1/4/2/1/1/1')
