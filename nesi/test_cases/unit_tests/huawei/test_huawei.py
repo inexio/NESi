@@ -18,9 +18,9 @@ import pytest
 
 
 class TestHuawei(TestCore):
-    PATH = 'test_cases/integration_tests/huawei/'
-    DATA = [f for f in listdir('test_cases/integration_tests/huawei/') if
-            isfile(join('test_cases/integration_tests/huawei/', f)) and f != 'output.txt']
+    PATH = 'nesi/test_cases/integration_tests/huawei/'
+    DATA = [f for f in listdir(PATH) if
+            isfile(join(PATH, f)) and f != 'output.txt']
 
     def test_portup_portdown(self):
         port = self.model.get_port("name", '0/0/0')

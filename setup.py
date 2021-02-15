@@ -8,7 +8,7 @@ def package_files(directory):
     paths = []
     for (path, directories, filenames) in os.walk(directory):
         for filename in filenames:
-            paths.append(re.match('.+(nesi/templates/.+$)', os.path.join(path, filename)).groups()[0])
+            paths.append(re.match('.+(templates/.+$)', os.path.join(path, filename)).groups()[0])
     return paths
 
 extra_files = package_files(os.path.dirname(os.path.abspath(__file__)) + '/nesi/templates')
@@ -33,11 +33,12 @@ setuptools.setup(
         ]
     },
     package_data={
-        '':
-            extra_files + ['nesi/bootup/conf/ssh/*.pub', 'nesi/bootup/conf/ssh/id_rsa', 'requirements.txt',
-            'nesi/test_cases/integration_tests/alcatel/*.txt', 'nesi/test_cases/integration_tests/edgecore/*.txt',
-            'nesi/test_cases/integration_tests/huawei/*.txt', 'nesi/test_cases/integration_tests/keymile/*.txt',
-            'nesi/test_cases/integration_tests/zhone/*.txt', 'nesi/test_cases/integration_tests/pbn/*.txt']
+        'nesi':
+            extra_files + ['bootup/conf/ssh/*.pub', 'bootup/conf/ssh/id_rsa',
+            'test_cases/integration_tests/alcatel/*.txt', 'test_cases/integration_tests/edgecore/*.txt',
+            'test_cases/integration_tests/huawei/*.txt', 'test_cases/integration_tests/keymile/*.txt',
+            'test_cases/integration_tests/zhone/*.txt', 'test_cases/integration_tests/pbn/*.txt'],
+        '': ['requirements.txt']
     },
     packages=[
         '',

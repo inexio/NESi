@@ -85,15 +85,3 @@ class TestCore:
         stdout1.close()
         del stdin1
         del stdout1
-
-
-    def get_path(self):
-        print(self.model.vendor)
-        if self.model.vendor == 'Alcatel':
-            path = 'test_cases/unit_tests/alcatel/'
-        elif self.model.vendor == 'Huawei':
-            path = 'test_cases/unit_tests/huawei/'
-        else:
-            path = 'broke'
-        return path
-

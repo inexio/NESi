@@ -17,9 +17,9 @@ from os.path import isfile, join
 
 
 class TestEdgecore(TestCore):
-    PATH = 'test_cases/integration_tests/edgecore/'
-    DATA = [f for f in listdir('test_cases/integration_tests/edgecore/') if
-            isfile(join('test_cases/integration_tests/edgecore/', f)) and f != 'output.txt']
+    PATH = 'nesi/test_cases/integration_tests/edgecore/'
+    DATA = [f for f in listdir(PATH) if
+            isfile(join(PATH, f)) and f != 'output.txt']
 
     def test_box(self):
         box = self.model

@@ -199,7 +199,7 @@ def main():
                     else:
                         return
     finally:
-        if args.standalone or args.test:
+        if (args.standalone or args.test) and p is not None:
             p.terminate()
             p.kill()
 

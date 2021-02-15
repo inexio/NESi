@@ -17,9 +17,9 @@ from os.path import isfile, join
 
 
 class TestKeymile(TestCore):
-    PATH = 'test_cases/integration_tests/keymile/'
-    DATA = [f for f in listdir('test_cases/integration_tests/keymile/') if
-            isfile(join('test_cases/integration_tests/keymile/', f)) and f != 'output.txt']
+    PATH = 'nesi/test_cases/integration_tests/keymile/'
+    DATA = [f for f in listdir(PATH) if
+            isfile(join(PATH, f)) and f != 'output.txt']
 
     def test_box(self):
         assert True

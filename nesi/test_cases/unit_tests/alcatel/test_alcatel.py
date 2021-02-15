@@ -18,9 +18,9 @@ from nesi import exceptions
 
 
 class TestAlcatel(TestCore):
-    PATH = 'test_cases/integration_tests/alcatel/'
-    DATA = [f for f in listdir('test_cases/integration_tests/alcatel/') if
-            isfile(join('test_cases/integration_tests/alcatel/', f)) and f != 'output.txt']
+    PATH = 'nesi/test_cases/integration_tests/alcatel/'
+    DATA = [f for f in listdir(PATH) if
+            isfile(join(PATH, f)) and f != 'output.txt']
 
     def test_ontportup_portdown(self):
         port = self.model.get_ont_port("name", '1/1/4/2/1/1/1')
