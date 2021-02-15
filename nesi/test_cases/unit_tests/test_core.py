@@ -67,7 +67,7 @@ class TestCore:
 
         while True:
             templ_root ='nesi/templates/' + str(self.model.vendor)
-            command_processor = self.cli(self.model, stdin1, stdout1, (), template_root=templ_root, daemon=True)
+            command_processor = self.cli(self.model, stdin1, stdout1, (), template_root=templ_root, testing=True)
             try:
                 context = dict()
                 context['login_banner'] = self.model.login_banner
