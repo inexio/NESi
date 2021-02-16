@@ -48,7 +48,7 @@ class CommandProcessor:
     """
 
     def __init__(self, model, input_stream, output_stream, history,
-                 template_root=None, scopes=(), daemon=False, parent=None, case_sensitive=True):
+                 template_root=None, scopes=(), daemon=False, parent=None, case_sensitive=True, testing=False):
         self._model = model
         self._input = input_stream
         self._output = output_stream
@@ -63,6 +63,7 @@ class CommandProcessor:
                     if template_root else None),
             trim_blocks=True, lstrip_blocks=True, autoescape=True)
         self.daemon = daemon
+        self.testing = testing
 
         # CLI specific attributes
         self.skipLogin = False
@@ -282,7 +283,7 @@ class CommandProcessor:
         self._write(text)
 
     def _read(self, tmp_boundary=None):
-        if self.daemon and self._model.network_protocol == 'telnet':
+        if (self.daemon and self._model.network_protocol == 'telnet') or self.testing:
             line = self._input.readline().decode('utf-8')
         else:
             line = self.getline(tmp_boundary)
@@ -344,7 +345,7 @@ class CommandProcessor:
         return subprocessor(
             self._model, self._input, self._output, self.history,
             template_root=self._template_root,
-            scopes=scopes, daemon=self.daemon, parent=self, case_sensitive=self.case_sensitive)
+            scopes=scopes, daemon=self.daemon, parent=self, case_sensitive=self.case_sensitive, testing=self.testing)
 
     def process_command(self, line, context):
         self._parse_and_execute_command(line, context)
