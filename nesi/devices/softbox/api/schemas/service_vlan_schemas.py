@@ -14,7 +14,7 @@ from nesi.devices.softbox.api import ma
 from ..models.service_vlan_models import ServiceVlan
 
 
-class ServiceVlanSchema(ma.ModelSchema):
+class ServiceVlanSchema(ma.Schema):
     class Meta:
         model = ServiceVlan
         fields = ('id', 'name', 'service_port_id', 'vlan_id', 'box', 'box_id', 'card_id', '_links')
@@ -28,11 +28,11 @@ class ServiceVlanSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_service_vlans', box_id='<box_id>')})
 
 
-class ServiceVlansSchema(ma.ModelSchema):
+class ServiceVlansSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class ServiceVlanSchema(ma.ModelSchema):
+    class ServiceVlanSchema(ma.Schema):
         class Meta:
             model = ServiceVlan
             fields = ('id', '_links')

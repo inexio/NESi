@@ -15,7 +15,7 @@ from ..models.vendor_models import Vendor
 from ..schemas.model_schemas import ModelsSchema
 
 
-class VendorSchema(ma.ModelSchema):
+class VendorSchema(ma.Schema):
     class Meta:
         model = Vendor
         fields = ('id', 'name', 'models', '_links')
@@ -26,11 +26,11 @@ class VendorSchema(ma.ModelSchema):
         {'self': ma.URLFor('show_vendor', id='<id>')})
 
 
-class VendorsSchema(ma.ModelSchema):
+class VendorsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class VendorSchema(ma.ModelSchema):
+    class VendorSchema(ma.Schema):
         class Meta:
             model = Vendor
             fields = ('id', 'name', 'models', '_links')

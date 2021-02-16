@@ -14,7 +14,7 @@ from nesi.devices.softbox.api import ma
 from ..models.portprofile_models import PortProfile
 
 
-class PortProfileSchema(ma.ModelSchema):
+class PortProfileSchema(ma.Schema):
     class Meta:
         model = PortProfile
         fields = ('id', 'name', 'description', 'box_id', 'type',
@@ -27,11 +27,11 @@ class PortProfileSchema(ma.ModelSchema):
             'show_port_profiles', box_id='<box_id>')})
 
 
-class PortProfilesSchema(ma.ModelSchema):
+class PortProfilesSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class PortProfileSchema(ma.ModelSchema):
+    class PortProfileSchema(ma.Schema):
         class Meta:
             model = PortProfile
             fields = ('id', 'name', '_links')

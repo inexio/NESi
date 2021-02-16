@@ -14,7 +14,7 @@ from nesi.devices.softbox.api import ma
 from ..models.interface_models import Interface
 
 
-class InterfaceSchema(ma.ModelSchema):
+class InterfaceSchema(ma.Schema):
     class Meta:
         model = Interface
         fields = ('id', 'box_id', 'box', 'name', 'description', '_links')
@@ -27,11 +27,11 @@ class InterfaceSchema(ma.ModelSchema):
         {'self': ma.URLFor('show_interface', box_id='<box_id>', id='<id>')})
 
 
-class InterfacesSchema(ma.ModelSchema):
+class InterfacesSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class InterfaceSchema(ma.ModelSchema):
+    class InterfaceSchema(ma.Schema):
         class Meta:
             model = Interface
             fields = ('id', 'name', '_links')

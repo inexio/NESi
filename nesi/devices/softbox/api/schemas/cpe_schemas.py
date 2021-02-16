@@ -15,7 +15,7 @@ from ..models.cpe_models import Cpe
 from ..schemas.cpeport_schemas import CpePortsSchema
 
 
-class CpeSchema(ma.ModelSchema):
+class CpeSchema(ma.Schema):
     class Meta:
         model = Cpe
         fields = ('id', 'box_id', 'box', 'port_id', 'ont_port_id', 'cpe_ports', 'cpe_ports', 'mac',
@@ -31,11 +31,11 @@ class CpeSchema(ma.ModelSchema):
         {'self': ma.URLFor('show_cpe', box_id='<box_id>', id='<id>')})
 
 
-class CpesSchema(ma.ModelSchema):
+class CpesSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class CpeSchema(ma.ModelSchema):
+    class CpeSchema(ma.Schema):
         class Meta:
             model = Cpe
             fields = ('id', 'name', '_links')

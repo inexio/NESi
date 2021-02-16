@@ -15,7 +15,7 @@ from nesi.devices.softbox.api import ma
 from ..models.mgmt_port_models import MgmtPort
 
 
-class MgmtPortSchema(ma.ModelSchema):
+class MgmtPortSchema(ma.Schema):
     class Meta:
         model = MgmtPort
         fields = ('id', 'box_id', 'box', 'mgmt_card_id', 'name',
@@ -30,11 +30,11 @@ class MgmtPortSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_mgmt_ports', box_id='<box_id>')})
 
 
-class MgmtPortsSchema(ma.ModelSchema):
+class MgmtPortsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class MgmtPortSchema(ma.ModelSchema):
+    class MgmtPortSchema(ma.Schema):
         class Meta:
             model = MgmtPort
             fields = ('id', 'name', 'operational_state', '_links')

@@ -16,7 +16,7 @@ from ..schemas.card_schemas import CardsSchema
 from ..schemas.mgmt_card_schemas import MgmtCardsSchema
 
 
-class SubrackSchema(ma.ModelSchema):
+class SubrackSchema(ma.Schema):
     class Meta:
         model = Subrack
         fields = ('id', 'box_id', 'box', 'cards', 'mgmt_cards',
@@ -34,11 +34,11 @@ class SubrackSchema(ma.ModelSchema):
             'collection': ma.URLFor('show_subracks', box_id='<box_id>')})
 
 
-class SubracksSchema(ma.ModelSchema):
+class SubracksSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class SubrackSchema(ma.ModelSchema):
+    class SubrackSchema(ma.Schema):
         class Meta:
             model = Subrack
             fields = ('id', 'name', '_links')

@@ -13,16 +13,13 @@
 import argparse
 import os
 import sys
-import time
 
 from nesi.devices.softbox.api import app
 from nesi.devices.softbox.api import db
 from nesi.devices.softbox.api.views import *  # noqa
 from nesi.devices.softbox.api import config
 import pydevd_pycharm
-import subprocess
 import threading
-from pathlib import Path
 
 DESCRIPTION = """\
 Network Equipment Simulator REST API.

@@ -16,7 +16,7 @@ from ..models.mgmt_card_models import MgmtCard
 from ..schemas.mgmt_port_schemas import MgmtPortsSchema
 
 
-class MgmtCardSchema(ma.ModelSchema):
+class MgmtCardSchema(ma.Schema):
     class Meta:
         model = MgmtCard
         fields = ('id', 'box_id', 'box', 'name', 'subrack_id', 'admin_state', 'operational_state', 'description',
@@ -33,11 +33,11 @@ class MgmtCardSchema(ma.ModelSchema):
             'collection': ma.URLFor('show_mgmt_cards', box_id='<box_id>')})
 
 
-class MgmtCardsSchema(ma.ModelSchema):
+class MgmtCardsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class MgmtCardSchema(ma.ModelSchema):
+    class MgmtCardSchema(ma.Schema):
         class Meta:
             model = MgmtCard
             fields = ('id', 'name', 'operational_state', 'mgmt_ports', '_links')

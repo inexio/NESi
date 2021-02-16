@@ -14,7 +14,7 @@ from nesi.devices.softbox.api import ma
 from ..models.route_models import Route
 
 
-class RouteSchema(ma.ModelSchema):
+class RouteSchema(ma.Schema):
     class Meta:
         model = Route
         fields = ('id', 'dst', 'gw', 'metric', 'box', 'box_id', '_links')
@@ -28,11 +28,11 @@ class RouteSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_routes', box_id='<box_id>')})
 
 
-class RoutesSchema(ma.ModelSchema):
+class RoutesSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class RouteSchema(ma.ModelSchema):
+    class RouteSchema(ma.Schema):
         class Meta:
             model = Route
             fields = ('id', '_links')

@@ -14,7 +14,7 @@ from nesi.devices.softbox.api import ma
 from ..models.qos_interface_models import QosInterface
 
 
-class QosInterfaceSchema(ma.ModelSchema):
+class QosInterfaceSchema(ma.Schema):
     class Meta:
         model = QosInterface
         fields = ('id', 'name', 'description', 'box', 'box_id',
@@ -27,11 +27,11 @@ class QosInterfaceSchema(ma.ModelSchema):
             'show_qos_interfaces', box_id='<box_id>')})
 
 
-class QosInterfacesSchema(ma.ModelSchema):
+class QosInterfacesSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class QosInterfaceSchema(ma.ModelSchema):
+    class QosInterfaceSchema(ma.Schema):
         class Meta:
             model = QosInterface
             fields = ('id', 'name', '_links')

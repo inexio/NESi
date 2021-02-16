@@ -33,21 +33,26 @@ setuptools.setup(
         ]
     },
     package_data={
-        'nesi':
-            extra_files + ['bootup/conf/ssh/*.pub', 'bootup/conf/ssh/id_rsa',
+        '': ['requirements.txt'],
+        'nesi': extra_files + ['bootup/conf/ssh/*.pub', 'bootup/conf/ssh/id_rsa',
             'test_cases/integration_tests/alcatel/*.txt', 'test_cases/integration_tests/edgecore/*.txt',
             'test_cases/integration_tests/huawei/*.txt', 'test_cases/integration_tests/keymile/*.txt',
-            'test_cases/integration_tests/zhone/*.txt', 'test_cases/integration_tests/pbn/*.txt'],
-        '': ['requirements.txt']
+            'test_cases/integration_tests/zhone/*.txt', 'test_cases/integration_tests/pbn/*.txt']
     },
     packages=[
         '',
         'nesi',
         'nesi.templates',
+        'nesi.templates.Alcatel',
+        'nesi.templates.Huawei',
+        'nesi.templates.EdgeCore',
+        'nesi.templates.KeyMile',
+        'nesi.templates.Zhone',
         'nesi.bootup',
         'nesi.bootup.sockets',
         'nesi.bootup.conf',
         'nesi.bootup.conf.bootstraps',
+        'nesi.devices',
         'nesi.devices.alcatel',
         'nesi.devices.edgecore',
         'nesi.devices.huawei',
@@ -90,6 +95,5 @@ setuptools.setup(
         'nesi.vendors.EdgeCore',
         'nesi.vendors.Huawei',
         'nesi.vendors.KeyMile',
-        'nesi.vendors.Zhone'
-    ]
+        'nesi.vendors.Zhone']
 )

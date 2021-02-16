@@ -15,7 +15,7 @@ from .interface_schemas import InterfacesSchema
 from ..models.logport_models import LogPort
 
 
-class LogPortSchema(ma.ModelSchema):
+class LogPortSchema(ma.Schema):
     class Meta:
         model = LogPort
         fields = ('id', 'box_id', 'box', 'card_id', 'name', 'ports', 'interfaces', 'description', 'admin_state',
@@ -33,11 +33,11 @@ class LogPortSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_logports', box_id='<box_id>')})
 
 
-class LogPortsSchema(ma.ModelSchema):
+class LogPortsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class LogPortSchema(ma.ModelSchema):
+    class LogPortSchema(ma.Schema):
         class Meta:
             model = LogPort
             fields = ('id', 'name', '_links')

@@ -18,7 +18,7 @@ from ..schemas.channel_schemas import ChannelsSchema
 from ..schemas.interface_schemas import InterfacesSchema
 
 
-class PortSchema(ma.ModelSchema):
+class PortSchema(ma.Schema):
     class Meta:
         model = Port
         fields = ('id', 'box_id', 'box', 'card_id', 'cpes', 'onts', 'channels', 'loopback', 'name', 'interfaces',
@@ -41,11 +41,11 @@ class PortSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_ports', box_id='<box_id>')})
 
 
-class PortsSchema(ma.ModelSchema):
+class PortsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class PortSchema(ma.ModelSchema):
+    class PortSchema(ma.Schema):
         class Meta:
             model = Port
             fields = ('id', 'name', 'operational_state', '_links')

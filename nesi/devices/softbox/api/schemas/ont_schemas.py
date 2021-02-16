@@ -15,7 +15,7 @@ from ..models.ont_models import Ont
 from ..schemas.ontport_schemas import OntPortsSchema
 
 
-class OntSchema(ma.ModelSchema):
+class OntSchema(ma.Schema):
     class Meta:
         model = Ont
         fields = ('id', 'box_id', 'box', 'port_id', 'ont_ports',
@@ -32,11 +32,11 @@ class OntSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_onts', box_id='<box_id>')})
 
 
-class OntsSchema(ma.ModelSchema):
+class OntsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class OntSchema(ma.ModelSchema):
+    class OntSchema(ma.Schema):
         class Meta:
             model = Ont
             fields = ('id', 'name', '_links')

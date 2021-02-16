@@ -14,7 +14,7 @@ from nesi.devices.softbox.api import ma
 from ..models.service_port_models import ServicePort
 
 
-class ServicePortSchema(ma.ModelSchema):
+class ServicePortSchema(ma.Schema):
     class Meta:
         model = ServicePort
         fields = ('id', 'name', 'box', 'box_id', 'connected_id', 'connected_type', 'admin_state', 'operational_state',
@@ -29,11 +29,11 @@ class ServicePortSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_service_ports', box_id='<box_id>')})
 
 
-class ServicePortsSchema(ma.ModelSchema):
+class ServicePortsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class ServicePortSchema(ma.ModelSchema):
+    class ServicePortSchema(ma.Schema):
         class Meta:
             model = ServicePort
             fields = ('id', '_links')

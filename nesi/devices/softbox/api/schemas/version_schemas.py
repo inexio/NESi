@@ -14,7 +14,7 @@ from nesi.devices.softbox.api import ma
 from ..models.version_models import Version
 
 
-class VersionSchema(ma.ModelSchema):
+class VersionSchema(ma.Schema):
     class Meta:
         model = Version
         fields = ('id', 'name', 'model_id', '_links')
@@ -23,11 +23,11 @@ class VersionSchema(ma.ModelSchema):
         {'self': ma.URLFor('show_version', id='<id>')})
 
 
-class VersionsSchema(ma.ModelSchema):
+class VersionsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class VersionSchema(ma.ModelSchema):
+    class VersionSchema(ma.Schema):
         class Meta:
             model = Version
             fields = ('id', 'name', '_links')

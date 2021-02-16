@@ -15,7 +15,7 @@ from ..models.model_models import Model
 from ..schemas.version_schemas import VersionsSchema
 
 
-class ModelSchema(ma.ModelSchema):
+class ModelSchema(ma.Schema):
     class Meta:
         model = Model
         fields = ('id', 'name', 'vendor_id', 'versions', '_links')
@@ -26,11 +26,11 @@ class ModelSchema(ma.ModelSchema):
         {'self': ma.URLFor('show_model', id='<id>')})
 
 
-class ModelsSchema(ma.ModelSchema):
+class ModelsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class ModelSchema(ma.ModelSchema):
+    class ModelSchema(ma.Schema):
         class Meta:
             model = Model
             fields = ('id', 'name', 'versions', '_links')

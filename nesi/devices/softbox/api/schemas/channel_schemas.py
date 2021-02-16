@@ -15,7 +15,7 @@ from ..models.channel_models import Channel
 from ..schemas.interface_schemas import InterfacesSchema
 
 
-class ChannelSchema(ma.ModelSchema):
+class ChannelSchema(ma.Schema):
     class Meta:
         model = Channel
         fields = ('id', 'box_id', 'box', 'port_id', 'interfaces', 'curr_rate_u', 'curr_rate_d', 'prev_rate_u',
@@ -31,11 +31,11 @@ class ChannelSchema(ma.ModelSchema):
         {'self': ma.URLFor('show_channel', box_id='<box_id>', id='<id>')})
 
 
-class ChannelsSchema(ma.ModelSchema):
+class ChannelsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class ChannelSchema(ma.ModelSchema):
+    class ChannelSchema(ma.Schema):
         class Meta:
             model = Channel
             fields = ('id', 'name', '_links')

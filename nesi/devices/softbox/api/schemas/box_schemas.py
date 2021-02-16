@@ -19,8 +19,7 @@ from ..schemas.vlan_schemas import VlansSchema
 from ..schemas.portprofile_schemas import PortProfilesSchema
 from ..schemas.user_schemas import UsersSchema
 
-
-class RootSchema(ma.ModelSchema):
+class RootSchema(ma.Schema):
     class Meta:
         fields = ('description', 'boxen', '_links')
 
@@ -28,7 +27,7 @@ class RootSchema(ma.ModelSchema):
         {'self': ma.URLFor('show_root')})
 
 
-class BoxSchema(ma.ModelSchema):
+class BoxSchema(ma.Schema):
     class Meta:
         model = Box
         fields = ('id', 'vendor', 'model', 'version', 'software_version', 'network_protocol', 'network_address',
@@ -147,11 +146,11 @@ class BoxSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_boxen')})
 
 
-class BoxenSchema(ma.ModelSchema):
+class BoxenSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class BoxSchema(ma.ModelSchema):
+    class BoxSchema(ma.Schema):
         class Meta:
             model = Box
             fields = (

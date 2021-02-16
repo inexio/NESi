@@ -15,7 +15,7 @@ from ..models.user_models import User
 from ..schemas.credential_schemas import CredentialsSchema
 
 
-class UserSchema(ma.ModelSchema):
+class UserSchema(ma.Schema):
     class Meta:
         model = User
         fields = ('id', 'box', 'box_id', 'credential_details', 'name', 'status', 'lock_status', 'profile', '_links')
@@ -31,11 +31,11 @@ class UserSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_users', box_id='<box_id>')})
 
 
-class UsersSchema(ma.ModelSchema):
+class UsersSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class UserSchema(ma.ModelSchema):
+    class UserSchema(ma.Schema):
         class Meta:
             model = User
             fields = ('id', 'name', 'status', '_links')

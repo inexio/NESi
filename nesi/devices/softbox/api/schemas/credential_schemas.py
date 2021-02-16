@@ -14,7 +14,7 @@ from nesi.devices.softbox.api import ma
 from ..models.credential_models import Credential
 
 
-class CredentialSchema(ma.ModelSchema):
+class CredentialSchema(ma.Schema):
     class Meta:
         model = Credential
         fields = ('id', 'protocol', 'credential', 'username', 'password',
@@ -29,11 +29,11 @@ class CredentialSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_credentials', box_id='<box_id>')})
 
 
-class CredentialsSchema(ma.ModelSchema):
+class CredentialsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class CredentialSchema(ma.ModelSchema):
+    class CredentialSchema(ma.Schema):
         class Meta:
             model = Credential
             fields = ('id', 'username', 'password', '_links')

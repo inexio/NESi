@@ -15,7 +15,7 @@ from ..models.ontport_models import OntPort
 from ..schemas.cpe_schemas import CpesSchema
 
 
-class OntPortSchema(ma.ModelSchema):
+class OntPortSchema(ma.Schema):
     class Meta:
         model = OntPort
         fields = ('id', 'box_id', 'box', 'ont_id', 'cpes',
@@ -32,11 +32,11 @@ class OntPortSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_ont_ports', box_id='<box_id>')})
 
 
-class OntPortsSchema(ma.ModelSchema):
+class OntPortsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class OntPortSchema(ma.ModelSchema):
+    class OntPortSchema(ma.Schema):
         class Meta:
             model = OntPort
             fields = ('id', 'name', '_links')

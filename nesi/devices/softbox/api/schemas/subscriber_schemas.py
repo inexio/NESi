@@ -14,7 +14,7 @@ from nesi.devices.softbox.api import ma
 from ..models.subscriber_models import Subscriber
 
 
-class SubscriberSchema(ma.ModelSchema):
+class SubscriberSchema(ma.Schema):
     class Meta:
         model = Subscriber
         fields = ('id', 'name', 'box', 'box_id', 'number', 'address', 'registration_state', 'display_name',
@@ -30,11 +30,11 @@ class SubscriberSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_subscribers', box_id='<box_id>')})
 
 
-class SubscribersSchema(ma.ModelSchema):
+class SubscribersSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class SubscriberSchema(ma.ModelSchema):
+    class SubscriberSchema(ma.Schema):
         class Meta:
             model = Subscriber
             fields = ('id', '_links')

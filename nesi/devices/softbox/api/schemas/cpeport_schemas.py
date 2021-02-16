@@ -14,7 +14,7 @@ from nesi.devices.softbox.api import ma
 from ..models.cpeport_models import CpePort
 
 
-class CpePortSchema(ma.ModelSchema):
+class CpePortSchema(ma.Schema):
     class Meta:
         model = CpePort
         fields = ('id', 'box_id', 'box', 'cpe_id',
@@ -29,11 +29,11 @@ class CpePortSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_cpe_ports', box_id='<box_id>')})
 
 
-class CpePortsSchema(ma.ModelSchema):
+class CpePortsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class CpePortSchema(ma.ModelSchema):
+    class CpePortSchema(ma.Schema):
         class Meta:
             model = CpePort
             fields = ('id', 'name', '_links')

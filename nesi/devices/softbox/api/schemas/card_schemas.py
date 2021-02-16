@@ -15,7 +15,7 @@ from ..models.card_models import Card
 from ..schemas.port_schemas import PortsSchema
 
 
-class CardSchema(ma.ModelSchema):
+class CardSchema(ma.Schema):
     class Meta:
         model = Card
         fields = ('id', 'box_id', 'box', 'subrack_id', 'ports', 'ppc',
@@ -32,11 +32,11 @@ class CardSchema(ma.ModelSchema):
             'collection': ma.URLFor('show_cards', box_id='<box_id>')})
 
 
-class CardsSchema(ma.ModelSchema):
+class CardsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class CardSchema(ma.ModelSchema):
+    class CardSchema(ma.Schema):
         class Meta:
             model = Card
             fields = ('id', 'name', 'product', 'ppc', 'operational_state', 'ports', '_links')

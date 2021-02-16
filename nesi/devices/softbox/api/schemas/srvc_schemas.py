@@ -15,7 +15,7 @@ from nesi.devices.softbox.api import ma
 from ..models.srvc_models import Srvc
 
 
-class SrvcSchema(ma.ModelSchema):
+class SrvcSchema(ma.Schema):
     class Meta:
         model = Srvc
         fields = ('id', 'box', 'box_id', 'name', 'service_type', 'address', 'svid', 'stag_priority', 'vlan_handling',
@@ -30,11 +30,11 @@ class SrvcSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_srvcs', box_id='<box_id>')})
 
 
-class SrvcsSchema(ma.ModelSchema):
+class SrvcsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class SrvcSchema(ma.ModelSchema):
+    class SrvcSchema(ma.Schema):
         class Meta:
             model = Srvc
             fields = ('id', 'name', '_links')

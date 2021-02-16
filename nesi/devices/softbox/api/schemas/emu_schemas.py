@@ -14,7 +14,7 @@ from nesi.devices.softbox.api import ma
 from ..models.emu_models import Emu
 
 
-class EmuSchema(ma.ModelSchema):
+class EmuSchema(ma.Schema):
     class Meta:
         model = Emu
         fields = ('id', 'name', 'box', 'box_id', '_links')
@@ -28,11 +28,11 @@ class EmuSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_emus', box_id='<box_id>')})
 
 
-class EmusSchema(ma.ModelSchema):
+class EmusSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class EmuSchema(ma.ModelSchema):
+    class EmuSchema(ma.Schema):
         class Meta:
             model = Emu
             fields = ('id', '_links')

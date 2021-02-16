@@ -15,7 +15,7 @@ from ..models.portgroupport_models import PortGroupPort
 from .subscriber_schemas import SubscribersSchema
 
 
-class PortGroupPortSchema(ma.ModelSchema):
+class PortGroupPortSchema(ma.Schema):
     class Meta:
         model = PortGroupPort
         fields = ('id', 'name', 'box_id', 'card_id', 'operational_state', 'admin_state', 'description', 'label1',
@@ -35,11 +35,11 @@ class PortGroupPortSchema(ma.ModelSchema):
          'collection': ma.URLFor('show_portgroupports', box_id='<box_id>')})
 
 
-class PortGroupPortsSchema(ma.ModelSchema):
+class PortGroupPortsSchema(ma.Schema):
     class Meta:
         fields = ('members', 'count', '_links')
 
-    class PortGroupPortSchema(ma.ModelSchema):
+    class PortGroupPortSchema(ma.Schema):
         class Meta:
             model = PortGroupPort
             fields = ('id', '_links')
