@@ -12,6 +12,9 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 #
+import warnings
+warnings.filterwarnings("ignore", message="int_from_bytes is deprecated")
+
 import argparse
 import logging
 import os
@@ -90,7 +93,7 @@ def main():
             pydevd_pycharm.settrace('localhost', port=3001, stdoutToServer=True, stderrToServer=True)
 
         if args.standalone in ('Alcatel', 'Huawei', 'Edgecore', 'Keymile', 'Pbn', 'Zhone'):
-            p = start_api_with_vendor(args.standalone)
+            p = start_api_with_vendor(args.standalone, True)
         elif args.standalone is not None:
             parser.error('--standalone has invalid argument')
             return
@@ -205,9 +208,12 @@ def main():
             p.kill()
 
 
-def start_api_with_vendor(vendor):
+def start_api_with_vendor(vendor, mute=False):
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
-    p = subprocess.Popen(['python3', 'api.py', '--recreate-db', '--load-model', vendor])
+    command_list = ['python3', 'api.py', '--recreate-db', '--load-model', vendor]
+    if mute:
+        command_list += ['--mute']
+    p = subprocess.Popen(command_list)
     time.sleep(10)
     return p
 

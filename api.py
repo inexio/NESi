@@ -67,6 +67,11 @@ def parse_args():
         help='Config file path. Can also be set via environment variable '
              'NESI_CONFIG.')
 
+    parser.add_argument(
+        '--mute',
+        action='store_true',
+        help='Will suppress API logging info.')
+
     return parser.parse_args()
 
 
@@ -95,6 +100,11 @@ def main():
     if args.recreate_db:
         db.drop_all()
         db.create_all()
+
+    if args.mute:
+        import logging
+        log = logging.getLogger('werkzeug')
+        log.disabled = True
 
     if args.load_model in ('Alcatel', 'Huawei', 'Edgecore', 'Keymile', 'Pbn', 'Zhone'):
         if args.load_model == 'Alcatel':
