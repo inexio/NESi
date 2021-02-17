@@ -263,42 +263,32 @@ For more information see [test_structure.rst](https://github.com/inexio/NESi/blo
 
 ### Available Flags
 
-#### restapi.sh
+#### api.py
 
 `--recreate-db`
 
-Recreate the underlying SQLite Database
-
-`--keep-running`
-
-Keeps the API process alive
+Recreate the underlying SQLite Database (Important for first run)
 
 `--debug`
 
 Launches the API in debug mode
 
-`--<vendor>-api-build`
+`--load-model <vendor>`
 
-Launches the API and fills the database with vendorspecific data
-
-`--test-<vendor>-commands`
-
-Launches the API and runs vendorspecific command tests
+load the data of vendor <vendor> into the underlying Database
 
 `--help`
 
 Displays help for available flags
 
 
-
-
-#### box.sh
+#### cli.py
 
 `--list_boxen`
 
 Lists all available devices that were created in the database
 
-`--box-uuid`
+`--box-uuid <uuid>`
 
 Launches the device with the given uuid
 
@@ -306,7 +296,7 @@ Launches the device with the given uuid
 
 Launches the device in daemon mode
 
-`--standalone`
+`--standalone <vendor>`
 
 Launches the device without having to launch the API in a seperate window first
 
