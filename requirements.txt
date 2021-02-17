@@ -10,7 +10,7 @@ pydevd-pycharm~=201.7846.77
 psutil==5.8.0
 pytest
 pyperclip==1.8.1
-twisted==19.10.0
+twisted>=20.3.0
 cryptography
 bcrypt
 pyasn1
