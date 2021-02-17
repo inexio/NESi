@@ -177,6 +177,24 @@ Second we connect to one box with the specific uuid
 
 Interactive menus will guide you through the implemented commands.
 
+### Installation via pip
+
+If you want to install our project as binaries into a venv using pip you can follow theses steps:
+
+```
+python3 -m venv venv
+cd venv
+source bin/activate
+pip install https://github.com/inexio/NESi/archive/master.zip
+```
+
+After finishing the installation you can use these commands:
+
+```
+nesi-api --recreate-db --load-model <vendor>
+nesi-cli --box-uuid <uuid>
+```
+
 ### SSH and Telnet Daemon
 
 NESi comes with SSH and Telnet socket Daemons built into the boxes itself. 
