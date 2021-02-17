@@ -134,7 +134,7 @@ dmypy.json
 .DS_Store
 
 # Archives
-.gz
+*.tar.gz
 
 # Tests
 /nesi/test_cases/integration_tests/alcatel/output.txt
