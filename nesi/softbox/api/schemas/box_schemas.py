@@ -94,6 +94,9 @@ class BoxSchema(ma.ModelSchema):
         {'_links': {
             'self': ma.URLFor('show_subscribers', box_id='<id>')}})
 
+    portgroupports = ma.Hyperlinks(
+        {'_links': {
+            'self': ma.URLFor('show_portgroupports', box_id='<id>')}})
 
     logports = ma.Hyperlinks(
         {'_links': {
