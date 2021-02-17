@@ -3,7 +3,6 @@
 ### (former Softboxen)
 
 [![GitHub license](https://img.shields.io/badge/license-BSD-blue.svg)](https://raw.githubusercontent.com/inexio/NESi/master/LICENSE.rst)
-[![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/api_build/master?label=build)]()
 [![GitHub build](https://img.shields.io/github/v/tag/inexio/NESi?label=Release)](https://github.com/inexio/NESi)
 
 
