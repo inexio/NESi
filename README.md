@@ -65,7 +65,7 @@ Furthermore the previous `softboxen` project is freely available as a GitHub [re
 
 ## Installation
 
-### Basic
+### Basic Setup
 
 Either clone the repository with the following command:
 ```shell script
@@ -74,6 +74,43 @@ $ git clone git@github.com:inexio/NESi.git
 After that, make sure you have installed the required python packages found in the requirements.txt. An easy way to do this is with the following command:
 ```shell script
 $ pip install -r requirements.txt
+```
+
+### pip Setup
+
+If you want to install our project as binaries into a venv using pip you can follow theses steps:
+
+```
+python3 -m venv venv
+cd venv
+source bin/activate
+pip install https://github.com/inexio/NESi/archive/master.zip
+```
+
+After finishing the installation you can use these commands:
+
+```
+nesi-api --recreate-db --load-model <vendor>
+nesi-cli --box-uuid <uuid>
+nesi-cli --standalone <vendor> --box-uuid <uuid>
+```
+
+### Debian-package Setup
+
+If you want to install our project using debian-package you can follow theses steps:
+
+```
+pip install -r requirements.txt
+apt-get update
+apt install NESi/deb_dist/$(ls "NESi/deb_dist" | grep ".deb$")
+```
+
+After finishing the installation you can use these commands:
+
+```
+nesi-api --recreate-db --load-model <vendor>
+nesi-cli --box-uuid <uuid>
+nesi-cli --standalone <vendor> --box-uuid <uuid>
 ```
 
 ### Systemd Setup
@@ -176,24 +213,6 @@ Second we connect to one box with the specific uuid
     Last login on 01.03.2020
 
 Interactive menus will guide you through the implemented commands.
-
-### Installation via pip
-
-If you want to install our project as binaries into a venv using pip you can follow theses steps:
-
-```
-python3 -m venv venv
-cd venv
-source bin/activate
-pip install https://github.com/inexio/NESi/archive/master.zip
-```
-
-After finishing the installation you can use these commands:
-
-```
-nesi-api --recreate-db --load-model <vendor>
-nesi-cli --box-uuid <uuid>
-```
 
 ### SSH and Telnet Daemon
 
