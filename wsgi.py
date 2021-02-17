@@ -13,5 +13,5 @@
 #
 # REST API server WSGI app
 #
-from nesi.softbox.api import app  # noqa
-from nesi.softbox.api.views import *  # noqa
+from nesi.devices.softbox.api import app  # noqa
+from nesi.devices.softbox.api.views import *  # noqa

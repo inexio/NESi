@@ -14,10 +14,12 @@ import argparse
 import os
 import sys
 
-from nesi.softbox.api import app
-from nesi.softbox.api import db
-from nesi.softbox.api.views import *  # noqa
+from nesi.devices.softbox.api import app
+from nesi.devices.softbox.api import db
+from nesi.devices.softbox.api.views import *  # noqa
+from nesi.devices.softbox.api import config
 import pydevd_pycharm
+import threading
 
 DESCRIPTION = """\
 Network Equipment Simulator REST API.
@@ -60,6 +62,16 @@ def parse_args():
         '--debug', action='store_true',
         help='Run CLI instance in debug mode')
 
+    parser.add_argument(
+        '--load-model', metavar='<VENDOR>', type=str,
+        help='Config file path. Can also be set via environment variable '
+             'NESI_CONFIG.')
+
+    parser.add_argument(
+        '--mute',
+        action='store_true',
+        help='Will suppress API logging info.')
+
     return parser.parse_args()
 
 
@@ -72,10 +84,12 @@ def main():
 
     if args.config:
         os.environ['NESI_CONFIG'] = args.config
+        config_file = os.environ.get('NESI_CONFIG')
+    else:
+        config_file = config.DefaultConfig()
 
-    config_file = os.environ.get('NESI_CONFIG')
     if config_file:
-        app.config.from_pyfile(config_file)
+        app.config.from_object(config_file)
 
     if args.interface:
         app.config['NESI_LISTEN_IP'] = args.interface
@@ -86,12 +100,43 @@ def main():
     if args.recreate_db:
         db.drop_all()
         db.create_all()
-        return 0
 
-    app.run(host=app.config.get('NESI_LISTEN_IP'),
-            port=app.config.get('NESI_LISTEN_PORT'))
+    if args.mute:
+        import logging
+        log = logging.getLogger('werkzeug')
+        log.disabled = True
 
-    return 0
+    if args.load_model in ('Alcatel', 'Huawei', 'Edgecore', 'Keymile', 'Pbn', 'Zhone'):
+        if args.load_model == 'Alcatel':
+            from nesi.bootup.conf.bootstraps.create_alcatel_7360 import create_alcatel
+            p = threading.Thread(target=create_alcatel, daemon=True)
+            p.start()
+        elif args.load_model == 'Huawei':
+            from nesi.bootup.conf.bootstraps.create_huawei_5623 import create_huawei
+            p = threading.Thread(target=create_huawei, daemon=True)
+            p.start()
+        elif args.load_model == 'Edgecore':
+            from nesi.bootup.conf.bootstraps.create_edgecore_xxxx import create_edgecore
+            p = threading.Thread(target=create_edgecore, daemon=True)
+            p.start()
+        elif args.load_model == 'Keymile':
+            from nesi.bootup.conf.bootstraps.create_keymile_MG2500 import create_keymile
+            p = threading.Thread(target=create_keymile, daemon=True)
+            p.start()
+        elif args.load_model == 'Pbn':
+            from nesi.bootup.conf.bootstraps.create_pbn_AOCM3924 import create_pbn
+            p = threading.Thread(target=create_pbn, daemon=True)
+            p.start()
+        elif args.load_model == 'Zhone':
+            from nesi.bootup.conf.bootstraps.create_zhone import create_zhone
+            p = threading.Thread(target=create_zhone, daemon=True)
+            p.start()
+    elif args.load_model is not None:
+        args.error('--load-model has invalid argument')
+        return
+
+    app.run(host=app.config.get('NESI_LISTEN_IP'), port=app.config.get('NESI_LISTEN_PORT'))
+
 
 
 if __name__ == '__main__':
