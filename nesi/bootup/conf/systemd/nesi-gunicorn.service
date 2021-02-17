@@ -1,0 +1,13 @@
+[Unit]
+Description=NESi gunicorn REST API server
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/nesi/venv/NESi
+ExecStart=/opt/nesi/venv/NESi/gunicorn-start.sh
+
+Restart=on-failure
+User=nesi
+
+[Install]
+WantedBy=multi-user.target

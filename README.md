@@ -36,12 +36,16 @@ Click [here](https://thola.io/posts/thola-fosdem/) for more information
 [![GitHub build](https://img.shields.io/github/workflow/status/inexio/NESi/test_zhone/master?label=zhone_tests)]()
 
 ### Supported Vendors
- - Alcatel  (nearly feature complete)
- - Huawei   (nearly feature complete)
- - Edgecore (nearly feature complete)
- - Keymile  (nearly feature complete)
- - Pbn      (not implemented yet)
- - Zhone    (work in progress)
+ - Alcatel
+ - Huawei
+ - Edgecore
+ - Keymile
+ - Zhone
+ 
+### Upcoming Vendors
+ - Pbn
+ - Juniper
+ - Cisco
 
 ### Supported network components
 
@@ -62,6 +66,8 @@ Furthermore the previous `softboxen` project is freely available as a GitHub [re
 
 ## Installation
 
+### Basic
+
 Either clone the repository with the following command:
 ```shell script
 $ git clone git@github.com:inexio/NESi.git
@@ -69,6 +75,68 @@ $ git clone git@github.com:inexio/NESi.git
 After that, make sure you have installed the required python packages found in the requirements.txt. An easy way to do this is with the following command:
 ```shell script
 $ pip install -r requirements.txt
+```
+
+### Systemd Setup
+
+Add a nesi user to your system
+
+```shell script
+$ sudo adduser nesi
+```
+
+Add a folder for nesi to /opt
+
+```shell script
+$ cd /opt
+$ mkdir nesi
+```
+
+Add a 'var' and 'etc' folder
+
+```shell script
+$ cd nesi/
+$ mkdir var/ etc/
+```
+
+Add a new venv via python
+
+```shell script
+$ python3 -m venv venv
+```
+
+Clone NESi into the venv and install requirements
+
+```shell script
+$ cd venv
+$ git clone https://github.com/inexio/NESi.git
+$ source bin/activate
+$ python3 -m pip install -r NESi/requirements.txt
+$ deactivate
+```
+
+Change access rights
+
+```shell script
+$ chown nesi:nesi -R /opt/nesi/
+```
+
+Copy the service template to /etc/systemd/system
+
+```shell script
+$ cp NESi/bootup/conf/systemd/nesi-gunicorn.service /etc/systemd/system
+```
+
+Copy nesi.conf to /opt/nesi/etc and make according changes
+
+```shell script
+$ cp NESi/bootup/conf/nesi.conf /opt/nesi/etc/
+```
+
+Start systemd process
+```shell script
+$ systemctl daemon-reload
+$ systemctl start nesi-gunicorn.service
 ```
 
 ## How to use NESi
@@ -110,6 +178,30 @@ Second we connect to one box with the specific uuid
 
 Interactive menus will guide you through the implemented commands.
 
+### SSH and Telnet Daemon
+
+NESi comes with SSH and Telnet socket Daemons built into the boxes itself. 
+
+To use either telnet or ssh you have to specify one of them in the setup-script of a box or set it via the rest-api.
+
+```shell script
+req='{
+  ...
+  "network_protocol": "ssh",
+  "network_address": "127.0.0.1",
+  ...
+}'
+```
+
+After setting the network_protocol of a device you can launch the 'box.sh' script with the --daemon flag to start the device in either telnet or ssh socket mode.
+
+```shell script
+$ ./bootup/box.sh --box-uuid <devices uuid> --daemon
+```
+
+The network_adress field is used as the host adress for the socket, so set this option accordingly.
+
+After the socket has started you can connect to your device with the chosen protocol.
 
 ### How to use debug mode
 
@@ -133,7 +225,75 @@ For other vendors replace 'Alcatel' with your desired vendor.
 
 For more information see [test_structure.rst](https://github.com/inexio/NESi/blob/master/docs/source/test_structure.rst)
 
- 
+### Available Flags
+
+#### restapi.sh
+
+`--recreate-db`
+
+Recreate the underlying SQLite Database
+
+`--keep-running`
+
+Keeps the API process alive
+
+`--debug`
+
+Launches the API in debug mode
+
+`--<vendor>-api-build`
+
+Launches the API and fills the database with vendorspecific data
+
+`--test-<vendor>-commands`
+
+Launches the API and runs vendorspecific command tests
+
+`--help`
+
+Displays help for available flags
+
+
+
+
+#### box.sh
+
+`--list_boxen`
+
+Lists all available devices that were created in the database
+
+`--box-uuid`
+
+Launches the device with the given uuid
+
+`--daemon`
+
+Launches the device in daemon mode
+
+`--standalone`
+
+Launches the device without having to launch the API in a seperate window first
+
+`--debug`
+
+Launches the device in debug mode
+
+`--help`
+
+Displays help for available flags
+
+### Docker
+
+For people using Docker we included a dockerfile. 
+
+You can build nesi using docker with the command
+    
+    % docker build . -t nesi
+
+After building you can start the container via
+
+    % docker run -(d)it nesi
+
 ### How to add new simulated CLI
 
 For more information on this matter, please refer to the
