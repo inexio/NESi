@@ -10,6 +10,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
+deb_dist/
 dist/
 downloads/
 eggs/
@@ -132,10 +133,13 @@ dmypy.json
 .idea/
 .DS_Store
 
+# Archives
+*.tar.gz
+
 # Tests
-/test_cases/integration_tests/alcatel/output.txt
-/test_cases/integration_tests/huawei/output.txt
-/test_cases/integration_tests/keymile/output.txt
-/test_cases/integration_tests/edgecore/output.txt
-/test_cases/integration_tests/pbn/output.txt
-/test_cases/integration_tests/zhone/output.txt
+/nesi/test_cases/integration_tests/alcatel/output.txt
+/nesi/test_cases/integration_tests/huawei/output.txt
+/nesi/test_cases/integration_tests/keymile/output.txt
+/nesi/test_cases/integration_tests/edgecore/output.txt
+/nesi/test_cases/integration_tests/pbn/output.txt
+/nesi/test_cases/integration_tests/zhone/output.txt

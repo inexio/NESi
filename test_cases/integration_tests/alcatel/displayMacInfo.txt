@@ -1,6 +1,0 @@
-admin
-secret
-show vlan bridge-port-fdb
-show pon unprovision-onu detail
-show equipment ont slot detail
-logout

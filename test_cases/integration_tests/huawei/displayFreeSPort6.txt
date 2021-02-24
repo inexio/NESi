@@ -1,9 +1,0 @@
-root
-secret
-enable
-config
-display service-port all
-
-return
-quit
-y

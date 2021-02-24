@@ -1,8 +1,0 @@
-manager
-secret
-cd /unit-19/port-1/status
-Lock
-/unit-19/port-1/status/StartQuickLoopbackTest
-get QuickLoopbackTest
-Unlock
-exit

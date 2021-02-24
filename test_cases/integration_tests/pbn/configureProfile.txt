@@ -1,9 +1,0 @@
-admin
-secret
-ena
-ena-secret
-conf
-exit
-exit
-exit
-exit

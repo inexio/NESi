@@ -1,6 +1,0 @@
-manager
-secret
-cd /unit-19/portgroup-1/port-1/cfgm
-get pstnport
-cd /
-exit

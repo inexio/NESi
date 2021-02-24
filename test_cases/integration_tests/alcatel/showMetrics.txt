@@ -1,9 +1,0 @@
-admin
-secret
-show equipment temperature
-show alarm current table
-show equipment slot detail
-show equipment shelf detail
-exit
-exit
-logout

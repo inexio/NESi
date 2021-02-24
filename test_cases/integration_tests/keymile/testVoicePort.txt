@@ -1,9 +1,0 @@
-manager
-secret
-cd /unit-19/main
-get HardwareAndSoftware
-/unit-19/port-1/status/StartLineTest
-get /unit-19/port-1/status/LineTestResults
-cd /unit-6/port-1/main
-set AdministrativeStatus up
-exit

@@ -1,7 +1,0 @@
-admin
-secret
-configure software-mngt oswp 2 primary-file-server-id 11.0.0.1
-admin software-mngt oswp 2 download firmware/isam/L6GPAA53.575
-exit
-exit
-logout

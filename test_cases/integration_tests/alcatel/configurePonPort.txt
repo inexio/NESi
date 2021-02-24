@@ -1,8 +1,0 @@
-admin
-secret
-show equipment transceiver-inventory
-configure interface port pon:1/1/5/1 admin-up
-exit
-exit
-exit
-logout

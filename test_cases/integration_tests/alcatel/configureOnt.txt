@@ -1,8 +1,0 @@
-admin
-secret
-configure equipment ont interface 1/1/5/1/1 admin-state down
-configure equipment ont no interface 1/1/5/1/1
-configure equipment ont interface 1/1/5/1/1 sw-ver-pland auto sernum GFED135790XY sw-dnload-version auto plnd-var DO enable-aes enable
-configure equipment ont interface 1/1/5/1/1 admin-state up
-configure equipment ont slot 1/1/5/1/1/1 planned-card-type ethernet plndnumdataports 1 plndnumvoiceports 0 admin-state up
-logout

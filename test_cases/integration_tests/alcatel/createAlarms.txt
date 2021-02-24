@@ -1,7 +1,0 @@
-admin
-secret
-configure alarm entry board-missing severity critical service-affecting reporting logging
-configure alarm entry board-instl-missing severity critical service-affecting reporting logging
-configure alarm entry board-init severity critical service-affecting reporting logging
-configure alarm entry board-hw-issue severity critical service-affecting reporting logging
-logout

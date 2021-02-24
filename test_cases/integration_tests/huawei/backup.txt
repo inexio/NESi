@@ -1,8 +1,0 @@
-root
-secret
-enable
-config
-backup configuration tftp 1.1.1.1 /test/huawei/testfile
-quit
-quit
-y
