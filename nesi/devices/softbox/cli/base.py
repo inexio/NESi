@@ -296,8 +296,9 @@ class CommandProcessor:
             reactor.iterate()
 
     def _get_command_func(self, line):
-        if line.startswith(self.comment):
-            return (lambda: None), '', []
+        #if line.startswith(self.comment):
+            #return (lambda: None), '', []
+
 
         args = line.strip().split()
         command = args[0]
@@ -456,9 +457,6 @@ class CommandProcessor:
         if text is not None:
             self._write(text)
 
-    @property
-    def comment(self):
-        return '!'
 
     @property
     def negation(self):

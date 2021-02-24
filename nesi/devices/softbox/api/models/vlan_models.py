@@ -54,10 +54,13 @@ class Vlan(db.Model):
     mode = db.Column(db.Enum('residential-bridge', 'reserved'), default='residential-bridge')
 
     # Huawei Data
-    type = db.Column(db.Enum('smart'), default='smart')
+    type = db.Column(db.Enum('smart', 'DYNAMIC'), default='smart')
     attribute = db.Column(db.Enum('common', 'uncommon'), default='common')
     bind_service_profile_id = db.Column(db.Integer(), default=None)
     bind_RAIO_profile_index = db.Column(db.String(), default='-')
     priority = db.Column(db.String())
     native_vlan = db.Column(db.Integer())
+
+    # PBN data
+    mac_address = db.Column(db.String(), default='')
 

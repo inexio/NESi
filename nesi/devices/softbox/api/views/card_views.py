@@ -85,6 +85,9 @@ def new_card(box_id):
                         req['name'] = "7"
                     elif box['version'] == '2200':
                         req['name'] = "9"
+                elif vendor == 'PBN':
+                    req['name'] = "0"
+
                 else:
                     req['name'] = "1"
 

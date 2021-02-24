@@ -11,7 +11,6 @@
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
 import logging
-
 from nesi.devices.softbox.base_resources import base
 
 LOG = logging.getLogger(__name__)

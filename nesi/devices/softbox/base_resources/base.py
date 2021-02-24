@@ -12,7 +12,6 @@
 
 import copy
 import logging
-
 from nesi import exceptions
 
 LOG = logging.getLogger(__name__)

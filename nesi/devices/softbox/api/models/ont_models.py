@@ -152,3 +152,6 @@ class Ont(db.Model):
     srvprofile_id = db.Column(db.Integer(), nullable=True)
     software_version = db.Column(db.String(), default=None)
 
+    # PBN data
+    mac_address = db.Column(db.String(), default=None)
+

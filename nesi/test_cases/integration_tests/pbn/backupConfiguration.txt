@@ -1,0 +1,9 @@
+admin
+secret
+ena
+ena-secret
+wr
+copy startup-config ftp://user:secret@10.1.1.1/pbn/testfilename
+exit
+exit
+exit

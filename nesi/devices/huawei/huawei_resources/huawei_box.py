@@ -189,14 +189,15 @@ class HuaweiBox(Box):
 
     def get_service_port_by_values(self, params=None):
         """Get specific service_port object."""
-        vlans = huawei_service_port.HuaweiServicePortCollection(
+
+        service_ports = huawei_service_port.HuaweiServicePortCollection(
             self._conn, base.get_sub_resource_path_by(self, 'service_ports'),
             params=params)
 
         # A collection is a non-subscriptable object, therefore we can only get the first object via this way
-        if len(vlans) > 0:
-            for vlan in vlans:
-                return vlan
+        if len(service_ports) > 0:
+            for service_port in service_ports:
+                return service_port
         else:
             return None
 

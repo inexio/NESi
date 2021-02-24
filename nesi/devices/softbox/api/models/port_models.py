@@ -31,8 +31,8 @@ class Port(db.Model):
     type = db.Column(db.Enum('pon', 'ethernet-line'), default='pon')
     shutdown = db.Column(db.Boolean(), default=False)
     speed = db.Column(db.Enum('10M', '1G', '10G'), default='1G')
-    operational_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating
-    admin_state = db.Column(db.Enum('0', '1', '2', '3'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating; KeyMile:  0 => down, 1 => up, 2 => locked, 3 => unlocked
+    operational_state = db.Column(db.Enum('0', '1', '2'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating; PBN: 0 => down, 1 => up
+    admin_state = db.Column(db.Enum('0', '1', '2', '3'), default='0')  # Alcatel: 0 => down, 1 => up, 2 => not-appl; Huawei: 0 => deactivated, 1 => activated, 2 => activating; KeyMile:  0 => down, 1 => up, 2 => locked, 3 => unlocked; PBN: 0 => down, 1 => up
     upstream = db.Column(db.Integer(), default=0)
     downstream = db.Column(db.Integer(), default=0)
     upstream_max = db.Column(db.String(), default="100000")
@@ -331,6 +331,21 @@ class Port(db.Model):
     profile4_enable = db.Column(db.Boolean(), default=False)
     profile4_name = db.Column(db.String(), default='')
     profile_mode = db.Column(db.Enum('Priority', 'ElectricalLoopLength'), default=None)
+
+    # PBN
+    spanning_tree_guard_root = db.Column(db.Boolean(), default=False)
+    switchport_trunk_vlan_allowed = db.Column(db.String(), default=None)
+    switchport_mode_trunk = db.Column(db.Boolean(), default=False)
+    switchport_pvid = db.Column(db.Integer(), default=None)
+    no_lldp_transmit = db.Column(db.Boolean(), default=False)
+    pbn_speed = db.Column(db.Integer(), default=None)
+    switchport_block_multicast = db.Column(db.Boolean(), default=False)
+    switchport_rate_limit_egress = db.Column(db.Integer(), default=None)
+    switchport_rate_limit_ingress = db.Column(db.Integer(), default=None)
+    no_pdp_enable = db.Column(db.Boolean(), default=False)
+    no_snmp_trap_link_status = db.Column(db.Boolean(), default=False)
+    exclamation_mark = db.Column(db.Boolean(), default=False)
+    switchport_protected = db.Column(db.Integer(), default=None)
 
     #Edgecore
     mac_address = db.Column(db.String(), default='A8-2B-B5-7F-E3-C0')

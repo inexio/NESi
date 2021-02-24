@@ -23,6 +23,7 @@ from nesi.devices.huawei.api.schemas import *
 from nesi.devices.keymile.api.schemas import *
 from nesi.devices.edgecore.api.schemas import *
 from nesi.devices.zhone.api.schemas import *
+from nesi.devices.pbn.api.schemas import *
 # important for other view classes
 from nesi.devices.softbox.api import db
 
