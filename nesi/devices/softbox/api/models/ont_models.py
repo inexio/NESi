@@ -154,3 +154,4 @@ class Ont(db.Model):
 
     # PBN data
     mac_address = db.Column(db.String(), default=None)
+

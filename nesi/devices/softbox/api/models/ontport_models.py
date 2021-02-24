@@ -34,6 +34,7 @@ class OntPort(db.Model):
     ont_port_index = db.Column(db.Integer())
     ont_port_type = db.Column(db.Enum('GE', 'ETH', 'POTS', 'VDSL', 'TDM', 'MOCA', 'CATV'), default='GE')
     duplex = db.Column(db.Enum('full', 'auto_full', 'auto', 'Auto-Duplex'), default='full')
+    duplex = db.Column(db.Enum('full', 'auto_full', 'auto'), default='full')
     link_state = db.Column(db.Enum('up', 'down'), default='down')
     ring_status = db.Column(db.String(), default='-')
 
@@ -62,3 +63,4 @@ class OntPort(db.Model):
     # PBN data
     flow_control = db.Column(db.Enum('Disable', 'Enable'), default='Disable')
     storm_control = db.Column(db.Enum('Disable', 'Enable'), default='Disable')
+    

@@ -189,6 +189,7 @@ class HuaweiBox(Box):
 
     def get_service_port_by_values(self, params=None):
         """Get specific service_port object."""
+
         service_ports = huawei_service_port.HuaweiServicePortCollection(
             self._conn, base.get_sub_resource_path_by(self, 'service_ports'),
             params=params)

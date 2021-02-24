@@ -11,9 +11,11 @@
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
 
+
 from nesi.devices.pbn.pbn_resources import *
 import logging
 from nesi.devices.softbox.base_resources import credentials, base
+from nesi.devices.softbox.base_resources import route
 from nesi.devices.softbox.base_resources.box import Box, BoxCollection
 
 LOG = logging.getLogger(__name__)
@@ -160,6 +162,7 @@ class PBNBox(Box):
         return pbn_ont_port.PBNOntPortCollection(
             self._conn, base.get_sub_resource_path_by(self, 'ont_ports'),
             params={field: value})
+
 
 
 class PBNBoxCollection(BoxCollection):

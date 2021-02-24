@@ -87,6 +87,7 @@ def new_card(box_id):
                         req['name'] = "9"
                 elif vendor == 'PBN':
                     req['name'] = "0"
+
                 else:
                     req['name'] = "1"
 

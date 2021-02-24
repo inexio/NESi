@@ -299,6 +299,7 @@ class CommandProcessor:
         #if line.startswith(self.comment):
             #return (lambda: None), '', []
 
+
         args = line.strip().split()
         command = args[0]
         args = args[1:]

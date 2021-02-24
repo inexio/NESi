@@ -10,7 +10,6 @@
 # - Philipp-Noah Groß <https://github.com/pngross>
 #
 # License: https://github.com/inexio/NESi/LICENSE.rst
-
 from nesi.devices.softbox.base_resources.service_vlan import ServiceVlan, ServiceVlanCollection, logging
 from nesi.devices.softbox.base_resources import base
 
