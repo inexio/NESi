@@ -1,0 +1,12 @@
+admin
+secret
+ena
+ena-secret
+conf
+no interface GigaEthernet0/1
+!
+exit
+write
+exit
+exit
+exit

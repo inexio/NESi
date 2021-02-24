@@ -1,0 +1,11 @@
+root
+secret
+enable
+config
+interface gpon 0/4
+ont add 0 2 sn-auth 1 omci ont-lineprofile-id 0 ont-srvprofile-id 0 desc "This is a new ont"
+quit
+save
+quit
+quit
+y

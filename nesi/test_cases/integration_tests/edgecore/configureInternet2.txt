@@ -1,0 +1,12 @@
+admin
+secret
+enable
+enable
+configure
+interface ethernet 1/1
+description test_description
+switchport mode hybrid
+no shutdown
+rate-limit input 1
+rate-limit output 1
+quit

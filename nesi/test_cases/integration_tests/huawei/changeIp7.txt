@@ -1,0 +1,25 @@
+root
+secret
+enable
+config
+undo smart
+undo interactive
+load script tftp 1.1.1.1 testfile
+vlan 11 smart
+port vlan 11 0/0 0
+interface vlanif 11
+ip address 1.1.1.1 255.255.255.0
+quit
+undo ip route-static all
+Y
+ip route-static 0.0.0.0 0 1.1.1.1
+interface vlanif 2620
+undo ip address 1.1.1.1 24
+quit
+undo interface vlanif 2620
+undo port vlan 2620 0/0 0
+undo vlan 2620
+raio-anid 1.1.1.1
+quit
+quit
+y

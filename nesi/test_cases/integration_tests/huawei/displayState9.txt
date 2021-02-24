@@ -1,0 +1,28 @@
+root
+secret
+enable
+display interface vdsl 0/1/0
+display vdsl port state 0/1/0
+display vdsl line operation port 0/1/0
+config
+interface vdsl 0/1
+display inventory cpe 0
+return
+display interface adsl 0/2/0
+display adsl port state 0/2/0
+display adsl line operation port 0/2/0
+config
+interface adsl 0/2
+display inventory cpe 0
+return
+config
+interface gpon 0/4
+display port state 0
+return
+config
+interface eth 0/3
+display port ddm-info 0
+
+return
+quit
+y

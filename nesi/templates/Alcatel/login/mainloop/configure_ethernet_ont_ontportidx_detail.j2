@@ -1,0 +1,27 @@
+configure ethernet
+#-------------------------------------------------------------------------------
+echo "ethernet"
+#-------------------------------------------------------------------------------
+ont {{ context.ont_port.uni_idx }}
+ cust-info 162094
+ auto-detect 10_100_1000baset-auto
+ no power-control # value=disable
+ no pse-class # value=0
+ no pwr-override # value=disable
+ no lpt-mode # value=not-supported
+ phy
+ no pm # value=disable
+ pm-intervals 0
+ exit
+ l2
+ no pm # value=disable
+ no tca # value=disable
+ no dropped-frames-up # value=disable
+ no dropped-frames-dn # value=disable
+ pm-intervals 0
+ exit
+ admin-state {{ context.ont_port.admin_state }}
+ oper-state {{ context.ont_port.operational_state }}
+exit
+#-------------------------------------------------------------------------------
+

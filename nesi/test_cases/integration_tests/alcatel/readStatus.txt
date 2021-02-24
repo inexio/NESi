@@ -1,0 +1,19 @@
+admin
+secret
+show xdsl operational-data line 1/1/1/1 detail
+info configure xdsl line 1/1/1/1
+show xdsl linkup-record 1/1/1/1 detail
+info configure xdsl line 1/1/1/1 detail
+show vlan bridge-port-fdb 1/1/1/1:1:32 detail
+show vlan bridge-port-fdb
+show vlan bridge-port-fdb 1/1/1/1 detail
+show xdsl cpe-inventory 1/1/1/1 detail
+show equipment slot lt:1/1/1 detail
+show interface port pon:1/1/5/1 detail
+show equipment diagnostics sfp lt:1/1/5:sfp:1 detail
+show equipment slot lt:1/1/2 detail
+show interface port ethernet-line:1/1/4/1 detail
+info configure bridge port 1/1/1/1 detail
+show software-mngt version etsi detail
+exit
+logout

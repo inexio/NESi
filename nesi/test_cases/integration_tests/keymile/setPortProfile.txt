@@ -1,0 +1,5 @@
+manager
+secret
+cd /unit-6/port-1/cfgm
+set portprofiles true default 0 false default 0 false default 0 true default Priority
+exit

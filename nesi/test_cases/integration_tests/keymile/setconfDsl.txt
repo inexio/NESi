@@ -1,0 +1,18 @@
+manager
+secret
+cd /unit-1/port-1/main
+Set Labels "umlctId)" "arrierId" ""
+set AdministrativeStatus up
+cd /unit-5/port-1/main
+Set Labels "Id" "ierLind" ""
+set AdministrativeStatus up
+cd /unit-7/port-1/main
+Set Labels "ctId" "d" ""
+set AdministrativeStatus up
+cd /unit-2/logports/cfgm
+create port-1 default
+cd /unit-2/logports/logport-1/cfgm
+CreateInterface name
+cd /unit-2/logports/logport-1/main
+set AdministrativeStatus up
+exit

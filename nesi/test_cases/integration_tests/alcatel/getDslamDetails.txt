@@ -1,0 +1,6 @@
+admin
+secret
+show equipment slot nt-a detail
+exit
+exit
+logout

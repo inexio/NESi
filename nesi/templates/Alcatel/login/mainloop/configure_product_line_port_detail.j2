@@ -1,0 +1,109 @@
+configure {{ context.product }}
+#-------------------------------------------------------------------------------
+echo "{{ context.product }}"
+#-------------------------------------------------------------------------------
+line {{ context.port.name }}
+    {{ ''|default("no ", true) }}service-profile {{ context.service_profile_id|default("# value=none", true) }}
+    {{ ''|default("no ", true) }}spectrum-profile {{ context.spectrum_profile_id|default("# value=none", true) }}
+    {{ ''|default("no ", true) }}dpbo-profile {{ context.dpbo_profile_id|default("# value=none", true) }}
+    {{ ''|default("no ", true) }}rtx-profile {{ context.rtx_profile_id|default("# value=none", true) }}
+    {{ ''|default("no ", true) }}vect-profile {{ context.vect_profile_id|default("# value=none", true) }}
+    {{ ''|default("no ", true) }}sos-profile {{ context.sos_profile_id|default("# value=none", true) }}
+    {{ ''|default("no ", true) }}ghs-profile {{ context.ghs_profile_id|default("# value=none", true) }}
+    no ansi-t1413
+    no etsi-dts
+    no g992-1-a
+    no g992-1-b
+    no g992-2-a
+    no g992-3-a
+    no g992-3-b
+    no g992-3-aj
+    no g992-3-l1
+    no g992-3-l2
+    no g992-3-am
+    no g992-5-a
+    no g992-5-b
+    no ansi-t1.424
+    no etsi-ts
+    no itu-g993-1
+    no ieee-802.3ah
+    no g992-5-aj
+    no g992-5-am
+    no g993-2-8a
+    no g993-2-8b
+    no g993-2-8c
+    no g993-2-8d
+    no g993-2-12a
+    no g993-2-12b
+    no g993-2-17a
+    no g993-2-30a
+    no g993-2-35b
+    no carrier-data-mode # value=off
+    {{ context.admin_state }}
+    no transfer-mode # value=system-default
+    no imp-noise-sensor
+    no vect-qln-mode # value=without-cancel
+    no auto-switch
+    no vect-fallback # value=auto
+    no gf-tdd-profile # value=none
+    no gf-dsrate-profile # value=none
+    no gf-usrate-profile # value=none
+    no gf-spec-profile # value=none
+    no gf-upbo-profile # value=none
+    no gf-rfi-profile # value=none
+    no gf-snrm-profile # value=none
+    no gf-fra-profile # value=none
+    no gf-rtx-profile # value=none
+    no gf-reinit-profile # value=none
+    no gf-vect-profile # value=none
+    no gf-lcvect-profile # value=none
+    gf-testmode
+        no rtx-ds
+        no rtx-us
+        no tps-ds
+        no tps-us
+        no dra-ds
+        no dra-us
+    exit
+    tca-line-threshold
+        no enable
+        no es-nearend # value=0
+        no ses-nearend # value=0
+        no uas-nearend # value=0
+        no leftr-nearend # value=0
+        no leftr-day-nearend # value=0
+        no es-day-nearend # value=0
+        no ses-day-nearend # value=0
+        no uas-day-nearend # value=0
+        no es-farend # value=0
+        no ses-farend # value=0
+        no uas-farend # value=0
+        no es-day-farend # value=0
+        no ses-day-farend # value=0
+        no uas-day-farend # value=0
+        no leftr-farend # value=0
+        no leftr-day-farend # value=0
+    exit
+    service-profile-name {{ context.service_profile_name|default(NONE, true) }}
+    spectrum-profile-name {{ context.spectrum_profile_name|default(NONE, true) }}
+    dpbo-profile-name {{ context.dpbo_profile_name|default(NONE, true) }}
+    rtx-profile-name {{ context.rtx_profile_name|default(NONE, true) }}
+    vect-profile-name {{ context.vect_profile_name|default(NONE, true) }}
+    overrule-state not-created
+    sos-profile-name {{ context.sos_profile_name|default(NONE, true) }}
+    ghs-profile-name {{ context.ghs_profile_name|default(NONE, true) }}
+    gf-tdd-prof-name ""
+    gf-dsrate-prof-name ""
+    gf-usrate-prof-name ""
+    gf-spec-prof-name ""
+    gf-upbo-prof-name ""
+    gf-rfi-prof-name ""
+    gf-snrm-prof-name ""
+    gf-fra-prof-name ""
+    gf-rtx-prof-name ""
+    gf-reinit-prof-name ""
+    gf-vect-prof-name ""
+    gf-lcvect-prof-name ""
+exit
+#-------------------------------------------------------------------------------
+

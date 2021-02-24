@@ -1,0 +1,58 @@
+manager
+secret
+cd /unit-1/port-1/status
+get AttainableRate
+cd /unit-1/port-1/main
+get AdministrativeStatus
+get OperationalStatus
+cd /unit-1/port-1/chan-1/cfgm
+get ProfileName
+cd /unit-5/port-1/chan-1/cfgm
+get ChanProfile
+cd /unit-1/port-1/chan-1/status
+get status
+cd /unit-1/port-1/chan-1/vcc-1/cfgm
+get configuredProfiles
+cd /unit-1/port-1/chan-1/vcc-1/status
+get ServiceStatus
+cd /unit-11
+ls
+cd /unit-19
+ls
+cd /unit-7/port-1/main
+get AdministrativeStatus
+get OperationalStatus
+cd /unit-7/port-1
+ls
+cd /unit-7/port-1/status
+get PortMacStatus
+get PortGeneralStatus
+cd /unit-7/port-1/interface-1/cfgm
+get configuredProfiles
+get vlanProfile
+get IfRateLimiting
+cd /unit-7/port-1/interface-1/status
+get ServiceStatus
+cd /unit-7/port-1/status
+get DDMStatus
+cd /unit-2/port-1/main
+ls
+cd /unit-2/port-1/status
+ls
+get LineActualState
+get LineOperationState
+cd /unit-2/logports/logport-2/status
+get ActualStatus
+get OperationalWireState
+cd /unit-2/logports/logport-2/main
+get AdministrativeStatus
+get OperationalStatus
+cd /unit-2/logports/logport-2/cfgm
+get SpanProfiles
+cd /unit-2/logports/logport-2/interface-1/cfgm
+get configuredProfiles
+get vlanProfile
+cd /unit-2/logports/logport-2/interface-1/status
+get ServiceStatus
+ls
+exit

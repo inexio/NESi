@@ -1,0 +1,104 @@
+  ----------------------------------------------------------------------------
+  Port Information
+  ----------------------------------------------------------------------------
+  F/S/P                        {{ context.port.name }}
+  Port state                   {% if context.port.operational_state == 'activated' %}Online{% else %}Offline{% endif %}
+
+  Last down cause              {{ context.port.last_down_cause }}
+  Last up time                 {{ context.port.last_up_time }}
+  Last down time               {{ context.port.last_down_time }}
+  Port energy-saving flag      {{ context.port.port_energy_saving_flag }}
+  xPON MAC chipset state       {{ context.port.xpon_mac_chipset_state }}
+  Signal detect                {{ context.port.signal_detect }}
+  Available bandwidth(Kbps)    {{ context.port.available_bandwidth }}
+  Illegal rogue ONT            {{ context.port.illegal_rogue_ont }}
+  ----------------------------------------------------------------------------
+  Optical Module State
+  ----------------------------------------------------------------------------
+  Optical Module status        {{ context.port.optical_module_status }}
+  Laser state                  {{ context.port.laser_state }}
+  TX fault                     {{ context.port.tx_fault_h }}
+  Temperature(C)               {{ context.port.temperature_h }}
+  TX Bias current(mA)          {{ context.port.tx_bias_current_h }}
+  Supply Voltage(V)            {{ context.port.supply_voltage_h }}
+  TX power(dBm)                {{ context.port.tx_power_h }}
+  ----------------------------------------------------------------------------
+  Optical Module Manufacturer Information
+  ----------------------------------------------------------------------------
+  Vendor name                  {{ context.port.vendor_name }}
+  Vendor rev                   {{ context.port.vendor_rev }}
+  Vendor OUI                   {{ context.port.vendor_oui }}
+  Vendor PN                    {{ context.port.vendor_pn }}
+  Vendor SN                    {{ context.port.vendor_sn }}
+  Date Code                    {{ context.port.date_code }}
+  Vendor specific              {{ context.port.vendor_specific }}
+  ----------------------------------------------------------------------------
+  Optical Module Static Information
+  ----------------------------------------------------------------------------
+  Module type                  {{ context.port.module_type }}
+  Module sub-type              {{ context.port.module_sub_type }}
+  Used type                    {{ context.port.used_type }}
+  Encapsulation Type           {{ context.port.encapsulation_time }}
+  SFF-8472 Compliance          {{ context.port.sff_8472_compliance }}
+  Max Distance(Km)             {{ context.port.max_distance }}
+  Max rate(Kbps)               {{ context.port.max_rate }}
+  Rate Identifier              {{ context.port.rate_identifier }}
+  Wave length(nm)              {{ context.port.wave_length }}
+  Fiber type                   {{ context.port.fiber_type_h }}
+  Identifier                   {{ context.port.identifier }}
+  Ext.Identifier               {{ context.port.ext_identifier }}
+  Connector                    {{ context.port.connector }}
+  Encoding                     {{ context.port.encoding }}
+  Length(9um)(km)              {{ context.port.length_9_um }}
+  Length(50um)(m)              {{ context.port.length_50_um }}
+  Length(62.5um)(m)            {{ context.port.length_62_5_um }}
+  Length(copper)(m)            {{ context.port.length_copper }}
+  Length(50um,OM3)(m)          {{ context.port.length_50_um_om_3 }}
+  BR,max                       {{ context.port.br_max }}
+  BR,min                       {{ context.port.br_min }}
+  Diagnostic Monitoring Type   Digital diagnostic monitoring
+                               Externally Calibrated
+                               Power measurement type: Average Power
+  Options                      TX_DISABLE,and disables the serial output
+                               TX_FAULT
+                               LOS(signal inverted from standard definition)
+  Enhanced Options             Alarm/warning flags
+                               TX_DISABLE control and monitoring
+                               TX_FAULT monitoring
+  OTDR capability              Not support
+  Cc_base                      {{ context.port.cc_base }}
+  CC_EXT                       {{ context.port.cc_exit }}
+  ----------------------------------------------------------------------------
+  Optical Module Threshold Parameter
+  ----------------------------------------------------------------------------
+  Rx power warning
+  threshold(dBm)               {{ context.port.rx_power_warning_threshold }}
+
+  Rx power alarm
+  threshold(dBm)               {{ context.port.rx_power_alarm_threshold }}
+
+  Tx power warning
+  threshold(dBm)               {{ context.port.tx_power_warning_threshold }}
+
+  Tx power alarm
+  threshold(dBm)               {{ context.port.tx_power_alarm_threshold }}
+
+  Tx bias warning
+  threshold(mA)                {{ context.port.tx_bias_warning_threshold }}
+
+  Tx bias alarm
+  threshold(mA)                {{ context.port.tx_bias_alarm_threshold }}
+
+  Supply voltage warning
+  threshold(V)                 {{ context.port.supply_voltage_warning_threshold }}
+
+  Supply voltage alarm
+  threshold(V)                 {{ context.port.supply_voltage_alarm_threshold }}
+
+  Temperature warning
+  threshold(C)                 {{ context.port.temperature_warning_threshold }}
+
+  Temperature alarm
+  threshold(C)                 {{ context.port.temperature_alarm_threshold }}
+  ----------------------------------------------------------------------------
+

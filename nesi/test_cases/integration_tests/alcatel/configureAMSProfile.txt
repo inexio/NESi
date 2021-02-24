@@ -1,0 +1,7 @@
+admin
+secret
+show equipment slot nt-a detail
+configure system security snmp community public host-address 127.0.0.1
+configure system security snmp community futurama host-address 127.0.0.1 context ihub
+configure system security snmp community tellme host-address 127.0.0.1
+logout

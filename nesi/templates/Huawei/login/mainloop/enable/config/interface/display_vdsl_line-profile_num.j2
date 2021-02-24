@@ -1,0 +1,101 @@
+  ------------------------------------------------------------------------------
+  Profile index: {{ context.profile.id }}      Name: {{ context.profile.name }}
+  Transmission mode:
+   {% if context.profile.T1_413 == 'enable' %}    T1.413
+   {% endif %}
+   {% if context.profile.G_992_1 == 'enable' %}    G.992.1(Annex A/B/C)
+   {% endif %}
+   {% if context.profile.G_992_2 == 'enable' %}    G.992.2(Annex A/C)
+   {% endif %}
+   {% if context.profile.G_992_3 == 'enable' %}    G.992.3(Annex A/B/I/J/L/M)
+   {% endif %}
+   {% if context.profile.G_992_4 == 'enable' %}    G.992.4(Annex A/I)
+   {% endif %}
+   {% if context.profile.G_992_5 == 'enable' %}    G.992.5(Annex A/B/I/J/M)
+   {% endif %}
+   {% if context.profile.AnnexB_G_993_2 == 'enable' %}    G.993.2(Annex A/B/C)
+   {% endif %}
+  Bit swap downstream                             :{% if context.profile.bit_swap_ds == 1 %} Enable {% else %} Disable {% endif %}
+
+  Bit swap upstream                               :{% if context.profile.bit_swap_us == 1 %} Enable {% else %} Disable {% endif %}
+
+  Form of transmit rate adaptation downstream     : AdaptAtStartup
+  Form of transmit rate adaptation upstream       : AdaptAtStartup
+  Target SNR margin downstream(0.1dB)             : 60
+  Minimum SNR margin downstream(0.1dB)            : 0
+  Maximum SNR margin downstream(0.1dB)            : 300
+  Target SNR margin upstream(0.1dB)               : 60
+  Minimum SNR margin upstream(0.1dB)              : 0
+  Maximum SNR margin upstream(0.1dB)              : 300
+  UPBO US1 band reference PSD parameters[a, b]    : 1650,1020
+  UPBO US2 band reference PSD parameters[a, b]    : 1650,615
+  UPBO US3 band reference PSD parameters[a, b]    : 0,0
+  UPBO US4 band reference PSD parameters[a, b]    : 0,0
+  UPBO Boost Mode                                 : Enable
+  UPBO US1 band reference electrical length       : 0
+  UPBO US2 band reference electrical length       : 0
+  UPBO US3 band reference electrical length       : 0
+  UPBO US4 band reference electrical length       : 0
+  UPBO use of electrical length to compute UPBO   : Auto
+  Kl0 selection                                   : max(kl0_CO,kl0_CPE)
+  UPBO electrical length estimation mode          : ELE_M0
+  UPBO electrical length threshold percentile     : 10
+  Allow transition to idle                        :{% if context.profile.allow_transitions_to_idle == 2 %} not allowed {% else %} allowed {% endif %}
+
+  Allow transition to low power                   :{% if context.profile.allow_transitions_to_lowpower == 2 %} not allowed {% else %} allowed {% endif %}
+
+  L0 time(second)                                 : {{ context.profile.l0_time }}
+  L2 time(second)                                 : {{ context.profile.l2_time }}
+  L3 time(second)                                 : {{ context.profile.l3_time }}
+  Maximum aggregate transmit power reduction(dB)  : {{ context.profile.max_transmite_power_reduction }}
+  Total maximum aggregate transmit power reduction
+  (dB)                                            : {{ context.profile.total_max_power_reduction }}
+  <defmode>
+    G.993.2 profile                               : Profile{{ context.profile.g_993_2_profile }}a
+    VDSL2 PSD class mask                          : AnnexB998-M2x-B(B8-6)
+    VDSL2 link use of U0                          : Unused
+    Maximum nominal aggregate transmit power
+    downstream(0.1dBm)                            : 145
+    Maximum nominal aggregate transmit power
+    upstream(0.1dBm)                              : 145
+    Upstream PSD mask selection                   : ADLU-{{ context.profile.us0_psd_mask }}/EU-{{ context.profile.us0_psd_mask }}
+    Virtual noise mode downstream                 : Disable
+    Virtual noise mode upstream                   : Disable
+    G.993.2 profile autosensing                   : Disable
+  Network timing reference clock mode             : {{ context.profile.reference_clock }}
+  INM inter arrival time offset downstream
+  (DMT symbol)                                    : 3
+  INM inter arrival time step downstream          : 0
+  INM cluster continuation value downstream
+  (DMT symbol)                                    : 0
+  INM equivalent INP mode downstream              : 0
+  INM inter arrival time offset upstream
+  (DMT symbol)                                    : 3
+  INM inter arrival time step upstream            : 0
+  INM cluster continuation value upstream
+  (DMT symbol)                                    : 0
+  INM equivalent INP mode upstream                : 0
+  SOS time window downstream(64ms)                : 0
+  Minimum percentage of degraded tones downstream : 0
+  Minimum number of normalized CRC anomalies
+  downstream(0.02)                                : 65535
+  Maximum number of SOS downstream                : 0
+  SNR margin offset of ROC downstream(0.1dB)      : 0
+  Minimum impulse noise protection of ROC
+  downstream                                      : 0
+  SOS time window upstream(64ms)                  : 0
+  Minimum percentage of degraded tones upstream   : 0
+  Minimum number of normalized CRC anomalies
+  upstream(0.02)                                  : 65535
+  Maximum number of SOS upstream                  : 0
+  SNR margin offset of ROC upstream(0.1dB)        : 0
+  Minimum impulse noise protection of ROC
+  upstream                                        : 0
+  G.998.4 retransmission control in downstream    : RTX_FORBIDDEN
+  G.998.4 retransmission control in upstream      : RTX_FORBIDDEN
+  Force framer setting for inp downstream         :{% if context.profile.force_inp_ds == 1 %} False {% else %} True {% endif %}
+
+  Force framer setting for inp upstream           :{% if context.profile.force_inp_us == 1 %} False {% else %} True {% endif %}
+
+  ------------------------------------------------------------------------------
+

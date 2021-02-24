@@ -1,0 +1,10 @@
+admin
+secret
+configure vlan id 1234 pppoe-relay-tag true
+configure system loop-id-syntax atm-based-dsl "10.0.0.1 eth Slot/Port" efm-based-dsl "10.0.0.1 eth Slot/Port"
+configure vlan id 1234 pppoe-relay-tag configurable pppoe-linerate addactuallinerate circuit-id-pppoe physical-id remote-id-pppoe customer-id
+exit
+exit
+exit
+exit
+logout

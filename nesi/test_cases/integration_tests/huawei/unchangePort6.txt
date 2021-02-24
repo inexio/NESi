@@ -1,0 +1,17 @@
+root
+secret
+enable
+config
+interface vdsl 0/1
+deactivate 1
+return
+config
+interface opg 0/5
+shutdown 0
+return
+config
+interface eth 0/3
+shutdown 0
+return
+quit
+y

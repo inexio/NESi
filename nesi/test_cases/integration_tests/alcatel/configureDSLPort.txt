@@ -1,0 +1,15 @@
+admin
+secret
+info configure vlan id 1234
+info configure vlan id 3320
+info configure vlan id 2620
+configure xdsl line 1/1/1/1 service-profile name:TEST_DSL_16000 admin-up
+configure atm pvc 1/1/1/1:1:32
+configure bridge port 1/1/1/1 max-unicast-mac 4
+configure bridge port 1/1/1/1 pvid 7
+configure xdsl line 1/1/1/1 dpbo-profile name:DPBO_3310
+configure interface port xdsl-line:1/1/1/1 user "TestUser (12345) "
+exit
+exit
+exit
+logout

@@ -1,0 +1,16 @@
+root
+secret
+enable
+config
+terminal user name
+testuser
+123456
+123456
+root
+3
+4
+
+n
+return
+quit
+y

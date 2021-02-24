@@ -1,0 +1,13 @@
+manager
+secret
+cd /unit-7
+ls
+cd /unit-7/port-1/cfgm
+Set Mode "Speed1000 Autoneg On"
+Set FlowControl false
+CreateInterface VLAN_name
+cd /unit-7/port-1/cfgm
+Set Mode "1000MbitsFullDuplex"
+Set FlowControl false
+CreateInterface VLAN_name
+exit

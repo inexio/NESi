@@ -1,0 +1,14 @@
+admin
+secret
+configure bridge no port 1/1/1/1:1:32
+configure xdsl line 1/1/1/1 no admin-up
+configure xdsl line 1/1/1/1 no service-profile
+configure xdsl line 1/1/1/1 no spectrum-profile
+configure xdsl line 1/1/1/1 no vect-profile
+configure interface port xdsl-line:1/1/1/1 user ""
+configure xdsl line 1/1/1/1 no dpbo-profile
+configure bridge no port 1/1/4/1
+configure ethernet line 1/1/4/1 mau 1 power down
+configure ethernet line 1/1/4/1 no admin-up
+configure interface port ethernet-line:1/1/4/1 no user
+logout

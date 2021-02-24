@@ -1,0 +1,6 @@
+port {{ context.service_port.name }}
+{% if context.service_port.max_unicast_mac != None %}  max-unicast-mac {{ context.service_port.max_unicast_mac }}
+{% else %}{% endif %}
+{% if context.qos_profile_name != None %}  qos-profile name:{{ context.qos_profile_name }}
+{% else %}{% endif %}
+

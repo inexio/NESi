@@ -1,0 +1,11 @@
+root
+secret
+enable
+config
+interface gpon 0/4
+ont delete 0 0
+quit
+save
+return
+quit
+y

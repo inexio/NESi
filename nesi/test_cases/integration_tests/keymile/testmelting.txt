@@ -1,0 +1,9 @@
+manager
+secret
+/unit-19/port-1/status/StartLineTest
+get /unit-19/port-1/status/LineTestResults
+/unit-1/port-1/status/StartMeltMeasurement
+get /unit-1/port-1/status/MeltResults
+cd /unit-6/port-1/main
+set AdministrativeStatus up
+exit

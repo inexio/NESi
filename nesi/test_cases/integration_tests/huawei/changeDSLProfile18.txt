@@ -1,0 +1,74 @@
+root
+secret
+enable
+config
+xdsl data-rate-profile quickadd 1003 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 3456 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc TEST_DSL_3000
+xdsl data-rate-profile quickadd 1006 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 6656 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc TEST_DSL_6000
+xdsl data-rate-profile quickadd 1016 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 17280 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc TEST_DSL_16000
+xdsl data-rate-profile quickadd 1025 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 26368 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc TEST_DSL_25000
+xdsl data-rate-profile quickadd 1050 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 52544 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc TEST_DSL_50000
+xdsl data-rate-profile quickadd 1100 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 115200 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc TEST_DSL_100000
+xdsl data-rate-profile quickadd 2001 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 1152 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc UP_1000
+xdsl data-rate-profile quickadd 2002 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 2304 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc UP_2000
+xdsl data-rate-profile quickadd 2005 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 5248 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc UP_5000
+xdsl data-rate-profile quickadd 2010 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 11520 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc UP_10000
+xdsl data-rate-profile quickadd 2256 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 256 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc UP_256
+xdsl data-rate-profile quickadd 2512 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 512 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc UP_512
+xdsl data-rate-profile quickadd 3010 maximum-bit-error-ratio 2 path-mode 3 rate 32 32 11520 32 0 0 g.998.4-rtx etr-min 32 etr-max 200000 ndr-max 200000 desc TEST_DSL_10000
+xdsl data-rate-profile quickadd 2015 desc UP_15000
+xdsl data-rate-profile quickmodify 2015 path-mode 3 rate 32 32 15750 32 0 0 maximum-bit-error-ratio 2
+xdsl data-rate-profile quickadd 2020 desc UP_20000
+xdsl data-rate-profile quickmodify 2020 path-mode 3 rate 32 32 23040 32 0 0 maximum-bit-error-ratio 2
+xdsl data-rate-profile quickadd 1060 desc TEST_DSL_60000
+xdsl data-rate-profile quickmodify 1060 path-mode 3 rate 32 32 63000 32 0 0 maximum-bit-error-ratio 2
+xdsl data-rate-profile quickadd 1030 desc TEST_DSL_30000
+xdsl data-rate-profile quickmodify 1030 path-mode 3 rate 32 32 31500 32 0 0 maximum-bit-error-ratio 2
+xdsl dpbo-profile quickadd 1020 working-mode 7 eside-electrical-length 40 40 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 1 desc DPBO_20
+xdsl dpbo-profile quickadd 1030 working-mode 7 eside-electrical-length 60 60 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_30
+xdsl dpbo-profile quickadd 1040 working-mode 7 eside-electrical-length 80 80 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_40
+xdsl dpbo-profile quickadd 1050 working-mode 7 eside-electrical-length 100 100 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_50
+xdsl dpbo-profile quickadd 1060 working-mode 7 eside-electrical-length 120 120 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_60
+xdsl dpbo-profile quickadd 1070 working-mode 7 eside-electrical-length 140 140 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_70
+xdsl dpbo-profile quickadd 1075 working-mode 7 eside-electrical-length 150 150 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_75
+xdsl dpbo-profile quickadd 1080 working-mode 7 eside-electrical-length 160 160 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_80
+xdsl dpbo-profile quickadd 1085 working-mode 7 eside-electrical-length 170 170 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_85
+xdsl dpbo-profile quickadd 1090 working-mode 7 eside-electrical-length 180 180 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_90
+xdsl dpbo-profile quickadd 1095 working-mode 7 eside-electrical-length 190 190 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_95
+xdsl dpbo-profile quickadd 1100 working-mode 7 eside-electrical-length 200 200 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_100
+xdsl dpbo-profile quickadd 1105 working-mode 7 eside-electrical-length 210 210 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_105
+xdsl dpbo-profile quickadd 1110 working-mode 7 eside-electrical-length 220 220 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_110
+xdsl dpbo-profile quickadd 1115 working-mode 7 eside-electrical-length 230 230 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_115
+xdsl dpbo-profile quickadd 1120 working-mode 7 eside-electrical-length 240 240 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_120
+xdsl dpbo-profile quickadd 1122 working-mode 7 eside-electrical-length 244 244 assumed-exchange-psd enable 63:73,256:73,314:84,376:93,511:96 eside-cable-model 270 490 264 min-usable-signal 224 span-frequency 64 511 dpbo-calculation 2 desc DPBO_122
+xdsl noise-margin-profile quickadd 1000 snr-margin 60 40 310 60 40 310 rate-adapt 2 2 snr-mode disable disable desc ADSL_6dB
+xdsl noise-margin-profile quickadd 2001 snr-margin 60 40 310 60 40 310 rate-adapt 2 2 snr-mode disable disable desc VDSL_6dB
+xdsl noise-margin-profile quickadd 1090 snr-margin 60 40 310 90 40 310 rate-adapt 2 2 snr-mode disable disable desc ADSL_9dB
+xdsl noise-margin-profile quickadd 2091 snr-margin 60 40 310 90 40 310 rate-adapt 2 2 snr-mode disable disable desc VDSL_9dB
+xdsl inp-delay-profile quickadd 1000 inp-4.3125khz 4 4 inp-8.625khz 3 3 interleaved-delay 8 8 delay-variation 255 channel-policy 0 desc ADSL
+xdsl inp-delay-profile quickadd 1001 inp-4.3125khz 4 4 inp-8.625khz 3 3 interleaved-delay 8 8 delay-variation 255 channel-policy 0 desc VDSL
+xdsl inp-delay-profile quickadd 2000 inp-4.3125khz 1 1 inp-8.625khz 1 1 interleaved-delay 0 0 delay-variation 255 channel-policy 0 desc ADSL_FAST
+xdsl inp-delay-profile quickadd 2001 inp-4.3125khz 1 1 inp-8.625khz 1 1 interleaved-delay 0 0 delay-variation 255 channel-policy 0 desc VDSL_FAST
+xdsl mode-specific-psd-profile quickadd 1000 nominal-transmit-PSD-ds 400 nominal-transmit-PSD-us 380 aggregate-transmit-power-ds 198 aggregate-transmit-power-us 133 aggregate-receive-power-us 255
+xdsl mode-specific-psd-profile quickmodify 1000 upstream-psd-mask-selection 8 description ADSL2plus
+xdsl mode-specific-psd-profile quickmodify 1000 psd-class-mask 6 psd-limit-mask 34
+xdsl mode-specific-psd-profile quickadd 1001 nominal-transmit-PSD-ds 400 nominal-transmit-PSD-us 380 aggregate-transmit-power-ds 145 aggregate-transmit-power-us 145 aggregate-receive-power-us 255
+xdsl mode-specific-psd-profile quickmodify 1001 upstream-psd-mask-selection 9 description VDSL
+xdsl mode-specific-psd-profile quickmodify 1001 psd-class-mask 6 psd-limit-mask 34
+xdsl line-spectrum-profile quickadd 1000 l0-time 255 l2-time 30 l3-time 255 max-transmite-power-reduction 3 total-max-power-reduction 31 bit-swap-ds 1 bit-swap-us 1 overhead-datarate-us 4000 overhead-datarate-ds 4000		 
+xdsl line-spectrum-profile quickmodify 1000 allow-transitions-to-idle 2 allow-transitions-to-lowpower 2 reference-clock freeRun cyclic-extension-flag 1 force-inp-ds 1 force-inp-us 1 desc ADSL2plus		 
+xdsl line-spectrum-profile quickmodify 1000 g.993.2-profile 7 mode-specific enable 1 1000		 
+xdsl line-spectrum-profile quickmodify 1000 transmode custom T1.413 disable G.992.1 disable G.992.2 disable G.992.3 disable G.992.4 disable G.992.5 enable AnnexB G.993.2 disable ETSI disable		 
+xdsl line-spectrum-profile quickadd 1001 l0-time 255 l2-time 30 l3-time 255 max-transmite-power-reduction 3 total-max-power-reduction 31 bit-swap-ds 1 bit-swap-us 1 overhead-datarate-us 4000 overhead-datarate-ds 4000		 
+xdsl line-spectrum-profile quickmodify 1001 allow-transitions-to-idle 2 allow-transitions-to-lowpower 2 reference-clock freeRun cyclic-extension-flag 1 force-inp-ds 1 force-inp-us 1 desc VDSL		 
+xdsl line-spectrum-profile quickmodify 1001 g.993.2-profile 7 mode-specific enable 1 1001		 
+xdsl line-spectrum-profile quickmodify 1001 g.993.2-profile 7 us0-psd-mask 19		 
+xdsl line-spectrum-profile quickmodify 1001 transmode 6		 
+xdsl line-spectrum-profile quickadd 1002 l0-time 255 l2-time 30 l3-time 255 max-transmite-power-reduction 3 total-max-power-reduction 31 bit-swap-ds 1 bit-swap-us 1 overhead-datarate-us 4000 overhead-datarate-ds 4000		 
+xdsl line-spectrum-profile quickmodify 1002 allow-transitions-to-idle 2 allow-transitions-to-lowpower 2 reference-clock freeRun cyclic-extension-flag 1 force-inp-ds 1 force-inp-us 1 desc VDSL_NO_ADSL		 
+xdsl line-spectrum-profile quickmodify 1002 g.993.2-profile 7 mode-specific enable 1 1001		 
+xdsl line-spectrum-profile quickmodify 1002 g.993.2-profile 7 us0-psd-mask 19		 
+xdsl line-spectrum-profile quickmodify 1002 transmode 6		 
+xdsl line-spectrum-profile quickmodify 1002 vdsltoneblackout enable 0-511
+return
+quit
+y

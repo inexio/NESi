@@ -1,0 +1,10 @@
+root
+secret
+enable
+config
+vlan 11 smart
+port vlan 11 0/0 0
+vlan bind service-profile 11 profile-id 1
+return
+quit
+y

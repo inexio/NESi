@@ -1,0 +1,16 @@
+root
+secret
+enable
+config
+display service-port 0
+undo service-port 0
+service-port 1 vlan 2620 adsl 0/2/0 vpi 1 vci 32 multi-service user-encap pppoe inbound traffic-table index 10 outbound traffic-table index 10
+service-port 2 vlan 2620 vdsl mode atm 0/1/0 vpi 1 vci 32 multi-service user-encap pppoe inbound traffic-table index 10 outbound traffic-table index 10
+service-port 3 vlan 2620 vdsl mode ptm 0/1/1 multi-service user-encap pppoe inbound traffic-table index 10 outbound traffic-table index 1
+service-port 4 vlan 2620 eth 0/3/0 multi-service user-vlan 2620  user-encap pppoe inbound traffic-table index intable outbound traffic-table index outtable
+service-port 5 vlan 2620 vdsl mode ptm 0/1/2 multi-service user-vlan untagged
+service-port 6 vlan 2620 vdsl mode atm 0/2/1 vpi 1 vci 32 multi-service user-vlan untagged
+service-port 7 vlan 2620 eth 0/3/1 multi-service user-vlan 2620 user-encap pppoe inbound traffic-table index intable outbound traffic-table index outtable
+return
+quit
+y

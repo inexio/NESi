@@ -1,0 +1,34 @@
+configure ethernet
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+echo "ethernet"
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+line {{ context.port.name }}
+  port-type uni
+  {{ context.admin_state }}
+  tca-line-threshold
+    no enable
+    no los # value=0
+    no fcs # value=0
+    no rx-octets # value=0
+    no tx-octets # value=0
+    no los-day # value=0
+    no fcs-day # value=0
+    no rx-octets-day # value=0
+    no tx-octets-day # value=0
+  exit
+  mau 1
+    type {{ context.mau.type }}
+    power {% if '1' in context.mau.admin_state %}on
+    {% else %}off
+    {% endif %}
+    no speed-auto-sense
+    {% if 'true' in context.mau.auto_neg_supported %}    autonegotiate
+    {% else %}   no autonegotiate
+    {% endif %}
+    no cap100base-tfd
+    cap1000base-xfd
+    no cap1000base-tfd
+    no cap10gbase-tfd
+  exit
+exit
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

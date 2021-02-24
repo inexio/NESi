@@ -1,0 +1,4 @@
+
+{% if context.iftype == 'vlanif' %}{{ model.hostname }}(config-if-{{ context.component.name }})#{% endif %}
+{% if context.iftype == 'emu' %}{{ model.hostname }}(config-if-{{ context.component.type| lower }}-{{ context.component.number }})#{% endif %}
+{% if context.iftype != 'vlanif' and context.iftype != 'emu' %}{{ model.hostname }}(config-if-{{ context.iftype }}-{{ context.component.name }})#{% endif %}

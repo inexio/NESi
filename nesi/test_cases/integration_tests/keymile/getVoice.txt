@@ -1,0 +1,7 @@
+manager
+secret
+cd /unit-19/portgroup-1/port-1/cfgm
+get pstnport
+cd /unit-19/portgroup-2/port-1/cfgm
+get isdnport
+exit

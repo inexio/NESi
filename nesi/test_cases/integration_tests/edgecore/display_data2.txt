@@ -1,0 +1,8 @@
+admin
+secret
+enable
+enable
+show system
+show process cpu
+show memory
+quit

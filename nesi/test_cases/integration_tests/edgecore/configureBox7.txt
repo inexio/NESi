@@ -1,0 +1,9 @@
+admin
+secret
+enable
+enable
+configure
+management all-client 10.218.20.21 10.218.20.22
+no logging host 10.10.103.254
+loopback-detection action shutdown
+quit

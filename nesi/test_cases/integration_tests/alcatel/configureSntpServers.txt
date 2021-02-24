@@ -1,0 +1,11 @@
+admin
+secret
+configure system sntp server-table ip-address 10.0.0.5
+configure system sntp server-table ip-address 10.0.0.6
+configure system sntp server-ip-addr 10.0.0.5
+configure system sntp enable timezone-offset 0
+exit
+exit
+exit
+exit
+logout

@@ -1,0 +1,41 @@
+  {% if context.card.product == 'vdsl'%}  VDSL {% endif %}{% if context.card.product == 'adsl'%}ADSL {% endif %}{{ context.spaced_out_name }} is {{ context.port_o_state }}
+  The {% if context.card.product == 'vdsl'%}VDSL {% endif %}{% if context.card.product == 'adsl'%}ADSL {% endif %}port state is {{ context.port.admin_state }}
+  The {% if context.card.product == 'vdsl'%}VDSL {% endif %}{% if context.card.product == 'adsl'%}ADSL {% endif %}port loopback state is {{ context.port.loopback }}
+  Description : {{ context.port.description }}
+  Bind line-template {{ context.port.line_template }}
+  Bind alarm-template {{ context.port.alarm_template }}
+  Dynamic-profile       Index:    {{ context.port.dynamic_profile_index}}{{ context.spacer }}Name: {{ context.port.dynamic_profile_name }}
+  Hardware is {{ context.port.hardware }}
+  Last up time                                : {{ context.port.last_up_time }}
+  Last down time                              : {{ context.port.last_down_time}}
+  Show time                                   : {{ context.port.show_time }}
+  NTE power status                            : {{ context.port.nte_power_status }}
+  Current operational mode                    : {{ context.port.current_operational_mode }}
+  Total count of line training                : {{ context.port.total_count_of_line_training }}
+  Result of the last full initialization      : {{ context.port.result_last_initialization }}
+  Total bytes num upstream(byte)              : {{ context.port.total_bytes_us }}
+  Total packets num upstream(packet)          : {{ context.port.total_packets_us }}
+  Total bytes num downstream(byte)            : {{ context.port.total_bytes_ds }}
+  Total packets num downstream(packet)        : {{ context.port.total_packets_ds }}
+  Total packets num discarded downstream
+  due to congestion(packet)                   : {{ context.port.total_discarded_packets_ds }}
+
+  Channel 1
+  Current rate downstream(kbps)               : {{ context.port.downstream }}
+  Current rate upstream(kbps)                 : {{ context.port.upstream }}
+  Packets num discarded downstream
+  Due to congestion(packet)                   : {{ context.port.channel_packets_discarded_ds }}
+
+{% if context.vlan_fields %}  Flow type                                   : {{ context.s_port.flow_type }}
+  Flow para                                   : {{ context.s_port.flow_para }}
+  Rx-cttr                                     : {{ context.s_port.rx_cttr }}
+  Tx-cttr                                     : {{ context.s_port.tx_cttr }}
+  VLAN                                        : {{ context.vlan.number }}
+  Max mac-address learning count              : {{ context.s_port.max_mac_count }}
+  Support down multicast stream               : {{ context.s_port.support_down_multicast_stream }}
+  Support IGMP packet                         : {{ context.s_port.support_igmp_packet }}
+  Bytes num upstream(byte)                    : {{ context.s_port.bytes_us }}
+  Packets num upstream(packet)                : {{ context.s_port.packets_us }}
+  Bytes num downstream(byte)                  : {{ context.s_port.bytes_ds }}
+  Packets num downstream(packet)              : {{ context.s_port.packets_ds }}
+{% endif %}

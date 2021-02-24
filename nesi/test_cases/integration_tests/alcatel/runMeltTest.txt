@@ -1,0 +1,15 @@
+admin
+secret
+configure linetest single ltsession 1 session-cmd destroy
+configure linetest single ltsession 1 session-cmd create ownerid 1 timeout-period 6000 line-num 1 type-high group type-low none test-parm-num 0 test-mode single
+configure linetest single ltline 1 lineid 1/1/1/1/1 line-status intest
+configure linetest single ltsession 1 session-cmd starttest
+show linetest single lineid-ext-rept 1
+configure linetest single ltsession 1 session-cmd destroy
+configure linetest single ltsession 1 session-cmd destroy
+exit
+exit
+exit
+exit
+exit
+logout
