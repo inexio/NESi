@@ -48,6 +48,7 @@ setuptools.setup(
         'nesi.templates.EdgeCore',
         'nesi.templates.KeyMile',
         'nesi.templates.Zhone',
+        'nesi.templates.PBN',
         'nesi.bootup',
         'nesi.bootup.sockets',
         'nesi.bootup.conf',
@@ -72,7 +73,9 @@ setuptools.setup(
         'nesi.devices.keymile.api',
         'nesi.devices.keymile.keymile_resources',
         'nesi.devices.keymile.api.schemas',
+        'nesi.devices.pbn.api',
         'nesi.devices.pbn.pbn_resources',
+        'nesi.devices.pbn.api.schemas',
         'nesi.devices.softbox.api',
         'nesi.devices.softbox.base_resources',
         'nesi.devices.softbox.cli',
@@ -95,5 +98,7 @@ setuptools.setup(
         'nesi.vendors.EdgeCore',
         'nesi.vendors.Huawei',
         'nesi.vendors.KeyMile',
-        'nesi.vendors.Zhone']
+        'nesi.vendors.Zhone',
+        'nesi.vendors.PBN'
+    ]
 )
