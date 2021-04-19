@@ -96,7 +96,7 @@ def new_box():
     box_data = req.copy()
 
     # Additional components have to be wiped from box_data as a box can otherwise not be created
-    components = ('credentials', 'subracks', 'cards', 'ports', 'onts', 'ont_ports', 'cpes', 'cpe_ports', 'vlans',
+    components = ('users', 'credentials', 'subracks', 'cards', 'ports', 'onts', 'ont_ports', 'cpes', 'cpe_ports', 'vlans',
                   'port_profiles', 'routes')
     for component in components:
         if component in req:
@@ -129,7 +129,6 @@ def new_box():
 
         return component_mapping
 
-    create_subcomponent(req['credentials'], Credential) if 'credentials' in req else dict()
     subrack_mapping = create_subcomponent(req['subracks'], Subrack) if 'subracks' in req else dict()
     card_mapping = create_subcomponent(req['cards'], Card, 'subrack_id', subrack_mapping) if 'cards' in req else dict()
     port_mapping = create_subcomponent(req['ports'], Port, 'card_id', card_mapping) if 'ports' in req else dict()
@@ -140,6 +139,8 @@ def new_box():
     create_subcomponent(req['vlans'], Vlan) if 'vlans' in req else dict()
     create_subcomponent(req['port_profiles'], PortProfile) if 'port_profiles' in req else dict()
     create_subcomponent(req['routes'], Route) if 'routes' in req else dict()
+    user_mapping = create_subcomponent(req['users'], User) if 'users' in req else dict()
+    create_subcomponent(req['credentials'], Credential, 'user_id', user_mapping) if 'credentials' in req else dict()
 
     db.session.commit()
 

@@ -45,7 +45,7 @@ class Box(db.Model):
     vendor = db.Column(db.String(64), nullable=False)
     model = db.Column(db.String(64), nullable=False)
     version = db.Column(db.String(64), nullable=False)
-    software_version = db.Column(db.String(64), nullable=False)
+    software_version = db.Column(db.String(64), nullable=False, default='1.0')
     network_protocol = db.Column(db.Enum('telnet', 'ssh'), default='telnet')
     network_port = db.Column(db.Integer(), default=None)
     network_address = db.Column(db.String(), default=None)
